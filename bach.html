@@ -193,16 +193,17 @@ img,svg{max-width:100%}
 .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 .mobile-nav{display:none;position:fixed;inset:0 0 0 auto;width:min(82vw,320px);z-index:60;
   background:var(--paper);border-left:1px solid var(--line);box-shadow:-12px 0 40px rgba(46,26,8,.16);
-  padding:78px 26px 32px;transform:translateX(100%);transition:transform .26s ease;overflow-y:auto}
-.mobile-nav.open{transform:translateX(0)}
+  padding:78px 26px 32px;transform:translateX(100%);overflow-y:auto;
+  visibility:hidden;transition:transform .26s ease,visibility 0s linear .26s}
+.mobile-nav.open{transform:translateX(0);visibility:visible;transition:transform .26s ease}
 .mobile-nav a{display:block;font-size:1.06rem;font-weight:600;color:var(--body);
   padding:15px 0;border-bottom:1px solid var(--line)}
 .mobile-nav a.active{color:var(--saffron)}
 .mobile-nav .mn-wa{margin-top:22px;border-bottom:none;background:#25D366;color:#fff;
   text-align:center;border-radius:999px;padding:14px 20px;font-size:.95rem}
 .nav-scrim{display:none;position:fixed;inset:0;z-index:55;background:rgba(46,26,8,.42);
-  opacity:0;transition:opacity .26s ease}
-.nav-scrim.open{opacity:1}
+  opacity:0;pointer-events:none;visibility:hidden;transition:opacity .26s ease,visibility 0s linear .26s}
+.nav-scrim.open{opacity:1;pointer-events:auto;visibility:visible;transition:opacity .26s ease}
 .mobile-bar{display:none;position:fixed;left:0;right:0;bottom:0;z-index:54;gap:10px;
   padding:10px 14px calc(10px + env(safe-area-inset-bottom));
   background:rgba(255,247,236,.97);border-top:1px solid var(--line);
@@ -298,6 +299,7 @@ img,svg{max-width:100%}
       <div class="video-wrap"><iframe src="https://www.youtube.com/embed/X9zGkzSlb_Y" title="What are Bach Flower Remedies" loading="lazy" allowfullscreen></iframe><div class="video-label">What are Bach Flower Remedies?</div></div>
       <div class="video-wrap"><iframe src="https://www.youtube.com/embed/K1r_LS_GdiU" title="The 38 remedies overview" loading="lazy" allowfullscreen></iframe><div class="video-label">The 38 remedies — an overview</div></div>
       <div class="video-wrap"><iframe src="https://www.youtube.com/embed/E8wJBlMX698" title="Bach Flower for stress and anxiety" loading="lazy" allowfullscreen></iframe><div class="video-label">Bach Flower for stress &amp; anxiety</div></div>
+      <div class="video-wrap"><iframe id="ytFeatured" data-speed="1.5" src="https://www.youtube.com/embed/Fit7BqpBDLE?enablejsapi=1&rel=0&playsinline=1" title="Bach Flower Therapy featured video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe><div class="video-label">Featured video · plays at 1.5×</div></div>
     </div>
   </div>
 </section>
@@ -595,6 +597,29 @@ img,svg{max-width:100%}
   window.addEventListener('resize',function(){
     if(window.innerWidth>720) setOpen(false);
   });
+})();
+</script>
+<script>
+/* Default playback speed for embeds marked data-speed (YouTube has no URL
+   parameter for this, so it is set through the official IFrame Player API). */
+(function(){
+  var frames=[].slice.call(document.querySelectorAll('iframe[data-speed]'));
+  if(!frames.length) return;
+  window.onYouTubeIframeAPIReady=function(){
+    frames.forEach(function(f){
+      var speed=parseFloat(f.getAttribute('data-speed'))||1, done=false;
+      function apply(p){ try{ p.setPlaybackRate(speed); }catch(e){} }
+      new YT.Player(f,{events:{
+        onReady:function(e){ apply(e.target); },
+        onStateChange:function(e){
+          if(e.data===YT.PlayerState.PLAYING && !done){ done=true; apply(e.target); }
+        }
+      }});
+    });
+  };
+  var s=document.createElement('script');
+  s.src='https://www.youtube.com/iframe_api';
+  document.head.appendChild(s);
 })();
 </script>
 </body>
