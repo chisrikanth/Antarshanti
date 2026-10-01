@@ -17,7 +17,7 @@ Last updated: 1 Oct 2026.
 
 ## Testimonials (none collected yet)
 Nothing is shown to visitors until you add real ones. The three older Happiness testimonials were removed because they were not collected from named people.
-What the site does now: Happiness links to the Art of Living page, Bach links to FeelBetter, Jyotish and home stay hidden until filled.
+What the site does now: Happiness links to the Art of Living page. Bach, Jyotish and home stay hidden until filled.
 
 **Suggested way to collect them**
 1. After each session or batch, 2–3 days later, send a WhatsApp note: *"Namaste, I hope the session is still helping. If it did help, would you share one or two lines in your own words? May I show it on my website with your first name and city? Totally fine to say no."*
@@ -30,7 +30,11 @@ What the site does now: Happiness links to the Art of Living page, Bach links to
 8. Add them to `assets/testimonials.js` (one entry each, the format is explained in the file). The right section appears automatically.
 9. Aim for 3 per service to start. Even 1–2 real ones beat none.
 
-**Using quotes from other sites.** Quotes on the Art of Living site belong to the participants and Art of Living, and FeelBetter reviews are about FeelBetter's service and other therapists too. Show them only with permission, name the source, and do not present them as your own clients. I could not fetch either site from my sandbox, so no quotes were copied. If you get permission, paste the exact text and I will add it with the source line.
+**Using quotes from other sites.** Quotes on the Art of Living site belong to the participants and Art of Living. Show them only with permission, name the source, and do not present them as your own clients. I could not fetch the site, so no quotes were copied. If you get permission, paste the exact text and I will add it with the source line.
+
+## FeelBetter profile learnings (pending)
+- [ ] I cannot open your FeelBetter profile from my environment (the site is blocked for me). Paste its text here, or save the page as PDF into the repo, and I will carry over what works: bio wording, credentials, session description, FAQs, reviews (only your own, with their permission).
+- [ ] Bach booking runs on Razorpay only; no FeelBetter link remains on the site.
 
 ## Content only you can supply
 - [ ] A real number of sessions or years, only if true (hero proof line).
