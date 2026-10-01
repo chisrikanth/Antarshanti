@@ -10,4 +10,6 @@
    seats: optional.
 */
 var AS_BATCHES = [
+  { date:'Thu 22 – Sun 25 Oct 2026', time:'Evening · 6:00–8:30 PM IST', mode:'Online (Zoom)', language:'',
+    seats:'', fee:'By donation to the Art of Living Foundation', registerUrl:'https://aolt.in/1061195' }
 ];

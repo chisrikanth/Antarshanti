@@ -69,7 +69,7 @@ var AS_CONFIG = {
 
   /* ---------- 3. Event API: AS.track(name, props) ---------- */
   // Ad-platform "conversion" mapping. `lead` = someone raised a hand; `purchase` = paid.
-  var META = { whatsapp_click: 'Contact', checkin_saved: 'Lead', pay_click: 'InitiateCheckout', payment_success: 'Purchase', slot_selected: 'Schedule' };
+  var META = { register_click: 'Lead', whatsapp_click: 'Contact', checkin_saved: 'Lead', pay_click: 'InitiateCheckout', payment_success: 'Purchase', slot_selected: 'Schedule' };
   var GA = { checkin_saved: 'generate_lead', payment_success: 'purchase' };
 
   function track(name, props) {
@@ -109,6 +109,7 @@ var AS_CONFIG = {
     if (!a) return;
     var href = a.getAttribute('href') || '', label = (a.getAttribute('data-label') || a.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
     if (href.indexOf('wa.me/') > -1) { tagWhatsApp(a); track('whatsapp_click', { label: label }); }
+    else if (href.indexOf('aolt.in') > -1 || href.indexOf('artofliving.org/search') > -1) track('register_click', { label: label });
     else if (href.indexOf('upi://') === 0) track('upi_click', { label: label });
     else if (href.indexOf('checkin') > -1) track('checkin_click', { label: label });
     else if (a.classList.contains('btn')) track('cta_click', { label: label });
@@ -143,7 +144,24 @@ var AS_CONFIG = {
     });
   }
 
+  /* ---------- 8. Testimonials: <div data-testimonials="bach"></div> inside a <section> ---------- */
+  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function initTestimonials() {
+    if (typeof AS_TESTIMONIALS === 'undefined') return;
+    [].slice.call(document.querySelectorAll('[data-testimonials]')).forEach(function (el) {
+      var items = AS_TESTIMONIALS[el.getAttribute('data-testimonials')] || [];
+      var sec = el.closest('section');
+      if (!items.length) { if (sec && sec.hasAttribute('data-hide-empty')) sec.hidden = true; el.innerHTML = ''; return; }
+      if (sec) sec.hidden = false;
+      el.innerHTML = '<div class="testi-grid">' + items.slice(0, 3).map(function (t) {
+        var who = [t.name, t.role, t.city].filter(Boolean).map(esc).join(', ');
+        var src = t.source ? '<br><span style="font-size:.76rem">Source: ' + (t.url ? '<a href="' + esc(t.url) + '" target="_blank" rel="noopener">' + esc(t.source) + '</a>' : esc(t.source)) + '</span>' : '';
+        return '<div class="testi"><blockquote>“' + esc(t.quote) + '”</blockquote><cite>— ' + who + src + '</cite></div>';
+      }).join('') + '</div>';
+    });
+  }
+
   window.AS = { track: track, attribution: attribution, page: page };
-  function ready() { tagAll(); floatingWA(); initVideos(); }
+  function ready() { tagAll(); floatingWA(); initVideos(); initTestimonials(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready); else ready();
 })();
