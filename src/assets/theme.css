@@ -176,3 +176,12 @@ header[style*="min-height"] > .wrap[style*="max-width"] > *{max-width:600px}
 .talk-card h3{font-size:1.2rem;margin-bottom:6px}
 .talk-card p{font-size:.92rem;color:var(--dim);margin-bottom:14px}
 @media(max-width:380px){.q-text{min-height:calc(1.2em * 4)}}
+
+.result-group{font-family:'Marcellus',serif;font-weight:400;font-size:1.05rem;color:var(--ink);margin:22px 0 10px}
+
+/* Booking: week navigation */
+.week-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:2px 0 10px}
+.wk-label{font-size:.84rem;font-weight:700;color:var(--dim)}
+.wk-btn{border:1.5px solid var(--line);background:#fff;color:#A04F14;border-radius:999px;padding:6px 14px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer}
+.wk-btn:hover:not([disabled]){border-color:var(--sun-deep);background:var(--sun-wash)}
+.wk-btn[disabled]{opacity:.35;cursor:not-allowed}

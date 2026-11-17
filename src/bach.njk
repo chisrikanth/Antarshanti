@@ -79,6 +79,7 @@ navKey: "bach"
   <div class="booking-body">
     <div class="session-tabs" id="stabs"></div>
     <div class="slots-label">Select a date</div>
+    <div class="week-nav"><button type="button" id="wk-prev" class="wk-btn" aria-label="Previous week">‹ Earlier</button><span id="wk-label" class="wk-label"></span><button type="button" id="wk-next" class="wk-btn" aria-label="Next week">Next week ›</button></div>
     <div class="week-strip" id="week-strip"></div>
     <div class="slots-label" id="slots-label" style="display:none">Available times</div>
     <div class="slots-grid" id="slots-grid"></div>
@@ -125,13 +126,26 @@ navKey: "bach"
     tabsEl.appendChild(b);
   });
   // Build week strip (next 7 days from today)
+  var weekOffset=0, MAX_WEEKS=6;
+  function weekLabel(){
+    var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var a=new Date(); a.setDate(a.getDate()+weekOffset*7); var b=new Date(a); b.setDate(a.getDate()+6);
+    document.getElementById('wk-label').textContent=a.getDate()+' '+MON[a.getMonth()]+' – '+b.getDate()+' '+MON[b.getMonth()];
+    document.getElementById('wk-prev').disabled=weekOffset===0;
+    document.getElementById('wk-next').disabled=weekOffset>=MAX_WEEKS-1;
+  }
+  function gotoWeek(n){
+    weekOffset=Math.max(0,Math.min(MAX_WEEKS-1,n)); selDay=null; selTime=null;
+    document.getElementById('bconfirm').className='booking-confirm';
+    renderDays(); renderSlots();
+  }
   function renderDays(){
-    var ws=document.getElementById('week-strip'); ws.innerHTML='';
+    var ws=document.getElementById('week-strip'); ws.innerHTML=''; weekLabel();
     var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var today=new Date();
     for(var i=0;i<7;i++){
-      var d=new Date(today); d.setDate(today.getDate()+i);
+      var d=new Date(today); d.setDate(today.getDate()+weekOffset*7+i);
       var dname=DAYS[d.getDay()];
       var avail=ASBook.dayHasFree(d,ASBook.timesFor(d,SLOTS));
       var btn=document.createElement('div');
@@ -149,8 +163,9 @@ navKey: "bach"
     }
     if(!ws.querySelector('.day-btn:not(.disabled)')){
       var n=document.createElement('p'); n.style.cssText='font-size:.86rem;color:var(--dim);margin:10px 0 0;width:100%';
-      n.innerHTML='No online times are open this week. Please <a href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+would+like+to+book+a+session." target="_blank" rel="noopener" style="text-decoration:underline">message Srikanth on WhatsApp</a> and he will find a time.';
+      n.innerHTML='No online times are open this week. Try <button type="button" id="try-next-week" style="background:none;border:0;padding:0;font:inherit;color:#A04F14;text-decoration:underline;cursor:pointer">next week</button>, or <a href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+would+like+to+book+a+session." target="_blank" rel="noopener" style="text-decoration:underline">message Srikanth on WhatsApp</a> and he will find a time.';
       ws.appendChild(n);
+      var tn=document.getElementById('try-next-week'); if(tn) tn.onclick=function(){ gotoWeek(weekOffset+1); };
     }
   }
   function renderSlots(){
@@ -258,6 +273,8 @@ navKey: "bach"
     });
   }
   document.getElementById('pay-btn').addEventListener('click',payNow);
+  document.getElementById('wk-prev').addEventListener('click',function(){ gotoWeek(weekOffset-1); });
+  document.getElementById('wk-next').addEventListener('click',function(){ gotoWeek(weekOffset+1); });
   renderDays(); renderSlots();
   ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules); } renderDays(); renderSlots(); });
 })();

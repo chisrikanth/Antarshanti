@@ -2,6 +2,7 @@
 
 Tick items by changing `[ ]` to `[x]`. Claude re-reads this at the start of each session and reminds you of the next few open items.
 **Last updated: 17 Nov 2026.**
+Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (lower pressure and fear; tell the truth, not a rosy story).
 
 ## A. Blocking: the site cannot take real bookings until these are done
 - [ ] **A1. Razorpay TEST keys.** Razorpay dashboard, Test Mode, Account & Settings, API Keys, Generate Test Key.
@@ -37,6 +38,7 @@ Tick items by changing `[ ]` to `[x]`. Claude re-reads this at the start of each
 - [ ] **D6. Check-in next-step wording (new).** Read the results on staging once. In particular please confirm you are happy with this sentence about Sudarshan Kriya: *"Several published studies report lower stress and anxiety after learning it, and many people simply find it deeply relaxing."* If you can, give me one specific study link (for example from the Art of Living research page) and I will link it; that makes the sentence stronger and safer.
 - [ ] **D7. Watch the two short videos on the check-in results:** Sudarshan Kriya `gWwhIPAajfw` and Bach Flower `Cm5DVzkOo_U` (chosen by title). Say if you want others.
 - [ ] **D4. Telugu and Hindi:** who will review the translations?
+- [ ] **D8. Happiness page headline changed** from "Don't settle for happy-ish" (felt like pressure) to "A calmer mind, one breath at a time". Also removed "why haven't you tried it yet?". Happy with both?
 - [ ] **D5. Bach headline** now says "Gentle support for the feelings words cannot reach". Happy with it?
 
 ## E. Operating notes (no action unless something looks wrong)

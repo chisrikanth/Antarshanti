@@ -32,8 +32,8 @@ navKey: "checkin"
         <h1 style="font-size:clamp(1.6rem,4vw,2.1rem);margin-bottom:14px">Free 5-Minute Wellbeing Check-In</h1>
         <p style="font-size:.98rem;color:var(--body)">Life can be exciting, overwhelming, confusing, and everything in between. This short questionnaire helps you pause and reflect on your emotional wellbeing — anxiety, mood, mindfulness, self-esteem, and how you handle emotions.</p>
         <div class="tag-row">
-          <span class="tag">Anxiety</span><span class="tag">Depression</span><span class="tag">Mindfulness</span>
-          <span class="tag">Self-Esteem</span><span class="tag">Emotion Regulation</span>
+          <span class="tag">Mindfulness</span><span class="tag">Self-esteem</span><span class="tag">Worry and tension</span>
+          <span class="tag">Feeling low</span><span class="tag">Emotional balance</span>
         </div>
         <ul class="notice-list">
           <li>This is a self-reflection tool, not a diagnostic instrument</li>
@@ -137,26 +137,6 @@ navKey: "checkin"
 --------------------------------------------------------- */
 const SECTIONS = [
   {
-    key:'anxiety', title:'Anxiety', direction:'distress', color:'lotus',
-    items:[
-      'Felt nervous, worried or on edge',
-      'Found it hard to switch off racing thoughts',
-      'Felt your heart race or body tense for no clear reason',
-      'Avoided a task or situation because it felt overwhelming',
-      'Expected something to go wrong, even without evidence'
-    ]
-  },
-  {
-    key:'depression', title:'Mood', direction:'distress', color:'lotus', crisisIndex:4,
-    items:[
-      "Lost interest in things you'd usually enjoy",
-      'Felt low, flat or hopeless',
-      'Had noticeably low energy or motivation',
-      'Struggled with sleep — too little or too much',
-      "Had thoughts that life isn't worth living, or of hurting yourself"
-    ]
-  },
-  {
     key:'mindfulness', title:'Mindfulness', direction:'strength', color:'sky',
     items:[
       'Noticed small sensory details around you — light, sound, smell',
@@ -167,7 +147,7 @@ const SECTIONS = [
     ]
   },
   {
-    key:'selfEsteem', title:'Self-Esteem', direction:'strength', color:'gold',
+    key:'selfEsteem', title:'Self-esteem', direction:'strength', color:'gold',
     items:[
       'Felt satisfied with who you are',
       'Felt confident in your own judgment and decisions',
@@ -177,7 +157,27 @@ const SECTIONS = [
     ]
   },
   {
-    key:'emotionRegulation', title:'Emotion Regulation', direction:'strength', color:'leaf',
+    key:'anxiety', title:'Worry and tension', direction:'distress', color:'lotus',
+    items:[
+      'Felt nervous, worried or on edge',
+      'Found it hard to switch off racing thoughts',
+      'Felt your heart race or body tense for no clear reason',
+      'Avoided a task or situation because it felt overwhelming',
+      'Expected something to go wrong, even without evidence'
+    ]
+  },
+  {
+    key:'depression', title:'Feeling low', direction:'distress', color:'lotus', crisisIndex:4,
+    items:[
+      "Lost interest in things you'd usually enjoy",
+      'Felt low, flat or hopeless',
+      'Had noticeably low energy or motivation',
+      'Struggled with sleep — too little or too much',
+      "Had thoughts that life isn't worth living, or of hurting yourself"
+    ]
+  },
+  {
+    key:'emotionRegulation', title:'Emotional balance', direction:'strength', color:'leaf',
     items:[
       'Managed to calm yourself down once upset',
       'Understood what triggered a strong emotion, even after the fact',
@@ -341,19 +341,26 @@ function computeAndRenderResults(){
     crisisSlot.appendChild(box);
   }
 
-  // -- snapshot message (words, not a number) --
+  // -- snapshot message (words, not a number): what is going well first, then what needs care, truthfully --
   const shown = domainScores.filter(d => d.sum !== null);
-  const care = shown.filter(d => d.sec.direction === 'distress' ? d.sum >= 10 : d.sum < 5).length;
+  const isCare = d => d.sec.direction === 'distress' ? d.sum >= 10 : d.sum < 5;
+  const isGood = d => d.sec.direction === 'distress' ? d.sum <= 4 : d.sum >= 10;
+  const care = shown.filter(isCare).length, good = shown.filter(isGood).length;
+  const heavy = shown.some(d => d.sec.direction === 'distress' && d.sum >= 15);
   const titleEl = document.getElementById('overall-title'), labelEl = document.getElementById('overall-label');
+  const nArea = n => n === 1 ? 'one area' : n + ' areas';
   if(!shown.length){
     titleEl.textContent = 'Not enough answers for a snapshot';
     labelEl.textContent = 'If you would like, go back and answer a few more questions. You can skip any you prefer.';
   } else if(care === 0){
     titleEl.textContent = 'Things look steady right now';
     labelEl.textContent = 'This is a snapshot of the last two weeks. A good time to keep doing what works for you.';
+  } else if(care >= 3 || heavy){
+    titleEl.textContent = (good > 0 ? 'Some things are going well, and ' + nArea(care) + ' ' + (care === 1 ? 'is' : 'are') + ' asking for care' : 'Several areas are asking for some care right now');
+    labelEl.textContent = 'That is worth some attention, and it is also very common. You do not have to handle it alone: talking with someone can make it feel lighter.';
   } else {
-    titleEl.textContent = care === 1 ? 'One area could use some gentle care' : care + ' areas could use some gentle care';
-    labelEl.textContent = 'That is common, and it is a snapshot of the last two weeks, not a verdict. ' + ((shown.length - care) > 0 ? 'Your strengths below are real too.' : 'Small steps count, and you do not have to do this alone.');
+    titleEl.textContent = (good > 0 ? 'Some things are going well, and ' + nArea(care) + ' could use some care' : nArea(care).replace(/^o/, 'O') + ' could use some care');
+    labelEl.textContent = 'That is common, and it is a snapshot of the last two weeks, not a verdict.';
   }
   // If the safety question was skipped, still make sure help is visible.
   if(!crisisFlag && crisisVal === undefined){
@@ -365,27 +372,34 @@ function computeAndRenderResults(){
   // -- domain rows --
   const domainWrap = document.getElementById('domain-results');
   domainWrap.innerHTML = '';
-  domainScores.forEach(d => {
-    const row = document.createElement('div');
-    row.className = 'domain-row';
-    if(d.sum === null){
-      row.innerHTML = `<div class="domain-top"><span class="domain-name">${d.sec.title}</span></div><div class="domain-note">Not enough answers to show this area. That is fine, you can skip anything you prefer.</div>`;
-      domainWrap.appendChild(row); return;
-    }
-    const band = bandFor(d.sec.direction, d.sum);
-    const steps = [0,1,2,3].map(i => `<i style="${i < band.steps ? 'background:'+band.color : ''}"></i>`).join('');
-    row.innerHTML = `
-      <div class="domain-top">
-        <span class="domain-name">${d.sec.title}</span>
-        <span class="domain-band" style="background:${band.color}22;color:var(--ink)">${band.label}</span>
-      </div>
-      <div class="steps4" role="img" aria-label="${band.label}, step ${band.steps} of 4">${steps}</div>
-      <div class="domain-note">${band.note}</div>
-    `;
-    domainWrap.appendChild(row);
+  // Positive first: inner resources, then how you have been feeling.
+  const groups = [
+    { head:'Your inner resources', list: domainScores.filter(d => d.sec.direction === 'strength') },
+    { head:'How you have been feeling', list: domainScores.filter(d => d.sec.direction === 'distress') }
+  ];
+  groups.forEach(g => {
+    const h = document.createElement('h4'); h.className = 'result-group'; h.textContent = g.head; domainWrap.appendChild(h);
+    g.list.forEach(d => {
+      const row = document.createElement('div');
+      row.className = 'domain-row';
+      if(d.sum === null){
+        row.innerHTML = `<div class="domain-top"><span class="domain-name">${d.sec.title}</span></div><div class="domain-note">Not enough answers to show this area. That is fine, you can skip anything you prefer.</div>`;
+        domainWrap.appendChild(row); return;
+      }
+      const band = bandFor(d.sec.direction, d.sum);
+      const steps = [0,1,2,3].map(i => `<i style="${i < band.steps ? 'background:'+band.color : ''}"></i>`).join('');
+      row.innerHTML = `
+        <div class="domain-top">
+          <span class="domain-name">${d.sec.title}</span>
+          <span class="domain-band" style="background:${band.color}22;color:var(--ink)">${band.label}</span>
+        </div>
+        <div class="steps4" role="img" aria-label="${band.label}, step ${band.steps} of 4">${steps}</div>
+        <div class="domain-note">${band.note}</div>
+      `;
+      domainWrap.appendChild(row);
+    });
   });
 }
-
 
 /* ---------------------------------------------------------
    PATH SUGGESTION — a gentle pointer, never a diagnosis.
