@@ -57,7 +57,7 @@ exports.handler = async function (event) {
   const cfg = dbConfig(event);
   let bookingId = null;
   if (cfg) {
-    const schedule = await loadSchedule(cfg);
+    const schedule = await loadSchedule(cfg, event);
     const check = checkSlot(payload.slot_start, schedule);
     if (!check.ok) return { statusCode: check.status, body: JSON.stringify({ error: check.error }) };
     const held = await reserve(cfg, { service_key: service, slot_start: check.date.toISOString(), status: 'held', hold_expires_at: new Date(Date.now() + HOLD_MINUTES * 60000).toISOString() });

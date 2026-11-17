@@ -162,7 +162,7 @@ navKey: "jyotish"
     for(var i=0;i<7;i++){
       var d=new Date(today); d.setDate(today.getDate()+i);
       var dname=DAYS[d.getDay()];
-      var avail=SLOTS.hasOwnProperty(dname)&&ASBook.dayHasFree(d,SLOTS[dname]);
+      var avail=ASBook.dayHasFree(d,ASBook.timesFor(d,SLOTS));
       var btn=document.createElement('div');
       btn.className='day-btn'+(avail?'':' disabled')+(selDay&&selDay.toDateString()===d.toDateString()?' selected':'');
       btn.innerHTML='<div class="dname">'+dname+'</div><div class="dnum">'+d.getDate()+'</div><div style="font-size:.7rem;color:inherit;opacity:.75">'+MONTHS[d.getMonth()]+'</div>';
@@ -176,6 +176,11 @@ navKey: "jyotish"
       })(d,avail);
       ws.appendChild(btn);
     }
+    if(!ws.querySelector('.day-btn:not(.disabled)')){
+      var n=document.createElement('p'); n.style.cssText='font-size:.86rem;color:var(--dim);margin:10px 0 0;width:100%';
+      n.innerHTML='No online times are open this week. Please <a href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+would+like+to+book+a+session." target="_blank" rel="noopener" style="text-decoration:underline">message Srikanth on WhatsApp</a> and he will find a time.';
+      ws.appendChild(n);
+    }
   }
   function renderSlots(){
     var sg=document.getElementById('slots-grid');
@@ -184,7 +189,7 @@ navKey: "jyotish"
     if(!selDay){ sl.style.display='none'; return; }
     var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     var dname=DAYS[selDay.getDay()];
-    var times=SLOTS[dname]||[];
+    var times=ASBook.timesFor(selDay,SLOTS);
     sl.style.display='block';
     sl.textContent='Available times — '+selDay.toDateString();
     times.forEach(function(t){
@@ -239,13 +244,13 @@ navKey: "jyotish"
         if(window.AS) AS.track('slot_held',{label:'jyotish'});
       } else {
         st.textContent=x.j&&x.j.error?x.j.error:'Could not hold the slot. Please try again or message Srikanth on WhatsApp.';
-        if(x.status===409){ selTime=null; document.getElementById('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
+        if(x.status===409){ selTime=null; document.getElementById('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
       }
     }).catch(function(){ btn.disabled=false; btn.textContent='Hold this slot'; st.textContent='Could not reach the server. Please try again or message Srikanth on WhatsApp.'; });
   }
   document.getElementById('hold-btn').addEventListener('click',holdSlot);
   renderDays(); renderSlots();
-  ASBook.load().then(function(d){ if(d){ SLOTS=ASBook.slotsFromRules(d.rules); } renderDays(); renderSlots(); });
+  ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules); } renderDays(); renderSlots(); });
 })();
 </script>
       </div>

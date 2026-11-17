@@ -2,7 +2,7 @@
 // For contribution-based sessions (Jyotish): no payment, so we ask for a name and WhatsApp number
 // (with consent) and hold the slot until Srikanth confirms. Paid sessions reserve inside create-order.
 const { config, rest } = require('./lib/db');
-const { loadSchedule, checkSlot, reserve } = require('./lib/booking');
+const { loadSchedule, checkSlot, reserve, addToCalendar } = require('./lib/booking');
 
 const SERVICES = new Set(['jyotish_consultation']);
 const json = (statusCode, obj) => ({ statusCode, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj) });
@@ -23,7 +23,7 @@ exports.handler = async function (event) {
   const cfg = config(event);
   if (!cfg) return json(503, { error: 'Online booking is not available right now. Please message Srikanth on WhatsApp.' });
 
-  const schedule = await loadSchedule(cfg);
+  const schedule = await loadSchedule(cfg, event);
   const check = checkSlot(p.slot_start, schedule);
   if (!check.ok) return json(check.status, { error: check.error });
 
@@ -36,5 +36,6 @@ exports.handler = async function (event) {
   const r = await reserve(cfg, { service_key: service, slot_start: check.date.toISOString(), status: 'requested', contact_name: name, contact_phone: phone, consent: true });
   if (r.taken) return json(409, { error: 'Sorry, that time was just taken. Please pick another.' });
   if (r.error) { console.error(r.error); return json(502, { error: 'Could not hold the slot. Please try again or message Srikanth on WhatsApp.' }); }
+  await addToCalendar(event, cfg, { id: r.id, slot_start: check.date.toISOString() }, `Jyotish: ${name} (requested)`, `WhatsApp: ${phone}\nStatus: requested, awaiting your confirmation on WhatsApp.`);
   return json(200, { ok: true, id: r.id });
 };

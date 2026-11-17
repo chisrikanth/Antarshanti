@@ -38,3 +38,8 @@ Not legal advice — have a qualified person review before publishing; then remo
 - [ ] `assets/site.css`, `assets/theme.css` and `assets/site.js` do not exist yet. The pages work without them. The new pages already contain the same inline mobile-menu script as `jyotish.html`; if `site.js` later binds the same nav toggle, remove one of them or the menu will open and close at once.
 - [ ] The mobile bottom bar "Book a session" button on the new pages points to `jyotish.html#booking-widget` (the original anchor does not exist on these pages).
 - [ ] The `/checkin` page is mentioned in text only (not linked), since it is not in this repo.
+
+
+## Added later (booking features), please review
+- The booking form for Jyotish stores name and WhatsApp number (with consent) in the `bookings` table; confirmed bookings also appear as events in a private Google Calendar (name and number for Jyotish, order number for Bach). The Privacy page should say this, name Google as a service provider, and state how long booking records are kept.
+- Suggested retention for booking records: 12 months after the session, unless a longer period is needed for accounts or refunds.

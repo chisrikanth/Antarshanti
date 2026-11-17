@@ -133,7 +133,7 @@ navKey: "bach"
     for(var i=0;i<7;i++){
       var d=new Date(today); d.setDate(today.getDate()+i);
       var dname=DAYS[d.getDay()];
-      var avail=SLOTS.hasOwnProperty(dname)&&ASBook.dayHasFree(d,SLOTS[dname]);
+      var avail=ASBook.dayHasFree(d,ASBook.timesFor(d,SLOTS));
       var btn=document.createElement('div');
       btn.className='day-btn'+(avail?'':' disabled')+(selDay&&selDay.toDateString()===d.toDateString()?' selected':'');
       btn.innerHTML='<div class="dname">'+dname+'</div><div class="dnum">'+d.getDate()+'</div><div style="font-size:.7rem;color:inherit;opacity:.75">'+MONTHS[d.getMonth()]+'</div>';
@@ -147,6 +147,11 @@ navKey: "bach"
       })(d,avail);
       ws.appendChild(btn);
     }
+    if(!ws.querySelector('.day-btn:not(.disabled)')){
+      var n=document.createElement('p'); n.style.cssText='font-size:.86rem;color:var(--dim);margin:10px 0 0;width:100%';
+      n.innerHTML='No online times are open this week. Please <a href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+would+like+to+book+a+session." target="_blank" rel="noopener" style="text-decoration:underline">message Srikanth on WhatsApp</a> and he will find a time.';
+      ws.appendChild(n);
+    }
   }
   function renderSlots(){
     var sg=document.getElementById('slots-grid');
@@ -155,7 +160,7 @@ navKey: "bach"
     if(!selDay){ sl.style.display='none'; return; }
     var DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
     var dname=DAYS[selDay.getDay()];
-    var times=SLOTS[dname]||[];
+    var times=ASBook.timesFor(selDay,SLOTS);
     sl.style.display='block';
     sl.textContent='Available times — '+selDay.toDateString();
     times.forEach(function(t){
@@ -248,13 +253,13 @@ navKey: "bach"
     })
     .catch(function(err){
       setPayBtnState(false);
-      if(err&&err.status===409){ selTime=null; document.getElementById('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
+      if(err&&err.status===409){ selTime=null; document.getElementById('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
       setStatus(err&&err.server&&err.message!=='order-failed'?('⚠ '+err.message):'⚠ Could not start payment. Please try again, or WhatsApp Srikanth.',false);
     });
   }
   document.getElementById('pay-btn').addEventListener('click',payNow);
   renderDays(); renderSlots();
-  ASBook.load().then(function(d){ if(d){ SLOTS=ASBook.slotsFromRules(d.rules); } renderDays(); renderSlots(); });
+  ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules); } renderDays(); renderSlots(); });
 })();
 </script>
       </div>

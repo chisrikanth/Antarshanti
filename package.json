@@ -8,7 +8,7 @@
   "scripts": {
     "build": "eleventy",
     "start": "eleventy --serve",
-    "test": "node tests/guards.test.js && node tests/payments.test.js && node tests/booking.test.js"
+    "test": "node tests/guards.test.js && node tests/payments.test.js && node tests/booking.test.js && node tests/calendar.test.js"
   },
   "repository": {
     "type": "git",

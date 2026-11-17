@@ -8,6 +8,7 @@
 // (Do this once in Razorpay LIVE mode for production and once in TEST mode for the staging address.)
 const crypto = require('crypto');
 const { config: dbConfig, rest } = require('./lib/db');
+const { addToCalendar } = require('./lib/booking');
 
 function validSignature(rawBody, signature, secret) {
   if (!signature || !secret) return false;
@@ -56,6 +57,13 @@ exports.handler = async function (event) {
         await rest(cfg, `bookings?razorpay_order_id=eq.${encodeURIComponent(orderId)}&status=in.(held,expired)`, { method: 'PATCH', body: JSON.stringify({ status: 'conflict', notes: 'Paid after the hold expired and the time was taken. Refund or reschedule.' }) });
         console.error('SLOT CONFLICT AFTER PAYMENT: refund or reschedule', orderId);
       } else if (!bk.ok) console.error('booking confirm failed', bk.status);
+      else {
+        // Put the paid booking on the Antarshanti Bookings calendar (once).
+        const rows = await bk.json().catch(() => []);
+        for (const row of rows || []) {
+          await addToCalendar(event, cfg, row, 'Bach Flower consultation (paid)', `Razorpay order: ${orderId}\nSlot chosen: ${(pay && pay.notes && pay.notes.slot) || ''}\nStatus: paid and confirmed.`);
+        }
+      }
       // Flag if the captured amount differs from what the server expected.
       const chk = await rest(cfg, `payments?select=amount_inr,paid_amount_inr&razorpay_order_id=eq.${encodeURIComponent(orderId)}&limit=1`);
       if (chk.ok) { const [p] = await chk.json(); if (p && p.amount_inr && p.paid_amount_inr && p.amount_inr !== p.paid_amount_inr) console.error('AMOUNT MISMATCH', orderId, p); }

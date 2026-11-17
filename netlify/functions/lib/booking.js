@@ -1,6 +1,7 @@
 // Slot rules + reservation. A slot is an instant (ISO string with +05:30). One calendar for everything:
 // only one live booking (held / requested / booked) may exist for any instant.
 const { rest } = require('./db');
+const gcal = require('./gcal');
 
 const HOLD_MINUTES = 15;          // how long a slot is held while the visitor pays
 const MIN_LEAD_MINUTES = 120;     // cannot book a slot starting sooner than this
@@ -17,8 +18,8 @@ function istParts(date) {
   return { ymd: `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}`, weekday: d.getUTCDay(), hm: `${p(d.getUTCHours())}:${p(d.getUTCMinutes())}` };
 }
 
-async function loadSchedule(cfg) {
-  if (!cfg) return { rules: DEFAULT_RULES, blocked: [], fromDb: false };
+async function weeklySchedule(cfg) {
+  if (!cfg) return { mode: 'weekly', rules: DEFAULT_RULES, blocked: [], fromDb: false };
   try {
     const [r, b] = await Promise.all([
       rest(cfg, 'availability_rules?select=weekday,start_time&active=eq.true&order=weekday,start_time'),
@@ -27,11 +28,26 @@ async function loadSchedule(cfg) {
     if (!r.ok || !b.ok) throw new Error('schedule read ' + r.status + '/' + b.status);
     const rules = {};
     (await r.json()).forEach((x) => { (rules[x.weekday] = rules[x.weekday] || []).push(String(x.start_time).slice(0, 5)); });
-    return { rules, blocked: (await b.json()).map((x) => x.block_date), fromDb: true };
+    return { mode: 'weekly', rules, blocked: (await b.json()).map((x) => x.block_date), fromDb: true };
   } catch (e) {
     console.error('schedule fallback:', e.message);
-    return { rules: DEFAULT_RULES, blocked: [], fromDb: false };
+    return { mode: 'weekly', rules: DEFAULT_RULES, blocked: [], fromDb: false };
   }
+}
+
+// If the Google calendar is configured and readable, IT decides availability (calendar always wins).
+// If it is configured but cannot be read right now, fall back to the weekly schedule so booking keeps working
+// (the database still prevents any double booking).
+async function loadSchedule(cfg, event) {
+  const c = event ? gcal.enabled(event) : null;
+  if (c) {
+    try {
+      const now = Date.now();
+      const { open, busy } = await gcal.readCalendar(c, now, now + (MAX_DAYS_AHEAD + 1) * 86400000);
+      return { mode: 'calendar', fromDb: true, slotSet: gcal.openSlotStarts(open, busy, [], now, gcal.SLOT_MINUTES), blocked: [], rules: {} };
+    } catch (e) { console.error('calendar unreadable, using weekly schedule:', e.message); }
+  }
+  return weeklySchedule(cfg);
 }
 
 // Returns { ok:true, date } or { ok:false, status, error }
@@ -41,7 +57,8 @@ function checkSlot(slotIso, schedule, now) {
   if (!slotIso || typeof slotIso !== 'string' || isNaN(date)) return { ok: false, status: 400, error: 'Please choose a time slot.' };
   const t = istParts(date);
   if (date.getUTCSeconds() !== 0) return { ok: false, status: 400, error: 'That is not a valid time slot.' };
-  if (!(schedule.rules[t.weekday] || []).includes(t.hm)) return { ok: false, status: 400, error: 'That is not one of Srikanth\'s available times.' };
+  if (schedule.mode === 'calendar') { if (!schedule.slotSet.has(date.getTime())) return { ok: false, status: 400, error: 'That time is not open for booking. Please pick one of the available times.' }; }
+  else if (!(schedule.rules[t.weekday] || []).includes(t.hm)) return { ok: false, status: 400, error: 'That is not one of Srikanth\'s available times.' };
   if (schedule.blocked.includes(t.ymd)) return { ok: false, status: 409, error: 'Srikanth is not available on that day. Please pick another.' };
   if (date.getTime() < now.getTime() + MIN_LEAD_MINUTES * 60000) return { ok: false, status: 400, error: 'That time is too soon to book online. Please pick a later slot, or message Srikanth on WhatsApp.' };
   if (date.getTime() > now.getTime() + MAX_DAYS_AHEAD * 86400000) return { ok: false, status: 400, error: 'That date is too far ahead to book yet.' };
@@ -79,4 +96,15 @@ async function takenSlots(cfg) {
   return (await res.json()).map((x) => new Date(x.slot_start).toISOString());
 }
 
-module.exports = { HOLD_MINUTES, MIN_LEAD_MINUTES, MAX_DAYS_AHEAD, DEFAULT_RULES, istParts, loadSchedule, checkSlot, reserve, release, takenSlots, expireHolds };
+// Best effort: put a confirmed/requested booking on the Antarshanti Bookings calendar.
+async function addToCalendar(event, cfg, booking, summary, description) {
+  const c = gcal.enabled(event);
+  if (!c || !booking || booking.calendar_event_id) return null;
+  try {
+    const id = await gcal.createEvent(c, { summary, description, startIso: booking.slot_start, bookingId: booking.id });
+    if (cfg && booking.id) await rest(cfg, `bookings?id=eq.${encodeURIComponent(booking.id)}`, { method: 'PATCH', body: JSON.stringify({ calendar_event_id: id }) });
+    return id;
+  } catch (e) { console.error('calendar event not created:', e.message); return null; }
+}
+
+module.exports = { addToCalendar, weeklySchedule, HOLD_MINUTES, MIN_LEAD_MINUTES, MAX_DAYS_AHEAD, DEFAULT_RULES, istParts, loadSchedule, checkSlot, reserve, release, takenSlots, expireHolds };

@@ -29,6 +29,11 @@ window.ASBook = (function () {
     if (data) { if (data.blocked.indexOf(stamp.slice(0, 10)) > -1) return 'blocked'; if (TAKEN[ms]) return 'taken'; }
     return 'free';
   }
+  // The times offered on a date: from the calendar (specific dates) or the weekly schedule.
+  function timesFor(date, weekly) {
+    if (data && data.mode === 'calendar') { var ymd = iso(date, '12:00 AM').slice(0, 10); return (data.days[ymd] || []).map(to12); }
+    return weekly[DAYS[date.getDay()]] || [];
+  }
   function dayHasFree(date, times) { return times.some(function (t) { return state(date, t) === 'free'; }); }
-  return { load: load, iso: iso, state: state, dayHasFree: dayHasFree, slotsFromRules: slotsFromRules };
+  return { timesFor: timesFor, load: load, iso: iso, state: state, dayHasFree: dayHasFree, slotsFromRules: slotsFromRules };
 })();

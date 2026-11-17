@@ -9,6 +9,9 @@ Tick items by changing `[ ]` to `[x]`. Claude re-reads this at the start of each
 - [ ] **A3. Razorpay webhook** (once in Live mode for production, once in Test mode for staging). URLs and events: `docs/PAYMENTS-AND-PRICES.md`.
 - [ ] **A4. Test the full payment flow on staging** with a Razorpay test card: pick a slot, pay, then check Supabase tables `payments` (status `paid`) and `bookings` (status `booked`).
 - [ ] **A5. Test slot clashes on staging:** open the Bach page in two browsers, pick the same slot; the second one must be refused. Try the Jyotish "Hold this slot" too.
+- [ ] **A7. Google Calendar setup:** follow `docs/GOOGLE-CALENDAR-SETUP.md` (about 45 minutes): create the two calendars (Bookings + TEST), the Google Cloud robot account, share both calendars with it, add 4 Netlify variables (`GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CALENDAR_ID`, `GOOGLE_CALENDAR_ENV`). Until then the site simply uses the weekly schedule.
+- [ ] **A8. Test the calendar on staging** (Part 6 of that guide) and tell Claude the result or any error text. The code has not yet run against your real Google account.
+- [ ] **A9. Add your real `Open` events** (ideally repeating) to the Antarshanti Bookings calendar before going live. With the calendar connected and no `Open` events, the site offers no times.
 - [ ] **A6. Staging review feedback.** You said you tested staging and shared suggestions, but I did not receive them. Please paste them again.
 
 ## B. Before going live (merge `staging` into `main`)
@@ -28,7 +31,7 @@ Tick items by changing `[ ]` to `[x]`. Claude re-reads this at the start of each
 - [ ] **C7. Weekly WhatsApp broadcast** note and a QR code to `/checkin` on Happiness Program materials.
 
 ## D. Decisions waiting for you / ideas
-- [ ] **D1. Google Calendar link-up** (proposal in the chat): choose a separate bookings calendar or not; create the Google service account. Not started until you say go.
+- [ ] **D1. Booking widget shows 7 days only.** With the calendar you can open up to 45 days ahead; want a "next week" button? (small improvement, not started)
 - [ ] **D2. Get notified of new bookings** (WhatsApp or email). Suggested after the calendar link-up, since calendar events notify your phone.
 - [ ] **D3. Check-in wording** was changed to bands (no 0 to 100 score). Please read the results screen once on staging and say if the tone is right.
 - [ ] **D4. Telugu and Hindi:** who will review the translations?

@@ -20,6 +20,10 @@ Netlify → Site configuration → Environment variables → *Add a variable* �
 | `SUPABASE_SERVICE_KEY` | prod project's service_role key | test project's service_role key |
 | `RAZORPAY_KEY_ID` | `rzp_live_...` | `rzp_test_...` |
 | `RAZORPAY_KEY_SECRET` | live secret | test secret |
+| `GOOGLE_CLIENT_EMAIL` | robot email | same |
+| `GOOGLE_PRIVATE_KEY` | robot key | same |
+| `GOOGLE_CALENDAR_ID` | Antarshanti Bookings calendar | Antarshanti TEST calendar |
+| `GOOGLE_CALENDAR_ENV` | `production` | `test` |
 | `RAZORPAY_WEBHOOK_SECRET` | secret you choose for the live webhook | secret you choose for the test-mode webhook |
 
 Safety net in code: a test address refuses to use a live Razorpay key or the production database, and production refuses test keys or the test database. A wrong setting shows an error instead of moving real money or data.
