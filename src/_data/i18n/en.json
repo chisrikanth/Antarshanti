@@ -17,7 +17,8 @@
    "terms": "Terms",
    "refunds": "Refunds",
    "fine": "Antarshanti offerings are complementary wellness services and do not replace medical, psychological, legal or financial advice. Personal details are kept strictly confidential and stored with your consent."
-  }
+  },
+  "langBar": "Language"
  },
  "checkin": {
   "seoTitle": "Free 5-Minute Emotional Wellbeing Check-In | Antarshanti Healing",
@@ -256,6 +257,251 @@
     "retry": "Try Again"
    },
    "waTalk": "Namaste Srikanth, I did the check-in and would like to talk."
+  }
+ },
+ "home": {
+  "seoTitle": "Antarshanti Healing — Jyotish, Bach Flower & Happiness Program | Hyderabad & Online",
+  "seoDescription": "Vedic astrology (Jyotish), Bach Flower therapy and the Art of Living Happiness Program with Srikanth — online and in Hyderabad. Start with a free 5-minute check-in.",
+  "topbar": {
+   "text": "Not sure where to begin?",
+   "link": "Take the free 5-minute check-in"
+  },
+  "mobileBar": {
+   "explore": "Explore offerings",
+   "whatsapp": "WhatsApp"
+  },
+  "hero": {
+   "eyebrow": "Jyotish and Bach Flower Consultations · Happiness Program",
+   "title": "Welcome to <em>Antarshanti</em> —<br>your path to inner peace.",
+   "intro": "I'm <strong>Srikanth</strong> — Vedic astrologer, Bach Flower Therapist, Art of Living teacher and meditation instructor, based in Hyderabad.",
+   "proof": "Art of Living teacher · Certified Bach Flower Therapist · Jyotish practitioner · Online & Hyderabad",
+   "btnPath": "Choose your path",
+   "linkCheckin": "Take the free check-in →",
+   "linkWhatsapp": "Ask on WhatsApp",
+   "waMessage": "Namaste Srikanth, I would like to know more.",
+   "portraitAlt": "Srikanth, Art of Living teacher, Bach Flower therapist and Jyotish practitioner"
+  },
+  "band": {
+   "eyebrow": "Free · Private · 5 minutes",
+   "title": "Not sure where to begin?",
+   "text": "Take the 5-minute reflection on stress, mood and emotional balance. At the end you will see which path may suit you — a gentle pointer, never a diagnosis.",
+   "btn": "Start the check-in →"
+  },
+  "offerings": {
+   "eyebrow": "Choose your path",
+   "title": "Three paths, one destination",
+   "intro": "Each path works on its own. Together they form a gentle system: Jyotish shows the map, Bach Flower Therapy supports the emotions, and the Happiness Program gives you daily breath and meditation tools.",
+   "jyotish": {
+    "eyebrow": "Vedic Astrology",
+    "title": "Jyotish Consultations",
+    "text": "Your birth chart is a map of your temperament and the seasons of your life. A Jyotish conversation helps you reflect on the patterns at work so you can act with more clarity.",
+    "ask": "Online · ~60 min · contribute what feels right",
+    "btn": "Book a reading →"
+   },
+   "bach": {
+    "eyebrow": "Emotional Wellness",
+    "title": "Bach Flower Therapy",
+    "text": "Natural flower essences to support you through worry, grief, fear and self-doubt — personalised to how you have been feeling. A gentle, complementary approach.",
+    "ask": "Online · <span data-price=\"bach_consultation\">₹1,000</span> per consultation",
+    "btn": "Book a session →"
+   },
+   "happiness": {
+    "eyebrow": "Breath · Meditation · SKY",
+    "title": "Happiness Program",
+    "text": "The Art of Living Happiness Program — 3 days of Sudarshan Kriya (SKY), pranayama, yoga and meditation.",
+    "ask": "3 days · online & Hyderabad · <span id=\"homeNextBatch\">next batch shared on WhatsApp</span>",
+    "btn": "Register →",
+    "nextBatch": "next batch: {date}"
+   }
+  },
+  "about": {
+   "eyebrow": "About Srikanth",
+   "title": "A practitioner who has walked both worlds",
+   "p1": "For over two decades I have worked in the technology industry with a large multinational corporation — which gave me firsthand understanding of modern stress: the deadlines, the uncertainty, the quiet anxiety that follows people home.",
+   "p2": "Alongside it runs a lifelong calling: <strong>Art of Living teacher</strong>, <strong>certified Bach Flower Therapist</strong>, <strong>Jyotish practitioner</strong> and meditation instructor. Healing begins when we can finally see ourselves clearly — in the mind, in the heart, and in the sky under which we were born.",
+   "chips": [
+    "Art of Living Teacher",
+    "Certified Bach Flower Therapist",
+    "Jyotish Practitioner",
+    "Yoga & Meditation Instructor",
+    "20+ yrs Corporate Technology"
+   ],
+   "alt": "Srikanth, Art of Living teacher, Bach Flower therapist and Jyotish practitioner"
+  },
+  "kind": {
+   "eyebrow": "Kind words",
+   "title": "From people I have worked with"
+  },
+  "cta": {
+   "title": "Ready to begin your healing journey?",
+   "text": "Book a session · Register for a program · Or just ask a question on WhatsApp",
+   "jyotish": "Book Jyotish",
+   "bach": "Bach Flower",
+   "whatsapp": "WhatsApp"
+  }
+ },
+ "happiness": {
+  "seoTitle": "Art of Living Happiness Program (Sudarshan Kriya) | Hyderabad & Online",
+  "seoDescription": "A 3-day Art of Living Happiness Program with Sudarshan Kriya, breathwork and meditation, taught by Srikanth in Hyderabad and online. See upcoming batches and fees.",
+  "topbar": {
+   "text": "Happiness Program — A calmer mind, one breath at a time ·",
+   "link": "Register for the next batch ↓"
+  },
+  "mobileBar": {
+   "register": "Register",
+   "whatsapp": "WhatsApp"
+  },
+  "hero": {
+   "eyebrow": "Art of Living · SKY · Meditation",
+   "title": "A calmer mind,<br><span class=\"hl\">one breath at a time.</span>",
+   "intro": "A 3-day experience of breathing, meditation and simple tools for a calmer, clearer day-to-day life. The Art of Living Happiness Program is built around <strong>Sudarshan Kriya (SKY)</strong> — a breathing technique that has been the subject of many published studies.",
+   "about": "The Art of Living is a global non-profit, founded in 1981, and its published research is summarised on its <a href=\"https://www.artofliving.org\" target=\"_blank\" rel=\"noopener\">website</a>. If it sounds interesting, you are welcome to join a batch whenever it feels right.",
+   "btnRegister": "Register for next program",
+   "btnWhat": "What is SKY?"
+  },
+  "strip": {
+   "title": "Register for the next Happiness Program batch",
+   "text": "Online & in-person · English & Telugu · Hyderabad",
+   "btnDates": "See upcoming dates ↓",
+   "btnWa": "WhatsApp to register",
+   "waMessage": "Namaste Srikanth, I want to register for the Happiness Program."
+  },
+  "whatIs": {
+   "eyebrow": "What is Sudarshan Kriya?",
+   "title": "A breathing practice many people find deeply calming",
+   "text": "Sudarshan Kriya (SKY) is a unique rhythmic breathing practice. Published studies suggest it may help reduce stress, anxiety and low mood and support sleep and focus — results vary from person to person. It is a simple daily practice you carry home after just 3 days, and it complements, never replaces, medical care.",
+   "videos": [
+    "Sudarshan Kriya — what it is",
+    "Sudarshan Kriya Yoga in a minute",
+    "Learn Sudarshan Kriya with Gurudev"
+   ],
+   "youtubeOpen": "Open on YouTube"
+  },
+  "learn": {
+   "eyebrow": "What you will learn",
+   "title": "Three days that stay with you",
+   "items": [
+    {
+     "title": "Sudarshan Kriya (SKY)",
+     "text": "The core rhythmic breathing technique. Many people find it deeply relaxing and energising."
+    },
+    {
+     "title": "Pranayama",
+     "text": "Breathing exercises that many people find calming and helpful for focus."
+    },
+    {
+     "title": "Yoga & Stretching",
+     "text": "Gentle sequences that help the body let go of tension and prepare for meditation."
+    },
+    {
+     "title": "Guided Meditation",
+     "text": "A daily meditation you can keep up at home."
+    },
+    {
+     "title": "Ancient Wisdom",
+     "text": "Practical tools from the Vedic tradition for everyday life."
+    },
+    {
+     "title": "Community & Sangha",
+     "text": "Join a global network of SKY practitioners. The support continues long after the program."
+    }
+   ]
+  },
+  "says": {
+   "eyebrow": "What participants say",
+   "title": "What participants say",
+   "more": "Read participant stories on the <a href=\"https://www.artofliving.org/in-en/happiness-program\" target=\"_blank\" rel=\"noopener\">Art of Living Happiness Program page ↗</a>."
+  },
+  "register": {
+   "eyebrow": "Register",
+   "title": "Join the next Happiness Program",
+   "text": "Registration happens on the Art of Living site. The program is by donation to the Art of Living Foundation, and I offer it as voluntary service. Dates are shown below.",
+   "fine": "Conducted in English and Telugu · Online & in-person · All levels welcome",
+   "btnWa": "Questions? WhatsApp Srikanth",
+   "waMessage": "Namaste Srikanth, I would like to register for the next Happiness Program batch.",
+   "btnFind": "Find the next batch on Art of Living ↗"
+  },
+  "faqEyebrow": "Common questions",
+  "faqTitle": "Before you join",
+  "faq": [
+   {
+    "q": "Do I need prior experience in yoga or meditation?",
+    "a": "None at all. The program is designed for complete beginners as much as seasoned practitioners. Just show up with an open mind for all three days."
+   },
+   {
+    "q": "Is it religious?",
+    "a": "No. The Happiness Program draws from Vedic wisdom but is completely secular. People of all faiths — and none — are welcome."
+   },
+   {
+    "q": "How long is each session?",
+    "a": "Each of the three days runs a few hours; the current online evening batch is 6:00–8:30 PM IST. Timings are shown with each batch."
+   },
+   {
+    "q": "What happens after the program?",
+    "a": "You receive the SKY practice to do daily at home. Follow-up long-SKY sessions are available through Art of Living centres. I remain available on WhatsApp for support."
+   }
+  ],
+  "cta": {
+   "title": "Ready to take the next step?",
+   "text": "A calmer mind, one breath at a time · See the next batch",
+   "btnRegister": "Register ↑",
+   "btnWa": "WhatsApp Srikanth",
+   "waMessage": "Namaste Srikanth, tell me about the next Happiness Program."
+  },
+  "explore": {
+   "eyebrow": "Also explore",
+   "title": "Other paths at Antarshanti",
+   "jyotish": {
+    "eyebrow": "Vedic Astrology",
+    "title": "Jyotish Consultations",
+    "text": "Once your mind feels clearer through SKY practice, a Jyotish conversation can help you reflect on the patterns and timing of this season of your life.",
+    "btn": "Explore Jyotish →"
+   },
+   "bach": {
+    "eyebrow": "Emotional Wellness",
+    "title": "Bach Flower Therapy",
+    "text": "If specific feelings such as old fears, grief or self-doubt stay with you, Bach Flower remedies offer gentle, personalised support alongside the breath practice.",
+    "btn": "Explore Bach Flower →"
+   }
+  },
+  "watch": {
+   "eyebrow": "Watch & learn",
+   "title": "Before you register",
+   "text": "You do not have to take this on faith. Gurudev explains the practice himself, and there are free guided meditations you can try tonight.",
+   "playlist": {
+    "kind": "Playlist",
+    "title": "Sudarshan Kriya explained ↗",
+    "desc": "The Art of Living's own collection on the technique — what it is, who it helps, and the research behind it."
+   },
+   "channel": {
+    "kind": "Channel",
+    "title": "The Art of Living on YouTube ↗",
+    "desc": "Free guided meditations, talks and music. Start with Journey Within or Panchakosha if you have never meditated."
+   },
+   "course": {
+    "kind": "Find a batch",
+    "title": "Course schedule ↗",
+    "desc": "Live online and in-person Happiness Program dates, searchable by city. WhatsApp me if you want help choosing one."
+   }
+  },
+  "js": {
+   "soonTitle": "Next batch announced soon",
+   "soonText": "Join the WhatsApp list and you will hear the date, fee and seats first. Fee is shared up front, before you commit.",
+   "soonBtn": "Join the WhatsApp list",
+   "soonWa": "Namaste Srikanth, please add me to the list for the next Happiness Program batch.",
+   "register": "Register →",
+   "askWa": "Ask on WhatsApp",
+   "registerWa": "Register on WhatsApp",
+   "registerMsg": "Namaste Srikanth, I would like to register for the Happiness Program batch on {date} ({mode}).",
+   "seats": "{n} seats",
+   "feeDefault": "Fee shared on WhatsApp",
+   "known": {
+    "By donation to the Art of Living Foundation": "By donation to the Art of Living Foundation",
+    "Evening · 6:00–8:30 PM IST": "Evening · 6:00–8:30 PM IST",
+    "Online (Zoom)": "Online (Zoom)",
+    "Online": "Online",
+    "In-person": "In-person"
+   }
   }
  }
 }

@@ -222,3 +222,27 @@ html[lang="te"] .q-stem,html[lang="hi"] .q-stem{line-height:1.6}
 html[lang="te"] :is(.overall-title,.result-group,.b-date,.pz-title,.res-title,.ct-head,.o-price,.day-btn .dnum){font-family:'Noto Sans Telugu','Karla',sans-serif;font-weight:600;letter-spacing:0}
 html[lang="hi"] :is(.overall-title,.result-group,.b-date,.pz-title,.res-title,.ct-head,.o-price,.day-btn .dnum){font-family:'Noto Sans Devanagari','Karla',sans-serif;font-weight:600;letter-spacing:0}
 html[lang="te"] .overall-title,html[lang="hi"] .overall-title{line-height:1.5}
+
+/* Home + Happiness: styling that used to be inline inside the text */
+.hero-grid h1 em{font-style:normal}
+.hero-grid p strong,.about-p strong{color:var(--ink)}
+header h1 .hl{color:var(--leaf)}
+.says-more a,.hero-grid a{text-decoration:underline}
+.about-p{color:var(--body);font-size:1rem;line-height:1.78;margin-bottom:14px}
+header p a{text-decoration:underline}
+
+.ls-short{display:none}
+@media(max-width:720px){
+  .ls-full{display:none}.ls-short{display:inline}
+  .lang-switch{margin-left:auto;margin-right:8px;padding:2px}
+  .lang-switch a{padding:5px 9px;font-size:.78rem}
+}
+
+/* phones: the language switch lives at the top of the menu (the header has no room for it) */
+.mn-lang{display:none}
+@media(max-width:720px){
+  .nav-inner .lang-switch{display:none}
+  .mn-lang{display:flex;gap:8px;padding:4px 0 14px;border-bottom:1px solid var(--line);margin-bottom:4px}
+  .mobile-nav .mn-lang a{display:inline-block;flex:1;text-align:center;border:1px solid var(--line);border-radius:999px;padding:10px 6px;font-size:.95rem;font-weight:600;color:var(--dim)}
+  .mobile-nav .mn-lang a.on{background:var(--sun);border-color:var(--sun-deep);color:var(--cta-text)}
+}

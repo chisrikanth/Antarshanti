@@ -4,10 +4,10 @@
 const env = require('./env');
 const review = require('./i18n/review.json');
 const ALL = [
-  { code: 'en', native: 'English', name: 'English', banner: '', fontsHref: '' },
-  { code: 'te', native: 'తెలుగు', name: 'Telugu', banner: 'ఈ పేజీని తెలుగులో చూడండి', bannerNo: 'వద్దు',
+  { code: 'en', native: 'English', short: 'EN', name: 'English', banner: '', fontsHref: '' },
+  { code: 'te', native: 'తెలుగు', short: 'తె', name: 'Telugu', banner: 'ఈ పేజీని తెలుగులో చూడండి', bannerNo: 'వద్దు',
     fontsHref: 'https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap' },
-  { code: 'hi', native: 'हिन्दी', name: 'Hindi', banner: 'यह पेज हिन्दी में देखें', bannerNo: 'नहीं',
+  { code: 'hi', native: 'हिन्दी', short: 'हि', name: 'Hindi', banner: 'यह पेज हिन्दी में देखें', bannerNo: 'नहीं',
     fontsHref: 'https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap' }
 ];
 module.exports = ALL.filter((l) => l.code === 'en' || review[l.code] === true || !env.isProduction);

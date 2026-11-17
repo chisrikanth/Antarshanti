@@ -41,7 +41,8 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 - [ ] **D8. Happiness page headline changed** from "Don't settle for happy-ish" (felt like pressure) to "A calmer mind, one breath at a time". Also removed "why haven't you tried it yet?". Happy with both?
 - [ ] **D5. Bach headline** now says "Gentle support for the feelings words cannot reach". Happy with it?
 
-- [ ] **D9. Tell Claude which Telugu/Hindi pages to translate next** (suggested order: Home, Happiness Program, then Bach and Jyotish).
+- [ ] **D9. Telugu/Hindi: Home and Happiness pages are now drafted.** Have them reviewed together with the check-in; the full list of doubts (Telugu 37, Hindi 30) and the 5 decisions that are yours are in `docs/TRANSLATION-REVIEW.md` (Part 2). Next to translate after review: Bach and Jyotish pages (say when).
+- [ ] **D10. Decide the translation style questions** at the top of Part 2 of `docs/TRANSLATION-REVIEW.md` (how to address Srikanth, donation wording, "healing" style).
 
 ## E. Operating notes (no action unless something looks wrong)
 - Databases: `antarshanti-prod` (real data) and `antarshanti-test` (sample data), both Mumbai, Free plan. Process for changes: `docs/DATABASE-CHANGES.md`. Free projects pause after 7 days idle; a scheduled keep-alive handles this once on production.
@@ -56,4 +57,4 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 5. Quotes from other sites (Art of Living, etc.) only with that site's permission, naming the source.
 
 ## Done so far
-Telugu and Hindi check-in drafts built behind a review gate; Site rebuilt on Eleventy; Golden Hour theme; check-in with gentler band results and a single Tele-MANAS helpline plus always-on WhatsApp option; Bach/Jyotish wording made non-promissory; two Supabase projects with row-level security; server-side pricing from the database; Razorpay webhook; slot reservation with a database-level no-double-booking guarantee; staging branch and safety guards between test and live.
+Telugu and Hindi drafts of the check-in, Home and Happiness pages built behind a review gate; Site rebuilt on Eleventy; Golden Hour theme; check-in with gentler band results and a single Tele-MANAS helpline plus always-on WhatsApp option; Bach/Jyotish wording made non-promissory; two Supabase projects with row-level security; server-side pricing from the database; Razorpay webhook; slot reservation with a database-level no-double-booking guarantee; staging branch and safety guards between test and live.

@@ -104,6 +104,7 @@ navKey: "checkin"
 /* All visible text comes from the language file (src/_data/i18n/{{ lang.code }}.json). */
 const T = {{ c.js | dump | safe }};
 const LANG = '{{ lang.code }}';
+const URL_HAPPINESS = '{{ 'happiness.html' | lhref(lang.code) }}';
 const fmt = (s, v) => String(s).replace(/\{(\w+)\}/g, (m, k) => (v && v[k] !== undefined ? v[k] : m));
 {% raw %}
 /* ---------------------------------------------------------
@@ -319,7 +320,7 @@ function computeAndRenderResults(){
    tension -> Sudarshan Kriya first; emotional heaviness -> Bach first; steady -> daily breathing practice.
 --------------------------------------------------------- */
 const NEXT = {
-  sky:  { ...T.next.sky,  url:'/happiness.html#register',  path:'happiness', yt:'gWwhIPAajfw' },
+  sky:  { ...T.next.sky,  url:URL_HAPPINESS + '#register',  path:'happiness', yt:'gWwhIPAajfw' },
   bach: { ...T.next.bach, url:'/bach.html#booking-widget', path:'bach',      yt:'Cm5DVzkOo_U' }
 };
 function suggestLead(domainScores){

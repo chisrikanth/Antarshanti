@@ -12,5 +12,5 @@
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{{ title }}">
 <meta name="twitter:description" content="{{ description }}"><meta name="twitter:image" content="{{ site.url }}/og-image.png">
 {% if ldKey %}{% for block in ld[ldKey] %}<script type="application/ld+json">{{ block | dump | safe }}</script>
-{% endfor %}{% endif %}{% if faqKey %}<script type="application/ld+json">{{ faq[faqKey] | faqSchema | dump | safe }}</script>
+{% endfor %}{% endif %}{% if faqItems or faqKey %}<script type="application/ld+json">{{ (faqItems or faq[faqKey]) | faqSchema | dump | safe }}</script>
 {% endif %}

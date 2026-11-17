@@ -27,4 +27,4 @@
 
 ## Next simplifications (not done yet)
 - (done 17 Nov) The check-in page now uses the shared header, footer and styles; only `src/assets/checkin-only.css` is specific to it.
-- Telugu and Hindi: the check-in is done as a pattern (`src/checkin.njk` + `src/_data/i18n/*.json` + `src/checkin.11tydata.js`). The remaining pages follow the same pattern; see `docs/TRANSLATION-REVIEW.md`.
+- Telugu and Hindi: the check-in, Home and Happiness pages are done (drafts behind the review gate) as a pattern (`src/*.njk` + `src/_data/i18n/*.json` + `src/*.11tydata.js`). Remaining pages: Bach, Jyotish, policy pages; see `docs/TRANSLATION-REVIEW.md`.

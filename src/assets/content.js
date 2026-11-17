@@ -40,7 +40,7 @@ var AS_READY = (function () {
       var out = { batches: [], testimonials: { home: [], jyotish: [], bach: [], happiness: [] }, links: {}, prices: {}, announcement: null };
       r[3].forEach(function (sv) { out.prices[sv.key] = sv.amount_inr; });
       r[0].forEach(function (b) {
-        out.batches.push({ date: b.date_label, time: b.time_label, mode: b.mode, language: b.language, seats: b.seats, fee: b.fee_label, registerUrl: b.register_url, end: b.ends_on });
+        out.batches.push({ date: b.date_label, time: b.time_label, mode: b.mode, language: b.language, seats: b.seats, fee: b.fee_label, registerUrl: b.register_url, start: b.starts_on, end: b.ends_on, i18n: b.translations });
       });
       r[1].forEach(function (t) { (out.testimonials[t.page] = out.testimonials[t.page] || []).push({ quote: t.quote, name: t.name, role: t.role, city: t.city, source: t.source, url: t.source_url }); });
       r[2].forEach(function (s) { if (s.key === 'announcement') out.announcement = s.value; if (s.key === 'links') out.links = s.value; });
@@ -52,3 +52,29 @@ var AS_READY = (function () {
   var p = (AS_SUPABASE.url && AS_SUPABASE.anonKey) ? fromSupabase().catch(fromFile) : fromFile();
   return p.then(function (c) { apply(c); return AS_CONTENT; }).catch(function () { return AS_CONTENT; });
 })();
+
+
+/* Batch text in the visitor's language.
+   - Date: a translation if given, otherwise formatted from start/end dates for te/hi, otherwise the English label.
+   - Mode / time / language / fee: batch.i18n.te.mode etc. (Supabase column `translations`), else the English text. */
+function AS_batchField(b, field) {
+  var lang = (document.documentElement.getAttribute('lang') || 'en').slice(0, 2);
+  var tr = b.i18n && b.i18n[lang];
+  if (tr && tr[field]) return tr[field];
+  var known = window.AS_KNOWN || {};
+  return known[b[field]] || b[field];
+}
+function AS_batchDate(b) {
+  var lang = (document.documentElement.getAttribute('lang') || 'en').slice(0, 2);
+  var tr = b.i18n && b.i18n[lang];
+  if (tr && tr.date) return tr.date;
+  if (lang !== 'en' && b.start && b.end) {
+    try {
+      var f = new Intl.DateTimeFormat(lang + '-IN', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' });
+      var y = new Intl.DateTimeFormat(lang + '-IN', { year: 'numeric', timeZone: 'Asia/Kolkata' });
+      var s = new Date(b.start + 'T12:00:00+05:30'), e = new Date(b.end + 'T12:00:00+05:30');
+      return f.format(s) + ' – ' + f.format(e) + ' ' + y.format(e);
+    } catch (err) {}
+  }
+  return b.date;
+}

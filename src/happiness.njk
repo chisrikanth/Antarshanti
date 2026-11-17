@@ -1,17 +1,19 @@
 ---
-permalink: "/happiness.html"
-path: "/happiness"
-title: "Art of Living Happiness Program (Sudarshan Kriya) | Hyderabad & Online"
-description: "A 3-day Art of Living Happiness Program with Sudarshan Kriya, breathwork and meditation, taught by Srikanth in Hyderabad and online. See upcoming batches and fees."
+pagination:
+  data: languages
+  size: 1
+  alias: lang
+  addAllPagesToCollections: true
+i18nKey: happiness
+basePage: happiness
+basePath: /happiness
 ldKey: "happiness"
-footerStandard: true
-faqKey: "happiness"
 navKey: "happiness"
 ---
 {% extends "layouts/base.njk" %}
-{% block topbar %}{% raw %}<div class="topbar" style="background:var(--leaf)">✦ Happiness Program — A calmer mind, one breath at a time · <a href="#register" style="color:#D4FFB8">Register for the next batch ↓</a> ✦</div>{% endraw %}{% endblock %}
-{% block mobilebar %}{% raw %}<div class="mobile-bar"><a class="btn btn-gold" href="#register">Register</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">WhatsApp</a></div>{% endraw %}{% endblock %}
-{% block content %}{% raw %}
+{% block topbar %}{% set c = t.happiness %}<div class="topbar" style="background:var(--leaf)">✦ {{ c.topbar.text }} <a href="#register" style="color:#D4FFB8">{{ c.topbar.link }}</a> ✦</div>{% endblock %}
+{% block mobilebar %}{% set c = t.happiness %}<div class="mobile-bar"><a class="btn btn-gold" href="#register">{{ c.mobileBar.register }}</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ c.mobileBar.whatsapp }}</a></div>{% endblock %}
+{% block content %}{% set c = t.happiness %}
 <header style="position:relative;min-height:68vh;display:flex;align-items:center;overflow:hidden;padding:90px 0 70px;background:linear-gradient(160deg,#F7FAEE 0%,#EDFAE4 100%)">
   <svg class="hero-deco" style="position:absolute;right:40px;top:50%;transform:translateY(-50%);width:460px;height:460px;pointer-events:none;opacity:.65" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g class="spin-el" style="transform-origin:200px 200px;animation:spin 160s linear infinite">
@@ -29,54 +31,53 @@ navKey: "happiness"
   <circle cx="200" cy="200" r="3.5" fill="#F7FAEE"/>
 </svg>
   <div class="wrap" style="position:relative;z-index:2;max-width:580px">
-    <div class="eyebrow" style="color:var(--leaf);margin-bottom:14px">Art of Living · SKY · Meditation</div>
-    <h1 style="font-size:clamp(2.4rem,5vw,3.6rem);color:var(--ink)">A calmer mind,<br><span style="color:var(--leaf)">one breath at a time.</span></h1>
-    <p style="font-size:1.08rem;color:var(--body);max-width:500px;margin:18px 0 10px;line-height:1.78">Unlock the freedom within — live with Joy, Confidence and Freedom. The Art of Living Happiness Program is a 3-day transformative experience built around <strong style="color:var(--ink)">Sudarshan Kriya (SKY)</strong> — a breathing technique that has been the subject of many published studies.</p>
-    <p style="font-size:.96rem;color:var(--dim);max-width:500px;margin:0 0 30px;line-height:1.7">The Art of Living is a global non-profit, founded in 1981, and its published research is summarised on its <a href="https://www.artofliving.org" target="_blank" rel="noopener" style="text-decoration:underline">website</a>. If it sounds interesting, you are welcome to join a batch whenever it feels right.</p>
+    <div class="eyebrow" style="color:var(--leaf);margin-bottom:14px">{{ c.hero.eyebrow }}</div>
+    <h1 style="font-size:clamp(2.4rem,5vw,3.6rem);color:var(--ink)">{{ c.hero.title | safe }}</h1>
+    <p style="font-size:1.08rem;color:var(--body);max-width:500px;margin:18px 0 10px;line-height:1.78">{{ c.hero.intro | safe }}</p>
+    <p style="font-size:.96rem;color:var(--dim);max-width:500px;margin:0 0 30px;line-height:1.7">{{ c.hero.about | safe }}</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="btn btn-leaf" href="#register">Register for next program</a>
-      <a class="btn btn-outline" href="#what-is" style="border-color:var(--leaf);color:var(--leaf)">What is SKY?</a>
+      <a class="btn btn-leaf" href="#register">{{ c.hero.btnRegister }}</a>
+      <a class="btn btn-outline" href="#what-is" style="border-color:var(--leaf);color:var(--leaf)">{{ c.hero.btnWhat }}</a>
     </div>
   </div>
 </header>
 
 <div class="cta-strip">
   <div class="cta-strip-inner">
-    <div><p>Register for the next Happiness Program batch</p><span>Online &amp; in-person · English &amp; Telugu · Hyderabad</span></div>
-    <div class="cta-strip-btns"><a class="btn btn-leaf btn-sm" href="#register">See upcoming dates ↓</a><a class="btn btn-wa btn-sm" href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+want+to+register+for+the+Happiness+Program." target="_blank">WhatsApp to register</a></div>
+    <div><p>{{ c.strip.title }}</p><span>{{ c.strip.text }}</span></div>
+    <div class="cta-strip-btns"><a class="btn btn-leaf btn-sm" href="#register">{{ c.strip.btnDates }}</a><a class="btn btn-wa btn-sm" href="https://wa.me/919985133161?text={{ c.strip.waMessage | urlencode }}" target="_blank">{{ c.strip.btnWa }}</a></div>
   </div>
 </div>
 
 <section id="what-is" class="alt">
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">What is Sudarshan Kriya?</div>
-    <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:18px">The science of the breath that changes everything</h2>
-    <p style="font-size:1rem;color:var(--body);max-width:700px;line-height:1.8;margin-bottom:34px">Sudarshan Kriya (SKY) is a unique rhythmic breathing practice. Published studies suggest it may help reduce stress, anxiety and low mood and support sleep and focus — results vary from person to person. It is a simple daily practice you carry home after just 3 days, and it complements, never replaces, medical care.</p>
+    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.whatIs.eyebrow }}</div>
+    <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:18px">{{ c.whatIs.title }}</h2>
+    <p style="font-size:1rem;color:var(--body);max-width:700px;line-height:1.8;margin-bottom:34px">{{ c.whatIs.text }}</p>
     <div class="vid-grid">
-      <div class="vid" data-yt="gWwhIPAajfw" data-title="Sudarshan Kriya — what it is"></div>
-      <div class="vid" data-yt="yJeXYLeWKqs" data-title="Sudarshan Kriya Yoga in a minute"></div>
-      <div class="vid" data-yt="94pOfxIQMxo" data-title="Learn Sudarshan Kriya with Gurudev"></div>
+      <div class="vid" data-yt="gWwhIPAajfw" data-title="{{ c.whatIs.videos[0] }}" data-open="{{ c.whatIs.youtubeOpen }}"></div>
+      <div class="vid" data-yt="yJeXYLeWKqs" data-title="{{ c.whatIs.videos[1] }}" data-open="{{ c.whatIs.youtubeOpen }}"></div>
+      <div class="vid" data-yt="94pOfxIQMxo" data-title="{{ c.whatIs.videos[2] }}" data-open="{{ c.whatIs.youtubeOpen }}"></div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">What you will learn</div>
-    <h2 style="font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:24px">Three days that stay with you for life</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px">
-      <div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--leaf);border-radius:var(--radius);padding:18px 20px"><h4 style="font-size:1rem;margin-bottom:7px;color:var(--ink)">Sudarshan Kriya (SKY)</h4><p style="font-size:.88rem;color:var(--body);line-height:1.65">The core rhythmic breathing technique — clears stress, boosts energy, restores emotional balance.</p></div><div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--leaf);border-radius:var(--radius);padding:18px 20px"><h4 style="font-size:1rem;margin-bottom:7px;color:var(--ink)">Pranayama</h4><p style="font-size:.88rem;color:var(--body);line-height:1.65">Breath regulation that calms the nervous system and sharpens focus instantly.</p></div><div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--leaf);border-radius:var(--radius);padding:18px 20px"><h4 style="font-size:1rem;margin-bottom:7px;color:var(--ink)">Yoga &amp; Stretching</h4><p style="font-size:.88rem;color:var(--body);line-height:1.65">Gentle sequences that release stored tension and prepare the body for deep meditation.</p></div><div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--leaf);border-radius:var(--radius);padding:18px 20px"><h4 style="font-size:1rem;margin-bottom:7px;color:var(--ink)">Guided Meditation</h4><p style="font-size:.88rem;color:var(--body);line-height:1.65">Daily meditation you can maintain at home — 20 minutes that transform your day.</p></div><div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--leaf);border-radius:var(--radius);padding:18px 20px"><h4 style="font-size:1rem;margin-bottom:7px;color:var(--ink)">Ancient Wisdom</h4><p style="font-size:.88rem;color:var(--body);line-height:1.65">Practical tools from Vedic tradition applied to modern life challenges.</p></div><div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--leaf);border-radius:var(--radius);padding:18px 20px"><h4 style="font-size:1rem;margin-bottom:7px;color:var(--ink)">Community &amp; Sangha</h4><p style="font-size:.88rem;color:var(--body);line-height:1.65">Join a global network of SKY practitioners. The support continues long after the program.</p></div>
+    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.learn.eyebrow }}</div>
+    <h2 style="font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:24px">{{ c.learn.title }}</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px">{% for it in c.learn.items %}
+      <div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--leaf);border-radius:var(--radius);padding:18px 20px"><h4 style="font-size:1rem;margin-bottom:7px;color:var(--ink)">{{ it.title }}</h4><p style="font-size:.88rem;color:var(--body);line-height:1.65">{{ it.text }}</p></div>{% endfor %}
     </div>
   </div>
 </section>
 
 <section class="alt">
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">What participants say</div>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:22px">What participants say</h2>
+    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.says.eyebrow }}</div>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:22px">{{ c.says.title }}</h2>
     <div data-testimonials="happiness"></div>
-    <p style="font-size:.92rem;color:var(--dim);margin-top:16px">Read participant stories on the <a href="https://www.artofliving.org/in-en/happiness-program" target="_blank" rel="noopener" style="text-decoration:underline">Art of Living Happiness Program page ↗</a>.</p>
-    </div>
+    <p style="font-size:.92rem;color:var(--dim);margin-top:16px" class="says-more">{{ c.says.more | safe }}</p>
   </div>
 </section>
 
@@ -84,15 +85,15 @@ navKey: "happiness"
   <div class="wrap">
     <div style="background:linear-gradient(140deg,#F7FAEE,#DFF2D8);border:1px solid rgba(90,138,62,.28);border-radius:var(--radius);padding:48px 44px;display:grid;grid-template-columns:1.3fr 1fr;gap:44px;align-items:center;box-shadow:0 8px 28px rgba(90,138,62,.1)" class="two-col">
       <div>
-        <div class="eyebrow" style="color:var(--leaf);margin-bottom:12px">Register</div>
-        <h2 style="font-size:2rem;color:var(--ink);margin-bottom:14px">Join the next Happiness Program</h2>
-        <p style="color:var(--body);font-size:1rem;line-height:1.75;margin-bottom:10px">Registration happens on the Art of Living site. The program is by donation to the Art of Living Foundation, and I offer it as voluntary service. Dates are shown below.</p>
+        <div class="eyebrow" style="color:var(--leaf);margin-bottom:12px">{{ c.register.eyebrow }}</div>
+        <h2 style="font-size:2rem;color:var(--ink);margin-bottom:14px">{{ c.register.title }}</h2>
+        <p style="color:var(--body);font-size:1rem;line-height:1.75;margin-bottom:10px">{{ c.register.text }}</p>
         <div id="batchList"></div>
-        <p style="font-size:.86rem;color:var(--dim)">Conducted in English and Telugu · Online &amp; in-person · All levels welcome</p>
+        <p style="font-size:.86rem;color:var(--dim)">{{ c.register.fine }}</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:13px">
-        <a class="btn btn-wa" href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+would+like+to+register+for+the+next+Happiness+Program+batch." target="_blank" style="text-align:center">Questions? WhatsApp Srikanth</a>
-        <a class="btn btn-leaf" href="https://www.artofliving.org/search/course" target="_blank" rel="noopener" style="text-align:center">Find the next batch on Art of Living ↗</a>
+        <a class="btn btn-wa" href="https://wa.me/919985133161?text={{ c.register.waMessage | urlencode }}" target="_blank" style="text-align:center">{{ c.register.btnWa }}</a>
+        <a class="btn btn-leaf" href="https://www.artofliving.org/search/course" target="_blank" rel="noopener" style="text-align:center">{{ c.register.btnFind }}</a>
       </div>
     </div>
   </div>
@@ -100,73 +101,78 @@ navKey: "happiness"
 
 <section class="alt">
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">Common questions</div>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:22px">Before you join</h2>
-    {% endraw %}{% include "partials/faq.njk" %}
-{% raw %}  </div>
+    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.faqEyebrow }}</div>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:22px">{{ c.faqTitle }}</h2>
+    {% include "partials/faq.njk" %}
+  </div>
 </section>
 
 <div class="cta-strip">
   <div class="cta-strip-inner">
-    <div><p>Ready to unlock the freedom within?</p><span>A calmer mind, one breath at a time · See the next batch</span></div>
-    <div class="cta-strip-btns"><a class="btn btn-leaf btn-sm" href="#register">Register ↑</a><a class="btn btn-wa btn-sm" href="https://wa.me/919985133161?text=Namaste+Srikanth,+tell+me+about+the+next+Happiness+Program." target="_blank">WhatsApp Srikanth</a></div>
+    <div><p>{{ c.cta.title }}</p><span>{{ c.cta.text }}</span></div>
+    <div class="cta-strip-btns"><a class="btn btn-leaf btn-sm" href="#register">{{ c.cta.btnRegister }}</a><a class="btn btn-wa btn-sm" href="https://wa.me/919985133161?text={{ c.cta.waMessage | urlencode }}" target="_blank">{{ c.cta.btnWa }}</a></div>
   </div>
 </div>
 
 <section>
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">Also explore</div>
-    <h2 style="font-size:1.7rem;margin-bottom:24px">Other paths at Antarshanti</h2>
+    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.explore.eyebrow }}</div>
+    <h2 style="font-size:1.7rem;margin-bottom:24px">{{ c.explore.title }}</h2>
     <div class="cross-grid">
-      <a href="jyotish.html" class="cross-card">
-        <div class="eyebrow" style="color:var(--saffron)">Vedic Astrology</div>
-        <h3>Jyotish Consultations</h3>
-        <p>Once your mind is clearer through SKY practice, a Jyotish reading helps you understand the timing and karma shaping your path — so you can move with life, not against it.</p>
-        <span class="btn btn-gold btn-sm" style="margin-top:6px">Explore Jyotish →</span>
+      <a href="/jyotish.html" class="cross-card">
+        <div class="eyebrow" style="color:var(--saffron)">{{ c.explore.jyotish.eyebrow }}</div>
+        <h3>{{ c.explore.jyotish.title }}</h3>
+        <p>{{ c.explore.jyotish.text }}</p>
+        <span class="btn btn-gold btn-sm" style="margin-top:6px">{{ c.explore.jyotish.btn }}</span>
       </a>
-      <a href="bach.html" class="cross-card">
-        <div class="eyebrow" style="color:var(--lotus)">Emotional Wellness</div>
-        <h3>Bach Flower Therapy</h3>
-        <p>If specific emotional blocks resist the breath — old fears, grief, self-doubt — Bach Flower remedies address them at the root while SKY works on the whole system.</p>
-        <span class="btn btn-lotus btn-sm" style="margin-top:6px">Explore Bach Flower →</span>
+      <a href="/bach.html" class="cross-card">
+        <div class="eyebrow" style="color:var(--lotus)">{{ c.explore.bach.eyebrow }}</div>
+        <h3>{{ c.explore.bach.title }}</h3>
+        <p>{{ c.explore.bach.text }}</p>
+        <span class="btn btn-lotus btn-sm" style="margin-top:6px">{{ c.explore.bach.btn }}</span>
       </a>
     </div>
   </div>
 </section>
 <section style="padding:56px 0;background:var(--paper-2);border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">Watch &amp; learn</div>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:10px">Before you register</h2>
-    <p style="color:var(--dim);max-width:600px;font-size:.95rem">You do not have to take this on faith. Gurudev explains the practice himself, and there are free guided meditations you can try tonight.</p>
+    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.watch.eyebrow }}</div>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:10px">{{ c.watch.title }}</h2>
+    <p style="color:var(--dim);max-width:600px;font-size:.95rem">{{ c.watch.text }}</p>
     <div class="res-grid">
-        <a class="res-card" href="https://www.youtube.com/playlist?list=PLoZ9lCw2MJU9x2vNGguZRB1giJwLscS1R" target="_blank" rel="noopener"><span class="res-kind">Playlist</span><span class="res-title">Sudarshan Kriya explained ↗</span><span class="res-desc">The Art of Living's own collection on the technique — what it is, who it helps, and the research behind it.</span></a>
-        <a class="res-card" href="https://www.youtube.com/@artofliving" target="_blank" rel="noopener"><span class="res-kind">Channel</span><span class="res-title">The Art of Living on YouTube ↗</span><span class="res-desc">Free guided meditations, talks and music. Start with Journey Within or Panchakosha if you have never meditated.</span></a>
-        <a class="res-card" href="https://www.artofliving.org/search/course" target="_blank" rel="noopener"><span class="res-kind">Find a batch</span><span class="res-title">Course schedule ↗</span><span class="res-desc">Live online and in-person Happiness Program dates, searchable by city. WhatsApp me if you want help choosing one.</span></a>
+        <a class="res-card" href="https://www.youtube.com/playlist?list=PLoZ9lCw2MJU9x2vNGguZRB1giJwLscS1R" target="_blank" rel="noopener"><span class="res-kind">{{ c.watch.playlist.kind }}</span><span class="res-title">{{ c.watch.playlist.title }}</span><span class="res-desc">{{ c.watch.playlist.desc }}</span></a>
+        <a class="res-card" href="https://www.youtube.com/@artofliving" target="_blank" rel="noopener"><span class="res-kind">{{ c.watch.channel.kind }}</span><span class="res-title">{{ c.watch.channel.title }}</span><span class="res-desc">{{ c.watch.channel.desc }}</span></a>
+        <a class="res-card" href="https://www.artofliving.org/search/course" target="_blank" rel="noopener"><span class="res-kind">{{ c.watch.course.kind }}</span><span class="res-title">{{ c.watch.course.title }}</span><span class="res-desc">{{ c.watch.course.desc }}</span></a>
     </div>
   </div>
 </section>
 
-{% endraw %}{% endblock %}
-{% block scripts %}{% raw %}<script>
+{% endblock %}
+{% block scripts %}{% set c = t.happiness %}<script>
+const T = {{ c.js | dump | safe }};
+const LANG = '{{ lang.code }}';
+window.AS_KNOWN = T.known;   // standard batch phrases (fee, time, mode) shown in the visitor's language
+{% raw %}
 /* Render batch cards from data/site.json (or Supabase) via assets/content.js */
+const fmt = (s, v) => String(s).replace(/\{(\w+)\}/g, (m, k) => (v && v[k] !== undefined ? v[k] : m));
 AS_READY.then(function(c){
   var AS_BATCHES=c.batches, el=document.getElementById('batchList'); if(!el) return;
   var WA='https://wa.me/919985133161?text=';
   function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   if(!AS_BATCHES.length){
-    el.innerHTML='<div class="batch-card"><div class="b-date">Next batch announced soon</div>'+
-      '<div class="b-meta">Join the WhatsApp list and you will hear the date, fee and seats first. Fee is shared up front, before you commit.</div>'+
-      '<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="'+WA+encodeURIComponent('Namaste Srikanth, please add me to the list for the next Happiness Program batch.')+'">Join the WhatsApp list</a></div>';
+    el.innerHTML='<div class="batch-card"><div class="b-date">'+esc(T.soonTitle)+'</div>'+
+      '<div class="b-meta">'+esc(T.soonText)+'</div>'+
+      '<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="'+WA+encodeURIComponent(T.soonWa)+'">'+esc(T.soonBtn)+'</a></div>';
     return;
   }
   el.innerHTML='<div class="batch-grid">'+AS_BATCHES.map(function(b){
-    var msg='Namaste Srikanth, I would like to register for the Happiness Program batch on '+b.date+' ('+b.mode+').';
-    var wa=WA+encodeURIComponent(msg);
-    var cta=b.registerUrl?'<a class="btn btn-leaf btn-sm" style="background:var(--leaf);color:#FFF7EC" target="_blank" rel="noopener" href="'+esc(b.registerUrl)+'">Register →</a> <a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="'+wa+'">Ask on WhatsApp</a>'
-                         :'<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="'+wa+'">Register on WhatsApp</a>';
-    return '<div class="batch-card"><div class="b-date">'+esc(b.date)+'</div><div class="b-meta">'+
-      [b.time,b.mode,b.language].filter(Boolean).map(esc).join(' · ')+'<br>'+
-      (b.seats?esc(b.seats)+' seats · ':'')+'<strong>'+(b.fee?esc(b.fee):'Fee shared on WhatsApp')+'</strong></div>'+cta+'</div>';
+    var date=AS_batchDate(b), mode=AS_batchField(b,'mode'), time=AS_batchField(b,'time'), lang=AS_batchField(b,'language'), fee=AS_batchField(b,'fee');
+    var wa=WA+encodeURIComponent(fmt(T.registerMsg,{date:date,mode:mode}));
+    var cta=b.registerUrl?'<a class="btn btn-leaf btn-sm" style="background:var(--leaf);color:#FFF7EC" target="_blank" rel="noopener" href="'+esc(b.registerUrl)+'">'+esc(T.register)+'</a> <a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="'+wa+'">'+esc(T.askWa)+'</a>'
+                         :'<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="'+wa+'">'+esc(T.registerOnWa)+'</a>';
+    return '<div class="batch-card"><div class="b-date">'+esc(date)+'</div><div class="b-meta">'+
+      [time,mode,lang].filter(Boolean).map(esc).join(' · ')+'<br>'+
+      (b.seats?esc(fmt(T.seats,{n:b.seats}))+' · ':'')+'<strong>'+esc(fee||T.feeDefault)+'</strong></div>'+cta+'</div>';
   }).join('')+'</div>';
 });
-</script>{% endraw %}{% endblock %}
+{% endraw %}</script>{% endblock %}

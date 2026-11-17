@@ -1,3 +1,3 @@
 <div class="faq">
-{% for f in faq[faqKey] %}      <details class="faq-item"><summary>{{ f.q | safe }}</summary><p>{{ f.a | safe }}</p></details>
+{% for f in (faqItems or faq[faqKey]) %}      <details class="faq-item"><summary>{{ f.q | safe }}</summary><p>{{ f.a | safe }}</p></details>
 {% endfor %}    </div>

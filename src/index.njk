@@ -1,16 +1,19 @@
 ---
-permalink: "/index.html"
-path: "/"
-title: "Antarshanti Healing — Jyotish, Bach Flower & Happiness Program | Hyderabad & Online"
-description: "Vedic astrology (Jyotish), Bach Flower therapy and the Art of Living Happiness Program with Srikanth — online and in Hyderabad. Start with a free 5-minute check-in."
+pagination:
+  data: languages
+  size: 1
+  alias: lang
+  addAllPagesToCollections: true
+i18nKey: home
+basePage: index
+basePath: /
 ldKey: "index"
-footerStandard: true
 navKey: "home"
 ---
 {% extends "layouts/base.njk" %}
-{% block topbar %}{% raw %}<div class="topbar" data-announce>✦ Not sure where to begin? <a href="checkin.html">Take the free 5-minute check-in</a> ✦</div>{% endraw %}{% endblock %}
-{% block mobilebar %}{% raw %}<div class="mobile-bar"><a class="btn btn-gold" href="#offerings">Explore offerings</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">WhatsApp</a></div>{% endraw %}{% endblock %}
-{% block content %}{% raw %}
+{% block topbar %}{% set c = t.home %}<div class="topbar" data-announce>✦ {{ c.topbar.text }} <a href="{{ 'checkin.html' | lhref(lang.code) }}">{{ c.topbar.link }}</a> ✦</div>{% endblock %}
+{% block mobilebar %}{% set c = t.home %}<div class="mobile-bar"><a class="btn btn-gold" href="#offerings">{{ c.mobileBar.explore }}</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ c.mobileBar.whatsapp }}</a></div>{% endblock %}
+{% block content %}{% set c = t.home %}
 <header style="position:relative;min-height:80vh;display:flex;align-items:center;overflow:hidden;padding:90px 0 70px;background:linear-gradient(160deg,#FFF7EC 0%,#FBEEDB 100%)">
   <svg class="hero-deco" style="position:absolute;right:-140px;top:50%;transform:translateY(-50%);width:560px;height:560px;pointer-events:none" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g class="spin-el" style="transform-origin:280px 280px;animation:spin 240s linear infinite">
@@ -34,59 +37,59 @@ navKey: "home"
   <div class="wrap hero-grid" style="position:relative;z-index:2">
   <div>
 
-    <div class="eyebrow" style="color:var(--saffron);margin-bottom:18px">Jyotish and Bach Flower Consultations · Happiness Program</div>
-    <h1 style="font-size:clamp(2.4rem,5.5vw,3.8rem);max-width:620px">Welcome to <em style="font-style:normal;color:var(--saffron)">Antarshanti</em> —<br>your path to inner peace.</h1>
+    <div class="eyebrow" style="color:var(--saffron);margin-bottom:18px">{{ c.hero.eyebrow }}</div>
+    <h1 style="font-size:clamp(2.4rem,5.5vw,3.8rem);max-width:620px">{{ c.hero.title | safe }}</h1>
     <p style="font-size:1.1rem;color:var(--body);max-width:540px;margin:18px 0 22px;line-height:1.75">
-      I'm <strong style="color:var(--ink)">Srikanth</strong> — Vedic astrologer, Bach Flower Therapist, Art of Living teacher and meditation instructor, based in Hyderabad.
+      {{ c.hero.intro | safe }}
     </p>
-    <p class="hero-proof">Art of Living teacher · Certified Bach Flower Therapist · Jyotish practitioner · Online &amp; Hyderabad</p>
+    <p class="hero-proof">{{ c.hero.proof }}</p>
     <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center">
-      <a class="btn btn-gold" href="#offerings">Choose your path</a>
-      <a class="hero-link" href="checkin.html">Take the free check-in →</a>
-      <a class="hero-link" href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+would+like+to+know+more." target="_blank" rel="noopener">Ask on WhatsApp</a>
+      <a class="btn btn-gold" href="#offerings">{{ c.hero.btnPath }}</a>
+      <a class="hero-link" href="{{ 'checkin.html' | lhref(lang.code) }}">{{ c.hero.linkCheckin }}</a>
+      <a class="hero-link" href="https://wa.me/919985133161?text={{ c.hero.waMessage | urlencode }}" target="_blank" rel="noopener">{{ c.hero.linkWhatsapp }}</a>
     </div>
   </div>
-  <div class="hero-portrait"><img src="assets/srikanth.webp" width="280" height="280" alt="Srikanth, Art of Living teacher, Bach Flower therapist and Jyotish practitioner" fetchpriority="high"></div>
+  <div class="hero-portrait"><img src="/assets/srikanth.webp" width="280" height="280" alt="{{ c.hero.portraitAlt }}" fetchpriority="high"></div>
 </div>
 </header>
 
 <section class="checkin-band">
   <div class="wrap checkin-band-inner">
     <div>
-      <div class="eyebrow" style="color:var(--saffron);margin-bottom:8px">Free · Private · 5 minutes</div>
-      <h2>Not sure where to begin?</h2>
-      <p>Take the 5-minute reflection on stress, mood and emotional balance. At the end you will see which path may suit you — a gentle pointer, never a diagnosis.</p>
+      <div class="eyebrow" style="color:var(--saffron);margin-bottom:8px">{{ c.band.eyebrow }}</div>
+      <h2>{{ c.band.title }}</h2>
+      <p>{{ c.band.text }}</p>
     </div>
-    <a class="btn btn-gold" href="checkin.html">Start the check-in →</a>
+    <a class="btn btn-gold" href="{{ 'checkin.html' | lhref(lang.code) }}">{{ c.band.btn }}</a>
   </div>
 </section>
 
 <section id="offerings" style="padding:56px 0;background:var(--paper-2);border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--saffron);margin-bottom:10px;text-align:center">Choose your path</div>
-    <h2 style="font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:8px;text-align:center">Three paths, one destination</h2>
-    <p style="text-align:center;color:var(--dim);max-width:600px;margin:0 auto 36px;font-size:.97rem">Each path works on its own. Together they form a gentle system: Jyotish shows the map, Bach Flower Therapy supports the emotions, and the Happiness Program gives you daily breath and meditation tools.</p>
+    <div class="eyebrow" style="color:var(--saffron);margin-bottom:10px;text-align:center">{{ c.offerings.eyebrow }}</div>
+    <h2 style="font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:8px;text-align:center">{{ c.offerings.title }}</h2>
+    <p style="text-align:center;color:var(--dim);max-width:600px;margin:0 auto 36px;font-size:.97rem">{{ c.offerings.intro }}</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
-      <a href="jyotish.html" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--saffron);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div class="eyebrow" style="color:var(--saffron)">Vedic Astrology</div>
-        <h2 style="font-size:1.45rem">Jyotish Consultations</h2>
-        <p style="font-size:.95rem;color:var(--body);line-height:1.7;flex:1">Your birth chart holds the map of your life — strengths, karma, timing. A Jyotish reading illuminates the patterns at work so you can act with clarity.</p>
-        <span class="offer-ask">Online · ~60 min · contribute what feels right</span>
-        <span class="btn btn-gold btn-sm" style="align-self:flex-start;margin-top:4px">Book a reading →</span>
+      <a href="{{ 'jyotish.html' | lhref(lang.code) }}" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--saffron);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+        <div class="eyebrow" style="color:var(--saffron)">{{ c.offerings.jyotish.eyebrow }}</div>
+        <h2 style="font-size:1.45rem">{{ c.offerings.jyotish.title }}</h2>
+        <p style="font-size:.95rem;color:var(--body);line-height:1.7;flex:1">{{ c.offerings.jyotish.text }}</p>
+        <span class="offer-ask">{{ c.offerings.jyotish.ask }}</span>
+        <span class="btn btn-gold btn-sm" style="align-self:flex-start;margin-top:4px">{{ c.offerings.jyotish.btn }}</span>
       </a>
-      <a href="bach.html" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--lotus);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div class="eyebrow" style="color:var(--lotus)">Emotional Wellness</div>
-        <h2 style="font-size:1.45rem">Bach Flower Therapy</h2>
-        <p style="font-size:.95rem;color:var(--body);line-height:1.7;flex:1">Natural flower essences for anxiety, grief, fear and self-doubt — personalised to your exact emotional state. Gentle, safe, no side effects.</p>
-        <span class="offer-ask">Online · <span data-price="bach_consultation">₹1,000</span> per consultation</span>
-        <span class="btn btn-lotus btn-sm" style="align-self:flex-start;margin-top:4px">Book a session →</span>
+      <a href="{{ 'bach.html' | lhref(lang.code) }}" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--lotus);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+        <div class="eyebrow" style="color:var(--lotus)">{{ c.offerings.bach.eyebrow }}</div>
+        <h2 style="font-size:1.45rem">{{ c.offerings.bach.title }}</h2>
+        <p style="font-size:.95rem;color:var(--body);line-height:1.7;flex:1">{{ c.offerings.bach.text }}</p>
+        <span class="offer-ask">{{ c.offerings.bach.ask | safe }}</span>
+        <span class="btn btn-lotus btn-sm" style="align-self:flex-start;margin-top:4px">{{ c.offerings.bach.btn }}</span>
       </a>
-      <a href="happiness.html" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--leaf);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
-        <div class="eyebrow" style="color:var(--leaf)">Breath · Meditation · SKY</div>
-        <h2 style="font-size:1.45rem">Happiness Program</h2>
-        <p style="font-size:.95rem;color:var(--body);line-height:1.7;flex:1">The Art of Living Happiness Program — 3 transformative days of Sudarshan Kriya (SKY), pranayama, yoga and meditation.</p>
-        <span class="offer-ask">3 days · online &amp; Hyderabad · <span id="homeNextBatch">next batch shared on WhatsApp</span></span>
-        <span class="btn btn-leaf btn-sm" style="align-self:flex-start;margin-top:4px">Register →</span>
+      <a href="{{ 'happiness.html' | lhref(lang.code) }}" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--leaf);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+        <div class="eyebrow" style="color:var(--leaf)">{{ c.offerings.happiness.eyebrow }}</div>
+        <h2 style="font-size:1.45rem">{{ c.offerings.happiness.title }}</h2>
+        <p style="font-size:.95rem;color:var(--body);line-height:1.7;flex:1">{{ c.offerings.happiness.text }}</p>
+        <span class="offer-ask">{{ c.offerings.happiness.ask | safe }}</span>
+        <span class="btn btn-leaf btn-sm" style="align-self:flex-start;margin-top:4px">{{ c.offerings.happiness.btn }}</span>
       </a>
     </div>
   </div>
@@ -95,18 +98,14 @@ navKey: "home"
 <section style="padding:56px 0">
   <div class="wrap">
     <div style="display:grid;grid-template-columns:280px 1fr;gap:52px;align-items:center" class="two-col">
-      <img src="assets/srikanth.webp" width="280" height="280" loading="lazy" alt="Srikanth, Art of Living teacher, Bach Flower therapist and Jyotish practitioner" style="width:100%;aspect-ratio:1/1;border-radius:50%;object-fit:cover;border:3px solid var(--gold);box-shadow:0 0 0 6px rgba(217,164,65,.15),0 14px 40px rgba(138,59,18,.16)">
+      <img src="/assets/srikanth.webp" width="280" height="280" loading="lazy" alt="{{ c.about.alt }}" style="width:100%;aspect-ratio:1/1;border-radius:50%;object-fit:cover;border:3px solid var(--gold);box-shadow:0 0 0 6px rgba(217,164,65,.15),0 14px 40px rgba(138,59,18,.16)">
       <div>
-        <div class="eyebrow" style="color:var(--saffron);margin-bottom:12px">About Srikanth</div>
-        <h2 style="font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:18px">A practitioner who has walked both worlds</h2>
-        <p style="color:var(--body);font-size:1rem;line-height:1.78;margin-bottom:14px">For over two decades I have worked in the technology industry with a large multinational corporation — which gave me firsthand understanding of modern stress: the deadlines, the uncertainty, the quiet anxiety that follows people home.</p>
-        <p style="color:var(--body);font-size:1rem;line-height:1.78;margin-bottom:14px">Alongside it runs a lifelong calling: <strong style="color:var(--ink)">Art of Living teacher</strong>, <strong style="color:var(--ink)">certified Bach Flower Therapist</strong>, <strong style="color:var(--ink)">Jyotish practitioner</strong> and meditation instructor. Healing begins when we can finally see ourselves clearly — in the mind, in the heart, and in the sky under which we were born.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:18px">
-          <span style="border:1px solid var(--gold);border-radius:999px;padding:6px 15px;font-size:.8rem;letter-spacing:.04em;color:var(--copper);background:rgba(217,164,65,.1);font-weight:500">Art of Living Teacher</span>
-          <span style="border:1px solid var(--gold);border-radius:999px;padding:6px 15px;font-size:.8rem;letter-spacing:.04em;color:var(--copper);background:rgba(217,164,65,.1);font-weight:500">Certified Bach Flower Therapist</span>
-          <span style="border:1px solid var(--gold);border-radius:999px;padding:6px 15px;font-size:.8rem;letter-spacing:.04em;color:var(--copper);background:rgba(217,164,65,.1);font-weight:500">Jyotish Practitioner</span>
-          <span style="border:1px solid var(--gold);border-radius:999px;padding:6px 15px;font-size:.8rem;letter-spacing:.04em;color:var(--copper);background:rgba(217,164,65,.1);font-weight:500">Yoga &amp; Meditation Instructor</span>
-          <span style="border:1px solid var(--gold);border-radius:999px;padding:6px 15px;font-size:.8rem;letter-spacing:.04em;color:var(--copper);background:rgba(217,164,65,.1);font-weight:500">20+ yrs Corporate Technology</span>
+        <div class="eyebrow" style="color:var(--saffron);margin-bottom:12px">{{ c.about.eyebrow }}</div>
+        <h2 style="font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:18px">{{ c.about.title }}</h2>
+        <p class="about-p">{{ c.about.p1 }}</p>
+        <p class="about-p">{{ c.about.p2 | safe }}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:18px">{% for chip in c.about.chips %}
+          <span style="border:1px solid var(--gold);border-radius:999px;padding:6px 15px;font-size:.8rem;letter-spacing:.04em;color:var(--copper);background:rgba(217,164,65,.1);font-weight:500">{{ chip }}</span>{% endfor %}
         </div>
       </div>
     </div>
@@ -115,25 +114,26 @@ navKey: "home"
 
 <section data-hide-empty>
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--saffron);margin-bottom:10px">Kind words</div>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:22px">From people I have worked with</h2>
+    <div class="eyebrow" style="color:var(--saffron);margin-bottom:10px">{{ c.kind.eyebrow }}</div>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:22px">{{ c.kind.title }}</h2>
     <div data-testimonials="home"></div>
   </div>
 </section>
 
 <div class="cta-strip">
   <div class="cta-strip-inner">
-    <div><p>Ready to begin your healing journey?</p><span>Book a session · Register for a program · Or just ask a question on WhatsApp</span></div>
+    <div><p>{{ c.cta.title }}</p><span>{{ c.cta.text }}</span></div>
     <div class="cta-strip-btns">
-      <a class="btn btn-gold btn-sm" href="jyotish.html#booking-widget">Book Jyotish</a>
-      <a class="btn btn-lotus btn-sm" href="bach.html">Bach Flower</a>
-      <a class="btn btn-wa btn-sm" href="https://wa.me/919985133161" target="_blank">WhatsApp</a>
+      <a class="btn btn-gold btn-sm" href="/jyotish.html#booking-widget">{{ c.cta.jyotish }}</a>
+      <a class="btn btn-lotus btn-sm" href="/bach.html">{{ c.cta.bach }}</a>
+      <a class="btn btn-wa btn-sm" href="https://wa.me/919985133161" target="_blank">{{ c.cta.whatsapp }}</a>
     </div>
   </div>
 </div>
 
-{% endraw %}{% endblock %}
-{% block scripts %}{% raw %}<script>
-AS_READY.then(function(c){var e=document.getElementById('homeNextBatch');
-  if(e&&c.batches.length){e.textContent='next batch: '+c.batches[0].date;}});
-</script>{% endraw %}{% endblock %}
+{% endblock %}
+{% block scripts %}{% set c = t.home %}<script>
+const NEXT_BATCH = {{ c.offerings.happiness.nextBatch | dump | safe }};
+{% raw %}AS_READY.then(function(c){var e=document.getElementById('homeNextBatch');
+  if(e&&c.batches.length){e.textContent=NEXT_BATCH.replace('{date}', AS_batchDate(c.batches[0]));}});
+{% endraw %}</script>{% endblock %}

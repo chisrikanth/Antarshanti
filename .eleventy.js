@@ -6,7 +6,15 @@ const decode = (s) => s
   .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n));
 const plain = (s) => decode(String(s).replace(/<[^>]+>/g, '')).trim();
 
+const translated = require('./src/_data/translated.json');
+// Link to the translated version of a page when one exists for the visitor's language.
+const lhref = (file, code) => {
+  const f = String(file).replace(/^\//, '');
+  return code && code !== 'en' && translated.includes(f) ? `/${code}/${f}` : `/${f}`;
+};
+
 module.exports = function (eleventyConfig) {
+  eleventyConfig.addFilter('lhref', lhref);
   eleventyConfig.addPassthroughCopy({ 'src/assets': 'assets', 'src/data': 'data', 'src/static': '.' });
   eleventyConfig.addFilter('plain', plain);
   // FAQ schema generated from the same data that renders the visible FAQ (always in sync)
