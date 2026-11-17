@@ -76,13 +76,17 @@ navKey: "checkin"
 
       <div class="card overall-card">
         <div class="eyebrow" style="color:var(--saffron);margin-bottom:8px">Your Wellbeing Snapshot</div>
-        <div class="overall-score"><span id="overall-number">—</span><span>/100</span></div>
-        <div class="overall-label" id="overall-label">Calculating...</div>
+        <div class="overall-title" id="overall-title">Calculating...</div>
+        <div class="overall-label" id="overall-label"></div>
       </div>
 
       <div id="domain-results"></div>
 
       <div id="path-slot"></div>
+
+      <details class="how-it-works"><summary>How are these worked out?</summary>
+        <p>Each area has five questions, each scored 0 to 4 and added up (0 to 20). We group the total into four bands. The bands are a simple guide, inspired by the way common screening tools group scores. They are not clinically validated, they cover only the last two weeks, and a skipped question is never counted as zero. They cannot diagnose anything.</p>
+      </details>
 
       <div class="disclaimer-box">
         This check-in is a self-reflection tool, not a diagnosis. If how you feel stays heavy or gets worse, please speak to a qualified doctor or counsellor. Antarshanti offers complementary wellness support and does not replace medical care.
@@ -266,24 +270,33 @@ function scoreDomain(sec){
     const v = answers[sec.key + '_' + i];
     if(v !== undefined){ sum += v; answeredCount++; }
   });
-  // If some questions were skipped, scale up proportionally so score stays out of 20
-  const maxPossible = sec.items.length * 4;
-  const percent = answeredCount === 0 ? null : Math.round((sum / (answeredCount*4)) * 100);
-  return { sum, percent, answeredCount };
+  // Each area has 5 questions scored 0-4, so a total is 0-20. A skipped question is never counted as 0:
+  // with 4 of 5 answered we scale up proportionally; with fewer we do not show that area at all.
+  const raw = answeredCount >= 4 ? Math.round(sum / answeredCount * 5) : null;
+  const percent = raw === null ? null : Math.round(raw / 20 * 100);   // kept only for saved data + path suggestion
+  return { sum: raw, percent, answeredCount };
 }
 
-function bandFor(direction, percent){
-  if(direction === 'distress'){
-    if(percent < 25) return { label:'Minimal', cls:'band-good', note:'These feelings show up rarely for you right now.' };
-    if(percent < 50) return { label:'Mild', cls:'band-mid', note:'Present sometimes — worth keeping a gentle eye on.' };
-    if(percent < 75) return { label:'Moderate', cls:'band-mid', note:'Showing up often enough to matter — some support could help.' };
-    return { label:'High', cls:'band-watch', note:'Frequent enough that extra support is worth prioritising.' };
-  } else {
-    if(percent < 25) return { label:'Room to grow', cls:'band-watch', note:'A place with real room to nurture and build.' };
-    if(percent < 50) return { label:'Developing', cls:'band-mid', note:'You have moments of this — building the habit will help.' };
-    if(percent < 75) return { label:'Steady', cls:'band-mid', note:'A fairly consistent strength for you.' };
-    return { label:'Strong', cls:'band-good', note:'A clear strength you can lean on.' };
-  }
+// Four gentle bands per area. Inspired by the proportions used in common screening tools (e.g. GAD-7, PHQ-9),
+// but NOT a clinically validated scale. They describe the last two weeks only.
+const BANDS = {
+  distress: [
+    { max:4,  label:'Settled lately',          note:'Little here is weighing on you right now.', color:'var(--leaf)' },
+    { max:9,  label:'A few ripples',           note:'Common, and worth noticing gently.', color:'var(--gold)' },
+    { max:14, label:'Noticeably present',      note:'Many people feel this at times. Support can help.', color:'var(--saffron)' },
+    { max:20, label:'Weighing on you',         note:'Talking with a counsellor or doctor could really help. You are not alone.', color:'var(--lotus)' }
+  ],
+  strength: [
+    { max:4,  label:'A seed to nurture',       note:'A good place to start. Small, regular practices can grow this.', color:'var(--gold)' },
+    { max:9,  label:'Growing',                 note:'You already have some of this to build on.', color:'var(--sky)' },
+    { max:14, label:'Well established',        note:'A real resource you can lean on.', color:'var(--leaf)' },
+    { max:20, label:'A strong resource',       note:'One of your clear strengths.', color:'var(--leaf)' }
+  ]
+};
+function bandFor(direction, raw){
+  const list = BANDS[direction === 'distress' ? 'distress' : 'strength'];
+  const i = list.findIndex(b => raw <= b.max);
+  return { ...list[i], index: i, steps: i + 1 };
 }
 
 function barColor(colorName){
@@ -301,14 +314,7 @@ function computeAndRenderResults(){
   const crisisVal = answers[depSection.key + '_' + depSection.crisisIndex];
   const crisisFlag = crisisVal !== undefined && crisisVal >= 1;
 
-  // overall wellbeing = average of "wellness-direction" percents (invert distress domains)
-  const wellnessPercents = domainScores.map(d => {
-    if(d.percent === null) return null;
-    return d.sec.direction === 'distress' ? (100 - d.percent) : d.percent;
-  }).filter(p => p !== null);
-  const overall = wellnessPercents.length
-    ? Math.round(wellnessPercents.reduce((a,b) => a+b, 0) / wellnessPercents.length)
-    : null;
+  const overall = null;   // no single number is shown or stored: a 0-100 figure for a mental state is misleading
 
   lastComputed = { domainScores, crisisFlag, overall };
   lastComputed.path = renderPathSuggestion(domainScores, crisisFlag, overall);
@@ -331,29 +337,45 @@ function computeAndRenderResults(){
     crisisSlot.appendChild(box);
   }
 
-  // -- overall score --
-  document.getElementById('overall-number').textContent = overall === null ? '—' : overall;
-  document.getElementById('overall-label').textContent = overall === null
-    ? 'Answer a few more questions for a full picture'
-    : (overall >= 75 ? 'You seem to be in a steady, resourceful place'
-      : overall >= 50 ? 'A mixed picture — some real strengths, some areas to tend to'
-      : overall >= 25 ? "There's a fair amount weighing on you right now"
-      : "It looks like you're going through a genuinely difficult stretch");
+  // -- snapshot message (words, not a number) --
+  const shown = domainScores.filter(d => d.sum !== null);
+  const care = shown.filter(d => d.sec.direction === 'distress' ? d.sum >= 10 : d.sum < 5).length;
+  const titleEl = document.getElementById('overall-title'), labelEl = document.getElementById('overall-label');
+  if(!shown.length){
+    titleEl.textContent = 'Not enough answers for a snapshot';
+    labelEl.textContent = 'If you would like, go back and answer a few more questions. You can skip any you prefer.';
+  } else if(care === 0){
+    titleEl.textContent = 'Nothing here is asking for urgent attention';
+    labelEl.textContent = 'This is a snapshot of the last two weeks, not a verdict. A good moment to keep nurturing what already works for you.';
+  } else {
+    titleEl.textContent = care === 1 ? 'One area could use some gentle care' : care + ' areas could use some gentle care';
+    labelEl.textContent = 'That is common, and it is a snapshot of the last two weeks, not a verdict. ' + ((shown.length - care) > 0 ? 'Your strengths below are real too.' : 'Small steps count, and you do not have to do this alone.');
+  }
+  // If the safety question was skipped, still make sure help is visible.
+  if(!crisisFlag && crisisVal === undefined){
+    const n = document.createElement('p'); n.className = 'crisis-small'; n.style.margin = '0 0 18px';
+    n.innerHTML = 'If things ever feel too heavy, Tele-MANAS (<a href="tel:14416">14416</a>) is free, confidential and open 24 hours.';
+    crisisSlot.appendChild(n);
+  }
 
   // -- domain rows --
   const domainWrap = document.getElementById('domain-results');
   domainWrap.innerHTML = '';
   domainScores.forEach(d => {
-    if(d.percent === null) return;
-    const band = bandFor(d.sec.direction, d.percent);
     const row = document.createElement('div');
     row.className = 'domain-row';
+    if(d.sum === null){
+      row.innerHTML = `<div class="domain-top"><span class="domain-name">${d.sec.title}</span></div><div class="domain-note">Not enough answers to show this area. That is fine, you can skip anything you prefer.</div>`;
+      domainWrap.appendChild(row); return;
+    }
+    const band = bandFor(d.sec.direction, d.sum);
+    const steps = [0,1,2,3].map(i => `<i style="${i < band.steps ? 'background:'+band.color : ''}"></i>`).join('');
     row.innerHTML = `
       <div class="domain-top">
         <span class="domain-name">${d.sec.title}</span>
-        <span class="domain-band ${band.cls}">${band.label}</span>
+        <span class="domain-band" style="background:${band.color}22;color:var(--ink)">${band.label}</span>
       </div>
-      <div class="bar-track"><div class="bar-fill" style="width:${d.percent}%;background:${barColor(d.sec.color)}"></div></div>
+      <div class="steps4" role="img" aria-label="${band.label}, step ${band.steps} of 4">${steps}</div>
       <div class="domain-note">${band.note}</div>
     `;
     domainWrap.appendChild(row);
