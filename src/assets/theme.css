@@ -185,3 +185,9 @@ header[style*="min-height"] > .wrap[style*="max-width"] > *{max-width:600px}
 .wk-btn{border:1.5px solid var(--line);background:#fff;color:#A04F14;border-radius:999px;padding:6px 14px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer}
 .wk-btn:hover:not([disabled]){border-color:var(--sun-deep);background:var(--sun-wash)}
 .wk-btn[disabled]{opacity:.35;cursor:not-allowed}
+/* Next-step video: compact so text and video balance on laptops */
+.next-step{grid-template-columns:130px 1fr}
+.next-step .vid{width:130px}
+.next-step .vid-frame{aspect-ratio:9/13}
+.next-step .vid-cap{font-size:.76rem;padding:8px 10px}
+@media(max-width:520px){.next-step{grid-template-columns:1fr}.next-step .vid{width:130px}}

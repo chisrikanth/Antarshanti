@@ -3,25 +3,13 @@ permalink: "/checkin.html"
 path: "/checkin"
 title: "Free 5-Minute Emotional Wellbeing Check-In | Antarshanti Healing"
 description: "A free, private 5-minute reflection on stress, mood, mindfulness, self-esteem and emotional balance, with a gentle suggestion of what may help. Not a diagnosis."
-ownCss: true
-footerStandard: false
+extraCss: "checkin-only.css"
 navKey: "checkin"
 ---
 {% extends "layouts/base.njk" %}
 {% block topbar %}{% raw %}<div class="topbar">✦ A gentle self-reflection tool from Antarshanti Healing ✦</div>{% endraw %}{% endblock %}
-{% block navigation %}{% raw %}<nav>
-  <div class="wrap nav-inner">
-    <a href="index.html" class="logo">Antar<em>shanti</em> Healing</a>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="jyotish.html">Jyotish</a>
-      <a href="bach.html">Bach Flower</a>
-      <a href="happiness.html">Happiness Program</a>
-      <a href="checkin.html" class="active">Free Check-In</a>
-    </div>
-  </div>
-</nav>
-<div class="talk-strip"><span>Prefer to talk it through?</span> <a href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+am+doing+the+check-in+and+would+like+to+talk." target="_blank" rel="noopener" data-label="talk-strip">Chat with Srikanth on WhatsApp</a></div>{% endraw %}{% endblock %}
+{% block navigation %}{% include "partials/nav.njk" %}
+{% raw %}<div class="talk-strip"><span>Prefer to talk it through?</span> <a href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+am+doing+the+check-in+and+would+like+to+talk." target="_blank" rel="noopener" data-label="talk-strip">Chat with Srikanth on WhatsApp</a></div>{% endraw %}{% endblock %}
 {% block content %}{% raw %}<section class="checkin-shell">
   <div class="narrow">
 
@@ -92,6 +80,7 @@ navKey: "checkin"
         This check-in is a self-reflection tool, not a diagnosis. If how you feel stays heavy or gets worse, please speak to a doctor or counsellor.
       </div>
 
+      <div class="results-bottom">
       <div class="card save-card">
         <h3>Want Srikanth to look at your results?</h3>
         <p>Optional — share your name and WhatsApp number and he'll personally follow up with a note. Your details are kept confidential and stored only with your consent.</p>
@@ -107,30 +96,14 @@ navKey: "checkin"
         <p>Talk to Srikanth on WhatsApp. He can help you choose between Sudarshan Kriya and Bach Flower remedies, or simply listen.</p>
         <a class="btn btn-wa" id="wa-alt" href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+did+the+check-in+and+would+like+to+talk." target="_blank" rel="noopener">Talk to Srikanth on WhatsApp</a>
       </div>
+      </div>
     </div>
 
   </div>
 </section>
 
 {% endraw %}{% endblock %}
-{% block footer %}{% raw %}<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <a href="index.html" style="font-family:'Marcellus',serif;font-size:1.1rem;color:var(--ink)">Antar<em style="font-style:normal;color:var(--saffron)">shanti</em> Healing</a>
-        <p style="font-size:.84rem;color:var(--dim);margin-top:8px">Srikanth · Hyderabad, India</p>
-        <p style="font-size:.84rem;color:var(--dim);margin-top:3px">antarshanti.co.in</p>
-      </div>
-      <div class="foot-links">
-        <a href="jyotish.html">Jyotish</a>
-        <a href="bach.html">Bach Flower</a>
-        <a href="happiness.html">Happiness Program</a>
-        <a href="https://wa.me/919985133161" target="_blank">WhatsApp</a>
-      </div>
-    </div>
-    <p class="fine">Antarshanti offerings are complementary wellness services and do not replace medical, psychological, legal or financial advice. This check-in is a self-reflection tool only. Personal details are kept strictly confidential and stored with your consent.</p>
-  </div>
-</footer>{% endraw %}{% endblock %}
+
 {% block scripts %}{% raw %}<script>
 /* ---------------------------------------------------------
    DATA
@@ -378,13 +351,14 @@ function computeAndRenderResults(){
     { head:'How you have been feeling', list: domainScores.filter(d => d.sec.direction === 'distress') }
   ];
   groups.forEach(g => {
-    const h = document.createElement('h4'); h.className = 'result-group'; h.textContent = g.head; domainWrap.appendChild(h);
+    const col = document.createElement('div'); col.className = 'result-col'; domainWrap.appendChild(col);
+    const h = document.createElement('h4'); h.className = 'result-group'; h.textContent = g.head; col.appendChild(h);
     g.list.forEach(d => {
       const row = document.createElement('div');
       row.className = 'domain-row';
       if(d.sum === null){
         row.innerHTML = `<div class="domain-top"><span class="domain-name">${d.sec.title}</span></div><div class="domain-note">Not enough answers to show this area. That is fine, you can skip anything you prefer.</div>`;
-        domainWrap.appendChild(row); return;
+        col.appendChild(row); return;
       }
       const band = bandFor(d.sec.direction, d.sum);
       const steps = [0,1,2,3].map(i => `<i style="${i < band.steps ? 'background:'+band.color : ''}"></i>`).join('');
@@ -396,7 +370,7 @@ function computeAndRenderResults(){
         <div class="steps4" role="img" aria-label="${band.label}, step ${band.steps} of 4">${steps}</div>
         <div class="domain-note">${band.note}</div>
       `;
-      domainWrap.appendChild(row);
+      col.appendChild(row);
     });
   });
 }

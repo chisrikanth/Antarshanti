@@ -25,5 +25,5 @@
 - To preview locally: `npm install`, then `npm start`.
 
 ## Next simplifications (not done yet)
-- Unify the check-in page's own header, footer and styles with the shared ones.
+- (done 17 Nov) The check-in page now uses the shared header, footer and styles; only `src/assets/checkin-only.css` is specific to it.
 - Add Telugu and Hindi as `/te` and `/hi` folders using the same layout, with the text in language files.

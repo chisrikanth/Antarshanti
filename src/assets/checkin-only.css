@@ -1,65 +1,24 @@
-
-:root{
-  --paper:#FFF7EC; --paper-2:#FAEEDB; --card:#FFFDF7;
-  --ink:#2E1A08;   --body:#4A3220;   --dim:#7A5A38;
-  --gold:#D9A441;  --saffron:#D96B10; --copper:#8A3B12;
-  --lotus:#B8406A; --leaf:#5A8A3E;   --sky:#2D6EA0;
-  --line:rgba(138,59,18,.2); --radius:14px;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--body);font-family:'Karla',sans-serif;
-  font-size:17px;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:'Marcellus',serif;font-weight:400;line-height:1.2;color:var(--ink)}
-a{color:var(--copper);text-decoration:none}
-.wrap{max-width:960px;margin:0 auto;padding:0 20px}
-.narrow{max-width:640px;margin:0 auto;padding:0 20px}
-.eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
-section{padding:60px 0}
-
-/* TOPBAR */
-.topbar{background:var(--copper);color:#FFF7EC;text-align:center;padding:10px 20px;
-  font-size:.88rem;font-weight:500;letter-spacing:.04em}
-.topbar a{color:#FFD98A;font-weight:700;border-bottom:1px solid rgba(255,217,138,.4)}
-.topbar a:hover{color:#fff}
-
-/* NAV */
-nav{position:sticky;top:0;z-index:50;background:rgba(255,247,236,.94);
-  backdrop-filter:blur(14px);border-bottom:1px solid var(--line);box-shadow:0 1px 12px rgba(138,59,18,.07)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
-.logo{font-family:'Marcellus',serif;font-size:1.18rem;letter-spacing:.05em;color:var(--ink);white-space:nowrap}
-.logo em{font-style:normal;color:var(--saffron)}
-.nav-links{display:flex;gap:20px;font-size:.87rem;font-weight:500}
-.nav-links a{color:var(--dim);white-space:nowrap;transition:color .2s;padding-bottom:2px;border-bottom:2px solid transparent}
-.nav-links a:hover,.nav-links a.active{color:var(--saffron);border-bottom-color:var(--saffron)}
-@media(max-width:720px){.nav-links{gap:14px;font-size:.8rem}.nav-links a:not(.active):not(:first-child){display:none}.logo{font-size:1.02rem}}
-
-/* BUTTONS */
-.btn{display:inline-block;padding:12px 26px;border-radius:999px;font-size:.9rem;
-  font-weight:600;letter-spacing:.04em;transition:transform .18s,box-shadow .18s;cursor:pointer;text-align:center;border:none}
-.btn:hover{transform:translateY(-2px)}
-.btn-sm{padding:9px 20px;font-size:.84rem}
-.btn-gold{background:var(--saffron);color:#FFF7EC}.btn-gold:hover{box-shadow:0 8px 28px rgba(217,107,16,.4)}
-.btn-lotus{border:1.5px solid var(--lotus);color:var(--lotus);background:transparent}.btn-lotus:hover{background:var(--lotus);color:#FFF7EC;box-shadow:0 6px 20px rgba(184,64,106,.3)}
-.btn-wa{background:#25D366;color:#fff;border:none}.btn-wa:hover{box-shadow:0 6px 20px rgba(37,211,102,.4)}
-.btn-outline{border:1.5px solid var(--line);color:var(--dim);background:transparent}.btn-outline:hover{border-color:var(--saffron);color:var(--saffron)}
+/* Check-in page only. Everything else (header, footer, buttons, fonts) comes from the shared styles. */
+.narrow{max-width:960px;margin:0 auto;padding:0 20px}
 .btn[disabled]{opacity:.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
-
-/* FOOTER */
-footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0 34px}
-.foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.foot-links{display:flex;gap:20px;font-size:.88rem;flex-wrap:wrap}
-.foot-links a{color:var(--dim);font-weight:500}.foot-links a:hover{color:var(--saffron)}
-.fine{margin-top:24px;font-size:.76rem;color:rgba(122,90,56,.8);max-width:640px;line-height:1.7}
-
+.checkin-shell{padding:36px 0 56px;display:block}
+.screen{display:none;width:100%}
+.screen.active{display:block}
+/* the question and welcome cards stay compact so the eye has one place to look */
+#screen-consent,#screen-question{max-width:680px;margin:0 auto}
+/* results fill the page like the rest of the site */
+#domain-results{display:grid;grid-template-columns:1fr;gap:0 24px;align-items:start}
+.results-bottom{display:grid;grid-template-columns:1fr;gap:20px;align-items:start;margin-top:8px}
+.results-bottom .save-card,.results-bottom .talk-card{margin:0}
+@media(min-width:880px){
+  #domain-results{grid-template-columns:1fr 1fr}
+  .results-bottom{grid-template-columns:1.15fr 1fr}
+  .overall-card{padding:36px 40px}
+}
 /* CARD */
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
   box-shadow:0 6px 28px rgba(138,59,18,.1)}
 
-/* CHECKIN SHELL */
-.checkin-shell{min-height:calc(100vh - 300px);display:flex;align-items:center;padding:40px 0}
-.screen{display:none;width:100%}
-.screen.active{display:block}
 
 /* CONSENT */
 .consent-card{padding:36px 32px}
