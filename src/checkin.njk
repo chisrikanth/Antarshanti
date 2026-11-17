@@ -20,7 +20,8 @@ navKey: "checkin"
       <a href="checkin.html" class="active">Free Check-In</a>
     </div>
   </div>
-</nav>{% endraw %}{% endblock %}
+</nav>
+<div class="talk-strip"><span>Prefer to talk it through?</span> <a href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+am+doing+the+check-in+and+would+like+to+talk." target="_blank" rel="noopener" data-label="talk-strip">Chat with Srikanth on WhatsApp</a></div>{% endraw %}{% endblock %}
 {% block content %}{% raw %}<section class="checkin-shell">
   <div class="narrow">
 
@@ -84,7 +85,7 @@ navKey: "checkin"
       <div id="path-slot"></div>
 
       <div class="disclaimer-box">
-        This check-in is a self-reflection tool, not a medical or psychological diagnosis. Antarshanti offerings are complementary wellness services and do not replace professional medical, psychological, legal or financial advice. If anything here concerns you, please speak with a qualified mental health professional.
+        This check-in is a self-reflection tool, not a diagnosis. If how you feel stays heavy or gets worse, please speak to a qualified doctor or counsellor. Antarshanti offers complementary wellness support and does not replace medical care.
       </div>
 
       <div class="card save-card">
@@ -97,7 +98,7 @@ navKey: "checkin"
         <div class="save-status" id="save-status"></div>
       </div>
 
-      <div class="cta-row" id="wa-row"><a class="btn btn-wa btn-sm" id="wa-alt" href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+took+the+check-in+and+would+like+to+talk." target="_blank" rel="noopener">Prefer to talk? Message Srikanth on WhatsApp</a></div>
+      <div class="cta-row" id="wa-row"><a class="btn btn-wa btn-sm" id="wa-alt" href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+took+the+check-in+and+would+like+to+talk." target="_blank" rel="noopener">Prefer to talk it through? Chat with Srikanth on WhatsApp</a></div>
     </div>
 
   </div>
@@ -320,12 +321,12 @@ function computeAndRenderResults(){
     box.className = 'crisis-box';
     box.innerHTML = `
       <h3>You don't have to carry this alone</h3>
-      <p>One of your answers suggests you may be having a very hard time right now. Please consider reaching out to a trained counsellor today — these services are free, confidential, and available right now.</p>
-      <div class="helpline-grid">
-        <div class="helpline"><span class="hname">Tele-MANAS (Govt. of India)</span><span class="hnum">14416</span><span class="havail">24×7 · Multilingual</span></div>
-        <div class="helpline"><span class="hname">KIRAN Mental Health Helpline</span><span class="hnum">1800-599-0019</span><span class="havail">24×7 · Toll-free</span></div>
-        <div class="helpline"><span class="hname">Vandrevala Foundation</span><span class="hnum">1860-266-2345</span><span class="havail">24×7 · Also: 9999-666-555</span></div>
+      <p>One of your answers suggests you may be having a very hard time right now. Please talk to someone today. Tele-MANAS is the Government of India's free, confidential helpline.</p>
+      <div class="helpline-main">
+        <div><span class="hname">Tele-MANAS · Government of India</span><span class="hnum">14416</span><span class="havail">Free · 24 hours · many languages</span></div>
+        <a class="btn btn-gold btn-sm" href="tel:14416">Call 14416</a>
       </div>
+      <p class="crisis-small">More information: <a href="https://telemanas.mohfw.gov.in" target="_blank" rel="noopener">telemanas.mohfw.gov.in</a>. If you are in immediate danger, call 112 or go to your nearest hospital. Please also consider speaking with a qualified doctor.</p>
     `;
     crisisSlot.appendChild(box);
   }
@@ -384,13 +385,14 @@ function suggestPath(domainScores){
   if(stress < 35 && heavy < 35) return 'jyotish';
   return stress >= heavy ? 'happiness' : 'bach';
 }
+const WA_TALK = 'https://wa.me/919985133161?text=' + encodeURIComponent('Namaste Srikanth, I did the check-in and would like to talk.');
 function renderPathSuggestion(domainScores, crisisFlag, overall){
   const slot = document.getElementById('path-slot');
   const waAlt = document.getElementById('wa-alt');
   slot.innerHTML = '';
   if(crisisFlag){
     // No programme pitch for someone who may be in crisis: support first, helplines are shown above.
-    slot.innerHTML = '<div class="card path-primary"><h3>When you feel ready</h3><p>There is no hurry and nothing to buy. If you would like to talk, Srikanth is available on WhatsApp.</p></div>';
+    slot.innerHTML = '<div class="card path-primary"><h3>When you feel ready</h3><p>There is no hurry and nothing to buy. If you would like to talk, Srikanth is available on WhatsApp. This is a listening ear, not a replacement for a doctor or counsellor.</p><a class="btn btn-wa btn-sm" id="wa-crisis" target="_blank" rel="noopener" data-label="talk-crisis" href="'+WA_TALK+'">Talk to Srikanth on WhatsApp</a></div>';
     return 'support';
   }
   const key = suggestPath(domainScores);
@@ -403,6 +405,8 @@ function renderPathSuggestion(domainScores, crisisFlag, overall){
       '<div class="eyebrow" style="color:var(--saffron)">What may suit you</div>' +
       '<h3>'+p.name+'</h3><p>'+p.why+' This is a gentle pointer based on your answers, not a diagnosis.</p>' +
       '<a class="btn btn-gold" href="'+p.url+'" data-label="path:'+key+'">'+p.cta+' →</a></div>' +
+      '<div class="care-note"><strong>Keep gently watching how you feel.</strong> If it stays heavy or begins to affect daily life, please see a qualified doctor or counsellor.' +
+      (key==='happiness' ? '' : ' Many people also enjoy breathing practices such as Sudarshan Kriya to unwind (<a href="happiness.html" data-label="care-sky">learn more</a>).') + '</div>' +
       '<p class="path-also">Also available: '+others+'</p></div>';
   waAlt.href = 'https://wa.me/919985133161?text=' + encodeURIComponent('Namaste Srikanth, I took the check-in and "' + p.name + '" came up as what may suit me. I would like to talk.');
   waAlt.removeAttribute('data-wa-tagged');

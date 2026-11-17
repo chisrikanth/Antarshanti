@@ -10,7 +10,7 @@ faqKey: "bach"
 navKey: "bach"
 ---
 {% extends "layouts/base.njk" %}
-{% block topbar %}{% raw %}<div class="topbar" style="background:var(--lotus)">✦ Bach Flower Consultations — <a href="#booking-widget" style="color:#FFD8E8">Book &amp; pay online · ₹1,000</a> · Personalised · Online · Complementary wellness ✦</div>{% endraw %}{% endblock %}
+{% block topbar %}{% raw %}<div class="topbar" style="background:var(--lotus)">✦ Bach Flower Consultations — <a href="#booking-widget" style="color:#FFD8E8">Book &amp; pay online · <span data-price="bach_consultation">₹1,000</span></a> · Personalised · Online · Complementary wellness ✦</div>{% endraw %}{% endblock %}
 {% block mobilebar %}{% raw %}<div class="mobile-bar"><a class="btn btn-gold" href="#booking-widget">Book a session</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">WhatsApp</a></div>{% endraw %}{% endblock %}
 {% block content %}{% raw %}
 <header style="position:relative;min-height:68vh;display:flex;align-items:center;overflow:hidden;padding:90px 0 70px;background:linear-gradient(160deg,#FFF7EC 0%,#FCEEE8 100%)">
@@ -41,7 +41,7 @@ navKey: "bach"
 
 <div class="cta-strip">
   <div class="cta-strip-inner">
-    <div><p>Book your Bach Flower consultation</p><span>₹1,000 consultation · Pay securely online · Personalised for your emotional state</span></div>
+    <div><p>Book your Bach Flower consultation</p><span><span data-price="bach_consultation">₹1,000</span> consultation · Pay securely online · Personalised for your emotional state</span></div>
     <div class="cta-strip-btns"><a class="btn btn-lotus btn-sm" href="#booking-widget">Choose a slot ↓</a><a class="btn btn-wa btn-sm" href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+have+a+question+about+Bach+Flower+Therapy." target="_blank">WhatsApp a question</a></div>
   </div>
 </div>
@@ -87,11 +87,11 @@ navKey: "bach"
         ✦ <span id="confirm-text"></span>
       </p>
       <p style="font-size:.88rem;color:var(--body);margin-bottom:10px">
-        The consultation is ₹1,000. If a remedy blend is right for you, the bottle is billed separately afterwards — only if you want it.
+        The consultation is <span data-price="bach_consultation">₹1,000</span>. If a remedy blend is right for you, the bottle is billed separately afterwards — only if you want it.
       </p>
       <div id="pay-status" style="font-size:.85rem;margin-bottom:10px;min-height:1.2em"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button id="pay-btn" class="btn btn-gold btn-sm" type="button">Pay ₹1,000 &amp; Confirm →</button>
+        <button id="pay-btn" class="btn btn-gold btn-sm" type="button">Pay <span data-price="bach_consultation">₹1,000</span> &amp; Confirm →</button>
         <a id="wa-btn" class="btn btn-wa btn-sm" href="https://wa.me/919985133161?text=Namaste%20Srikanth%2C%20I%20have%20booked%20a%20slot%20for%20a+Bach+Flower+consultation." target="_blank">WhatsApp Srikanth</a>
       </div>
     </div>
@@ -105,7 +105,8 @@ navKey: "bach"
   // ── Razorpay. Key ID is public and safe here. The SECRET goes only in
   //    Netlify env vars (RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET). ───────────
   var RAZORPAY_KEY_ID = "rzp_live_TZpURxGvndampZ";  // live Key ID (public); the secret stays in Netlify
-  var AMOUNTS = {"Bach Flower Consultation": 100000};  // paise
+  var AMOUNTS = {"Bach Flower Consultation": 0};  // names only; the PRICE is set on the server (services table)
+  function currentPrice(){ return (window.AS_CONTENT&&AS_CONTENT.prices&&AS_CONTENT.prices.bach_consultation)||1000; }
   var sessions = Object.keys(AMOUNTS);
   var selSession=sessions[0], selDay=null, selTime=null;
   // Build tabs
@@ -183,7 +184,7 @@ navKey: "bach"
   function setPayBtnState(busy){
     var b=document.getElementById('pay-btn');
     b.disabled=busy;
-    b.textContent=busy?'Processing…':'Pay ₹1,000 & Confirm →';
+    b.innerHTML=busy?'Processing…':'Pay <span data-price="bach_consultation">'+AS.money(currentPrice())+'</span> &amp; Confirm →';
   }
   function setStatus(msg,ok){
     var el=document.getElementById('pay-status');
@@ -192,12 +193,12 @@ navKey: "bach"
   }
   function payNow(){
     if(!selDay||!selTime) return;
-    if(window.AS) AS.track('pay_click',{value:1000});
+    if(window.AS) AS.track('pay_click',{value:currentPrice()});
     setPayBtnState(true); setStatus('',true);
     fetch('/.netlify/functions/create-order',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({amount:AMOUNTS[selSession],currency:'INR',receipt:'bach_'+Date.now()})
+      body:JSON.stringify({service:'bach_consultation',slot:document.getElementById('confirm-text').textContent,receipt:'bach_'+Date.now()})
     })
     .then(function(r){ if(!r.ok) return r.json().then(function(j){ var e=new Error((j&&j.error)||'order-failed'); e.server=true; throw e; },function(){ throw new Error('order-failed'); }); return r.json(); })
     .then(function(order){
@@ -223,7 +224,7 @@ navKey: "bach"
           .then(function(result){
             setPayBtnState(false);
             if(result.success){
-              if(window.AS) AS.track('payment_success',{value:1000});
+              if(window.AS) AS.track('payment_success',{value:currentPrice()});
               setStatus('✓ Payment confirmed. Please share a little about how you have been feeling on WhatsApp so Srikanth can prepare.',true);
             } else {
               setStatus('⚠ Payment could not be verified. WhatsApp Srikanth with payment ID '+response.razorpay_payment_id+'.',false);

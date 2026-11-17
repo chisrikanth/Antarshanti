@@ -125,3 +125,14 @@ header[style*="min-height"] > .wrap[style*="max-width"] > *{max-width:600px}
   .hero-proof{display:none}
   header[style*="min-height"]{padding:36px 0 40px!important}
 }
+
+/* Always-available "talk to someone" strip (check-in) */
+.talk-strip{position:sticky;top:63px;z-index:49;background:#FFF1DC;border-bottom:1px solid var(--line);text-align:center;padding:7px 14px;font-size:.84rem;color:var(--copper)}
+.talk-strip a{color:#A04F14;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.helpline-main{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:10px 0 12px}
+.helpline-main .hname{display:block;font-size:.84rem;font-weight:700;color:var(--ink)}
+.helpline-main .hnum{display:block;font-size:1.5rem;font-weight:700;color:#A04F14;line-height:1.3}
+.helpline-main .havail{display:block;font-size:.78rem;color:var(--dim)}
+.crisis-small{font-size:.82rem!important;color:var(--dim);margin:0!important}
+.care-note{font-size:.88rem;color:var(--body);background:#FFF7EA;border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:0 0 12px;line-height:1.65}
+.care-note a{text-decoration:underline;color:#A04F14;font-weight:600}

@@ -172,7 +172,15 @@ var AS_CONFIG = {
     });
   }
 
-  window.AS = { track: track, attribution: attribution, page: page };
+  window.AS = { money: money, track: track, attribution: attribution, page: page };
+  function money(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+  function initPrices() {
+    if (typeof AS_CONTENT === 'undefined') return;
+    [].slice.call(document.querySelectorAll('[data-price]')).forEach(function (el) {
+      var v = AS_CONTENT.prices[el.getAttribute('data-price')];
+      if (v) el.textContent = money(v);
+    });
+  }
   function announce() {
     if (typeof AS_CONTENT === 'undefined') return;
     var a = AS_CONTENT.announcement, bar = document.querySelector('.topbar[data-announce]');
@@ -181,7 +189,7 @@ var AS_CONFIG = {
   }
   function ready() {
     tagAll(); floatingWA(); initVideos(); initReveal();
-    (typeof AS_READY !== 'undefined' ? AS_READY : Promise.resolve()).then(function () { initTestimonials(); announce(); });
+    (typeof AS_READY !== 'undefined' ? AS_READY : Promise.resolve()).then(function () { initTestimonials(); announce(); initPrices(); });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready); else ready();
 })();

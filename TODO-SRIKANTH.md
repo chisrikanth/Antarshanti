@@ -3,12 +3,18 @@
 Living list. Newest items are added at the top of each section; tick items off by changing `[ ]` to `[x]`.
 Last updated: 17 Nov 2026.
 
+## Check-in wording to approve
+- The helpline shown to someone in distress is now **only Tele-MANAS (14416)** with its official website `telemanas.mohfw.gov.in` (found via a secondary source; please click it once to confirm), plus "call 112 if in immediate danger". KIRAN and Vandrevala were removed at your request.
+- "Talk to Srikanth on WhatsApp" is at the top of every check-in screen and again at the bottom of the results.
+- Results say: keep gently watching how you feel; see a qualified doctor or counsellor if it stays heavy; Sudarshan Kriya is mentioned only as something many people enjoy to unwind. No program is pitched to someone whose answers raised the safety flag.
+
 ## Do these first (only you can)
 - [ ] **Create Razorpay TEST keys** (Razorpay dashboard → switch to *Test Mode* → Account & Settings → API Keys → Generate Test Key). You get a Key ID `rzp_test_...` and a secret.
 - [ ] **Add 4 variables in Netlify, with a different value per deploy context** (Environment variables → Add a variable → *Different value for each deploy context*). The exact table is in `docs/RELEASE-PROCESS.md`:
   - `SUPABASE_URL`: production `https://kntohzyxzoucymrmriva.supabase.co`; previews and branch deploys `https://rnofqxmfwqiogtlchkbp.supabase.co`.
   - `SUPABASE_SERVICE_KEY`: the **service_role** key of each project (Supabase → project → Project Settings → API Keys). I cannot see these and they never go in the repo.
   - `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`: live for Production, test for previews and branch deploys.
+  - `RAZORPAY_WEBHOOK_SECRET`: a long random text you choose; add the webhook in Razorpay (live and test mode) as described in `docs/PAYMENTS-AND-PRICES.md`.
   A mistake here cannot move real money or write to the wrong database: the server refuses and shows an error.
 - [ ] **Open the Netlify preview** of this branch and click through every page on your phone, then tell me what to change.
 - [ ] **Send the Happiness registration link** whenever you have it (I will add the batch).

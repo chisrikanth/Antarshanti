@@ -8,6 +8,7 @@
 
 const https = require('https');
 const { paymentKeyProblem } = require('./lib/env');
+const { config: dbConfig, rest, getPrice } = require('./lib/db');
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
@@ -38,15 +39,19 @@ exports.handler = async function (event) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON body' }) };
   }
 
-  const amount = parseInt(payload.amount, 10);
-  const currency = payload.currency || 'INR';
+  // The browser only says WHICH service. The price is looked up here, on the server, so it cannot be
+  // tampered with. (Any "amount" sent by the browser is ignored.)
+  const service = String(payload.service || 'bach_consultation').slice(0, 60);
+  const price = await getPrice(event, service);
+  if (price.error) {
+    return { statusCode: price.status || 400, body: JSON.stringify({ error: price.error }) };
+  }
+  const amount = price.amountInr * 100;   // paise
+  const currency = 'INR';
+  const slot = payload.slot ? String(payload.slot).slice(0, 120) : '';
   const receipt = (payload.receipt || ('rcpt_' + Date.now())).toString().slice(0, 40);
 
-  if (!amount || amount <= 0) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Invalid amount' }) };
-  }
-
-  const orderData = JSON.stringify({ amount: amount, currency: currency, receipt: receipt });
+  const orderData = JSON.stringify({ amount: amount, currency: currency, receipt: receipt, notes: { service: service, slot: slot } });
   const auth = Buffer.from(keyId + ':' + keySecret).toString('base64');
 
   const options = {
@@ -85,13 +90,26 @@ exports.handler = async function (event) {
       req.end();
     });
 
+    // Record the expected amount so the webhook can check what was actually paid (best effort).
+    const cfg = dbConfig(event);
+    if (cfg) {
+      try {
+        await rest(cfg, 'payments?on_conflict=razorpay_order_id', {
+          method: 'POST',
+          headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+          body: JSON.stringify({ razorpay_order_id: order.id, service_key: service, amount_inr: price.amountInr, slot_label: slot || null, status: 'created' })
+        });
+      } catch (e) { console.error('payment log failed:', e.message); }
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify({
         key_id: keyId,            // public Key ID, so the page uses whichever key this deploy context has
         order_id: order.id,
         amount: order.amount,
-        currency: order.currency
+        currency: order.currency,
+        price_inr: price.amountInr
       })
     };
   } catch (err) {

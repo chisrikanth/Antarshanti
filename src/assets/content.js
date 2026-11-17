@@ -7,7 +7,7 @@
 /* AS_SUPABASE (url + publishable key) is generated per environment into assets/env.js at build time. */
 if (typeof AS_SUPABASE === 'undefined') { var AS_SUPABASE = { url: '', anonKey: '' }; }
 
-var AS_CONTENT = { batches: [], testimonials: { home: [], jyotish: [], bach: [], happiness: [] }, announcement: null, links: { whatsapp: '919985133161' } };
+var AS_CONTENT = { batches: [], testimonials: { home: [], jyotish: [], bach: [], happiness: [] }, announcement: null, prices: {}, links: { whatsapp: '919985133161' } };
 
 var AS_READY = (function () {
   function live(b) {
@@ -19,6 +19,7 @@ var AS_READY = (function () {
     if (!c) return;
     if (Array.isArray(c.batches)) AS_CONTENT.batches = c.batches.filter(live);
     if (c.testimonials) for (var k in c.testimonials) AS_CONTENT.testimonials[k] = c.testimonials[k] || [];
+    if (c.prices) for (var pk in c.prices) AS_CONTENT.prices[pk] = c.prices[pk];
     if (c.announcement && c.announcement.text) AS_CONTENT.announcement = c.announcement;
     if (c.links && c.links.whatsapp) AS_CONTENT.links.whatsapp = c.links.whatsapp;
   }
@@ -33,9 +34,11 @@ var AS_READY = (function () {
     return Promise.all([
       get(base + 'batches?select=*&order=sort.asc,starts_on.asc', h),
       get(base + 'testimonials?select=*&order=sort.asc', h),
-      get(base + 'site_settings?select=key,value', h)
+      get(base + 'site_settings?select=key,value', h),
+      get(base + 'services?select=key,amount_inr', h)
     ]).then(function (r) {
-      var out = { batches: [], testimonials: { home: [], jyotish: [], bach: [], happiness: [] }, links: {}, announcement: null };
+      var out = { batches: [], testimonials: { home: [], jyotish: [], bach: [], happiness: [] }, links: {}, prices: {}, announcement: null };
+      r[3].forEach(function (sv) { out.prices[sv.key] = sv.amount_inr; });
       r[0].forEach(function (b) {
         out.batches.push({ date: b.date_label, time: b.time_label, mode: b.mode, language: b.language, seats: b.seats, fee: b.fee_label, registerUrl: b.register_url, end: b.ends_on });
       });
