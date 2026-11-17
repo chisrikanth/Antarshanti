@@ -45,7 +45,7 @@ exports.handler = async function (event) {
   const service = String(payload.service || 'bach_consultation').slice(0, 60);
   const price = await getPrice(event, service);
   if (price.error) {
-    return { statusCode: price.status || 400, body: JSON.stringify({ error: price.error }) };
+    return { statusCode: price.status || 400, body: JSON.stringify({ code: price.code, error: price.error }) };
   }
   const amount = price.amountInr * 100;   // paise
   const currency = 'INR';
@@ -59,9 +59,9 @@ exports.handler = async function (event) {
   if (cfg) {
     const schedule = await loadSchedule(cfg, event);
     const check = checkSlot(payload.slot_start, schedule);
-    if (!check.ok) return { statusCode: check.status, body: JSON.stringify({ error: check.error }) };
+    if (!check.ok) return { statusCode: check.status, body: JSON.stringify({ code: check.code, error: check.error }) };
     const held = await reserve(cfg, { service_key: service, slot_start: check.date.toISOString(), status: 'held', hold_expires_at: new Date(Date.now() + HOLD_MINUTES * 60000).toISOString() });
-    if (held.taken) return { statusCode: 409, body: JSON.stringify({ error: 'Sorry, that time was just taken. Please pick another.' }) };
+    if (held.taken) return { statusCode: 409, body: JSON.stringify({ code: 'slot_taken', error: 'Sorry, that time was just taken. Please pick another.' }) };
     if (held.error) console.error(held.error); else bookingId = held.id;
   }
 

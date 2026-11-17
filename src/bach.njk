@@ -100,10 +100,10 @@ navKey: "bach"
   </div>
 </div>
 <script src="/assets/booking.js"></script>
-<script>var T = {{ b | dump | safe }}, K = {{ k | dump | safe }};</script>
+<script>var T = {{ b | dump | safe }}, K = {{ k | dump | safe }}, LANG = '{{ lang.code }}';</script>
 {% raw %}<script>
 (function(){
-  ASBook.setT(T);
+  ASBook.setT(T,LANG);
   var SLOTS = {"Mon": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Wed": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Fri": ["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "05:00 PM", "06:00 PM"], "Sat": ["09:00 AM", "10:00 AM", "11:00 AM", "03:00 PM", "04:00 PM", "05:00 PM"]};
   // ── Razorpay. Key ID is public and safe here. The SECRET goes only in
   //    Netlify env vars (RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET). ───────────
@@ -178,7 +178,7 @@ navKey: "bach"
       var st=ASBook.state(selDay,t);
       s.className='slot'+(t===selTime?' selected':'')+(st!=='free'?' taken':'');
       if(st==='taken') s.title=T.taken;
-      s.textContent=t;
+      s.textContent=ASBook.timeLabel(t);
       s.onclick=st!=='free'?null:function(){
         selTime=t; renderSlots();
         if(window.AS) AS.track('slot_selected',{label:SESSION_EN});
@@ -189,7 +189,7 @@ navKey: "bach"
   }
   function showConfirm(){
     if(!selDay||!selTime) return;
-    slotText=ASBook.fmt(T.at,{date:ASBook.dateLabel(selDay),time:selTime});
+    slotText=ASBook.fmt(T.at,{date:ASBook.dateLabel(selDay),time:ASBook.timeLabel(selTime)});
     document.getElementById('confirm-text').textContent=ASBook.fmt(T.confirmLine,{session:selSession,slot:slotText});
     setStatus('',true);
     document.getElementById('bconfirm').className='booking-confirm show';
@@ -216,7 +216,7 @@ navKey: "bach"
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({service:'bach_consultation',slot:SESSION_EN+' — '+slotText,slot_start:ASBook.iso(selDay,selTime),receipt:'bach_'+Date.now()})
     })
-    .then(function(r){ if(!r.ok) return r.json().then(function(j){ var e=new Error((j&&j.error)||'order-failed'); e.server=true; e.status=r.status; throw e; },function(){ throw new Error('order-failed'); }); return r.json(); })
+    .then(function(r){ if(!r.ok) return r.json().then(function(j){ var e=new Error((j&&j.error)||'order-failed'); e.server=true; e.j=j; e.status=r.status; throw e; },function(){ throw new Error('order-failed'); }); return r.json(); })
     .then(function(order){
       var rzp=new Razorpay({
         key:order.key_id||RAZORPAY_KEY_ID,
@@ -262,7 +262,7 @@ navKey: "bach"
     .catch(function(err){
       setPayBtnState(false);
       if(err&&err.status===409){ selTime=null; document.getElementById('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
-      setStatus(err&&err.server&&err.message!=='order-failed'?('⚠ '+err.message):K.startFail,false);
+      var em=err&&err.server&&err.message!=='order-failed'?ASBook.err(err.j):null; setStatus(em?('⚠ '+em):K.startFail,false);
     });
   }
   document.getElementById('pay-btn').addEventListener('click',payNow);

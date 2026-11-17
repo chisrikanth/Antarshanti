@@ -36,11 +36,21 @@ window.ASBook = (function () {
   }
   function dayHasFree(date, times) { return times.some(function (t) { return state(date, t) === 'free'; }); }
   // Words shown in the visitor's language (set by each page from its language file); English if not set.
-  var T = null;
-  function setT(t) { T = t; }
+  var T = null, LANG = 'en';
+  function setT(t, lang) { T = t; LANG = lang || 'en'; }
+  // Server messages arrive with a code: show the visitor's-language text for it, else a plain generic line, else the server's own words.
+  function err(j) { var e = T && T.errors; if (e && j && e[j.code]) return e[j.code]; if (e && LANG !== 'en' && e.generic) return e.generic; return (j && j.error) || null; }
+  // '09:00 AM' (as used by the schedule) shown as e.g. 'ఉదయం 9:00' when the page language has day-period words.
+  function timeLabel(t) {
+    if (!T || !T.timeFmt || !T.periods) return t;
+    var m = /(\d+):(\d+)\s*(AM|PM)/i.exec(t); if (!m) return t;
+    var h24 = (+m[1]) % 12 + (/PM/i.test(m[3]) ? 12 : 0), p = T.periods;
+    var period = h24 < 4 ? p.night : h24 < 12 ? p.morning : h24 < 16 ? p.noon : h24 < 20 ? p.evening : p.night;
+    return fmt(T.timeFmt, { period: period, h: (+m[1]), hh: pad(+m[1]), m: m[2], ap: m[3].toUpperCase() });
+  }
   function fmt(str, vars) { return String(str).replace(/\{(\w+)\}/g, function (m, k) { return vars && vars[k] != null ? vars[k] : m; }); }
   function dayName(date) { return (T ? T.days : DAYS)[date.getDay()]; }
   function monthName(date) { return (T ? T.months : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'])[date.getMonth()]; }
   function dateLabel(date) { return fmt(T ? T.dateFmt : '{day}, {d} {month}', { day: dayName(date), d: date.getDate(), month: monthName(date) }); }
-  return { setT: setT, fmt: fmt, dayName: dayName, monthName: monthName, dateLabel: dateLabel, timesFor: timesFor, load: load, iso: iso, state: state, dayHasFree: dayHasFree, slotsFromRules: slotsFromRules };
+  return { setT: setT, err: err, timeLabel: timeLabel, fmt: fmt, dayName: dayName, monthName: monthName, dateLabel: dateLabel, timesFor: timesFor, load: load, iso: iso, state: state, dayHasFree: dayHasFree, slotsFromRules: slotsFromRules };
 })();

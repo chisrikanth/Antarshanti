@@ -54,14 +54,14 @@ async function loadSchedule(cfg, event) {
 function checkSlot(slotIso, schedule, now) {
   now = now || new Date();
   const date = new Date(slotIso);
-  if (!slotIso || typeof slotIso !== 'string' || isNaN(date)) return { ok: false, status: 400, error: 'Please choose a time slot.' };
+  if (!slotIso || typeof slotIso !== 'string' || isNaN(date)) return { ok: false, status: 400, code: 'choose_slot', error: 'Please choose a time slot.' };
   const t = istParts(date);
-  if (date.getUTCSeconds() !== 0) return { ok: false, status: 400, error: 'That is not a valid time slot.' };
-  if (schedule.mode === 'calendar') { if (!schedule.slotSet.has(date.getTime())) return { ok: false, status: 400, error: 'That time is not open for booking. Please pick one of the available times.' }; }
-  else if (!(schedule.rules[t.weekday] || []).includes(t.hm)) return { ok: false, status: 400, error: 'That is not one of Srikanth\'s available times.' };
-  if (schedule.blocked.includes(t.ymd)) return { ok: false, status: 409, error: 'Srikanth is not available on that day. Please pick another.' };
-  if (date.getTime() < now.getTime() + MIN_LEAD_MINUTES * 60000) return { ok: false, status: 400, error: 'That time is too soon to book online. Please pick a later slot, or message Srikanth on WhatsApp.' };
-  if (date.getTime() > now.getTime() + MAX_DAYS_AHEAD * 86400000) return { ok: false, status: 400, error: 'That date is too far ahead to book yet.' };
+  if (date.getUTCSeconds() !== 0) return { ok: false, status: 400, code: 'invalid_slot', error: 'That is not a valid time slot.' };
+  if (schedule.mode === 'calendar') { if (!schedule.slotSet.has(date.getTime())) return { ok: false, status: 400, code: 'not_open', error: 'That time is not open for booking. Please pick one of the available times.' }; }
+  else if (!(schedule.rules[t.weekday] || []).includes(t.hm)) return { ok: false, status: 400, code: 'not_open', error: 'That is not one of Srikanth\'s available times.' };
+  if (schedule.blocked.includes(t.ymd)) return { ok: false, status: 409, code: 'day_blocked', error: 'Srikanth is not available on that day. Please pick another.' };
+  if (date.getTime() < now.getTime() + MIN_LEAD_MINUTES * 60000) return { ok: false, status: 400, code: 'too_soon', error: 'That time is too soon to book online. Please pick a later slot, or message Srikanth on WhatsApp.' };
+  if (date.getTime() > now.getTime() + MAX_DAYS_AHEAD * 86400000) return { ok: false, status: 400, code: 'too_far', error: 'That date is too far ahead to book yet.' };
   return { ok: true, date };
 }
 

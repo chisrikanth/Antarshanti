@@ -132,10 +132,10 @@ navKey: "jyotish"
   </div>
 </div>
 <script src="/assets/booking.js"></script>
-<script>var T = {{ b | dump | safe }}, K = {{ k | dump | safe }};</script>
+<script>var T = {{ b | dump | safe }}, K = {{ k | dump | safe }}, LANG = '{{ lang.code }}';</script>
 {% raw %}<script>
 (function(){
-  ASBook.setT(T);
+  ASBook.setT(T,LANG);
   var SLOTS = {"Mon": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Wed": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Fri": ["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "05:00 PM", "06:00 PM"], "Sat": ["09:00 AM", "10:00 AM", "11:00 AM", "03:00 PM", "04:00 PM", "05:00 PM"]};
   // ── Contribution model: no fixed fee. Set your UPI ID here. ──────────────
   var UPI_ID   = "chivukula.srikanth@ybl";   // e.g. srikanth@ybl
@@ -209,7 +209,7 @@ navKey: "jyotish"
       var st=ASBook.state(selDay,t);
       s.className='slot'+(t===selTime?' selected':'')+(st!=='free'?' taken':'');
       if(st==='taken') s.title=T.taken;
-      s.textContent=t;
+      s.textContent=ASBook.timeLabel(t);
       s.onclick=st!=='free'?null:function(){
         selTime=t; renderSlots();
         if(window.AS) AS.track('slot_selected',{label:K.track});
@@ -220,7 +220,7 @@ navKey: "jyotish"
   }
   function showConfirm(){
     if(!selDay||!selTime) return;
-    slotText=ASBook.fmt(T.at,{date:ASBook.dateLabel(selDay),time:selTime});
+    slotText=ASBook.fmt(T.at,{date:ASBook.dateLabel(selDay),time:ASBook.timeLabel(selTime)});
     document.getElementById('confirm-text').textContent=ASBook.fmt(T.confirmLine,{session:selSession,slot:slotText});
     var u=document.getElementById('upi-btn');
     u.href='upi://pay?pa='+encodeURIComponent(UPI_ID)+'&pn='+encodeURIComponent(UPI_NAME)+'&cu=INR';
@@ -251,7 +251,7 @@ navKey: "jyotish"
         w.removeAttribute('data-wa-tagged');
         if(window.AS) AS.track('slot_held',{label:K.track});
       } else {
-        st.textContent=x.j&&x.j.error?x.j.error:K.failed;
+        st.textContent=ASBook.err(x.j)||K.failed;
         if(x.status===409){ selTime=null; document.getElementById('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
       }
     }).catch(function(){ btn.disabled=false; btn.textContent=K.holdBtn; st.textContent=K.unreachable; });

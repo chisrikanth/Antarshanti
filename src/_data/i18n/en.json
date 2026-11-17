@@ -545,7 +545,31 @@
   ],
   "dateFmt": "{day}, {d} {month}",
   "at": "{date} at {time} IST",
-  "confirmLine": "{session} — {slot}"
+  "confirmLine": "{session} — {slot}",
+  "timeFmt": "{hh}:{m} {ap}",
+  "periods": {
+   "morning": "AM",
+   "noon": "PM",
+   "evening": "PM",
+   "night": "PM"
+  },
+  "errors": {
+   "choose_slot": "Please choose a time slot.",
+   "invalid_slot": "That is not a valid time slot.",
+   "not_open": "That time is not open for booking. Please pick one of the available times.",
+   "day_blocked": "Srikanth is not available on that day. Please pick another.",
+   "too_soon": "That time is too soon to book online. Please pick a later slot, or message Srikanth on WhatsApp.",
+   "too_far": "That date is too far ahead to book yet.",
+   "slot_taken": "Sorry, that time was just taken. Please pick another.",
+   "name": "Please enter your name.",
+   "phone": "Please enter a valid WhatsApp number.",
+   "consent": "Please tick the box so Srikanth may contact you about this booking.",
+   "unavailable": "Online booking is not available right now. Please message Srikanth on WhatsApp.",
+   "service_closed": "This service is not open for online booking right now. Please message Srikanth on WhatsApp.",
+   "too_many": "You already have two open requests. Please message Srikanth on WhatsApp to change them.",
+   "hold_failed": "Could not hold the slot. Please try again or message Srikanth on WhatsApp.",
+   "generic": "Something went wrong. Please try again, or message Srikanth on WhatsApp."
+  }
  },
  "jyotish": {
   "seoTitle": "Vedic Astrology (Jyotish) Consultation Online | Antarshanti Healing",

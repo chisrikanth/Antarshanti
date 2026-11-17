@@ -30,7 +30,7 @@ async function getPrice(event, service) {
       if (res.ok) {
         const rows = await res.json();
         if (rows.length) return { amountInr: rows[0].amount_inr, source: 'database' };
-        return { error: 'This service is not open for online booking right now. Please message Srikanth on WhatsApp.', status: 404 };
+        return { error: 'This service is not open for online booking right now. Please message Srikanth on WhatsApp.', code: 'service_closed', status: 404 };
       }
       console.error('price lookup failed:', res.status);
     } catch (e) { console.error('price lookup error:', e.message); }
