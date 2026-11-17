@@ -321,7 +321,7 @@ function computeAndRenderResults(){
 --------------------------------------------------------- */
 const NEXT = {
   sky:  { ...T.next.sky,  url:URL_HAPPINESS + '#register',  path:'happiness', yt:'gWwhIPAajfw' },
-  bach: { ...T.next.bach, url:'/bach.html#booking-widget', path:'bach',      yt:'Cm5DVzkOo_U' }
+  bach: { ...T.next.bach, url:'{{ 'bach.html' | lhref(lang.code) }}#booking-widget', path:'bach',      yt:'Cm5DVzkOo_U' }
 };
 function suggestLead(domainScores){
   const pct = {};

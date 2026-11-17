@@ -1,5 +1,24 @@
 # Telugu and Hindi: status and how to get them reviewed
 
+## Where each page's notes are (start here)
+Every page has its own list of doubts, written by the translator at the time. Each row says: the key in the language file | what was used | why unsure | alternative. Go page by page.
+
+| Page | Telugu and Hindi notes are in |
+|---|---|
+| Free check-in | Part 1 (check-in), plus the plain-words list in Part 3 |
+| Home | Part 2 |
+| Happiness Program | Part 2 |
+| Jyotish (with its booking widget) | Part 3 |
+| Bach Flower (with its booking widget and payment messages) | Part 3 |
+| Booking widget words shared by both (days, months, buttons) | Part 3 |
+| Privacy Policy | Part 4 |
+| Terms of Use | Part 4 |
+| Refund Policy | Part 4 |
+| Check-in plain-words changes, all pages | Part 3 ("Plain-words pass") |
+
+**How to give feedback:** send "page, item number or key, your replacement". Or edit `src/_data/i18n/te.json` / `hi.json` yourself (keys are named in every row). Nothing goes live until the flags in `src/_data/i18n/review.json` are set to true.
+
+
 ## What exists now
 | Part | English | Telugu | Hindi |
 |---|---|---|---|
@@ -8,7 +27,7 @@
 | **Home page** | done | **draft** | **draft** |
 | **Happiness Program page** (incl. batch cards, FAQ, video captions) | done | **draft** | **draft** |
 | **Jyotish and Bach Flower pages** (with booking widgets, FAQs) | done | **draft** | **draft** |
-| Privacy, terms, refund pages | done | not yet | not yet |
+| **Privacy, Terms and Refund pages** | done | **draft** | **draft** |
 
 Draft means: translated by an AI assistant, **not yet read by a native speaker**. Because this is a mental-wellbeing tool, nothing in Telugu or Hindi goes on antarshanti.co.in until a person you trust has read it.
 
@@ -64,7 +83,7 @@ Draft means: translated by an AI assistant, **not yet read by a native speaker**
 Easiest: the reviewer sends a list ("replace X with Y"), and you paste it to Claude. Or edit the file directly on GitHub: `src/_data/i18n/te.json` or `hi.json` (the English master is `en.json`, keys are identical). Never change anything inside `{braces}` or HTML tags.
 
 ## Next translation steps
-1. Privacy, terms and refund pages (legal wording: needs a careful reviewer).
+1. Nothing left to translate on the site pages. Remaining: server messages, and re-translating whenever the English changes.
 3. Privacy, terms and refund pages (these need a careful, ideally professional translation).
 4. WhatsApp pre-filled messages on those pages.
 
@@ -407,3 +426,205 @@ booking.headerSub | सेशन का प्रकार चुनिए, त�
 jyotish.book.waMsg | नमस्ते श्रीकांत जी, मेरा नाम {name} है। ... | Used "मेरा नाम ... है" instead of "मैं {name} हूँ" to avoid gender markers. | "मैं {name} बोल रहा/रही हूँ"
 jyotish.book.steps[1] | मैं 24 घंटे के अंदर कन्फ़र्म कर देता हूँ। | Masculine first-person verb for Srikanth, as asked. | None
 All visitor WhatsApp messages | "मुझे ... बुक करना है / जानना है" | Gender-neutral on purpose (matches hi.json style "मुझे ... रजिस्टर करना है"). | None
+
+
+---
+
+# Part 4: Privacy Policy, Terms of Use, Refund Policy (added 17 Nov 2026)
+
+Staging links: `/te/privacy`, `/hi/privacy`, `/te/terms`, `/hi/terms`, `/te/refund`, `/hi/refund`. These three pages are still marked "noindex" (draft) in English, so they are hidden from Google until you approve the English text. The translations follow whatever the English says.
+
+## Read this first
+1. **Have a lawyer read the English first.** These are legal documents. Any change to the English later means the Telugu and Hindi must be updated to match.
+2. **I added a short note at the top of each translated legal page** (Telugu and Hindi only): "This page is translated to help you read it. If the translation and the English version ever differ, the English version applies." This is a protective choice that you or your lawyer should confirm. Delete it from `legal.translationNote` in `te.json`/`hi.json` if you do not want it.
+3. Each translator also made a list of **legal-sensitive points**: places where a small change in nuance could change the legal meaning (consent, withdrawal, erasure, liability, courts, refund timing, children). Please have the reviewer look at those first. They are at the end of each language's list below.
+4. A small thing to check in Telugu: the refund line "24 గంటలు లేదా అంతకంటే ముందు" must read as "24 hours or more before", not "exactly 24 hours". And "18 ఏళ్ల లోపు" must read as "under 18".
+5. Names written in English letters (Razorpay, Supabase, Netlify, Google Analytics, KIRAN, UPI) stay that way. Tele-MANAS is spelled "టెలి-మానస్" on the check-in page; if the legal pages spell it differently, please pick one spelling.
+
+## Telugu: doubts on Privacy, Terms, Refund
+
+Format: key path | Telugu phrase used | why unsure | alternative
+
+General note: ZWNJ joiners were added before case endings after English loanwords, as in te.json (వాట్సాప్‌లో, ఆన్‌లైన్‌లో, సైట్‌ను). Names with an existing te.json spelling (వాట్సాప్, ఆర్ట్ ఆఫ్ లివింగ్, హైదరాబాద్) use that spelling. Names the brief said to keep (Razorpay, Supabase, Netlify, Google Analytics, Meta Pixel, Plausible, UPI, DPDP Act, Data Protection Board of India, Tele-MANAS, KIRAN) stay in English letters.
+
+### Privacy
+
+key path | Telugu phrase used | why unsure | alternative
+---|---|---|---
+privacy.h1 / seoTitle | గోప్యతా విధానం | Footer in te.json says only "గోప్యత". "గోప్యతా విధానం" is the usual website heading but a bit formal | ప్రైవసీ పాలసీ
+privacy.sections.0.html | ఉచిత 5 నిమిషాల చెక్-ఇన్ | English says "free 5-minute wellbeing check-in"; I used the te.json name and dropped "wellbeing" | ఉచిత 5 నిమిషాల వెల్‌బీయింగ్ చెక్-ఇన్
+privacy.sections.0.html | Digital Personal Data Protection Act, 2023 (DPDP Act) | Kept in English as the brief asked; a Telugu sentence around an English law name reads a little mixed | డిజిటల్ వ్యక్తిగత డేటా రక్షణ చట్టం, 2023
+privacy.sections.0.html | మీ వివరాలను ఎందుకు, ఎలా వాడాలో శ్రీకాంతే నిర్ణయిస్తారు | English "decides why and how your information is used" (the DPDP "data fiduciary" idea). Plain wording used, no legal term | డేటా ఫిడ్యూషియరీ అయిన శ్రీకాంత్ (too legal)
+privacy.sections.1.html | సమాధానాలు, స్కోర్లు, పేరు, వాట్సాప్ నంబర్ ... మా దగ్గర ఉంటాయి (check-in bullet) | English "we store"; I used "మా దగ్గర ఉంటాయి" (stay with us) which is softer than "we store" | మేము సేవ్ చేస్తాం
+privacy.sections.1.html | నమోదు చేసుకుంటాం (utm values) | "we note them"; "నమోదు" is slightly formal | రాసుకుంటాం / సేవ్ చేసుకుంటాం
+privacy.sections.1.html | వెబ్‌సైట్ వాడకం లెక్కలు (అనలిటిక్స్) | "Usage analytics". Added "అనలిటిక్స్" in brackets so it matches the tool names below | కేవలం "అనలిటిక్స్"
+privacy.sections.1.html | గుర్తింపు కోడ్‌లు | "similar identifiers" (cookies and the like). No common Telugu term | ఐడెంటిఫైయర్లు
+privacy.sections.1.html | జ్యోతిష్య విరాళం (bullet heading) | English "Jyotish contributions"; te.json uses "విరాళం" for donation-based | జ్యోతిష్య సహకారం
+privacy.sections.1.html | ఈ సైట్ వాటిని ఎప్పుడూ చూడదు, సేవ్ చేసుకోదు | "never sees or stores"; "సేవ్ చేసుకోదు" used instead of a heavier word for "store" | భద్రపరచదు (owner dislikes)
+privacy.sections.3.html | మేనేజ్డ్ డేటాబేస్ సర్వీస్ | "managed database service" kept as loanwords | డేటాబేస్ సేవ
+privacy.sections.4.html | ఎవరివో గుర్తుపట్టలేని విధంగా మార్చేస్తాం | English "anonymise". Explained in plain words; longer than the original | పేరు, నంబర్ లేకుండా మార్చేస్తాం
+privacy.sections.4.html | ఆ తర్వాత | English "After that" is slightly open (after you ask / he clears). Kept the same loose link | -
+privacy.sections.5.html | మేము దాన్ని పరిశీలించేలా చూడటం | "have it looked at" (complaint). Awkward but literal | మా పరిశీలన కోరడం
+privacy.sections.5.html | అది నిజంగా మీరేనా అని చెక్ చేసుకోవాల్సి రావచ్చు | "confirm it is really you". Everyday, not "ధృవీకరించు" | నిర్ధారించుకోవాల్సి రావచ్చు
+privacy.sections.6.html | తల్లిదండ్రులు లేదా గార్డియన్ | "guardian" as English loanword (people say గార్డియన్) | సంరక్షకులు (heavier)
+privacy.sections.7.html | Tele-MANAS / KIRAN హెల్ప్‌లైన్ | Kept in English letters as the brief said, but te.json check-in page writes "టెలి-మానస్". Site will show two spellings | టెలి-మానస్
+privacy.sections.7.html | ఇది అత్యవసర పరిస్థితికి స్పందించలేదు | "cannot respond to a crisis". Plain, but a bit blunt | ఇది అత్యవసర సమయంలో తోడుగా ఉండలేదు
+privacy.sections.7.html | మిమ్మల్ని మీరు బాధపెట్టుకోవాలనే ఆలోచనలు | Same phrase as te.json check-in ("harming yourself") | -
+privacy.sections.9.html | నంబర్‌కు కాల్ చేయండి | English "call"; kept "కాల్ చేయండి" | ఫోన్ చేయండి
+
+### Terms
+
+key path | Telugu phrase used | why unsure | alternative
+---|---|---|---
+terms.h1 / seoTitle / privacy link text | వినియోగ నిబంధనలు | Standard website heading but "వినియోగ" is a bit bookish. te.json footer says only "నిబంధనలు" | వాడుక నిబంధనలు; నిబంధనలు
+terms.intro | వీటిని మీరు అంగీకరించినట్టే | "you agree to them". "అంగీకరించు" is common in apps and newspapers but slightly formal | వీటికి ఒప్పుకున్నట్టే
+terms.sections.0.html | అదనపు వెల్‌నెస్ సేవలు | "complementary wellness services"; te.json uses "అదనపు" for complementary | కాంప్లిమెంటరీ వెల్‌నెస్ సేవలు
+terms.sections.0.html | వైద్య, మానసిక, న్యాయ లేదా ఆర్థిక సలహా | "psychological" as "మానసిక" (as in te.json footer); can be read as "mental" | మానసిక ఆరోగ్య సలహా
+terms.sections.0.html | నయం చేస్తామని, చికిత్స చేస్తామని, రాకుండా చేస్తామని మేము చెప్పుకోం | "claim to cure, treat or prevent". Three verbs kept separate | -
+terms.sections.1.html | ఇది జరిగే సంఘటనలను ఖచ్చితంగా చెప్పదు | "does not predict events with certainty". Could be read as "never predicts"; I kept "ఖచ్చితంగా" (with certainty) so the sense is the same | కచ్చితంగా (everyday spelling)
+terms.sections.1.html | షరతు | "condition of a consultation". Everyday word | నిబంధన
+terms.sections.1.html | ఫిక్స్‌డ్ ఫీజు లేదు | Same as te.json | నిర్ణీత రుసుము (heavy)
+terms.sections.2.html | ₹1,000 (written for "Rs 1,000") | Allowed by brief | రూ. 1,000
+terms.sections.5.html | IST (భారత సమయం) | English has "Indian Standard Time (IST)" | భారత ప్రామాణిక సమయం (IST)
+terms.sections.6.html | సైట్‌ను దుర్వినియోగం చేయకండి | "Do not misuse the site"; "దుర్వినియోగం" is fairly common but heavy | సైట్‌ను తప్పుగా వాడకండి
+terms.sections.6.html | చట్టవిరుద్ధమైనదేదైనా | "anything unlawful"; one long word | చట్టానికి వ్యతిరేకమైనది ఏదైనా
+terms.sections.7.html | మేము బాధ్యులం కాదు | "we are not liable". Common newspaper form | మాది బాధ్యత కాదు
+terms.sections.7.html | చట్టం అనుమతించిన మేరకు | "as far as the law allows" | చట్టం ఒప్పుకున్నంత వరకు
+terms.sections.7.html | పరిమితం చేయలేని మీ ఏ హక్కునూ ఈ నిబంధనలు పరిమితం చేయవు | "limits any right ... that cannot be limited by law". "పరిమితం" repeated twice on purpose | తగ్గించలేని ... తగ్గించవు
+terms.sections.11.html | హైదరాబాద్‌లోని కోర్టులకు విచారణ చేసే అధికారం (పరిధి) ఉంటుంది | "have jurisdiction". Kept non-exclusive, as in English (did not write "only" / "ప్రత్యేక") | హైదరాబాద్ కోర్టుల పరిధిలో ఉంటుంది (could read as exclusive)
+terms.sections.11.html | భారతదేశ చట్టాలు వర్తిస్తాయి | "governed by the laws of India" | భారత చట్టాల ప్రకారం నడుస్తాయి
+
+### Refund
+
+key path | Telugu phrase used | why unsure | alternative
+---|---|---|---
+refund.h1 | రీఫండ్, రద్దు విధానం | English "Refund and Cancellation Policy"; "రద్దు" as in te.json ("పేమెంట్ రద్దయింది") | రీఫండ్, క్యాన్సిలేషన్ పాలసీ
+refund.sections.0.html | మీ స్లాట్‌కు 24 గంటలు లేదా అంతకంటే ముందు రద్దు చేస్తే | "24 or more hours before your slot". Telugu word order could be read as "24 hours before the slot" with the "or more" at the end; check this reads as at least 24 hours | మీ స్లాట్‌కు కనీసం 24 గంటల ముందు రద్దు చేస్తే
+refund.sections.0.html | రీషెడ్యూల్: ... ఒక్కసారి ఉచితంగా మార్చుకోవచ్చు | "move your booking once, free of charge". "ఒక్కసారి" = one time only | ఒకసారి మాత్రమే
+refund.sections.0.html | మేము రద్దు చేస్తే, లేదా మీ సెషన్ జరపలేకపోతే | "cancel or cannot hold your session" | మేము సెషన్ జరపలేకపోతే
+refund.sections.0.html | ఎలాంటి ఛార్జీ లేకుండా కొత్త స్లాట్ | "new slot at no charge" | అదనపు ఖర్చు లేకుండా
+refund.sections.0.html | మీరు మొదట చెల్లించిన పద్ధతికే | "original payment method" | అదే పేమెంట్ పద్ధతికి
+refund.sections.0.html | 5-7 పని రోజుల్లో | "working days". "పని రోజులు" is common in newspapers; some people say "వర్కింగ్ డేస్" | 5-7 వర్కింగ్ డేస్‌లో
+refund.sections.1.html | రీఫండ్ చేస్తాం లేదా కొత్తది ఇస్తాం | "refund or replace". The choice stays with us, as in English | -
+refund.sections.1.html | అది అందిన తర్వాత వీలైనంత త్వరగా | "as soon as you can after it arrives". No fixed deadline in English, none added | -
+refund.sections.2.html | మేము పరిశీలిస్తాం | "we will look into it". Deliberately does not promise a refund | మేము చూస్తాం (could sound like a promise)
+refund.sections.3.html | వారికి చేసిన చెల్లింపులను మేము రీఫండ్ చేయలేం | "we cannot refund payments made to them" | -
+
+### Legal-sensitive points (lawyer / reviewer please check these first)
+
+key path | Telugu phrase | what a wrong nuance would change
+---|---|---
+privacy.sections.2.html | మీ అనుమతిని మీరు ఎప్పుడైనా వెనక్కి తీసుకోవచ్చు; ... వెనక్కి తీసుకునేలోపు మేము చేసినవాటిని అది వెనక్కి తిప్పదు; చట్టం కోరితే, పేమెంట్ రికార్డులను మేము ఇంకా ఉంచుకోవచ్చు | Consent and withdrawal: right to withdraw "at any time", no retroactive effect, and the exception for payment records "if the law requires it". "ఇంకా ఉంచుకోవచ్చు" says we may keep, not that we must
+privacy.sections.2.html | మీరు ఒక నిర్దిష్ట కారణం కోసం వివరాలు ఇచ్చారు కాబట్టి వాటిని వాడతాం | Basis of consent: purpose-specific. "for a specific purpose" must not read as general consent
+privacy.sections.4.html | 12 నెలల వరకు ఉంచుతాం. మీరు అంతకంటే ముందే తొలగించమని కోరితే తొలగిస్తాం | Retention: "up to 12 months" and erasure on request. Payment records "as long as we need them for refunds, accounts and legal reasons" (no fixed period)
+privacy.sections.5.html | తొలగించమని కోరడం | Erasure right ("తొలగించు" = delete). Lawyer to confirm this is enough for the DPDP "erasure" right
+privacy.sections.5.html | సరిచేయమని కోరడం / మీ అనుమతిని వెనక్కి తీసుకోవడం / Data Protection Board of India దగ్గరకు తీసుకెళ్లవచ్చు | Correction, withdrawal and complaint rights listed exactly as in English. Board escalation is "may", only if not satisfied
+privacy.sections.5.html | అది నిజంగా మీరేనా అని చెక్ చేసుకోవాల్సి రావచ్చు | Identity check before acting on a request ("may need")
+privacy.sections.3.html | మీ వివరాలను మేము అమ్మం. పైన చెప్పినవారితో తప్ప, లేదా చట్టం కోరితే తప్ప, ఇతరులతో పంచుకోం | "We do not sell" and the only two exceptions to sharing
+privacy.sections.6.html | 18 ఏళ్ల లోపు ... పిల్లల తరఫున అనుమతి కూడా వారే ఇస్తారు | Children: age 18 and parent/guardian consent. "లోపు" means below 18; check it does not read as "up to and including 18"
+privacy.sections.7.html | helpline numbers and "ఇది అత్యవసర పరిస్థితికి స్పందించలేదు" | Safety note: must not suggest the check-in gives crisis help
+terms.sections.0.html | ఏ అనారోగ్యాన్నైనా నయం చేస్తామని, చికిత్స చేస్తామని, రాకుండా చేస్తామని మేము చెప్పుకోం; ఆరోగ్య ఫలితానికి హామీ అనుకోకండి | No cure/treatment/prevention claim and no promised outcome (also a guiding principle)
+terms.sections.1.html | ఏ ఫలితానికీ హామీ లేదు; విరాళం ఇవ్వడం, సంప్రదింపుకు ఎప్పుడూ షరతు కాదు | No guarantee; a contribution is never a condition
+terms.sections.2.html | ₹1,000 ... రెమెడీ బాటిల్ ... వేరుగా బిల్ చేస్తాం | Fee amount and that the remedy bottle is billed separately (optional)
+terms.sections.7.html | చట్టం అనుమతించిన మేరకు ... మేము బాధ్యులం కాదు ... పరిమితం చేయలేని మీ ఏ హక్కునూ ఈ నిబంధనలు పరిమితం చేయవు | Liability limit, "as far as the law allows", and the carve-out for rights that cannot be limited
+terms.sections.9.html | అప్‌డేట్ తర్వాత కూడా సైట్‌ను వాడితే, కొత్త నిబంధనలను మీరు అంగీకరించినట్టే | Acceptance of changes by continued use
+terms.sections.11.html | భారతదేశ చట్టాలు వర్తిస్తాయి; హైదరాబాద్‌లోని కోర్టులకు విచారణ చేసే అధికారం (పరిధి) ఉంటుంది | Governing law and jurisdiction. Kept non-exclusive as in English
+terms.sections.3.html | ఆర్ట్ ఆఫ్ లివింగ్ ... వారి నిబంధనలు, విధానాలే వర్తిస్తాయి | Third-party terms apply to Art of Living registration/donation
+refund.sections.0.html | మీ స్లాట్‌కు 24 గంటలు లేదా అంతకంటే ముందు రద్దు చేస్తే: పూర్తి రీఫండ్ | Refund threshold: 24 hours or more before the slot = full refund
+refund.sections.0.html | సెషన్ జరిగిన తర్వాత: రీఫండ్ ఉండదు | No refund after the session
+refund.sections.0.html | ఒక్కసారి ఉచితంగా మార్చుకోవచ్చు | Reschedule once only, free
+refund.sections.0.html | మేము రద్దు చేస్తే ... పూర్తి రీఫండ్ లేదా ... కొత్త స్లాట్, ఏదైనా మీరు ఎంచుకోవచ్చు | If we cancel, the choice is the customer's
+refund.sections.0.html | మీరు మొదట చెల్లించిన పద్ధతికే, 5-7 పని రోజుల్లో | Refund method and timing (5-7 working days)
+refund.sections.1.html | రవాణాలో అది దెబ్బతిని వస్తే, రీఫండ్ చేస్తాం లేదా కొత్తది ఇస్తాం | Damaged remedy bottle: refund or replace, photo and prompt notice asked
+refund.sections.2.html | రీఫండ్ ప్రక్రియ ఏదీ లేదు ... మేము పరిశీలిస్తాం | Jyotish: no refund process; mistaken or duplicate payments only "looked into", not promised
+refund.sections.3.html | వారికి చేసిన చెల్లింపులను మేము రీఫండ్ చేయలేం | Payments to Art of Living cannot be refunded by us
+legal.translationNote | ఇంగ్లీష్ వెర్షన్ వర్తిస్తుంది | English version prevails if there is a difference
+
+## Hindi: doubts on Privacy, Terms, Refund
+
+Conventions used (flip if you prefer): spellings follow hi.json (व्हाट्सऐप, आर्ट ऑफ़ लिविंग, टेली-मानस, हैदराबाद, श्रीकांत जी, रिफ़ंड, कैंसल, कंसल्टेशन, सेशन, फ़ीस, पेमेंट, बाख फ्लावर, चेक-इन). Razorpay, Supabase, Netlify, Google Analytics, Meta Pixel, Plausible, KIRAN, UPI, DPDP Act, Digital Personal Data Protection Act 2023 and Data Protection Board of India are kept in Latin script. The brief listed WhatsApp, Art of Living, Tele-MANAS and Hyderabad as names to keep untouched, but also asked to reuse hi.json spellings, which write them in Devanagari; I followed hi.json.
+
+### Privacy
+
+| Key path | Hindi phrase used | Why unsure | Alternative |
+|---|---|---|---|
+| privacy.sections.0.html | आपकी जानकारी किसलिए और कैसे इस्तेमाल होगी, यह श्रीकांत जी तय करते हैं | "decides why and how" is the DPDP "Data Fiduciary" idea; plain Hindi loses the technical term | "...के लिए श्रीकांत जी डेटा फ़िडूशियरी हैं" (too technical, not used) |
+| privacy.sections.0.html | "Digital Personal Data Protection Act, 2023 (DPDP Act)" kept in English | Mixed script inside a Hindi sentence | डिजिटल पर्सनल डेटा प्रोटेक्शन एक्ट, 2023 |
+| privacy.sections.1.html (check-in) | हम आपके जवाब और स्कोर सेव करते हैं | "answers and scores" literal; fine | जवाब और अंक |
+| privacy.sections.1.html (check-in) | अगर आप कहें तो श्रीकांत जी आपसे संपर्क कर सकें | "follow up if you ask him to": makes clear it is on the person's request | अगर आप चाहें कि वे आपसे बात करें |
+| privacy.sections.1.html (analytics) | कुकी या उसी तरह की पहचान | "cookies or similar identifiers"; "पहचान" may sound vague | कुकी या ऐसे ही दूसरे आइडेंटिफ़ायर |
+| privacy.sections.1.html (campaign tags) | कैंपेन टैग (utm_ वैल्यू) | Marketing jargon, kept as loanword | प्रचार के टैग |
+| privacy.sections.1.html (Jyotish) | ज्योतिष दान के आधार पर है | Same phrasing as hi.json ("दान के आधार पर"); "contribution" rendered as योगदान | दक्षिणा / भेंट (not used, more bookish) |
+| privacy.sections.2.h | आपकी सहमति और उसे वापस कैसे लें | "सहमति" is understood but slightly formal | मंज़ूरी / इजाज़त (hi.json footer uses इजाज़त) |
+| privacy.sections.2.html | सहमति वापस लेने से, उससे पहले हमने जो कुछ किया, वह रद्द नहीं हो जाता | Long sentence to keep "does not undo anything done before" exact | वापस लेने का असर पहले की बातों पर नहीं पड़ता |
+| privacy.sections.2.html | अगर कानून के हिसाब से ज़रूरी हो, तो हम पेमेंट के रिकॉर्ड फिर भी रख सकते हैं | "may still keep ... if the law requires" | कानून माँगे तो |
+| privacy.sections.3.html | शेयर करते हैं | "share" as loanword; the legal word would be साझा | साझा करते हैं |
+| privacy.sections.4.html | ऐसा बदल देते हैं कि उससे आपकी पहचान न हो सके | "anonymise" described, not a one-word term | गुमनाम कर देते हैं |
+| privacy.sections.4.html | ज़्यादा से ज़्यादा 12 महीने तक | "up to 12 months" | अधिकतम (bookish, not used) |
+| privacy.sections.5.html | कह सकते हैं कि हम आपकी जानकारी मिटा दें | "erasure" rendered as मिटा दें (plain) | हटा दें / डिलीट कर दें |
+| privacy.sections.5.html | हमसे शिकायत कर सकते हैं, और उसे देखा जाएगा | "have it looked at" is vague in English too; kept equally vague | हम उस पर गौर करेंगे |
+| privacy.sections.5.html | Data Protection Board of India के पास ले जा सकते हैं | Name kept in English | डेटा प्रोटेक्शन बोर्ड ऑफ़ इंडिया |
+| privacy.sections.6.html | माता-पिता या अभिभावक | "guardian"; अभिभावक is a bit formal | माता-पिता या गार्डियन |
+| privacy.sections.6.html | 18 साल से कम उम्र के लोगों के लिए नहीं है | "not directed at anyone under 18" | 18 साल से छोटे लोगों के लिए नहीं |
+| privacy.sections.7.html | यह किसी संकट में जवाब नहीं दे सकता | "cannot respond to a crisis"; संकट is slightly formal | मुश्किल घड़ी / इमरजेंसी में |
+| privacy.sections.9.html | रिक्वेस्ट | "requests" as loanword | अनुरोध |
+
+### Terms
+
+| Key path | Hindi phrase used | Why unsure | Alternative |
+|---|---|---|---|
+| terms.intro | साइट इस्तेमाल करने का मतलब है कि आप इनसे सहमत हैं | "By using the site, you agree" | साइट इस्तेमाल करके आप इन्हें मान लेते हैं |
+| terms.sections.0.html | कृपया उसे जारी रखिए | "keep following any treatment" | चलाते रहिए |
+| terms.sections.0.html | फ़ाइनेंशियल एडवाइज़र | loanword for "financial adviser" | पैसों का सलाहकार |
+| terms.sections.1.html | सोच-विचार के एक ढाँचे की तरह | "reflective framework"; same wording as hi.json jyotish | सोचने-समझने का एक तरीक़ा |
+| terms.sections.1.html | किसी घटना को पक्के तौर पर नहीं बताता | "does not predict events with certainty" | पक्की भविष्यवाणी नहीं करता |
+| terms.sections.1.html | योगदान देना कंसल्टेशन की कोई शर्त नहीं है | "never a condition of a consultation" | कंसल्टेशन के लिए योगदान देना ज़रूरी नहीं है |
+| terms.sections.2.html | रेमेडी की बोतल ... उसका बिल अलग से बनता है | "billed separately" | अलग से चार्ज होती है |
+| terms.sections.3.h/html | सेवा के रूप में, अपनी मर्ज़ी से सिखाते हैं | "voluntary service"; no exact everyday phrase | स्वयंसेवा के तौर पर / वॉलंटियर के तौर पर |
+| terms.sections.4.html | इमरजेंसी वाला नोट | "crisis note", pointing to Privacy heading | मदद वाला नोट |
+| terms.sections.5.html | भारतीय समय (IST) | "Indian Standard Time" | भारतीय मानक समय |
+| terms.sections.6.html | गैरकानूनी | "unlawful" | कानून के ख़िलाफ़ |
+| terms.sections.6.html | कमर्शियल इस्तेमाल | "commercial use" | कारोबारी इस्तेमाल / बिज़नेस के लिए |
+| terms.sections.7.h | हमारी ज़िम्मेदारी कहाँ तक | Heading for "Liability"; friendly, not formal | ज़िम्मेदारी की सीमा |
+| terms.sections.7.html | किसी भी नुक़सान | "any loss or harm" covered by single word नुक़सान | नुक़सान या हानि |
+| terms.sections.7.html | आपके उस हक़ को सीमित नहीं करती, जिसे कानून सीमित नहीं होने देता | Mirror of "any right ... that cannot be limited by law"; sounds clumsy | कानून जो हक़ आपसे छीनने नहीं देता, उसे ये नियम नहीं छीनते |
+| terms.sections.9.html | बदले हुए नियम मानते हैं | "accept the updated terms" | मंज़ूर करते हैं |
+| terms.sections.10.h/html | सुनवाई का अधिकार (ज्यूरिस्डिक्शन) हैदराबाद की अदालतों के पास होगा | "have jurisdiction": not clear if exclusive; I kept it non-exclusive-sounding, same as English | क्षेत्राधिकार (formal); "सिर्फ़ हैदराबाद की अदालतों में" (would make it exclusive, not used) |
+| terms.sections.10.html | भारत के कानूनों के हिसाब से चलेंगे | "governed by the laws of India" | भारत के कानून लागू होंगे |
+
+### Refund
+
+| Key path | Hindi phrase used | Why unsure | Alternative |
+|---|---|---|---|
+| refund.sections.0.html | स्लॉट से 24 घंटे या उससे ज़्यादा पहले कैंसल करने पर: पूरा रिफ़ंड | "24 or more hours before your slot" | 24 घंटे पहले या उससे भी पहले |
+| refund.sections.0.html | आप अपनी बुकिंग एक बार बिना किसी चार्ज के दूसरे समय पर कर सकते हैं | "move once, free of charge"; stays limited to one time | एक बार फ़्री में बदल सकते हैं |
+| refund.sections.0.html | अगर हम कैंसल करें या आपका सेशन नहीं ले पाएँ | "cannot hold your session" | सेशन न कर पाएँ |
+| refund.sections.0.html | जिस पेमेंट तरीक़े से आपने दिया था, उसी में, 5-7 कामकाजी दिनों के अंदर | "original payment method" and "working days"; unclear if days count from refund approval or request (same as English) | वर्किंग डेज़; "मूल पेमेंट तरीक़े" |
+| refund.sections.0.html | समय बदलना (रीशेड्यूल) | "Reschedule" has no common Hindi word | रीशेड्यूल only |
+| refund.sections.1.html | रास्ते में टूट-फूट जाए या खराब हो जाए, तो हम उसका रिफ़ंड देंगे या उसकी जगह दूसरी भेजेंगे | "damaged in transit ... refund or replace"; I added "या खराब हो जाए" for clarity, only "damaged" in English | सिर्फ़ "टूट-फूट जाए" |
+| refund.sections.1.html | पहुँचने के बाद जितनी जल्दी हो सके बता दीजिए | "as soon as you can after it arrives"; no fixed time (same as English) | |
+| refund.sections.2.html | इसलिए रिफ़ंड की कोई प्रक्रिया नहीं है | "no refund process"; then "हम उसे देखेंगे" for "we will look into it" (not a promise of refund) | कोई रिफ़ंड नहीं मिलता (would be stronger, not used) |
+| refund.sections.3.html | उन्हें किए गए पेमेंट का रिफ़ंड हम नहीं कर सकते | "we cannot refund payments made to them" | |
+
+### Legal-sensitive points (reviewer or lawyer, please check these first)
+
+1. **Consent and withdrawal** (privacy.sections.2.html): "सहमति कभी भी वापस ले सकते हैं ... वापस लेने से, उससे पहले हमने जो कुछ किया, वह रद्द नहीं हो जाता ... कानून के हिसाब से ज़रूरी हो, तो हम पेमेंट के रिकॉर्ड फिर भी रख सकते हैं". Check that "not undone" and "may still keep payment records" are exactly as strong as in English.
+2. **Controller statement** (privacy.sections.0.html): "आपकी जानकारी किसलिए और कैसे इस्तेमाल होगी, यह श्रीकांत जी तय करते हैं" stands for the DPDP "Data Fiduciary" role.
+3. **Erasure and correction rights** (privacy.sections.5.html): "मिटा दें", "सही करें" and the complaint line ("शिकायत ... देखा जाएगा ... Data Protection Board of India के पास ले जा सकते हैं"). Check that the complaint wording does not promise an outcome or time.
+4. **Identity check before acting on a request** (privacy.sections.5.html): "हमें पक्का करना पड़ सकता है कि वह सचमुच आप ही हैं": "may need", not "will".
+5. **Retention** (privacy.sections.4.html): "ज़्यादा से ज़्यादा 12 महीने ... जब तक कि आप उन्हें पहले हटाने को न कहें", and the "delete or anonymise" ending.
+6. **Sharing / no sale** (privacy.sections.3.html): "बेचते नहीं हैं ... सिर्फ़ ऊपर बताए तरीक़े से शेयर करते हैं, या तब, जब कानून ज़रूरी करे".
+7. **Children** (privacy.sections.6.html): "18 साल से कम", parent or guardian gives information and consent on the child's behalf.
+8. **Significant-change consent** (privacy.sections.8.html): "जहाँ कानून ज़रूरी करे, वहाँ हम आपसे दोबारा सहमति माँगेंगे".
+9. **No cure claims / not professional advice** (terms.sections.0.html): "ठीक करने, उसका इलाज करने या उसे रोकने का दावा नहीं करते".
+10. **Liability limit** (terms.sections.7.html): "कानून जितनी छूट देता है, उस हद तक ... ज़िम्मेदार नहीं हैं" and the saving clause for rights that cannot be limited.
+11. **Acceptance by continued use** (terms.intro, terms.sections.9.html): "सहमत हैं" and "बदले हुए नियम मानते हैं".
+12. **Governing law and jurisdiction** (terms.sections.10.html): "भारत के कानूनों के हिसाब से चलेंगे ... हैदराबाद की अदालतों के पास होगा". English says "have jurisdiction" without "exclusive"; Hindi keeps it the same.
+13. **Refund timing and conditions** (refund.sections.0.html): 24 hours or more before the slot, full refund; reschedule once free; no refund after the session; full refund or new slot if we cancel; 5-7 working days to original payment method.
+14. **Remedy bottle refund** (refund.sections.1.html): refund or replace only if damaged in transit; photo and prompt notice, with no fixed deadline.
+15. **Jyotish "no refund process" and mistaken contribution** (refund.sections.2.html): "रिफ़ंड की कोई प्रक्रिया नहीं है" versus "हम उसे देखेंगे".
+16. **Art of Living payments** (refund.sections.3.html, terms.sections.3.html): their policy applies; we cannot refund.
+17. **Translation note** (legal.translationNote): English version prevails ("अंग्रेज़ी वर्शन ही लागू होगा").
+
+Doubts total: 47 rows (Privacy 20, Terms 18, Refund 9), plus 17 legal-sensitive points.
+

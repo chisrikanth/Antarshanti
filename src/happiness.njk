@@ -119,13 +119,13 @@ navKey: "happiness"
     <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.explore.eyebrow }}</div>
     <h2 style="font-size:1.7rem;margin-bottom:24px">{{ c.explore.title }}</h2>
     <div class="cross-grid">
-      <a href="/jyotish.html" class="cross-card">
+      <a href="{{ 'jyotish.html' | lhref(lang.code) }}" class="cross-card">
         <div class="eyebrow" style="color:var(--saffron)">{{ c.explore.jyotish.eyebrow }}</div>
         <h3>{{ c.explore.jyotish.title }}</h3>
         <p>{{ c.explore.jyotish.text }}</p>
         <span class="btn btn-gold btn-sm" style="margin-top:6px">{{ c.explore.jyotish.btn }}</span>
       </a>
-      <a href="/bach.html" class="cross-card">
+      <a href="{{ 'bach.html' | lhref(lang.code) }}" class="cross-card">
         <div class="eyebrow" style="color:var(--lotus)">{{ c.explore.bach.eyebrow }}</div>
         <h3>{{ c.explore.bach.title }}</h3>
         <p>{{ c.explore.bach.text }}</p>

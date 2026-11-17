@@ -1,62 +1,16 @@
 ---
-permalink: "/terms.html"
-path: "/terms"
-title: "Terms of Use | Antarshanti Healing"
-description: "The terms for using antarshanti.co.in and booking Jyotish, Bach Flower and Happiness Program services with Antarshanti Healing."
+pagination:
+  data: languages
+  size: 1
+  alias: lang
+  addAllPagesToCollections: true
+i18nKey: terms
+basePage: terms
+basePath: /terms
 noindex: true
 extraCss: "legal.css"
 footerStandard: true
 ---
 {% extends "layouts/base.njk" %}
-{% block mobilebar %}{% raw %}<div class="mobile-bar"><a class="btn btn-gold" href="jyotish.html#booking-widget">Book a session</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">WhatsApp</a></div>{% endraw %}{% endblock %}
-{% block content %}{% raw %}<main class="legal">
-<h1>Terms of Use</h1>
-<p class="updated">Last updated: 1 Nov 2026</p>
-
-<p>These terms apply when you use antarshanti.co.in and book or attend any of the services described here. By using the site, you agree to them.</p>
-
-<h2>What we offer</h2>
-<p>Antarshanti Healing offers complementary wellness services. They are not medical, psychological, legal or financial advice, and they do not replace a doctor, therapist, lawyer or financial adviser. Please keep following any treatment you have been prescribed, and talk to a qualified professional about anything serious.</p>
-<p>We do not claim to cure, treat or prevent any illness. Nothing on this site should be read as a promise of a health outcome.</p>
-
-<h2>Jyotish consultations</h2>
-<p>Jyotish (Vedic astrology) is offered as a reflective framework to help you think about your situation. It does not predict events with certainty, and no outcome is guaranteed. Decisions you make remain yours.</p>
-<p>Jyotish consultations are donation-based. There is no fixed fee. If you wish to contribute, you can do so by UPI after the session. A contribution is never a condition of a consultation.</p>
-
-<h2>Bach Flower consultations</h2>
-<p>Bach Flower therapy is a complementary approach. The online consultation is Rs 1,000, paid online through Razorpay when you book. A remedy bottle, if you want one, is billed separately. See our <a href="refund.html">Refund Policy</a> for cancellations and refunds.</p>
-
-<h2>Art of Living Happiness Program</h2>
-<p>This site is only a landing page for the Happiness Program. The program is run by Art of Living. Registration and donation take place on the Art of Living site, and their terms and policies apply to them. Srikanth teaches the program as voluntary service.</p>
-
-<h2>Free wellbeing check-in</h2>
-<p>The 5-minute check-in is a self-reflection tool. It does not diagnose anything. If you are in distress, please read the crisis note in our <a href="privacy.html">Privacy Policy</a>.</p>
-
-<h2>Booking and timings</h2>
-<p>Sessions are held online. All slot times are in Indian Standard Time (IST). Please check the time against your own time zone before you confirm.</p>
-
-<h2>Using the site properly</h2>
-<ul>
-<li>Give accurate information when you book or contact us.</li>
-<li>Do not misuse the site, try to break it, or interfere with how it works.</li>
-<li>Do not use it to harass anyone or to send us anything unlawful.</li>
-<li>Do not copy our content for commercial use without asking us first.</li>
-</ul>
-
-<h2>Liability</h2>
-<p>We do our best to offer the services with care. As far as the law allows, we are not liable for any loss or harm that arises from using the site or from decisions you make based on a consultation or the check-in. Nothing in these terms limits any right you have that cannot be limited by law.</p>
-
-<h2>Your information</h2>
-<p>How we handle your personal information is explained in our <a href="privacy.html">Privacy Policy</a>.</p>
-
-<h2>Changes</h2>
-<p>We may update these terms. The date at the top shows when they were last changed. Using the site after an update means you accept the updated terms.</p>
-
-<h2>Governing law</h2>
-<p>These terms are governed by the laws of India. Courts at Hyderabad have jurisdiction over any dispute.</p>
-
-<h2>Contact</h2>
-<p>Message us on <a href="https://wa.me/919985133161" target="_blank" rel="noopener">WhatsApp</a> or call <a href="tel:+919985133161">+91 99851 33161</a>. Use the same number for questions, requests and complaints.</p>
-
-</main>
-{% endraw %}{% endblock %}
+{% block mobilebar %}{% set c = t.terms %}<div class="mobile-bar"><a class="btn btn-gold" href="{{ 'jyotish.html' | lhref(lang.code) }}#booking-widget">{{ c.mobileBar.book }}</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ c.mobileBar.whatsapp }}</a></div>{% endblock %}
+{% block content %}{% set c = t.terms %}{% include "partials/legal.njk" %}{% endblock %}

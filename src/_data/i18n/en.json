@@ -815,5 +815,155 @@
     }
    ]
   }
+ },
+ "privacy": {
+  "seoTitle": "Privacy Policy | Antarshanti Healing",
+  "seoDescription": "How Antarshanti Healing collects, uses and protects your personal information, and your rights under India's DPDP Act, 2023.",
+  "mobileBar": {
+   "book": "Book a session",
+   "whatsapp": "WhatsApp"
+  },
+  "h1": "Privacy Policy",
+  "updated": "Last updated: 1 Nov 2026",
+  "intro": "<p>This page explains what personal information Antarshanti Healing collects, why, and what you can do about it. We have tried to keep it plain and accurate.</p>",
+  "sections": [
+   {
+    "h": "Who we are",
+    "html": "<p>Antarshanti Healing is run by Srikanth from Hyderabad, India. The site is antarshanti.co.in. We offer online Jyotish (Vedic astrology) consultations, online Bach Flower therapy consultations, and a landing page for the Art of Living Happiness Program. There is also a free 5-minute wellbeing check-in on this site. Under India's Digital Personal Data Protection Act, 2023 (DPDP Act), Srikanth decides why and how your information is used.</p>"
+   },
+   {
+    "h": "What we collect and why",
+    "html": "<ul>\n<li><strong>Wellbeing check-in.</strong> The check-in has 25 questions. It is a self-reflection tool, not a diagnosis. If you choose to save your result, we store your answers and scores along with the name and WhatsApp number you enter, and an email address if you choose to give one. We use this so that Srikanth can follow up if you ask him to, and so you can come back to your result.</li>\n<li><strong>How you found us.</strong> If a link you clicked carries campaign tags (utm_ values), we note them, along with the page you landed on and the website you came from (the domain only). We use this to understand which of our efforts reach people.</li>\n<li><strong>WhatsApp messages.</strong> If you message us, we see your number and what you write. For a Jyotish consultation, you share birth details with Srikanth on WhatsApp. They are not entered on this website.</li>\n<li><strong>Bach Flower payments.</strong> The Rs 1,000 consultation fee is paid online through Razorpay. Razorpay handles your card, UPI or bank details. This site never sees or stores them. We keep the order ID and payment ID that Razorpay gives us, so we can match a payment to a booking and process refunds.</li>\n<li><strong>Jyotish contributions.</strong> Jyotish is donation-based. If you choose to contribute by UPI after your session, you do it in your own UPI app. This site does not collect or process it.</li>\n<li><strong>Usage analytics.</strong> We may use Google Analytics, Meta Pixel or Plausible to count page views and button clicks. These tools load only if we have switched them on. If they are on, they may set cookies or similar identifiers in your browser.</li>\n</ul>\n<p>We do not store any health diagnosis about you. The check-in is not a medical tool.</p>"
+   },
+   {
+    "h": "Consent and how to withdraw it",
+    "html": "<p>We use your information because you gave it to us for a specific purpose, for example by pressing Save on the check-in, by messaging us, or by booking a consultation. You can withdraw your consent at any time by telling us on WhatsApp or by phone (see Contact). Withdrawing does not undo anything we did before you withdrew. We may still keep payment records if the law requires it.</p>"
+   },
+   {
+    "h": "Who sees your information",
+    "html": "<ul>\n<li><strong>Srikanth</strong>, who runs the services.</li>\n<li><strong>Razorpay</strong>, which processes Bach Flower payments.</li>\n<li><strong>Supabase</strong>, the managed database service where we store saved check-in details and payment references.</li>\n<li><strong>Netlify</strong>, which hosts this website.</li>\n<li><strong>Analytics tools</strong> (Google Analytics, Meta Pixel, Plausible), only if we have switched them on.</li>\n<li><strong>WhatsApp</strong>, for messages you send us there, under its own terms.</li>\n</ul>\n<p>We do not sell your information. We share it with others only as described above, or if the law requires it.</p>"
+   },
+   {
+    "h": "How long we keep it",
+    "html": "<p>We keep saved check-in responses for up to 12 months, unless you ask us to delete them sooner. Payment order and payment references are kept for as long as we need them for refunds, accounts and legal reasons. WhatsApp conversations stay in Srikanth's WhatsApp until you ask for them to be deleted or he clears them. After that, we delete or anonymise what we hold.</p>"
+   },
+   {
+    "h": "Your rights",
+    "html": "<p>Under the DPDP Act, 2023, you can:</p>\n<ul>\n<li>ask what personal information of yours we hold and how it is used;</li>\n<li>ask us to correct information that is wrong or incomplete;</li>\n<li>ask us to erase your information;</li>\n<li>withdraw your consent;</li>\n<li>make a complaint to us and have it looked at. If you are not satisfied, you may take it to the Data Protection Board of India.</li>\n</ul>\n<p>To use any of these, contact us as described below. We may need to confirm it is really you before we act on a request.</p>"
+   },
+   {
+    "h": "Children",
+    "html": "<p>This website is not directed at anyone under 18. If you are under 18, please do not use the check-in or send us personal information yourself. Bach Flower consultations for a child are booked by a parent or guardian, who provides the information and gives consent on the child's behalf.</p>"
+   },
+   {
+    "h": "The check-in is not for emergencies",
+    "html": "<div class=\"note\">\n<p>The wellbeing check-in is for self-reflection. It cannot respond to a crisis. If you are in distress or thinking of harming yourself, please contact someone right now:</p>\n<ul>\n<li>Tele-MANAS: <a href=\"tel:14416\">14416</a></li>\n<li>KIRAN helpline: <a href=\"tel:18005990019\">1800-599-0019</a></li>\n<li>In an emergency, call 112.</li>\n</ul>\n</div>"
+   },
+   {
+    "h": "Changes to this policy",
+    "html": "<p>If we change how we use your information, we will update this page and the date at the top. If a change is significant, we will ask for fresh consent where the law requires it.</p>"
+   },
+   {
+    "h": "Contact",
+    "html": "<p>Message us on <a href=\"https://wa.me/919985133161\" target=\"_blank\" rel=\"noopener\">WhatsApp</a> or call <a href=\"tel:+919985133161\">+91 99851 33161</a>. Use the same number for questions, requests and complaints.</p>\n<p>See also our <a href=\"{terms}\">Terms of Use</a> and <a href=\"{refund}\">Refund Policy</a>.</p>"
+   }
+  ]
+ },
+ "terms": {
+  "seoTitle": "Terms of Use | Antarshanti Healing",
+  "seoDescription": "The terms for using antarshanti.co.in and booking Jyotish, Bach Flower and Happiness Program services with Antarshanti Healing.",
+  "mobileBar": {
+   "book": "Book a session",
+   "whatsapp": "WhatsApp"
+  },
+  "h1": "Terms of Use",
+  "updated": "Last updated: 1 Nov 2026",
+  "intro": "<p>These terms apply when you use antarshanti.co.in and book or attend any of the services described here. By using the site, you agree to them.</p>",
+  "sections": [
+   {
+    "h": "What we offer",
+    "html": "<p>Antarshanti Healing offers complementary wellness services. They are not medical, psychological, legal or financial advice, and they do not replace a doctor, therapist, lawyer or financial adviser. Please keep following any treatment you have been prescribed, and talk to a qualified professional about anything serious.</p>\n<p>We do not claim to cure, treat or prevent any illness. Nothing on this site should be read as a promise of a health outcome.</p>"
+   },
+   {
+    "h": "Jyotish consultations",
+    "html": "<p>Jyotish (Vedic astrology) is offered as a reflective framework to help you think about your situation. It does not predict events with certainty, and no outcome is guaranteed. Decisions you make remain yours.</p>\n<p>Jyotish consultations are donation-based. There is no fixed fee. If you wish to contribute, you can do so by UPI after the session. A contribution is never a condition of a consultation.</p>"
+   },
+   {
+    "h": "Bach Flower consultations",
+    "html": "<p>Bach Flower therapy is a complementary approach. The online consultation is Rs 1,000, paid online through Razorpay when you book. A remedy bottle, if you want one, is billed separately. See our <a href=\"{refund}\">Refund Policy</a> for cancellations and refunds.</p>"
+   },
+   {
+    "h": "Art of Living Happiness Program",
+    "html": "<p>This site is only a landing page for the Happiness Program. The program is run by Art of Living. Registration and donation take place on the Art of Living site, and their terms and policies apply to them. Srikanth teaches the program as voluntary service.</p>"
+   },
+   {
+    "h": "Free wellbeing check-in",
+    "html": "<p>The 5-minute check-in is a self-reflection tool. It does not diagnose anything. If you are in distress, please read the crisis note in our <a href=\"{privacy}\">Privacy Policy</a>.</p>"
+   },
+   {
+    "h": "Booking and timings",
+    "html": "<p>Sessions are held online. All slot times are in Indian Standard Time (IST). Please check the time against your own time zone before you confirm.</p>"
+   },
+   {
+    "h": "Using the site properly",
+    "html": "<ul>\n<li>Give accurate information when you book or contact us.</li>\n<li>Do not misuse the site, try to break it, or interfere with how it works.</li>\n<li>Do not use it to harass anyone or to send us anything unlawful.</li>\n<li>Do not copy our content for commercial use without asking us first.</li>\n</ul>"
+   },
+   {
+    "h": "Liability",
+    "html": "<p>We do our best to offer the services with care. As far as the law allows, we are not liable for any loss or harm that arises from using the site or from decisions you make based on a consultation or the check-in. Nothing in these terms limits any right you have that cannot be limited by law.</p>"
+   },
+   {
+    "h": "Your information",
+    "html": "<p>How we handle your personal information is explained in our <a href=\"{privacy}\">Privacy Policy</a>.</p>"
+   },
+   {
+    "h": "Changes",
+    "html": "<p>We may update these terms. The date at the top shows when they were last changed. Using the site after an update means you accept the updated terms.</p>"
+   },
+   {
+    "h": "Governing law",
+    "html": "<p>These terms are governed by the laws of India. Courts at Hyderabad have jurisdiction over any dispute.</p>"
+   },
+   {
+    "h": "Contact",
+    "html": "<p>Message us on <a href=\"https://wa.me/919985133161\" target=\"_blank\" rel=\"noopener\">WhatsApp</a> or call <a href=\"tel:+919985133161\">+91 99851 33161</a>. Use the same number for questions, requests and complaints.</p>"
+   }
+  ]
+ },
+ "refund": {
+  "seoTitle": "Refund Policy | Antarshanti Healing",
+  "seoDescription": "Cancellation and refund terms for Bach Flower consultations, remedy bottles, Jyotish contributions and the Happiness Program.",
+  "mobileBar": {
+   "book": "Book a session",
+   "whatsapp": "WhatsApp"
+  },
+  "h1": "Refund and Cancellation Policy",
+  "updated": "Last updated: 1 Nov 2026",
+  "intro": "<p>This page explains when you can get your money back and when you cannot. If anything is unclear, please ask us before you pay.</p>",
+  "sections": [
+   {
+    "h": "Bach Flower consultation (Rs 1,000)",
+    "html": "<ul>\n<li><strong>Cancel 24 or more hours before your slot:</strong> full refund.</li>\n<li><strong>Reschedule:</strong> you can move your booking once, free of charge.</li>\n<li><strong>After the session has taken place:</strong> no refund.</li>\n<li><strong>If we cancel or cannot hold your session:</strong> you can choose a full refund or a new slot at no charge.</li>\n<li><strong>How refunds are paid:</strong> to the original payment method, within 5-7 working days.</li>\n</ul>\n<p>To cancel or reschedule, message or call us (see Contact below) with the name and number you booked under.</p>"
+   },
+   {
+    "h": "Bach remedy bottle",
+    "html": "<p>If you ask for a remedy bottle, it is billed separately from the consultation. If it arrives damaged in transit, we will refund or replace it. Please send us a photo and tell us as soon as you can after it arrives.</p>"
+   },
+   {
+    "h": "Jyotish consultations",
+    "html": "<p>Jyotish is donation-based. Any contribution is voluntary, so there is no refund process. If you contributed by mistake, for example the wrong amount or a duplicate payment, please contact us and we will look into it.</p>"
+   },
+   {
+    "h": "Art of Living Happiness Program",
+    "html": "<p>Registration and donations for the Happiness Program are made on the Art of Living site. Their refund and cancellation policy applies, and we cannot refund payments made to them.</p>"
+   },
+   {
+    "h": "Contact",
+    "html": "<p>Message us on <a href=\"https://wa.me/919985133161\" target=\"_blank\" rel=\"noopener\">WhatsApp</a> or call <a href=\"tel:+919985133161\">+91 99851 33161</a>. Use the same number for questions, requests and complaints.</p>\n<p>See also our <a href=\"{terms}\">Terms of Use</a> and <a href=\"{privacy}\">Privacy Policy</a>.</p>"
+   }
+  ]
+ },
+ "legal": {
+  "translationNote": "This page is translated to help you read it. If the translation and the English version ever differ, the English version applies."
  }
 }

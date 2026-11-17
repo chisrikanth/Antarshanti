@@ -7,14 +7,14 @@
         <p class="foot-contact" style="margin-top:3px">antarshanti.co.in<br><a href="tel:+919985133161">+91 99851 33161</a><br>{{ t.chrome.footer.hours }}</p>
       </div>
       <div class="foot-links">
-        <a href="/jyotish.html">{{ t.chrome.nav.jyotish }}</a>
-        <a href="/bach.html">{{ t.chrome.nav.bach }}</a>
+        <a href="{{ 'jyotish.html' | lhref(lang.code) }}">{{ t.chrome.nav.jyotish }}</a>
+        <a href="{{ 'bach.html' | lhref(lang.code) }}">{{ t.chrome.nav.bach }}</a>
         <a href="{{ 'happiness.html' | lhref(lang.code) }}">{{ t.chrome.nav.happiness }}</a>
         <a href="https://wa.me/919985133161" target="_blank">{{ t.chrome.footer.whatsapp }}</a>
         <a href="https://www.instagram.com/antarshanti.co.in/" target="_blank" rel="noopener">{{ t.chrome.footer.instagram }}</a>
-        {% if site.legalLinks or noindex %}<a href="/privacy.html">{{ t.chrome.footer.privacy }}</a>
-        <a href="/terms.html">{{ t.chrome.footer.terms }}</a>
-        <a href="/refund.html">{{ t.chrome.footer.refunds }}</a>{% endif %}
+        {% if site.legalLinks or noindex %}<a href="{{ 'privacy.html' | lhref(lang.code) }}">{{ t.chrome.footer.privacy }}</a>
+        <a href="{{ 'terms.html' | lhref(lang.code) }}">{{ t.chrome.footer.terms }}</a>
+        <a href="{{ 'refund.html' | lhref(lang.code) }}">{{ t.chrome.footer.refunds }}</a>{% endif %}
       </div>
     </div>
     <p class="fine">{{ t.chrome.footer.fine }}</p>

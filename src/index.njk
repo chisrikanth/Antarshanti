@@ -124,8 +124,8 @@ navKey: "home"
   <div class="cta-strip-inner">
     <div><p>{{ c.cta.title }}</p><span>{{ c.cta.text }}</span></div>
     <div class="cta-strip-btns">
-      <a class="btn btn-gold btn-sm" href="/jyotish.html#booking-widget">{{ c.cta.jyotish }}</a>
-      <a class="btn btn-lotus btn-sm" href="/bach.html">{{ c.cta.bach }}</a>
+      <a class="btn btn-gold btn-sm" href="{{ 'jyotish.html' | lhref(lang.code) }}#booking-widget">{{ c.cta.jyotish }}</a>
+      <a class="btn btn-lotus btn-sm" href="{{ 'bach.html' | lhref(lang.code) }}">{{ c.cta.bach }}</a>
       <a class="btn btn-wa btn-sm" href="https://wa.me/919985133161" target="_blank">{{ c.cta.whatsapp }}</a>
     </div>
   </div>
