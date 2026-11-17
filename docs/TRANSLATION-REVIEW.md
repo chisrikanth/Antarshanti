@@ -1,6 +1,8 @@
 # Telugu and Hindi: status and how to get them reviewed
 
 ## Where each page's notes are (start here)
+**Newest first: Part 5 (17 Nov, later in the day) supersedes anything in Parts 1 to 4 that it contradicts. Open items for you are in `TODO-SRIKANTH.md` (D4); AI-side follow-ups are in `docs/AI-ACTIONS.md`.**
+
 Every page has its own list of doubts, written by the translator at the time. Each row says: the key in the language file | what was used | why unsure | alternative. Go page by page.
 
 | Page | Telugu and Hindi notes are in |
@@ -15,6 +17,7 @@ Every page has its own list of doubts, written by the translator at the time. Ea
 | Terms of Use | Part 4 |
 | Refund Policy | Part 4 |
 | Check-in plain-words changes, all pages | Part 3 ("Plain-words pass") |
+| **Second read-through (all pages): natural headlines, everyday words, questions for you** | **Part 5**, and the line-by-line before/after list in `docs/TRANSLATION-CHANGES-LOG.md` |
 
 **How to give feedback:** send "page, item number or key, your replacement". Or edit `src/_data/i18n/te.json` / `hi.json` yourself (keys are named in every row). Nothing goes live until the flags in `src/_data/i18n/review.json` are set to true.
 
@@ -628,3 +631,220 @@ Conventions used (flip if you prefer): spellings follow hi.json (व्हाट
 
 Doubts total: 47 rows (Privacy 20, Terms 18, Refund 9), plus 17 legal-sensitive points.
 
+
+
+---
+
+# Part 5: second read-through by a stronger editor model, and your feedback applied (17 Nov 2026)
+
+**Parts 1 to 4 describe the first draft. Where Part 5 says something different, Part 5 is newer and wins.** The full before/after list of every line changed is in `docs/TRANSLATION-CHANGES-LOG.md` (Telugu 151 + 96 changes, Hindi 89 changes).
+
+## What was done
+- **Your feedback applied:** Jyotish and other headlines rewritten in natural Telugu (gist kept, not word-for-word); Hindi headlines kept in their rhyming style; heavy and church-like words removed (తోడ్పాటు, తోడ్పడు, సంప్రదింపు, అభ్యాసం, ఆత్మసందేహం, ఆత్మగౌరవం, సమతుల్యత, సారాంశం and more, about 140 uses, now సాయం, ఆసరా, సెషన్, పద్ధతి and similar everyday words); "మనసు ఆరోగ్యం" replaced. The "English version applies" note stays. The గారు/जी addressing is left as it is.
+- **"Mental health / emotional wellness":** the clinical meaning is **మానసిక ఆరోగ్యం** (used where a sentence means real mental health, for example in the disclaimers "వైద్య, మానసిక… సలహా"). For the Bach label "Emotional Wellness" I used **మానసిక ప్రశాంతత** (mental calm). It uses your word మానసిక, but I avoided "మానసిక ఆరోగ్యం" on the Bach label itself because a flower-remedy page should not read as if it treats mental health. If you want exactly "మానసిక ఆరోగ్యం" there, change 4 lines (search the Telugu file for మానసిక ప్రశాంతత).
+- **Booking messages and times:** server messages (slot taken, not available and so on) now appear in Telugu and Hindi, and times show as "ఉదయం 9:00", "సాయంత్రం 5:00", "सुबह 9:00 बजे", "शाम 5:00 बजे".
+- **Bugs found and fixed on the way:** the check-in page's links to Bach and Jyotish (one briefly broke the page's script in the previous push to staging; fixed now and re-tested in English, Telugu and Hindi); the Telugu draft had also strengthened some claims ("several studies" had become "many", "studies suggest" had become "according to studies", "many people find it calming" had become "it gives calm") and a price line said "for only one session" instead of "per session". All put back to the English meaning.
+- **No specialist Telugu/Hindi model was available in this session.** The check was done by the strongest model I have access to, working as a native-speaker copy editor. A second check by a dedicated Indian-language model is on the AI action list (`docs/AI-ACTIONS.md`), not on yours.
+
+## Telugu headlines: the choice made, with two alternatives each
+Pick a different option for any of them and I will swap it in.
+
+key | now says | other options | why
+---|---|---|---
+`checkin.topbar` | మీ మనసును మీరే చూసుకునే ఒక సున్నితమైన సాధనం — అంతర్శాంతి హీలింగ్ | అంతర్శాంతి హీలింగ్ నుండి: మనసును తరచి చూసుకునే చిన్న సాధనం / మిమ్మల్ని మీరు తెలుసుకునే సున్నితమైన సాధనం · అంతర్శాంతి హీలింగ్ | The old line stacked two relative clauses ('...అందించే మీ గురించి మీరు ఆలోచించుకునే...') and read like a translation; brand moved to the end like a signature.
+`checkin.consent.h1` | మనసు ఎలా ఉంది? 5 నిమిషాల ఉచిత చెక్-ఇన్ | మీ మనసు కోసం 5 నిమిషాలు · ఉచిత చెక్-ఇన్ / ఉచిత 5 నిమిషాల మనసు చెక్-ఇన్ | English has 'Wellbeing' which the draft dropped; a friendly question (already used in the SEO title) carries that warmth the way the Hindi 'मन का...' does.
+`checkin.results.eyebrow` | ఒక్క చూపులో మీ మనసు | మీ మనసు ఇప్పుడు ఇలా ఉంది / మీ మనసు — ఒక చిన్న చిత్రం | 'మనసు స్థితి సారాంశం' (summary of mind-state) sounds like a report heading; this is short and warm, like the Hindi 'मन की झलक'.
+`checkin.save.title` | మీ ఫలితాలు శ్రీకాంత్‌కు చూపించాలనుకుంటున్నారా? | మీ ఫలితాలను శ్రీకాంత్ ఒకసారి చూసి చెప్పాలా? / శ్రీకాంత్ మీ ఫలితాలు చూడాలనుకుంటున్నారా? | 'శ్రీకాంత్ చూడాలా?' can read as 'Should Srikanth see?' (or even 'Must he?'); this clearly asks what the visitor wants.
+`checkin.js.snap.none.title` | ఫలితం చూపడానికి సరిపడా సమాధానాలు లేవు | ఇంకొన్ని సమాధానాలు కావాలి / ఫలితానికి ఇంకా సమాధానాలు కావాలి | 'సారాంశానికి' (for a summary) is bookish for 'snapshot'.
+`checkin.js.snap.attention.titleGoodOne` | కొన్ని విషయాలు బాగున్నాయి, ఒక అంశానికి కాస్త శ్రద్ధ కావాలి | కొన్ని విషయాలు బాగానే ఉన్నాయి; ఒక అంశం మాత్రం కాస్త శ్రద్ధ అడుగుతోంది / చాలా విషయాలు బాగానే ఉన్నాయి, ఒక్క అంశాన్ని కాస్త చూసుకోవాలి | Bare 'కొన్ని బాగున్నాయి' (some are good) has no noun and sounds clipped.
+`checkin.js.snap.attention.titleGoodMany` | కొన్ని విషయాలు బాగున్నాయి, {n} అంశాలకు కాస్త శ్రద్ధ కావాలి | కొన్ని విషయాలు బాగానే ఉన్నాయి; {n} అంశాలు కాస్త శ్రద్ధ అడుగుతున్నాయి / కొన్ని బాగున్నాయి, {n} అంశాలను కాస్త చూసుకోవాలి | Same fix as titleGoodOne.
+`checkin.js.snap.attention.titleNone` | ప్రస్తుతం కొన్ని అంశాలకు కాస్త శ్రద్ధ కావాలి | ఇప్పుడు కొన్ని అంశాలు కాస్త శ్రద్ధ అడుగుతున్నాయి / కొన్ని అంశాలను ఇప్పుడు కాస్త చూసుకోవాలి | 'చాలా అంశాలకు' means 'many areas', stronger and more alarming than 'several' (principle 1).
+`checkin.js.snap.mild.titleGoodOne` | కొన్ని విషయాలు బాగున్నాయి, ఒక అంశానికి కాస్త శ్రద్ధ పెడితే మంచిది | కొన్ని విషయాలు బాగానే ఉన్నాయి; ఒక అంశాన్ని కాస్త చూసుకుంటే మంచిది / కొన్ని బాగున్నాయి, ఒక అంశానికి కొంచెం శ్రద్ధ చాలు | 'శ్రద్ధ ఇవ్వవచ్చు' reads as 'you are allowed to give care'; 'పెడితే మంచిది' is the natural 'could use some care' and stays softer than the 'కావాలి' used for the stronger band.
+`checkin.js.snap.mild.titleGoodMany` | కొన్ని విషయాలు బాగున్నాయి, {n} అంశాలకు కాస్త శ్రద్ధ పెడితే మంచిది | కొన్ని విషయాలు బాగానే ఉన్నాయి; {n} అంశాలను కాస్త చూసుకుంటే మంచిది / కొన్ని బాగున్నాయి, {n} అంశాలకు కొంచెం శ్రద్ధ చాలు | Same fix as mild.titleGoodOne.
+`checkin.js.snap.mild.titleNoneOne` | ఒక అంశానికి కాస్త శ్రద్ధ పెడితే మంచిది | ఒక అంశాన్ని కాస్త చూసుకుంటే మంచిది / ఒక అంశానికి కొంచెం శ్రద్ధ చాలు | Same fix as mild.titleGoodOne.
+`checkin.js.snap.mild.titleNoneMany` | {n} అంశాలకు కాస్త శ్రద్ధ పెడితే మంచిది | {n} అంశాలను కాస్త చూసుకుంటే మంచిది / {n} అంశాలకు కొంచెం శ్రద్ధ చాలు | Same fix as mild.titleGoodOne.
+`checkin.js.crisis.title` | ఈ బరువును మీరు ఒంటరిగా మోయనక్కర్లేదు | ఈ భారం మీరు ఒక్కరే మోయాల్సిన పని లేదు / మీరు దీన్ని ఒంటరిగా మోయనక్కర్లేదు | 'ఇది మీరు ఒక్కరే మోయాల్సిన అవసరం లేదు' has a stray 'ఇది' with no object case; 'బరువు' names what is carried, and 'మోయనక్కర్లేదు' is the spoken form. Meaning unchanged.
+`checkin.js.crisis.highTitle` | మీకు ఎప్పుడు వీలనిపిస్తే అప్పుడు | మీరు సిద్ధమైనప్పుడు / మీకు ఎప్పుడు అనిపిస్తే అప్పుడే | 'సిద్ధంగా అనిపించినప్పుడు' is a literal 'feel ready'; 'ఎప్పుడు... అప్పుడు' is the natural, no-pressure Telugu.
+`checkin.js.next.eyebrow` | ముందుకు ఒక మంచి అడుగు | ఇప్పుడు వేయగల మంచి అడుగు / తర్వాత ఏం చేయవచ్చు? | 'మంచి తదుపరి అడుగు' copies English word order and uses bookish 'తదుపరి'.
+`home.hero.title` | <em>అంతర్శాంతి</em>కి స్వాగతం —<br>మనశ్శాంతి వైపు మీ ప్రయాణం. | <em>అంతర్శాంతి</em>కి స్వాగతం —<br>మనశ్శాంతి వైపు మీ తొలి అడుగు. / <em>అంతర్శాంతి</em>కి స్వాగతం —<br>మనశ్శాంతికి మీ దారి ఇదే. | 'మీ మనశ్శాంతికి దారి' is flat word-for-word and ends abruptly; 'వైపు మీ ప్రయాణం' flows as a welcome line.
+`home.offerings.eyebrow` | మీ దారి ఎంచుకోండి | మీకు సరిపోయే దారి / ఏ దారి మీది? | Same as hero.btnPath, so the two stay identical.
+`home.offerings.bach.eyebrow` | మనసుకు ఊరట | మనసుకు హాయి / మనసు బాగోగులు | 'మనసు ఆరోగ్యం' is ungrammatical (two nouns side by side) and sounds clinical; 'ఊరట' (comfort, relief) is warm everyday Telugu.
+`home.about.title` | రెండు ప్రపంచాలనూ దగ్గరగా చూసిన వ్యక్తి | ఆఫీసు ఒత్తిడీ తెలుసు, మనశ్శాంతి దారీ తెలుసు / కార్పొరేట్ జీవితం, ఆధ్యాత్మిక సాధన — రెండూ తెలిసిన వ్యక్తి | 'రెండు లోకాలనూ చూసిన సాధకుడు' sounds mythological (లోకాలు = heavenly worlds) and religious; 'ప్రపంచాలు' is the everyday word for the corporate and spiritual worlds.
+`home.kind.eyebrow` | మనసారా అన్న మాటలు | ఆప్యాయమైన మాటలు / వారి మనసులోని మాట | 'ఆప్యాయమైన మాటలు' is fine but flat; 'మనసారా' (from the heart) is how Telugu speakers describe heartfelt words.
+`home.kind.title` | నా దగ్గరకు వచ్చినవారి మాటల్లో | నాతో పనిచేసినవారు ఇలా అంటున్నారు / వారి మాటల్లోనే | 'నాతో కలిసి నడిచినవారు' (walked with me) is poetic; 'నా దగ్గరకు వచ్చినవారు' is how a practitioner refers to the people he has helped.
+`home.cta.title` | మీ హీలింగ్ ప్రయాణం మొదలుపెడదామా? | మీ హీలింగ్ ప్రయాణం మొదలుపెట్టడానికి సిద్ధమా? / మనశ్శాంతి వైపు తొలి అడుగు వేద్దామా? | '...మొదలుపెట్టడానికి సిద్ధమా?' is the English 'Ready to...?' pattern; 'మొదలుపెడదామా?' (shall we begin?) is warm, inclusive and has no pressure.
+`happiness.topbar.text` | హ్యాపీనెస్ ప్రోగ్రామ్ — ఒక్కో శ్వాసతో, మనసు మరింత ప్రశాంతం · | హ్యాపీనెస్ ప్రోగ్రామ్ — శ్వాస మీద ధ్యాస, మనసుకు ప్రశాంతత · / హ్యాపీనెస్ ప్రోగ్రామ్ — ప్రశాంతమైన మనసు, శ్వాస శ్వాసకూ · | Matches the new hero line.
+`happiness.hero.title` | ఒక్కో శ్వాసతో,<br><span class="hl">మనసు మరింత ప్రశాంతం.</span> | శ్వాస మీద ధ్యాస,<br><span class="hl">మనసుకు ప్రశాంతత.</span> / ప్రశాంతమైన మనసు,<br><span class="hl">శ్వాస శ్వాసకూ.</span> | 'ప్రశాంతమైన మనసు, ఒక్కో శ్వాసతో' copies English order and loses 'calmer'; this keeps the gist ('with each breath, a calmer mind') and puts the payoff in the highlight, short and balanced like the Hindi.
+`happiness.strip.title` | రాబోయే హ్యాపీనెస్ ప్రోగ్రామ్ బ్యాచ్‌కు రిజిస్టర్ చేసుకోండి | రాబోయే హ్యాపీనెస్ ప్రోగ్రామ్ బ్యాచ్‌లో చేరండి / హ్యాపీనెస్ ప్రోగ్రామ్ — రాబోయే బ్యాచ్‌లో మీ పేరు నమోదు చేసుకోండి | 'తదుపరి' -> 'రాబోయే'; 'చేసుకోండి' since you register yourself.
+`happiness.whatIs.title` | చాలామందికి ఎంతో ప్రశాంతంగా అనిపించే శ్వాస అభ్యాసం | ఎంతోమందికి మనసుకు హాయిగా అనిపించే శ్వాస అభ్యాసం / చాలామందికి ప్రశాంతతను అనుభవంలోకి తెచ్చే శ్వాస అభ్యాసం | 'ప్రశాంతతనిచ్చే' (that gives calm) states the effect as fact; 'అనిపించే' keeps 'many people find' and is less bookish.
+`happiness.learn.items.5.title` | తోటి సాధకుల తోడు | కమ్యూనిటీ & సత్సంగం / సాధకుల సంఘం | 'కమ్యూనిటీ & సంఘం' — 'సంఘం' reads as 'society/association' and the pair is redundant; this rhymes softly (తోటి/తోడు) and says what Sangha means.
+`happiness.register.title` | రాబోయే హ్యాపీనెస్ ప్రోగ్రామ్‌లో చేరండి | హ్యాపీనెస్ ప్రోగ్రామ్‌లో మీరూ చేరండి / రాబోయే బ్యాచ్‌లో మీకూ చోటుంది | 'తదుపరి' -> 'రాబోయే' (everyday).
+`happiness.cta.title` | ముందడుగు వేయడానికి సిద్ధమా? | ఇక ముందడుగు వేద్దామా? / మనశ్శాంతి వైపు ఒక అడుగు వేద్దామా? | 'తదుపరి అడుగు' is bookish; 'ముందడుగు' (step forward) is the everyday Telugu idiom.
+`happiness.cta.text` | ఒక్కో శ్వాసతో, మనసు మరింత ప్రశాంతం · రాబోయే బ్యాచ్ చూడండి | శ్వాస మీద ధ్యాస, మనసుకు ప్రశాంతత · రాబోయే బ్యాచ్ చూడండి / ప్రశాంతమైన మనసు, శ్వాస శ్వాసకూ · రాబోయే బ్యాచ్ చూడండి | Matches the new hero line; 'తదుపరి' -> 'రాబోయే'.
+`happiness.explore.title` | అంతర్శాంతిలో మరిన్ని దారులు | అంతర్శాంతిలో ఇంకొన్ని దారులు / ఇవి కూడా మీ కోసం | 'ఇతర దారులు' is formal; 'మరిన్ని' is inviting.
+`happiness.explore.bach.eyebrow` | మనసుకు ఊరట | మనసుకు హాయి / మనసు బాగోగులు | Same as home.offerings.bach.eyebrow.
+`happiness.watch.title` | రిజిస్టర్ చేసుకునే ముందు | చేరే ముందు ఒకసారి చూడండి / రిజిస్టర్ చేసుకునే ముందు చూడండి | Reflexive 'చేసుకునే' (you register yourself).
+`happiness.js.soonTitle` | రాబోయే బ్యాచ్ వివరాలు త్వరలో | కొత్త బ్యాచ్ తేదీలు త్వరలో / తర్వాతి బ్యాచ్ త్వరలోనే | 'త్వరలో ప్రకటిస్తాం' (we will announce) is formal; short and light like the Hindi 'अगले बैच की जानकारी जल्द'.
+`jyotish.hero.titleA` | మీ జాతకం, | గ్రహాల గమనంలో, / నక్షత్రాల వెలుగులో | Owner flagged 'మీ జీవితాన్ని చదవండి, నక్షత్రాల వెలుగులో' as unnatural (nobody 'reads their life' in Telugu). 'జాతకం జీవితానికి అద్దం' is a familiar Telugu image and fits the site's 'reflection, not prediction' stance; titleB carries the coloured payoff.
+`jyotish.hero.titleB` | మీ జీవితానికి అద్దం. | మీ జీవిత గమనం. / మిమ్మల్ని మీరు చూసుకోండి. | Second half of the new headline: 'Your chart, a mirror to your life.' Alternatives pair with titleA alternatives in the same order.
+`jyotish.hero.intro` | వేదాలకు కన్ను వంటిది జ్యోతిష్యం. ఇది భవిష్యత్తు గురించి ఇచ్చే హామీ కాదు, ఆలోచించుకోవడానికి ఒక ఆధారం. మిమ్మల్ని మీరు అర్థం చేసుకునే ఒక దారి: మీ స్వభావం, మీలో ఉన్న ధోరణులు, జీవితంలో మీరు ఇప్పుడు ఏ దశలో ఉండవచ్చు, ఆ దశను మరింత అవగాహనతో ఎలా దాటాలి. | జ్యోతిష్యం వేదాలకు కన్ను లాంటిది. ఇది భవిష్యత్తు గురించి ఇచ్చే హామీ కాదు, ఆలోచించుకోవడానికి ఒక ఆధారం. మిమ్మల్ని మీరు అర్థం చేసుకునే ఒక దారి: మీ స్వభావం, మీలో ఉన్న ధోరణులు, జీవితంలో మీరు ఇప్పుడు ఏ దశలో ఉండవచ్చు, ఆ దశను మరింత అవగాహనతో ఎలా దాటాలి. / వేదానికి నేత్రం జ్యోతిష్యం అంటారు. ఇది భవిష్యత్తు గురించి ఇచ్చే హామీ కాదు, ఆలోచించుకోవడానికి ఒక ఆధారం. మిమ్మల్ని మీరు అర్థం చేసుకునే ఒక దారి: మీ స్వభావం, మీలో ఉన్న ధోరణులు, జీవితంలో మీరు ఇప్పుడు ఏ దశలో ఉండవచ్చు, ఆ దశను మరింత అవగాహనతో ఎలా దాటాలి. | Owner flagged 'జ్యోతిష్యం — వేదాల కన్ను —'. The traditional Telugu saying is 'వేదాలకు కన్ను వంటిది జ్యోతిష్యం' and works as an opening line; the rest is split into short sentences. 'Not a promise about the future' kept exactly.
+`jyotish.whatIs.title` | మనల్ని మనం తెలుసుకునే సంప్రదాయ పద్ధతి | మనల్ని మనం అర్థం చేసుకునే పురాతన దారి / తనను తాను తెలుసుకునే ఒక పాత విద్య | 'చూసుకోవడానికి ఒక సంప్రదాయ పద్ధతి' is a calque of 'system of self-reflection'; shorter and more natural.
+`jyotish.cta.title` | మీ జాతకం ఒకసారి చూద్దామా? | మీ జాతకం చూపించుకోవడానికి సిద్ధమా? / జాతకం చూద్దాం, జీవితాన్ని అర్థం చేసుకుందాం. | 'జాతకం చూసుకోవడానికి సిద్ధమా?' copies the English 'Ready to...?' pattern; 'ఒకసారి చూద్దామా?' (shall we take a look at your chart?) is how a Telugu astrologer actually invites you.
+`jyotish.explore.title` | అంతర్శాంతిలో మరిన్ని దారులు | అంతర్శాంతిలో ఇంకొన్ని దారులు / ఇవి కూడా మీ కోసం | Same as happiness.explore.title.
+`jyotish.explore.bach.eyebrow` | మనసుకు ఊరట | మనసుకు హాయి / మనసు బాగోగులు | Same as home.offerings.bach.eyebrow.
+`bach.hero.eyebrow` | మనసుకు ఊరట | మనసుకు హాయి / మనసు బాగోగులు | Same as home.offerings.bach.eyebrow.
+`bach.hero.titleB` | సున్నితమైన ఆసరా. | మెల్లని తోడు. / మృదువైన ఆసరా. | 'తోడ్పాటు' is a formal, slightly bookish word; 'ఆసరా' (support to lean on) is warm everyday Telugu, like the Hindi 'सहारा' the owner likes. titleA 'మాటలకు అందని భావాలకు' stays as is and reads well with it; if the owner wants a titleA change, 'మాటల్లో చెప్పలేని మనసుకు' pairs with 'మెల్లని తోడు.'
+`bach.strip.title` | మీ బాచ్ ఫ్లవర్ సంప్రదింపు బుక్ చేసుకోండి | బాచ్ ఫ్లవర్ సంప్రదింపు — మీ సమయం ఎంచుకోండి / మీ బాచ్ ఫ్లవర్ సెషన్ బుక్ చేసుకోండి | Booking for yourself is 'బుక్ చేసుకోండి' (as on the Jyotish strip).
+`bach.whatIs.title` | పూల సారం, మనసుకు తోడు | మనసు కోసం పూల సారాలు / పువ్వుల సారం, మనసుకు ఆసరా | 'మనసుకు పూల సారాలు' is a clipped literal; two balanced halves (సారం / తోడు) read like a Telugu tagline.
+`bach.who.eyebrow` | ఇది ఎవరి కోసం? | ఎవరికి ఉపయోగం? / ఇది మీ కోసమేనా? | Bare 'ఎవరికి?' (to whom?) is too clipped to stand alone.
+`bach.who.title` | మీరు ఇలాంటి దశలో ఉన్నారేమో… | బహుశా మీరు ఇలాంటి సమయంలో ఉన్నారేమో… / ఇవి మీకు తెలిసినవేనా… | 'ఇలాంటి స్థితిలో ఉండవచ్చు' is a literal 'may be'; 'ఉన్నారేమో…' is the gentle spoken form.
+`bach.cta.title` | మొదలుపెడదామా? | మొదలుపెట్టడానికి సిద్ధమా? / మీ మనసు కోసం ఒక అడుగు వేద్దామా? | 'మొదలుపెట్టడానికి సిద్ధమా?' copies the English 'Ready to...?'; 'మొదలుపెడదామా?' is warm and pressure-free.
+`bach.explore.title` | అంతర్శాంతిలో మరిన్ని దారులు | అంతర్శాంతిలో ఇంకొన్ని దారులు / ఇవి కూడా మీ కోసం | Same as happiness.explore.title.
+`bach.learn.title` | ఈ పద్ధతి మూలాలు | ఈ పద్ధతి ఎక్కడ పుట్టింది / మూలం నుంచే తెలుసుకోండి | 'ఈ పని ఎక్కడినుంచి వచ్చింది' (where did this job come from) is word-for-word.
+`booking.headerTitle` | మీ సెషన్ బుక్ చేసుకోండి | మీకు వీలైన సమయం ఎంచుకోండి / మీ సెషన్ సమయం ఎంచుకోండి | 'షెడ్యూల్ చేసుకోండి' is less common than 'బుక్' in everyday Telugu (Hindi also says बुक).
+`booking.headerSub` | సెషన్ రకం, తేదీ, సమయం ఎంచుకోండి — వెంటనే కన్ఫర్మ్ | రకం, తేదీ, సమయం ఎంచుకోండి — వెంటనే కన్ఫర్మ్ అవుతుంది / సెషన్, తేదీ, సమయం — మూడు ఎంచుకుంటే చాలు | Repeated 'ఎంచుకోండి' and 'డేట్, టైమ్' (the rest of the site uses 'తేదీ', 'సమయం').
+
+## Telugu: lessons about what made the draft sound unnatural
+1. **English sentence shape copied into Telugu.** "Ready to …?" became "…కి సిద్ధమా?" everywhere, and "A good next step" became "మంచి తదుపరి అడుగు". Telugu invites with "…దామా?" (మొదలుపెడదామా?, చూద్దామా?) or with an idiom (ముందడుగు).
+2. **English idioms translated word by word.** "read your life", "good to see", "a good place to start", "build on", "has been with you", "what works for you", "landed on a page", "open mind", "on autopilot", "racing thoughts", "acting on it". Find the Telugu idiom first. If there isn't one, say what it means in plain words.
+3. **Headlines translated, not rewritten.** Telugu headlines work as two short, balanced halves, often with a repeated sound or word (పూల సారం, మనసుకు తోడు; ఒక్కో శ్వాసతో, మనసు మరింత ప్రశాంతం; జాతకం … జీవితానికి అద్దం). Keep the gist, then write the line again in Telugu.
+4. **Newspaper or Sanskrit words where speech has an everyday word.** తదుపరి, బహుళజాతి సంస్థ, దశాబ్దాలు, గడువులు, త్వరిత, మూల వనరులు, భావోద్వేగ సంరక్షణ, నిర్వహణ, పటం, క్రమాలు, సాధనాలు. People in Hyderabad say రాబోయే, మల్టీనేషనల్ కంపెనీ, ఇరవై ఏళ్లు, డెడ్‌లైన్లు, మ్యాప్, ఆసనాలు, మెలకువలు.
+5. **Small grammar slips that a native reader notices at once.** Plural subject with singular verb (ప్రశ్నలు … తోడ్పడుతుంది), missing case endings (ఇవి/వీటిని, సెషన్ ముందు/సెషన్‌కు ముందు, స్వాగతం needs the dative), and "ఒక్క" (only one) used where "ఒక్కో" (per/each) was meant, which put a pricing error in two places.
+6. **Long sentences with stacked participles and the subject at the end.** For example: "…రూపొందించిన ఇవి, … అందించే, బాగా తెలిసిన … విధానం". Split them into two short sentences.
+7. **Strength of claims drifted.** "several studies" became "చాలా" (many), "suggest" became "ప్రకారం" (according to), "many people find it calming" became "ప్రశాంతతనిచ్చే" (it gives calm), "can help" became "తోడ్పడుతుంది" (helps). Hedge words need their own exact Telugu: పలు, సూచిస్తున్నాయి, అనిపించే, తోడ్పడవచ్చు.
+8. **The reader's point of view was lost.** "తమపై తమకే సందేహం" (themselves) was used in cards that speak to "you" ("మీపై మీకే"), and "ఇతరుల భయం" says "others' fear" where the English means "fear of others".
+9. **Reflexive verbs.** When you do something for yourself, Telugu uses రిజిస్టర్ / బుక్ **చేసుకోండి**, not **చేయండి**. The WhatsApp messages already did this. The buttons did not.
+
+## Telugu: questions for you (context-dependent choices)
+1. **Jyotish hero.** I propose "మీ జాతకం, / మీ జీవితానికి అద్దం." (your chart, a mirror to your life). It matches the site's message that Jyotish is for reflection, not prediction. The other option, "గ్రహాల గమనంలో, / మీ జీవిత గమనం.", has more rhythm but sounds more like fate. Which do you prefer?
+2. **Happiness hero.** I propose "ఒక్కో శ్వాసతో, / మనసు మరింత ప్రశాంతం." The more poetic option is "శ్వాస మీద ధ్యాస, / మనసుకు ప్రశాంతత." (it rhymes, but drops "calmer"). Whichever you choose should also go into topbar.text and cta.text.
+3. **Emotional Wellness eyebrow.** Which do you prefer: "మనసుకు ఊరట" (comfort for the mind), "మనసుకు హాయి", or the current "మనసు ఆరోగ్యం"? The current one is grammatically loose and sounds clinical.
+4. **"Book a reading" buttons.** The idiom people actually use is "జాతకం చూపించుకోండి". Would you like that on home.offerings.jyotish.btn and jyotish.cta.btn instead of "సంప్రదింపు బుక్ చేయండి"? It is warmer, but it sounds more like a traditional astrologer.
+5. **"Jyotish practitioner".** The current word, "జ్యోతిష్య నిపుణుడు", means "expert". Keep it, or use the plainer "జ్యోతిష్యుడు"?
+6. **"A Jyotish conversation".** The current "జ్యోతిష్య సంభాషణ" is understandable but sounds translated. Keep it, or use "జ్యోతిష్య సంప్రదింపు" to match the rest of the page?
+7. **Mood.** "మనసు స్థితి" is used for "mood" in the check-in. Many Hyderabad speakers would just say "మూడ్". Should we switch?
+8. **In-person.** Is "ప్రత్యక్షంగా" fine, or do you prefer the spoken "నేరుగా"?
+9. **Hold.** "హోల్డ్ చేయండి" is still open from earlier. The natural Telugu would be "ఈ సమయం మీ కోసం ఉంచుతాం" in the sentences, with the button kept as "స్లాట్ హోల్డ్ చేయండి". Should I do that?
+10. **"About" title.** I chose the safe "రెండు ప్రపంచాలనూ దగ్గరగా చూసిన వ్యక్తి". A punchier option is "ఆఫీసు ఒత్తిడీ తెలుసు, మనశ్శాంతి దారీ తెలుసు". Do you like that style for this heading?
+
+## Telugu: uncommon words audit (what was replaced, other options, what was kept on purpose)
+| Uncommon word | Count | Replacement used | Other options | Context notes |
+|---|---|---|---|---|
+| తోడ్పాటు / తోడ్పడు (all forms) | 25 (14 + 11) | **సాయం / సాయపడు** (most); **ఆసరా** where the sense is emotional support; **ఉపయోగపడు** for "who it helps" | సహాయం, తోడు, సపోర్ట్ | This is the owner's "church" word. "మద్దతు" was rejected: it sounds like politics or news ("మద్దతు ప్రకటించారు"). "అదనపు సాయం" carries "complementary support" without making the claim stronger. |
+| సంప్రదింపు / -లు / -కు / -ను | 48 | **సెషన్ / సెషన్‌లు / సెషన్‌కు / సెషన్‌ను** | కన్సల్టేషన్, "జాతకం చూపించుకోవడం" | "సంప్రదింపులు" is news language (talks between governments). The site's buttons already say "సెషన్ బుక్ చేయండి", so one word now runs through cards, booking, prices and the legal pages. The "consultation fee ₹1,000" is now "సెషన్ ఫీజు ₹1,000". The amounts and the meaning are the same. |
+| అభ్యాసం (శ్వాస అభ్యాసం) | 15 | **పద్ధతి / పద్ధతులు** ("శ్వాస పద్ధతి") | సాధన, శ్వాస వ్యాయామం, ప్రాక్టీస్ | In Telugu, "అభ్యాసం" sounds like a school exercise. "శ్వాస పద్ధతి" was already used elsewhere on the page. "SKY అభ్యాసంతో" became "SKY చేస్తూ". |
+| ధోరణులు | 6 | **తీరు**, "ఏం నడుస్తోంది", "జరుగుతున్నదాని తీరు" | మలుపులు, పోకడ | "ధోరణి" is a news word ("trend"). In jyotish talk people say "జాతకంలో ఏం నడుస్తోంది". |
+| ఆత్మగౌరవం (self-esteem) | 4 | **మీపై మీకు నమ్మకం** (chip and section title) / **మీపై మీకున్న నమ్మకం** (in sentences) | మీ మీద మీకు గౌరవం, సెల్ఫ్-ఎస్టీమ్ | In Hyderabad, "ఆత్మగౌరవం" means political dignity ("తెలంగాణ ఆత్మగౌరవం"), not the psychology idea. |
+| ఆత్మవిశ్వాసం | 1 | **మీపై మీకు నమ్మకం** | ఆత్మవిశ్వాసం (keep), కాన్ఫిడెన్స్ | This word is genuinely common in news and film. I replaced it only because the owner gave it as the example and the new form matches the check-in. Reverting is safe. |
+| భావాల సమతుల్యత (Emotional balance) | 5 | **మనసు నిలకడ** (chip and title); in sentences "మనసు ఎలా ఉంది, ఎంత నిలకడగా ఉంది" / "నిలకడగా ఉండటానికి" | ఎమోషనల్ బ్యాలెన్స్, మనసు స్థిరంగా ఉండటం | "సమతుల్యత" is textbook or diet-page language ("సమతుల ఆహారం"). |
+| సారాంశం | 5 | "ఎలా ఉన్నారో చూపిస్తుంది" (check-in snapshot), **క్లుప్తంగా** (research overview, one-page guide), "ముఖ్యమైన విషయాలు రాసి ఇస్తాం" (written summary) | సంగ్రహం (worse) | "సారాంశం" is used in news but sounds like an essay. |
+| భావోద్వేగ (స్థితి / ధోరణులు) | 3 | **మనసు స్థితి**, "లోతైన భావాలు" | భావాలు, మూడ్ | "భావోద్వేగానికి లోనయ్యారు" is news jargon. |
+| సాధకులు | 2 | "SKY చేసేవారు"; the title is now **తోటివారి తోడు, సత్సంగం** | సాధన చేసేవారు | "సాధకులు" is insider spiritual jargon. "సత్సంగం" is ordinary temple and Hindu usage, and it matches the English "Sangha". |
+| జ్యోతిష్య సంభాషణ | 4 of 5 | **జ్యోతిష్య సెషన్** | జాతకం గురించి మాట్లాడుకోవడం | This was a coined, literary phrase. The fifth use, "వాట్సాప్ సంభాషణలు" in Privacy, is kept on purpose (legal text). |
+| ఆదరణ … అర్హులు | 1 | **ఆప్యాయత … తగినవారు** | ప్రేమ, దయ | "ఆదరణ" sounds like "audience response" in film news. |
+| ముందస్తు అభిప్రాయాలు | 1 | "మనసులో ముందే ఏ అభిప్రాయాలూ పెట్టుకోకుండా" | ఓపెన్ మైండ్‌తో | |
+| అనిశ్చితి | 1 | "ఏమవుతుందో తెలియని **పరిస్థితి**" | అయోమయం | "అనిశ్చితి" is a political-news word. |
+| జనన సమయ సవరణ | 1 | "పుట్టిన సమయాన్ని సరిచేసే (రెక్టిఫికేషన్)" | | This is how astrologers say it aloud. |
+
+On సాయం vs. సహాయం: both are everyday Telugu. The new text uses సాయం to match the existing "సాయపడతాయి". Where the file already said "సహాయపడవచ్చు", I left it as it was.
+
+### 2. "Mental health" and "Emotional Wellness": decision
+**Update after the owner's feedback:** the Bach label now reads **మానసిక ప్రశాంతత** (the owner wanted మానసిక in it). The text below was written before that and still mentions "మనసుకు ఊరట".
+
+- **The clinical idea, "mental health" or "psychological"**, should be **మానసిక** / **మానసిక ఆరోగ్యం**. That is the standard term on Telugu news and health pages and in government messages (Tele-MANAS). The footer and Terms already say "వైద్య, మానసిక, న్యాయ లేదా ఆర్థిక సలహా". That is correct and I kept it. No string in en.json actually says "mental health", so no new string was needed. If one is ever added, for example in a disclaimer, use "మానసిక ఆరోగ్యం". Never use "మనసు ఆరోగ్యం".
+- **The Bach "Emotional Wellness" eyebrow** (home, happiness and jyotish explore cards, bach hero) stays **మనసుకు ఊరట**. This was the earlier pass's choice. It is an everyday phrase, warm and short. "మనశ్శాంతి" was rejected for two reasons: it is close to the brand "అంతర్శాంతి", and the home hero already uses "మనశ్శాంతి వైపు మీ ప్రయాణం". "మానసిక ఆరోగ్యం" was rejected because a clinical word on a complementary-remedy label would suggest a health claim.
+- **Running text about wellbeing** (Bach "support their mood", "caring for your wellbeing") uses **మనసు బాగుండటం / మనసు, శరీరం బాగుండటానికి**. It is neutral and makes no promise.
+- **Check-in disclaimers** keep "రోగ నిర్ధారణ కాదు" and "డాక్టర్ లేదా కౌన్సెలర్". Those are plain and correct, so I did not touch them.
+
+Rule for consistency: clinical or advice meaning → మానసిక; label for the Bach offering → మనసుకు ఊరట; describing feeling well → మనసు బాగుండటం.
+
+### 3. Words kept on purpose because they are genuinely common
+
+- **రోగ నిర్ధారణ / నిర్ధారించలేం** (9). This is the standard word for "diagnosis" on health pages. It sits in disclaimers, so I did not touch it.
+- **సంప్రదించండి / సంప్రదిస్తారు** (13), meaning "contact". It appears on every banner and ad ("వివరాలకు సంప్రదించండి"). Only the noun "సంప్రదింపు" was the problem.
+- **అవగాహన** (3). Very common ("అవగాహన కార్యక్రమం", "అవగాహన లేదు").
+- **పరిశీలిస్తాం / పరిశీలించేలా** (2). Normal customer-care wording, and these are in legal text.
+- **మానసిక** (2). See above.
+- **సున్నితమైన** (14), meaning "gentle". It is understood. It is repeated often, but it is not wrong.
+- **మనసు స్థితి** (mood). It is plain, not the bookish "మనఃస్థితి".
+- Also kept:
+  - **ధ్యాస**, **ఏకాగ్రత**, **కుదుటపడు**, **ఆసరా**, **తోడు**, **ప్రత్యేకమైన**, **గమ్యం**, **ఆధారం**, **మిశ్రమం**, **దుఃఖం**, **స్వభావం**
+  - **పొంతన**, **దశ**, **జాతకం**, **విరాళం**, **ప్రాచీన జ్ఞానం**, **మెలకువలు**, **సత్సంగం**
+  - **స్వచ్ఛంద సేవ**, **లాభాపేక్ష లేని సంస్థ**, **ప్రచురించిన అధ్యయనాలు** (study claims: kept exactly), **రూపొందించారు**, **ప్రసంగాలు**, **శిక్షకుడు**, **నిపుణుడు**, **అధికారిక**, **భారత ప్రామాణిక సమయం**
+- **Legal register, kept on purpose:** వినియోగ నిబంధనలు, వర్తిస్తాయి, అభ్యర్థనలు, అంగీకరిస్తున్నాను, నిర్దిష్ట, దుర్వినియోగం, బాధ్యులం, పరిధి, అర్హత కలిగిన డాక్టర్ (safety text). These are standard in Telugu official text, and changing them could shift legal meaning.
+- **ప్రత్యక్షంగా** (In-person, 4). Understood, but slightly formal. A possible later swap is "నేరుగా". I did not change it, because "నేరుగా" alone is unclear as a mode label.
+
+### 4. What the patches did not change
+
+- No disclaimer, price, refund timing, helpline text or legal obligation was made stronger or weaker.
+- Placeholders, HTML, emoji/symbols, URLs and numbers were checked by script.
+- The address forms ("శ్రీకాంత్ గారు" in WhatsApp messages) and the "English version applies" note are unchanged.
+- Short strings stay short: chips, titles and eyebrows are at most 4 words. "తోటివారి తోడు, సత్సంగం" is the longest.
+
+## Hindi headlines changed (all others, including the rhyming Jyotish and Happiness heroes, were kept)
+
+key | now says | other options | why
+---|---|---|---
+`home.hero.title` | <em>अंतर्शांति</em> में आपका स्वागत है —<br>मन की शांति की ओर आपका रास्ता। | <em>अंतर्शांति</em> में आपका स्वागत है —<br>मन की शांति का आपका रास्ता। / <em>अंतर्शांति</em> में आपका स्वागत है —<br>सुकून भरे मन की ओर आपका सफ़र। | 'भीतर की शांति' is a literal 'inner peace'; everyday Hindi says 'मन की शांति'. Rhythm and structure kept.
+`home.kind.eyebrow` | प्यार भरे शब्द | लोगों के अनुभव / आभार के शब्द | 'दो अच्छे शब्द' is unclear (flagged) and sounds like 'a couple of nice words'; 'प्यार भरे शब्द' is the natural 'kind words'.
+`happiness.whatIs.title` | साँस का एक अभ्यास, जिससे बहुत-से लोगों को गहरा सुकून मिलता है | साँस का एक अभ्यास — बहुत-से लोगों के लिए गहरे सुकून का ज़रिया / साँस का वह अभ्यास, जिसमें कई लोग गहरा सुकून पाते हैं | '...सुकून देने वाला लगता है' is long and literal ('find deeply calming'); flagged as longer than English.
+`happiness.learn.title` | तीन दिन, जो साथ रह जाते हैं | तीन दिन, जो याद रह जाते हैं / तीन दिन, जो मन में बस जाते हैं | 'जो आपके साथ रहते हैं' is a literal 'stay with you' (sounds like the days physically stay); 'साथ रह जाते हैं' is the idiom for something lasting.
+`jyotish.whatIs.title` | खुद को समझने की एक पारंपरिक विद्या | खुद को समझने का एक पारंपरिक तरीका / खुद को जानने की सदियों पुरानी विद्या | 'पुरानी पद्धति' can read as 'old/outdated method'; 'पारंपरिक' = traditional, and 'विद्या' is the warm, common word for Jyotish.
+`bach.hero.titleA` | उन एहसासों को एक नर्म सहारा, | उन एहसासों को प्यार भरा सहारा, / उन भावनाओं के लिए एक नर्म सहारा, | 'भावनाओं' is the bookish word; 'एहसास' is what people say for feelings and sounds softer with 'जिन तक शब्द नहीं पहुँच पाते'. Rhythm kept.
+`bach.whatIs.title` | भावनाओं के लिए फूलों के अर्क | मन के लिए फूलों के अर्क / फूलों के अर्क, मन की देखभाल के लिए | Term consistency: 'flower essences' = 'फूलों के अर्क' on Home and the rest of Bach; 'सार' also means 'summary' and is used that way on this site.
+`bach.who.title` | शायद आप इनमें से किसी दौर से गुज़र रहे हों… | हो सकता है, आप इनमें से किसी से गुज़र रहे हों… / शायद इनमें से कुछ आपको अपना-सा लगे… | 'इस दौर से गुज़र रहे हैं…' is singular and definite but introduces a list of noun phrases (flagged loose grammar); subjunctive 'हों' also keeps the gentle 'may be'.
+`bach.learn.title` | यह तरीका कहाँ से आया | इस तरीके की जड़ें / यह पद्धति कहाँ से आई | 'यह काम कहाँ से आता है' is a word-for-word 'where this work comes from'; 'काम' reads as 'job'.
+
+## Hindi: editor's notes and questions for you
+The patch file `hi_natural.json` sits next to this note. It has 89 changes: 71 naturalness, 9 word/term, 9 headline. Confidence: 43 high, 46 medium. It does not touch the settled decisions: "श्रीकांत जी", सेशन/फ़ीस/पेमेंट, the "English version applies" note, the donation wording, prices, the safety and helpline text, or the self-harm item.
+
+### 1. What sounded unnatural (general lessons)
+
+1. **English sentence shapes copied word for word.** Examples: "यह बात आपके लिए कितनी बार सच रही" ("true for you"), "शुरू करने के लिए अच्छी जगह" ("a good place to start"), "जो आपके लिए काम कर रहा है" ("what works for you"), "तय भविष्यवाणी के मतलब में नहीं" ("not in the sense of"), "काम आता है अगर…" (English word order), "हिस्से के रूप में" ("as part of"). Hindi says the idea, not the English structure.
+2. **"find it X" written as "X देने वाला लगता है / पाते हैं".** Hindi says "इससे … मिलता है" (बहुत-से लोगों को इससे सुकून मिलता है). This was fixed on Happiness, check-in and Bach. The careful claims ("many people", "may help") are kept every time.
+3. **Stacked participles and noun chains.** Examples: "इलाज के साथ-साथ अपनाया जा सकने वाला एक नर्म तरीका", "एक जाना-माना इलाज के साथ-साथ चलने वाला तरीका", "…पर खुद को समझने का 5 मिनट का मुफ़्त, निजी चेक-इन". These were split into short clauses.
+4. **Gender agreement with placeholders.** "{name} सुझाया गया था" and "{other} भी अपनाया जा सकता है" are masculine. They become ungrammatical when the value is "सुदर्शन क्रिया" or "ज्योतिष पर एक बातचीत". Both are rewritten so every value fits.
+5. **"ज़रूरी नहीं" for "you don't have to".** "आपको इसे अकेले संभालना ज़रूरी नहीं" reads like "it is not compulsory". The warm idiom is "आपको यह सब अकेले नहीं सँभालना है".
+6. **Words with a misleading second meaning.**
+   - "पुरानी पद्धति" can mean outdated, so it became "पारंपरिक विद्या".
+   - "सच्ची ताक़त" suggests other strengths are fake.
+   - "सबूत" sounds like a courtroom.
+   - "बुलावा" sounds like a summons.
+   - "हर स्तर के लोग" can sound like social class.
+   - "आपके लिए गए फ़ैसलों" in Terms reads as "decisions taken FOR you", the opposite of the English.
+   - "सेशन नहीं ले पाएँ" sounds like a student missing a class.
+7. **Real errors.**
+   - "विमशोत्तरी" should be "विंशोत्तरी".
+   - "थोड़ी-सी अल्कोहल" should be masculine: "थोड़ा-सा अल्कोहल".
+   - "…होगी कि आप … बताइए" needs the subjunctive "बताएँ".
+   - "अगर आपने जिस लिंक…" (Privacy) is a broken clause.
+   - "रेमेडी की बोतल, अगर…, उसका बिल" (Terms) is a broken sentence.
+8. **Small meaning drifts the earlier draft had introduced, now set back to the English.**
+   - "the choice works best" had become "the remedy works better", which is an effect claim.
+   - Jyotish payFine had dropped "never".
+   - Happiness "results vary" had become "may vary".
+
+### 2. Terms standardised
+
+| Concept | Standard now | Replaced |
+|---|---|---|
+| financial advice | पैसों से जुड़ी सलाह | पैसों की सलाह (footer, Terms), आर्थिक सलाह (Jyotish ×2) |
+| flower essences | फूलों के अर्क | फूलों के सार / नर्म सार (Bach), बाख फ्लावर एसेंस (Jyotish) |
+| grief | ग़म | शोक (Bach hero, who-list, Jyotish explore); the plain-words pass had already done Home and Happiness |
+| tools | तरीके | साधन (one leftover on Jyotish) |
+| hold a slot | रोकना | होल्ड (booking.errors.hold_failed) |
+| payment confirmed / not | कन्फ़र्म | पुष्टि (Bach payUnverified) |
+| cancelled | कैंसल | रद्द (bach.book.cancelled), matching the Refund page |
+| alcohol | masculine: थोड़ा-सा अल्कोहल | थोड़ी-सी अल्कोहल |
+| "you don't have to … alone" | आपको (यह सब) अकेले नहीं सँभालना है | …संभालना ज़रूरी नहीं (है) |
+| spelling | सँभालना (with chandrabindu) in changed strings | संभालना. Several untouched strings still have "संभाल"; both spellings are accepted. |
+
+### 3. Questions for the owner
+
+1. **"नर्म" for "gentle".** The plain-words pass turned every कोमल into नर्म. In Hindi, नर्म is mostly about texture (soft bread, soft cloth). With सहारा/तरीका/स्वभाव it is acceptable, so I left those. With सुझाव/संकेत/व्यवस्था/क्रम/सार it sounded wrong, so I changed those. About 12 strings still say "नर्म सहारा" or "नर्म तरीका". If you want, the alternatives are "सहज" (easy, natural) or "हल्का" (mild). Do you want a single word everywhere?
+2. **"इलाज के साथ वेलनेस"** (bach.topbar.tail, bach.cta.sub, for "Complementary wellness") is a short chip and sounds a little odd. Options: keep it; "इलाज के साथ-साथ" alone; or the English loanword "कॉम्प्लिमेंटरी वेलनेस", which many people may misread as "free".
+3. **Medical word.** The footer and check-in say "डॉक्टरी सलाह/इलाज", while Jyotish and Terms say "मेडिकल सलाह". Both are natural. Pick one if you want strict consistency; I did not change them.
+4. **"ध्यान ट्रेनर"** (Home intro and chips) mixes Hindi and English. "मेडिटेशन ट्रेनर" or "ध्यान सिखाने वाला" are the options. I left it.
+5. **Address form in running text.** Booking errors and Privacy say "श्रीकांत जी", while check-in, Bach and Jyotish running text say plain "श्रीकांत" (with वे). The address decision is final, so I did not touch this. Just confirm the mix is intended: "जी" in messages and legal text, plain name in page copy.
+6. **Headlines with alternatives.** These 9 are in the patch: home.hero.title, home.kind.eyebrow, happiness.whatIs.title, happiness.learn.title, jyotish.whatIs.title, bach.hero.titleA, bach.whatIs.title, bach.who.title, bach.learn.title. The Jyotish hero ("अपनी ज़िंदगी को पढ़िए / सितारों के ज़रिए") and the Happiness hero ("शांत मन, एक-एक साँस से") were kept as they are.
+7. **Still open from earlier lists (not decided here):** "समुदाय और संगत" vs "सत्संग"; "दान के आधार पर" vs "योगदान"; "अख़बार वाले" in the Jyotish FAQ; "हीलिंग"; "लॉन्ग-SKY"; Refund's extra words "या खराब हो जाए".

@@ -1,7 +1,7 @@
 # Srikanth's to-do list (kept up to date by Claude)
 
 Tick items by changing `[ ]` to `[x]`. Claude re-reads this at the start of each session and reminds you of the next few open items.
-**Last updated: 17 Nov 2026.**
+**Last updated: 17 Nov 2026 (later).** AI-side follow-ups are tracked separately in `docs/AI-ACTIONS.md`.
 Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (lower pressure and fear; tell the truth, not a rosy story).
 
 ## A. Blocking: the site cannot take real bookings until these are done
@@ -32,17 +32,16 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 - [ ] **C7. Weekly WhatsApp broadcast** note and a QR code to `/checkin` on Happiness Program materials.
 
 ## D. Decisions waiting for you / ideas
-- [ ] **D1. Booking widget shows 7 days only.** With the calendar you can open up to 45 days ahead; want a "next week" button? (small improvement, not started)
+- [x] **D1. Booking widget "Next week" button** (done: you can page up to 6 weeks ahead).
 - [ ] **D2. Get notified of new bookings** (WhatsApp or email). Suggested after the calendar link-up, since calendar events notify your phone.
 - [ ] **D3. Check-in wording** was changed to bands (no 0 to 100 score). Please read the results screen once on staging and say if the tone is right.
 - [ ] **D6. Check-in next-step wording (new).** Read the results on staging once. In particular please confirm you are happy with this sentence about Sudarshan Kriya: *"Several published studies report lower stress and anxiety after learning it, and many people simply find it deeply relaxing."* If you can, give me one specific study link (for example from the Art of Living research page) and I will link it; that makes the sentence stronger and safer.
 - [ ] **D7. Watch the two short videos on the check-in results:** Sudarshan Kriya `gWwhIPAajfw` and Bach Flower `Cm5DVzkOo_U` (chosen by title). Say if you want others.
-- [ ] **D4. Get the Telugu and Hindi check-in reviewed by a native speaker** (2 people if possible). Guide, a ready WhatsApp message, and the word choices to check are in `docs/TRANSLATION-REVIEW.md`. Staging links: `/te/checkin` and `/hi/checkin`. Nothing goes live in these languages until you flip `src/_data/i18n/review.json`.
+- [ ] **D4. Native review of all Telugu and Hindi pages (you coordinate; Claude has done the first and second drafts).** Start at the index at the top of `docs/TRANSLATION-REVIEW.md`: every page has its own notes. Newest and most important: **Part 5** (headline choices with alternatives, and a list of questions for you) and `docs/TRANSLATION-CHANGES-LOG.md` (every changed line, before and after). Staging links: `/te/` and `/hi/` for every page. Nothing goes live in these languages until the flags in `src/_data/i18n/review.json` are switched on. Send corrections as "page, key or item number, new wording".
+- [ ] **D11. Lawyer review of the English Privacy, Terms and Refund pages** before they are linked (the Telugu and Hindi versions follow whatever the English says; their "legal-sensitive points" are in Part 4 of `docs/TRANSLATION-REVIEW.md`).
 - [ ] **D8. Happiness page headline changed** from "Don't settle for happy-ish" (felt like pressure) to "A calmer mind, one breath at a time". Also removed "why haven't you tried it yet?". Happy with both?
 - [ ] **D5. Bach headline** now says "Gentle support for the feelings words cannot reach". Happy with it?
 
-- [ ] **D9. Telugu/Hindi: Home and Happiness pages are now drafted.** Have them reviewed together with the check-in; the full list of doubts (Telugu 37, Hindi 30) and the 5 decisions that are yours are in `docs/TRANSLATION-REVIEW.md` (Part 2). Bach and Jyotish pages are now drafted too (Part 3 of that document), with the plain-words pass applied to everything. Privacy, Terms and Refund pages are drafted as well (Part 4). **All site pages are now translated as drafts**; per-page notes are indexed at the top of that document.
-- [ ] **D10. Decide the translation style questions** at the top of Part 2 and Part 3 ("New decisions for you") of `docs/TRANSLATION-REVIEW.md` (how to address Srikanth, donation wording, "healing" style, "contribute" wording).
 
 ## E. Operating notes (no action unless something looks wrong)
 - Databases: `antarshanti-prod` (real data) and `antarshanti-test` (sample data), both Mumbai, Free plan. Process for changes: `docs/DATABASE-CHANGES.md`. Free projects pause after 7 days idle; a scheduled keep-alive handles this once on production.
@@ -57,6 +56,7 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 5. Quotes from other sites (Art of Living, etc.) only with that site's permission, naming the source.
 
 ## Done so far
-Telugu and Hindi drafts of the check-in, Home and Happiness pages built behind a review gate; Site rebuilt on Eleventy; Golden Hour theme; check-in with gentler band results and a single Tele-MANAS helpline plus always-on WhatsApp option; Bach/Jyotish wording made non-promissory; two Supabase projects with row-level security; server-side pricing from the database; Razorpay webhook; slot reservation with a database-level no-double-booking guarantee; staging branch and safety guards between test and live.
-
-- [ ] **D11. Legal pages in Telugu/Hindi:** have a lawyer read the English Privacy, Terms and Refund first, then the translators' "legal-sensitive points" (Part 4 of `docs/TRANSLATION-REVIEW.md`). Confirm whether to keep the "English version applies" note at the top of the translated pages.
+- Site rebuilt on Eleventy; Golden Hour theme; check-in with gentler band results, a single Tele-MANAS helpline and an always-available WhatsApp option; Bach/Jyotish wording made non-promissory; two Supabase projects with row-level security; server-side editable prices; slot reservation with Google Calendar support; "Next week" button on the booking widget (D1).
+- **Telugu and Hindi: every page translated as a draft** (check-in, Home, Happiness, Jyotish, Bach, Privacy, Terms, Refund), including booking messages and times in the reader's language, behind the review gate.
+- Decisions settled by you on 17 Nov (no action left): keep the "English version applies" note on translated legal pages; leave the గారు / जी addressing as it is until something sounds very odd; "ఇవ్వండి" (not "సమర్పించండి") for contributing; use plain everyday words instead of bookish or church-like ones; booking server messages and times translated.
+- A second read-through by a stronger editor model rewrote the Telugu headlines naturally and replaced about 140 uncommon-word uses (Part 5 of the review document).
