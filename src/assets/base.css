@@ -140,7 +140,7 @@ footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0
 .o-price{font-family:'Marcellus',serif;font-size:1.15rem;color:var(--copper);white-space:nowrap}
 
 @media(max-width:700px){
-  .two-col{grid-template-columns:1fr!important}
+  .two-col{grid-template-columns:minmax(0,1fr)!important}
   .slots-grid{grid-template-columns:repeat(2,1fr)}
   .cta-strip-inner{flex-direction:column;text-align:center}
 }
@@ -235,3 +235,4 @@ img,svg{max-width:100%}
   .logo-mark{width:26px;height:26px}
   .slots-grid{grid-template-columns:repeat(2,1fr)}
 }
+.two-col>*{min-width:0}

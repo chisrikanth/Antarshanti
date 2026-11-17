@@ -35,5 +35,12 @@ window.ASBook = (function () {
     return weekly[DAYS[date.getDay()]] || [];
   }
   function dayHasFree(date, times) { return times.some(function (t) { return state(date, t) === 'free'; }); }
-  return { timesFor: timesFor, load: load, iso: iso, state: state, dayHasFree: dayHasFree, slotsFromRules: slotsFromRules };
+  // Words shown in the visitor's language (set by each page from its language file); English if not set.
+  var T = null;
+  function setT(t) { T = t; }
+  function fmt(str, vars) { return String(str).replace(/\{(\w+)\}/g, function (m, k) { return vars && vars[k] != null ? vars[k] : m; }); }
+  function dayName(date) { return (T ? T.days : DAYS)[date.getDay()]; }
+  function monthName(date) { return (T ? T.months : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'])[date.getMonth()]; }
+  function dateLabel(date) { return fmt(T ? T.dateFmt : '{day}, {d} {month}', { day: dayName(date), d: date.getDate(), month: monthName(date) }); }
+  return { setT: setT, fmt: fmt, dayName: dayName, monthName: monthName, dateLabel: dateLabel, timesFor: timesFor, load: load, iso: iso, state: state, dayHasFree: dayHasFree, slotsFromRules: slotsFromRules };
 })();

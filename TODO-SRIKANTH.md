@@ -41,8 +41,8 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 - [ ] **D8. Happiness page headline changed** from "Don't settle for happy-ish" (felt like pressure) to "A calmer mind, one breath at a time". Also removed "why haven't you tried it yet?". Happy with both?
 - [ ] **D5. Bach headline** now says "Gentle support for the feelings words cannot reach". Happy with it?
 
-- [ ] **D9. Telugu/Hindi: Home and Happiness pages are now drafted.** Have them reviewed together with the check-in; the full list of doubts (Telugu 37, Hindi 30) and the 5 decisions that are yours are in `docs/TRANSLATION-REVIEW.md` (Part 2). Next to translate after review: Bach and Jyotish pages (say when).
-- [ ] **D10. Decide the translation style questions** at the top of Part 2 of `docs/TRANSLATION-REVIEW.md` (how to address Srikanth, donation wording, "healing" style).
+- [ ] **D9. Telugu/Hindi: Home and Happiness pages are now drafted.** Have them reviewed together with the check-in; the full list of doubts (Telugu 37, Hindi 30) and the 5 decisions that are yours are in `docs/TRANSLATION-REVIEW.md` (Part 2). Bach and Jyotish pages are now drafted too (Part 3 of that document), with the plain-words pass applied to everything. Next to translate after review: privacy, terms and refund pages (say when).
+- [ ] **D10. Decide the translation style questions** at the top of Part 2 and Part 3 ("New decisions for you") of `docs/TRANSLATION-REVIEW.md` (how to address Srikanth, donation wording, "healing" style, "contribute" wording).
 
 ## E. Operating notes (no action unless something looks wrong)
 - Databases: `antarshanti-prod` (real data) and `antarshanti-test` (sample data), both Mumbai, Free plan. Process for changes: `docs/DATABASE-CHANGES.md`. Free projects pause after 7 days idle; a scheduled keep-alive handles this once on production.

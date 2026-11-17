@@ -503,5 +503,317 @@
     "In-person": "In-person"
    }
   }
+ },
+ "booking": {
+  "headerTitle": "Schedule your session",
+  "headerSub": "Choose a type, pick a date & time — confirm instantly",
+  "selectDate": "Select a date",
+  "prevWeek": "‹ Earlier",
+  "nextWeek": "Next week ›",
+  "prevAria": "Previous week",
+  "nextAria": "Next week",
+  "times": "Available times",
+  "timesFor": "Available times — {date}",
+  "taken": "Already booked",
+  "noTimes": "No online times are open this week. Try {next}, or {wa} and he will find a time.",
+  "nextLink": "next week",
+  "waLink": "message Srikanth on WhatsApp",
+  "noTimesWaMsg": "Namaste Srikanth, I would like to book a session.",
+  "availNote": "Slots reflect Srikanth's current availability · IST (India Standard Time)",
+  "days": [
+   "Sun",
+   "Mon",
+   "Tue",
+   "Wed",
+   "Thu",
+   "Fri",
+   "Sat"
+  ],
+  "months": [
+   "Jan",
+   "Feb",
+   "Mar",
+   "Apr",
+   "May",
+   "Jun",
+   "Jul",
+   "Aug",
+   "Sep",
+   "Oct",
+   "Nov",
+   "Dec"
+  ],
+  "dateFmt": "{day}, {d} {month}",
+  "at": "{date} at {time} IST",
+  "confirmLine": "{session} — {slot}"
+ },
+ "jyotish": {
+  "seoTitle": "Vedic Astrology (Jyotish) Consultation Online | Antarshanti Healing",
+  "seoDescription": "One-to-one Jyotish consultation online with Srikanth: birth chart, dashas and timing for career, marriage and life direction. No fixed fee — contribute what feels right.",
+  "topbar": {
+   "lead": "Online Jyotish Consultations —",
+   "link": "Book your session ↓",
+   "tail": "· No fixed fee · Contribute what feels right"
+  },
+  "mobileBar": {
+   "book": "Book a session",
+   "whatsapp": "WhatsApp"
+  },
+  "hero": {
+   "eyebrow": "Vedic Astrology",
+   "titleA": "Read your life",
+   "titleB": "through the stars.",
+   "intro": "Jyotish — the eye of the Vedas — is a reflective framework, not a promise about the future. It is a way to understand yourself: your temperament, the patterns you carry, which season of life you may be in, and how to move through it with more awareness.",
+   "btnBook": "Book a consultation",
+   "btnWhat": "What is Jyotish?"
+  },
+  "strip": {
+   "title": "Schedule your Jyotish consultation",
+   "sub": "Donation-based · UPI · Slots available Mon, Wed, Fri, Sat",
+   "btn": "See available slots ↓",
+   "wa": "WhatsApp a question",
+   "waMsg": "Namaste Srikanth, I have a question about Jyotish."
+  },
+  "whatIs": {
+   "eyebrow": "What is Jyotish?",
+   "title": "A traditional system of self-reflection",
+   "text": "Vedic astrology is a traditional Indian system that relates the sky to time. Your birth chart — cast for the exact moment, date and place you were born — maps the sky as it was when you arrived. We use it as a framework for reflecting on temperament, relationships, career and the timing of life phases, through planetary periods called <em>dashas</em>. Free will always applies; nothing is guaranteed, and it is not medical, legal or financial advice.",
+   "videos": [
+    "Vimshottari dasha: time and karma — Komilla Sutton",
+    "Rahu mahadasha in Vedic astrology"
+   ]
+  },
+  "consult": {
+   "eyebrow": "The Consultation",
+   "title": "The consultation",
+   "name": "Jyotish Consultation",
+   "desc": "One unhurried session, shaped around whatever matters most right now — your birth chart and the phase you are living through, a compatibility question, career and timing, or a follow-up on an earlier reading. Around 60 minutes.",
+   "noFee": "There is no fixed fee.",
+   "gift1": "This knowledge reached me as a gift, and I would like it to reach you the same way. After we speak, contribute whatever the session was worth to you — through the PhonePe QR in the booking panel. Any amount. If this is a hard season and you can give nothing at all, come anyway. The guidance does not change.",
+   "gift2": "And if the session helps you, the kindest thing you can do is tell one person who needs it.",
+   "fine": "Online · Written summary provided · IST timezone"
+  },
+  "book": {
+   "tabName": "Jyotish Consultation",
+   "holdIntro": "To hold this time for you, please share a name and your WhatsApp number. Srikanth will message you there.",
+   "nameLabel": "Your name",
+   "phoneLabel": "WhatsApp number",
+   "phonePh": "+91 XXXXX XXXXX",
+   "consent": "I agree that Srikanth may contact me on WhatsApp about this booking.",
+   "holdBtn": "Hold this slot",
+   "holding": "Holding…",
+   "errName": "Please enter your name.",
+   "errPhone": "Please enter a valid WhatsApp number.",
+   "errConsent": "Please tick the box so Srikanth may contact you.",
+   "held": "Held for you: {slot}",
+   "failed": "Could not hold the slot. Please try again or message Srikanth on WhatsApp.",
+   "unreachable": "Could not reach the server. Please try again or message Srikanth on WhatsApp.",
+   "next": "Here is what happens next:",
+   "steps": [
+    "Your slot is held for you (done).",
+    "Send your birth date, exact time and place on WhatsApp so I can prepare. I confirm within 24 hours.",
+    "After the session, contribute whatever it was worth to you — only if it helped."
+   ],
+   "payTitle": "Contribute what feels right",
+   "paySub": "Scan the code, or tap below to pay from the phone you are holding. There is no set amount and none is expected — give after the session, if it helped.",
+   "qrAlt": "PhonePe QR code to contribute to Antarshanti",
+   "waBtn": "Send birth details on WhatsApp",
+   "waMsgFirst": "Namaste Srikanth, I have booked a slot for a Jyotish consultation.",
+   "waMsg": "Namaste Srikanth, this is {name}. I have held {slot} for a Jyotish consultation. My birth details: ",
+   "upiBtn": "Open my UPI app →",
+   "payFine": "Your slot is held either way. A contribution is never a condition for the session.",
+   "track": "jyotish"
+  },
+  "testimonials": {
+   "eyebrow": "What clients say",
+   "title": "In their words"
+  },
+  "faqSection": {
+   "eyebrow": "Common questions",
+   "title": "Before you book"
+  },
+  "faq": [
+   {
+    "q": "Do I need to know my exact birth time?",
+    "a": "The more precise the birth time, the more accurate the chart. Share what you have — I apply rectification techniques to narrow it down if needed."
+   },
+   {
+    "q": "Is Jyotish about predicting the future?",
+    "a": "Not in the sense of fixed predictions. Jyotish is a reflective framework for understanding patterns and timing — free will always applies and nothing is guaranteed. The reading helps you reflect on your current chapter and choose your next steps with more awareness. It is not medical, legal or financial advice."
+   },
+   {
+    "q": "How is this different from Sun-sign horoscopes?",
+    "a": "Quite different. Vedic astrology uses your exact birth chart across 16 divisional charts, planetary periods, and classical techniques. A Sun-sign column uses one of dozens of factors."
+   },
+   {
+    "q": "What do I share after booking?",
+    "a": "Date of birth, exact time of birth, and place of birth — sent over WhatsApp after booking. You can also share the main area of life you want to focus on."
+   }
+  ],
+  "cta": {
+   "title": "Ready to read your chart?",
+   "sub": "Book online · Contribute what feels right · Slot confirmed within 24 hrs",
+   "btn": "Book a reading ↑",
+   "wa": "WhatsApp Srikanth",
+   "waMsg": "Namaste Srikanth, I would like to book a Jyotish consultation."
+  },
+  "explore": {
+   "eyebrow": "Also explore",
+   "title": "Other paths at Antarshanti",
+   "bach": {
+    "eyebrow": "Emotional Wellness",
+    "title": "Bach Flower Therapy",
+    "text": "If you are going through a season of fear, grief or self-doubt, Bach Flower essences may be a gentle complement. Many clients enjoy exploring the two together.",
+    "btn": "Explore Bach Flower →"
+   },
+   "happiness": {
+    "eyebrow": "Breath & Meditation",
+    "title": "Happiness Program",
+    "text": "Understanding your life map is powerful. Sudarshan Kriya and meditation give you the daily tools to walk that map with energy and joy.",
+    "btn": "Register for SKY →"
+   }
+  }
+ },
+ "bach": {
+  "seoTitle": "Bach Flower Therapy Consultation Online | ₹1,000 | Antarshanti Healing",
+  "seoDescription": "Personalised Bach Flower remedy consultation online with a certified Bach Flower therapist. ₹1,000 per session; a remedy bottle is billed separately, only if you want it.",
+  "topbar": {
+   "lead": "Bach Flower Consultations —",
+   "link": "Book & pay online · {price}",
+   "tail": "· Personalised · Online · Complementary wellness"
+  },
+  "mobileBar": {
+   "book": "Book a session",
+   "whatsapp": "WhatsApp"
+  },
+  "hero": {
+   "eyebrow": "Emotional Wellness",
+   "titleA": "Gentle support for the",
+   "titleB": "feelings words cannot reach.",
+   "intro": "Bach Flower Remedies are gentle flower essences that many people use to support their emotional wellbeing through times of stress, fear, grief or self-doubt. Developed by Dr. Edward Bach, they are a well-known system of complementary emotional care, offered to support your own healing.",
+   "btnBook": "Book a session",
+   "btnWhat": "What is Bach Flower?"
+  },
+  "strip": {
+   "title": "Book your Bach Flower consultation",
+   "sub": "{price} consultation · Pay securely online · Personalised for your emotional state",
+   "btn": "Choose a slot ↓",
+   "wa": "WhatsApp a question",
+   "waMsg": "Namaste Srikanth, I have a question about Bach Flower Therapy."
+  },
+  "whatIs": {
+   "eyebrow": "What is Bach Flower Therapy?",
+   "title": "Flower essences for the emotional self",
+   "text": "Dr. Edward Bach identified 38 flower essences — each associated with a specific emotional state. The remedies are highly diluted and preserved in brandy, so a small amount of alcohol is present. Many people find them a gentle support, and the choice works best when it is matched carefully to how you are feeling. Scientific evidence for their effect is limited, so we offer them as a complementary, personal practice.",
+   "videos": [
+    "Which Bach Flower remedy is right for you?",
+    "Stop overthinking your Bach Flower remedies",
+    "Can you mix all 38 remedies together?"
+   ]
+  },
+  "who": {
+   "eyebrow": "Who is it for?",
+   "title": "You may be going through…",
+   "items": [
+    "Worry, or a mind that will not stop overthinking",
+    "Grief, loss or feeling emotionally numb",
+    "Fear — of failure, of others, of the unknown",
+    "Low confidence or constant self-criticism",
+    "Anger, resentment or feeling stuck",
+    "Feeling overwhelmed, drained or unable to cope",
+    "Relationship conflicts or communication blocks",
+    "Finding it hard to move on after a difficult life event"
+   ]
+  },
+  "book": {
+   "tabName": "Bach Flower Consultation",
+   "intro": "The consultation is {price}. If a remedy blend is right for you, the bottle is billed separately afterwards — only if you want it.",
+   "payBtn": "Pay {price} & Confirm →",
+   "processing": "Processing…",
+   "waMsgFirst": "Namaste Srikanth, I have booked a slot for a Bach Flower consultation.",
+   "payOk": "✓ Payment confirmed. Please share a little about how you have been feeling on WhatsApp so Srikanth can prepare.",
+   "payUnverified": "⚠ Payment could not be verified. WhatsApp Srikanth with payment ID {id}.",
+   "payVerifyErr": "⚠ Could not verify payment. WhatsApp Srikanth with payment ID {id}.",
+   "cancelled": "Payment cancelled.",
+   "failedMsg": "⚠ Payment failed: {reason}",
+   "startFail": "⚠ Could not start payment. Please try again, or WhatsApp Srikanth.",
+   "medNote": "Bach Flower remedies are a gentle complement to medical care, not a replacement. Please keep seeing your doctor for any medical condition."
+  },
+  "testimonials": {
+   "eyebrow": "What clients say",
+   "title": "In their words"
+  },
+  "faqSection": {
+   "eyebrow": "Common questions",
+   "title": "Before your first session"
+  },
+  "faq": [
+   {
+    "q": "Are Bach Flower Remedies safe?",
+    "a": "The remedies are highly diluted flower essences preserved in brandy, so a small amount of alcohol is present. Many people of different ages use them. If you are pregnant, avoid alcohol, are choosing for a child, or have a health condition, please check with your doctor first."
+   },
+   {
+    "q": "How long before I notice a difference?",
+    "a": "Experiences vary and results are not guaranteed. Some people notice a change early on; for deeper emotional patterns, many continue for 4–6 weeks. A follow-up consultation helps refine the blend."
+   },
+   {
+    "q": "How is the remedy chosen?",
+    "a": "In a session we talk through your current emotional state — what you feel, when, and how it affects daily life. The blend is then personalised to you."
+   },
+   {
+    "q": "Can I take them alongside medication?",
+    "a": "Bach Flower Remedies are complementary and are not a substitute for medical care. Please keep taking any prescribed medicine, and mention the remedies to your doctor."
+   }
+  ],
+  "cta": {
+   "title": "Ready to begin?",
+   "sub": "Personalised consultation · Online · Complementary wellness",
+   "btn": "Book a session ↑",
+   "wa": "WhatsApp Srikanth",
+   "waMsg": "Namaste Srikanth, I would like to explore Bach Flower Therapy."
+  },
+  "explore": {
+   "eyebrow": "Also explore",
+   "title": "Other paths at Antarshanti",
+   "jyotish": {
+    "eyebrow": "Vedic Astrology",
+    "title": "Jyotish Consultations",
+    "text": "Many clients find it interesting to look at their birth chart as a way of reflecting on the patterns and timing in their journey.",
+    "btn": "Explore Jyotish →"
+   },
+   "happiness": {
+    "eyebrow": "Breath & Meditation",
+    "title": "Happiness Program",
+    "text": "Sudarshan Kriya and pranayama can sit well alongside Bach Flower — many people enjoy combining breath practice with the remedies as part of caring for their wellbeing.",
+    "btn": "Register for SKY →"
+   }
+  },
+  "learn": {
+   "eyebrow": "Learn more",
+   "title": "Where this work comes from",
+   "text": "Everything I practise follows the original method Dr. Edward Bach left behind, unchanged. These are the primary sources — read them yourself rather than taking my word for it.",
+   "cards": [
+    {
+     "kind": "The Bach Centre",
+     "title": "The 38 remedies ↗",
+     "desc": "The official guide to every remedy and the emotional state it addresses, from Dr. Bach's own home at Mount Vernon."
+    },
+    {
+     "kind": "The Bach Centre",
+     "title": "Quick reference guide ↗",
+     "desc": "A one-page overview of all 38 remedies — useful if you want to recognise your own state before we speak."
+    },
+    {
+     "kind": "The Bach Centre",
+     "title": "How the remedies are made ↗",
+     "desc": "The sun method, the boiling method, and why the process has stayed the same since 1936."
+    },
+    {
+     "kind": "The Bach Centre",
+     "title": "Recognised training ↗",
+     "desc": "The three levels of Bach Centre-approved training, and how to check whether a practitioner is registered."
+    }
+   ]
+  }
  }
 }

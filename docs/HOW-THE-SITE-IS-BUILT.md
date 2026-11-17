@@ -14,8 +14,8 @@
 | Telugu / Hindi text; switching a language on for the live site | `src/_data/i18n/te.json`, `hi.json`; `review.json` |
 | Footer, logo, top of every page | `src/_includes/partials/` |
 | Colours, fonts feel, spacing for the whole site | `src/assets/theme.css` |
-| Text on a page | `src/index.njk`, `src/jyotish.njk`, `src/bach.njk`, `src/happiness.njk` |
-| FAQ questions (the page and the Google markup update together) | `src/_data/faq/<page>.json` |
+| Text on a page | `src/index.njk`, `src/jyotish.njk`, `src/bach.njk`, `src/happiness.njk` (layout) and the words in `src/_data/i18n/*.json` |
+| FAQ questions (the page and the Google markup update together) | the `faq` list of that page in `src/_data/i18n/en.json` (and `te.json`, `hi.json`) |
 | Page title, description, address (SEO) | the top of that page file (between the `---` lines) |
 | Happiness dates, registration links, announcement bar, testimonials | `src/data/site.json`, or Supabase tables (no deploy) |
 | Sitemap | automatic (draft policy pages are left out until `noindex` is removed) |
@@ -27,4 +27,4 @@
 
 ## Next simplifications (not done yet)
 - (done 17 Nov) The check-in page now uses the shared header, footer and styles; only `src/assets/checkin-only.css` is specific to it.
-- Telugu and Hindi: the check-in, Home and Happiness pages are done (drafts behind the review gate) as a pattern (`src/*.njk` + `src/_data/i18n/*.json` + `src/*.11tydata.js`). Remaining pages: Bach, Jyotish, policy pages; see `docs/TRANSLATION-REVIEW.md`.
+- Telugu and Hindi: the check-in, Home, Happiness, Jyotish and Bach pages are done (drafts behind the review gate) as a pattern (`src/*.njk` + `src/_data/i18n/*.json` + `src/*.11tydata.js`). Remaining pages: privacy, terms, refund; see `docs/TRANSLATION-REVIEW.md`.
