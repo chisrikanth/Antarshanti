@@ -1,182 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free 5-Minute Emotional Wellbeing Check-In | Antarshanti Healing</title>
-<meta name="description" content="A free, private 5-minute reflection on stress, mood, mindfulness, self-esteem and emotional balance, with a gentle suggestion of what may help. Not a diagnosis.">
-<link rel="canonical" href="https://antarshanti.co.in/checkin">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Antarshanti Healing">
-<meta property="og:title" content="Free 5-Minute Emotional Wellbeing Check-In | Antarshanti Healing">
-<meta property="og:description" content="A free, private 5-minute reflection on stress, mood, mindfulness, self-esteem and emotional balance, with a gentle suggestion of what may help. Not a diagnosis.">
-<meta property="og:url" content="https://antarshanti.co.in/checkin">
-<meta property="og:image" content="https://antarshanti.co.in/og-image.png">
-<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Free 5-Minute Emotional Wellbeing Check-In | Antarshanti Healing">
-<meta name="twitter:description" content="A free, private 5-minute reflection on stress, mood, mindfulness, self-esteem and emotional balance, with a gentle suggestion of what may help. Not a diagnosis.">
-<meta name="twitter:image" content="https://antarshanti.co.in/og-image.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#FFF7EC; --paper-2:#FAEEDB; --card:#FFFDF7;
-  --ink:#2E1A08;   --body:#4A3220;   --dim:#7A5A38;
-  --gold:#D9A441;  --saffron:#D96B10; --copper:#8A3B12;
-  --lotus:#B8406A; --leaf:#5A8A3E;   --sky:#2D6EA0;
-  --line:rgba(138,59,18,.2); --radius:14px;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--body);font-family:'Karla',sans-serif;
-  font-size:17px;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:'Marcellus',serif;font-weight:400;line-height:1.2;color:var(--ink)}
-a{color:var(--copper);text-decoration:none}
-.wrap{max-width:960px;margin:0 auto;padding:0 20px}
-.narrow{max-width:640px;margin:0 auto;padding:0 20px}
-.eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
-section{padding:60px 0}
-
-/* TOPBAR */
-.topbar{background:var(--copper);color:#FFF7EC;text-align:center;padding:10px 20px;
-  font-size:.88rem;font-weight:500;letter-spacing:.04em}
-.topbar a{color:#FFD98A;font-weight:700;border-bottom:1px solid rgba(255,217,138,.4)}
-.topbar a:hover{color:#fff}
-
-/* NAV */
-nav{position:sticky;top:0;z-index:50;background:rgba(255,247,236,.94);
-  backdrop-filter:blur(14px);border-bottom:1px solid var(--line);box-shadow:0 1px 12px rgba(138,59,18,.07)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
-.logo{font-family:'Marcellus',serif;font-size:1.18rem;letter-spacing:.05em;color:var(--ink);white-space:nowrap}
-.logo em{font-style:normal;color:var(--saffron)}
-.nav-links{display:flex;gap:20px;font-size:.87rem;font-weight:500}
-.nav-links a{color:var(--dim);white-space:nowrap;transition:color .2s;padding-bottom:2px;border-bottom:2px solid transparent}
-.nav-links a:hover,.nav-links a.active{color:var(--saffron);border-bottom-color:var(--saffron)}
-@media(max-width:720px){.nav-links{gap:14px;font-size:.8rem}.nav-links a:not(.active):not(:first-child){display:none}.logo{font-size:1.02rem}}
-
-/* BUTTONS */
-.btn{display:inline-block;padding:12px 26px;border-radius:999px;font-size:.9rem;
-  font-weight:600;letter-spacing:.04em;transition:transform .18s,box-shadow .18s;cursor:pointer;text-align:center;border:none}
-.btn:hover{transform:translateY(-2px)}
-.btn-sm{padding:9px 20px;font-size:.84rem}
-.btn-gold{background:var(--saffron);color:#FFF7EC}.btn-gold:hover{box-shadow:0 8px 28px rgba(217,107,16,.4)}
-.btn-lotus{border:1.5px solid var(--lotus);color:var(--lotus);background:transparent}.btn-lotus:hover{background:var(--lotus);color:#FFF7EC;box-shadow:0 6px 20px rgba(184,64,106,.3)}
-.btn-wa{background:#25D366;color:#fff;border:none}.btn-wa:hover{box-shadow:0 6px 20px rgba(37,211,102,.4)}
-.btn-outline{border:1.5px solid var(--line);color:var(--dim);background:transparent}.btn-outline:hover{border-color:var(--saffron);color:var(--saffron)}
-.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
-
-/* FOOTER */
-footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0 34px}
-.foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.foot-links{display:flex;gap:20px;font-size:.88rem;flex-wrap:wrap}
-.foot-links a{color:var(--dim);font-weight:500}.foot-links a:hover{color:var(--saffron)}
-.fine{margin-top:24px;font-size:.76rem;color:rgba(122,90,56,.8);max-width:640px;line-height:1.7}
-
-/* CARD */
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:0 6px 28px rgba(138,59,18,.1)}
-
-/* CHECKIN SHELL */
-.checkin-shell{min-height:calc(100vh - 300px);display:flex;align-items:center;padding:40px 0}
-.screen{display:none;width:100%}
-.screen.active{display:block}
-
-/* CONSENT */
-.consent-card{padding:36px 32px}
-.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
-.tag{border:1px solid var(--gold);border-radius:999px;padding:6px 15px;font-size:.8rem;letter-spacing:.03em;
-  color:var(--copper);background:rgba(217,164,65,.1);font-weight:500}
-.notice-list{margin:18px 0 24px;padding-left:0;list-style:none}
-.notice-list li{position:relative;padding-left:22px;font-size:.92rem;color:var(--body);margin-bottom:8px}
-.notice-list li::before{content:'✦';position:absolute;left:0;color:var(--saffron);font-size:.8rem;top:3px}
-.consent-check{display:flex;gap:10px;align-items:flex-start;background:var(--paper-2);border:1px solid var(--line);
-  border-radius:10px;padding:14px 16px;margin:22px 0;font-size:.88rem;color:var(--dim)}
-.consent-check input{margin-top:3px;width:16px;height:16px;accent-color:var(--saffron);flex-shrink:0}
-
-/* PROGRESS */
-.progress-wrap{margin-bottom:26px}
-.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.progress-domain{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--saffron)}
-.progress-count{font-size:.78rem;color:var(--dim);font-weight:600}
-.progress-track{height:6px;background:var(--paper-2);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--saffron),var(--gold));border-radius:999px;transition:width .35s ease}
-
-/* QUESTION */
-.q-card{padding:36px 32px}
-.q-stem{font-size:.85rem;color:var(--dim);margin-bottom:10px}
-.q-text{font-size:1.35rem;margin-bottom:26px}
-.options{display:flex;flex-direction:column;gap:10px}
-.opt{border:1.5px solid var(--line);border-radius:10px;padding:14px 18px;font-size:.96rem;font-weight:500;
-  color:var(--body);cursor:pointer;transition:all .16s;background:var(--paper);display:flex;align-items:center;justify-content:space-between}
-.opt:hover{border-color:var(--saffron);background:rgba(217,107,16,.05)}
-.opt.selected{background:var(--saffron);border-color:var(--saffron);color:#FFF7EC}
-.opt .odot{width:16px;height:16px;border-radius:50%;border:1.5px solid currentColor;flex-shrink:0}
-.opt.selected .odot{background:#FFF7EC;border-color:#FFF7EC}
-.q-nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px}
-.skip-link{font-size:.82rem;color:var(--dim);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
-
-/* RESULTS */
-.crisis-box{background:linear-gradient(135deg,#FDEDED,#FFF7EC);border:1.5px solid #D9765C;border-radius:var(--radius);
-  padding:24px 26px;margin-bottom:28px}
-.crisis-box h3{color:#A83E1E;font-size:1.1rem;margin-bottom:8px}
-.crisis-box p{font-size:.92rem;color:var(--body);margin-bottom:12px}
-.helpline-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:6px}
-.helpline{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-.helpline .hname{font-size:.82rem;font-weight:700;color:var(--ink);display:block}
-.helpline .hnum{font-size:1.05rem;font-weight:700;color:var(--copper)}
-.helpline .havail{font-size:.74rem;color:var(--dim)}
-
-.overall-card{padding:32px;text-align:center;margin-bottom:28px;background:linear-gradient(135deg,#FAE7CC,#FFF7EC)}
-.overall-score{font-family:'Marcellus',serif;font-size:3.2rem;color:var(--ink);line-height:1}
-.overall-score span{font-size:1.3rem;color:var(--dim)}
-.overall-label{font-size:.88rem;color:var(--dim);margin-top:6px}
-
-.domain-row{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:20px 22px;margin-bottom:14px}
-.domain-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;gap:10px;flex-wrap:wrap}
-.domain-name{font-size:1.02rem;font-weight:700;color:var(--ink)}
-.domain-band{font-size:.78rem;font-weight:700;letter-spacing:.03em;padding:3px 12px;border-radius:999px}
-.band-good{background:rgba(90,138,62,.14);color:var(--leaf)}
-.band-mid{background:rgba(217,164,65,.18);color:var(--copper)}
-.band-watch{background:rgba(184,64,106,.14);color:var(--lotus)}
-.bar-track{height:9px;background:var(--paper-2);border-radius:999px;overflow:hidden;margin-bottom:8px}
-.bar-fill{height:100%;border-radius:999px;transition:width .5s ease}
-.domain-note{font-size:.86rem;color:var(--dim)}
-
-.disclaimer-box{font-size:.82rem;color:var(--dim);background:var(--paper-2);border:1px solid var(--line);
-  border-radius:10px;padding:14px 16px;margin:26px 0;line-height:1.7}
-
-.save-card{padding:28px;margin-top:8px}
-.save-card h3{font-size:1.1rem;margin-bottom:6px}
-.save-card p{font-size:.88rem;color:var(--dim);margin-bottom:18px}
-.field{margin-bottom:14px}
-.field label{display:block;font-size:.8rem;font-weight:700;color:var(--dim);margin-bottom:5px;letter-spacing:.02em}
-.field input,.field select{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:11px 13px;
-  font-family:'Karla',sans-serif;font-size:.94rem;color:var(--body);background:var(--paper)}
-.field input:focus,.field select:focus{outline:none;border-color:var(--saffron)}
-.save-status{font-size:.85rem;margin-top:10px;display:none}
-.save-status.show{display:block}
-.save-status.ok{color:var(--leaf)}
-.save-status.err{color:var(--lotus)}
-
-.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-
-/* PATH SUGGESTION */
-.path-wrap{margin:8px 0 26px}
-.path-primary{padding:26px 26px 24px;border-left:5px solid var(--saffron);margin-bottom:14px}
-.path-primary.leaf{border-left-color:var(--leaf)}.path-primary.lotus{border-left-color:var(--lotus)}
-.path-primary h3{font-size:1.3rem;margin:4px 0 8px}
-.path-primary p{font-size:.95rem;margin-bottom:16px}
-.path-also{font-size:.84rem;color:var(--dim)}
-.path-also a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
-</style>
-<link rel="stylesheet" href="assets/site.css">
-<link rel="stylesheet" href="assets/theme.css">
-</head>
-<body>
-
-<div class="topbar">✦ A gentle self-reflection tool from Antarshanti Healing ✦</div>
-<nav>
+---
+permalink: "/checkin.html"
+path: "/checkin"
+title: "Free 5-Minute Emotional Wellbeing Check-In | Antarshanti Healing"
+description: "A free, private 5-minute reflection on stress, mood, mindfulness, self-esteem and emotional balance, with a gentle suggestion of what may help. Not a diagnosis."
+ownCss: true
+footerStandard: false
+navKey: "checkin"
+---
+{% extends "layouts/base.njk" %}
+{% block topbar %}{% raw %}<div class="topbar">✦ A gentle self-reflection tool from Antarshanti Healing ✦</div>{% endraw %}{% endblock %}
+{% block navigation %}{% raw %}<nav>
   <div class="wrap nav-inner">
     <a href="index.html" class="logo">Antar<em>shanti</em> Healing</a>
     <div class="nav-links">
@@ -187,9 +20,8 @@ footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0
       <a href="checkin.html" class="active">Free Check-In</a>
     </div>
   </div>
-</nav>
-
-<section class="checkin-shell">
+</nav>{% endraw %}{% endblock %}
+{% block content %}{% raw %}<section class="checkin-shell">
   <div class="narrow">
 
     <!-- CONSENT SCREEN -->
@@ -271,7 +103,8 @@ footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0
   </div>
 </section>
 
-<footer>
+{% endraw %}{% endblock %}
+{% block footer %}{% raw %}<footer>
   <div class="wrap">
     <div class="foot-grid">
       <div>
@@ -288,9 +121,8 @@ footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0
     </div>
     <p class="fine">Antarshanti offerings are complementary wellness services and do not replace medical, psychological, legal or financial advice. This check-in is a self-reflection tool only. Personal details are kept strictly confidential and stored with your consent.</p>
   </div>
-</footer>
-
-<script>
+</footer>{% endraw %}{% endblock %}
+{% block scripts %}{% raw %}<script>
 /* ---------------------------------------------------------
    DATA
 --------------------------------------------------------- */
@@ -636,8 +468,4 @@ document.getElementById('btn-save').addEventListener('click', async () => {
     btn.textContent = 'Try Again';
   }
 });
-</script>
-
-<script src="assets/site.js" defer></script>
-</body>
-</html>
+</script>{% endraw %}{% endblock %}

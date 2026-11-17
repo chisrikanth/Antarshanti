@@ -1,4 +1,7 @@
-# Check-in survey: Supabase + Netlify setup (about 15 minutes)
+# Check-in survey: Supabase + Netlify setup
+
+> **Status 17 Nov 2026:** steps 1–3 are done. Project `antarshanti-prod` (Mumbai) exists at `https://kntohzyxzoucymrmriva.supabase.co` and the tables, views and read-only policies are applied. What remains for you is step 4: add `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` in Netlify, then redeploy.
+
 
 The check-in lives at `/checkin`. It posts to a Netlify function (`submit-checkin`), which writes to Supabase.
 The browser never talks to Supabase, so no database key is ever public.

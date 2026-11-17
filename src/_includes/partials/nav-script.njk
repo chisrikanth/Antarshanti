@@ -1,0 +1,27 @@
+{% raw %}<script>
+(function(){
+  var t=document.getElementById('navToggle'),
+      m=document.getElementById('mobileNav'),
+      s=document.getElementById('navScrim');
+  if(!t||!m||!s) return;
+  function setOpen(open){
+    t.setAttribute('aria-expanded',open?'true':'false');
+    m.classList.toggle('open',open);
+    s.classList.toggle('open',open);
+    document.body.classList.toggle('nav-open',open);
+  }
+  t.addEventListener('click',function(){
+    setOpen(t.getAttribute('aria-expanded')!=='true');
+  });
+  s.addEventListener('click',function(){ setOpen(false); });
+  m.addEventListener('click',function(e){
+    if(e.target.tagName==='A') setOpen(false);
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') setOpen(false);
+  });
+  window.addEventListener('resize',function(){
+    if(window.innerWidth>720) setOpen(false);
+  });
+})();
+</script>{% endraw %}

@@ -1,7 +1,21 @@
 # Notes for Srikanth: things only you can do
 
 Living list. Newest items are added at the top of each section; tick items off by changing `[ ]` to `[x]`.
-Last updated: 1 Oct 2026.
+Last updated: 17 Nov 2026.
+
+## Do these first (only you can)
+- [ ] **Add the Supabase secret key to Netlify** so the check-in can save. Netlify → Site configuration → Environment variables:
+  - `SUPABASE_URL` = `https://kntohzyxzoucymrmriva.supabase.co`
+  - `SUPABASE_SERVICE_KEY` = the **service_role** key from Supabase → Project Settings → API Keys. I do not have it and must not (it never goes in the repo).
+- [ ] **Open the Netlify preview** of this branch and click through every page on your phone, then tell me what to change.
+- [ ] **Send the Happiness registration link** whenever you have it (I will add the batch).
+- [ ] **Review the draft Privacy, Terms and Refund pages** (`docs/policy-decisions.md`); they stay hidden from Google until you approve.
+
+## Supabase project (created 17 Nov 2026)
+- Name `antarshanti-prod`, region Mumbai (ap-south-1, nearest to Hyderabad; Supabase has no Hyderabad region). Free plan.
+- Tables: `checkin_responses` (private, server only), `batches`, `testimonials`, `site_settings` (public read-only for live items). Security advisor: clean (the one INFO note is intentional).
+- Free projects pause after 7 days of no activity. A keep-alive job and a backup export are still to be added.
+- The website reads dates and testimonials from this project first, then falls back to `data/site.json`.
 
 ## Next Happiness batch dates (suggestions, not yet on the site)
 Your last batches ran Thu to Sun evenings (1–4 Oct, 22–25 Oct), about three weeks apart. Same pattern would give:

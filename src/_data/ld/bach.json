@@ -1,0 +1,23 @@
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Bach Flower Therapy Consultation",
+  "serviceType": "Bach Flower remedy consultation",
+  "description": "Personalised online Bach Flower remedy consultation with a certified Bach Flower therapist.",
+  "url": "https://antarshanti.co.in/bach",
+  "provider": {
+   "@id": "https://antarshanti.co.in/#business"
+  },
+  "areaServed": [
+   "Hyderabad",
+   "India",
+   "Online"
+  ],
+  "offers": {
+   "@type": "Offer",
+   "price": "1000",
+   "priceCurrency": "INR"
+  }
+ }
+]

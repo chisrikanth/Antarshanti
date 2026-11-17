@@ -1,5 +1,7 @@
 # Antarshanti — deploy notes
 
+> **Update (Nov 2026):** the site is now built with Eleventy. Netlify runs `npm run build` and publishes `_site`; edit pages under `src/`. See `docs/HOW-THE-SITE-IS-BUILT.md`. Paths below that mention `bach.html` / `jyotish.html` now live in `src/bach.njk` / `src/jyotish.njk`.
+
 ## Before you push, do these three things
 
 ### 1. Razorpay live key

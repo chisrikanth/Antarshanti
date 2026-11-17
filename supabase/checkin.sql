@@ -44,7 +44,7 @@ alter table checkin_responses enable row level security;
 
 -- 4. Views you will actually open in the Table Editor
 -- 4a. Campaign scoreboard: leads and revenue per source/campaign (join this with your ad spend)
-create or replace view campaign_scoreboard as
+create or replace view campaign_scoreboard with (security_invoker = true) as
 select
   coalesce(utm_source,'(none/organic)')   as source,
   coalesce(utm_campaign,'(none)')         as campaign,
@@ -57,7 +57,7 @@ group by 1,2
 order by leads desc;
 
 -- 4b. Follow-up queue: crisis flags first, then newest unanswered leads
-create or replace view followup_queue as
+create or replace view followup_queue with (security_invoker = true) as
 select id, created_at, crisis_flag, name, phone, email, suggested_path, utm_source, utm_campaign, status
 from checkin_responses
 where status = 'new'

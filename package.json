@@ -1,0 +1,27 @@
+{
+  "name": "antarshanti",
+  "version": "1.0.0",
+  "description": "Antarshanti Healing website (Eleventy)",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chisrikanth/Antarshanti.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chisrikanth/Antarshanti/issues"
+  },
+  "homepage": "https://github.com/chisrikanth/Antarshanti#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  }
+}

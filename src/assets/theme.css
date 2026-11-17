@@ -1,0 +1,127 @@
+/* ==========================================================================
+   Antarshanti — "Golden Hour" theme
+   Sun-led, warm, calm. Soft apricot and peach instead of loud orange; white and
+   cream for air; a little sage, dusty rose and morning-sky blue so the page is
+   never one flat colour. Each service gets its own gentle tint:
+     Jyotish / Home  -> golden morning     Bach  -> rose dawn     Happiness -> sage sunrise
+   Loaded after each page's base styles, so these tokens override them site-wide.
+   Contrast: dark cocoa text on the apricot buttons (about 8:1), brown body text on cream (7:1+).
+   ========================================================================== */
+:root{
+  --paper:#FFFCF8;   --paper-2:#FFF3E6;   --card:#FFFFFF;
+  --ink:#2F2418;     --body:#51402F;      --dim:#74644F;
+  --sun:#F4A860;     --sun-deep:#EE9546;  --sun-soft:#FBD9B0;  --sun-wash:#FFF0DC;
+  --gold:#E4B24F;    --saffron:#B0601F;   --copper:#7A4A2E;
+  --lotus:#B05A7B;   --leaf:#547F61;      --sky:#5A87A8;
+  --cta:var(--sun);  --cta-deep:var(--sun-deep); --cta-text:#3A2108; --cta-soft:#FDE7CC;
+  --line:rgba(122,74,46,.15);
+  --radius:20px;
+  --shadow-soft:0 10px 32px rgba(122,74,46,.09);
+  --shadow-lift:0 16px 40px rgba(238,149,70,.30);
+}
+html{scroll-padding-top:76px}
+body{background:var(--paper);color:var(--body);line-height:1.78;letter-spacing:.005em}
+h1,h2,h3{letter-spacing:.005em;font-weight:400;text-wrap:balance}
+p{text-wrap:pretty}
+::selection{background:var(--sun-soft);color:var(--ink)}
+:focus-visible{outline:3px solid rgba(238,149,70,.55);outline-offset:3px;border-radius:8px}
+
+/* Announcement bar: airy apricot ribbon with brown text (not a heavy stripe) */
+.topbar{background:linear-gradient(90deg,#FFE9CC,#FFF3E0 50%,#FFE9CC)!important;color:var(--copper)!important;
+  font-weight:500;letter-spacing:.03em;font-size:.86rem;border-bottom:1px solid var(--line)}
+.topbar a{color:#A04F14!important;border-bottom-color:rgba(160,79,20,.4)!important;font-weight:700}
+
+/* Navigation: frosted white */
+nav{background:rgba(255,252,248,.88);backdrop-filter:blur(16px) saturate(1.15);border-bottom:1px solid var(--line);box-shadow:none}
+.nav-links a{color:var(--dim)}
+.nav-links a:hover,.nav-links a.active{color:#A04F14;border-bottom-color:var(--sun-deep)}
+.nav-links a.nav-cta{color:var(--cta-text);background:linear-gradient(135deg,#F9BC7C,var(--sun));border-radius:999px;padding:7px 16px;border-bottom:none;font-weight:700}
+.nav-links a.nav-cta:hover{background:linear-gradient(135deg,var(--sun),var(--sun-deep));color:var(--cta-text)}
+.mobile-nav a.nav-cta{color:#A04F14}
+
+/* Buttons: one soft sunrise primary, quiet secondaries */
+.btn{border-radius:999px;font-weight:700;letter-spacing:.03em;padding:13px 28px;
+  transition:transform .25s ease,box-shadow .25s ease,background .25s ease,color .25s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,#F9BC7C,var(--sun));color:var(--cta-text);border:none;box-shadow:0 8px 22px rgba(244,168,96,.35)}
+.btn-gold:hover{background:linear-gradient(135deg,var(--sun),var(--sun-deep));box-shadow:var(--shadow-lift);color:var(--cta-text)}
+.btn-lotus{border:1.5px solid rgba(176,90,123,.5);color:var(--lotus);background:#fff}
+.btn-lotus:hover{background:var(--lotus);color:#fff;box-shadow:0 8px 22px rgba(176,90,123,.25)}
+.btn-leaf{border:1.5px solid rgba(84,127,97,.5);color:var(--leaf);background:#fff}
+.btn-leaf:hover{background:var(--leaf);color:#fff}
+.btn-outline{border:1.5px solid var(--line);color:var(--dim);background:#fff}
+.btn-outline:hover{border-color:var(--sun-deep);color:#A04F14}
+.btn-wa{background:#25A862;color:#fff}
+.hero-link{color:#A04F14;text-decoration-color:rgba(160,79,20,.4)}
+
+.eyebrow{font-weight:700;letter-spacing:.3em;font-size:.7rem}
+
+/* Sections: more air, soft separation */
+section{padding:84px 0}
+.alt{background:var(--paper-2);border-color:transparent}
+.cta-strip{background:linear-gradient(135deg,#FFEBD2,#FFF7EA);border-top:1px solid var(--line)}
+.checkin-band{background:linear-gradient(135deg,#FFE9CC 0%,#FFF6E8 55%,#FDEFE4 100%);border-color:transparent}
+.cta-strip p,.checkin-band h2{color:var(--ink)}
+.checkin-band .eyebrow{color:var(--saffron)!important}
+
+/* Cards: white, softly lifted, warm shadow */
+.cross-card,.testi,.faq-item,.batch-card,.res-card,.card{border-radius:var(--radius);border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow-soft)}
+.cross-card:hover,.res-card:hover{box-shadow:0 18px 46px rgba(122,74,46,.14);transform:translateY(-3px)}
+.faq-item summary::after{color:var(--sun-deep)}
+.booking-box{border-radius:24px;box-shadow:0 18px 56px rgba(122,74,46,.14);border:1px solid var(--line)}
+.slot{border-radius:12px}
+.slot.selected,.day.selected{background:var(--sun)!important;border-color:var(--sun-deep)!important;color:var(--cta-text)!important}
+
+/* Hero: a low sun glowing behind the content. Each page gets its own tint. */
+header[style*="min-height"]{
+  min-height:auto!important;padding:64px 0 56px!important;
+  background:
+    radial-gradient(620px 560px at 84% 22%,rgba(246,178,107,.42),transparent 66%),
+    radial-gradient(520px 420px at 4% 100%,rgba(255,214,170,.40),transparent 62%),
+    linear-gradient(180deg,#FFF7EC,#FFFCF8)!important}
+header[style*="FCEEE8"]{background:   /* Bach: rose dawn */
+    radial-gradient(620px 560px at 84% 22%,rgba(236,164,150,.34),transparent 66%),
+    radial-gradient(520px 420px at 4% 100%,rgba(255,214,190,.42),transparent 62%),
+    linear-gradient(180deg,#FFF3EC,#FFFCF8)!important}
+header[style*="F7FAEE"]{background:   /* Happiness: sage sunrise */
+    radial-gradient(620px 560px at 84% 22%,rgba(246,190,120,.34),transparent 66%),
+    radial-gradient(560px 460px at 2% 100%,rgba(176,206,170,.38),transparent 62%),
+    linear-gradient(180deg,#FBF8EC,#FFFCF8)!important}
+/* hero text column aligned to the same left edge on every page */
+header[style*="min-height"] > .wrap{width:100%}
+header[style*="min-height"] > .wrap[style*="max-width"]{max-width:960px!important}
+header[style*="min-height"] > .wrap[style*="max-width"] > *{max-width:600px}
+.hero-grid h1{max-width:none!important;font-size:clamp(2.1rem,4.4vw,3.15rem)!important;line-height:1.16}
+.hero-grid h1 em{color:#C46A22!important}
+.hero-proof{margin:0 0 22px;color:var(--dim)}
+.hero-portrait{position:relative}
+.hero-portrait::before{content:'';position:absolute;inset:-34px;border-radius:50%;z-index:-1;
+  background:radial-gradient(circle,rgba(246,178,107,.55),rgba(255,222,170,.28) 52%,transparent 72%);
+  animation:breathe 9s ease-in-out infinite}
+.hero-portrait img{border:4px solid #fff;box-shadow:0 0 0 1px var(--line),0 24px 60px rgba(122,74,46,.20)}
+@keyframes breathe{0%,100%{transform:scale(.94);opacity:.8}50%{transform:scale(1.07);opacity:1}}
+.offer-ask{color:#A04F14}
+.hero-deco circle,.hero-deco line,.hero-deco path{stroke:rgba(228,178,79,.5)}
+
+/* Check-in screens pick up the same warmth */
+.progress-fill,.opt.selected{background:linear-gradient(90deg,var(--sun),var(--gold))!important;border-color:var(--sun-deep)!important}
+.opt.selected{color:var(--cta-text)!important}
+.opt:hover{border-color:var(--sun-deep)!important;background:var(--sun-wash)!important}
+.overall-card{background:linear-gradient(135deg,#FFE9CC,#FFF7EA)!important}
+.path-primary{border-left-color:var(--sun-deep)!important}
+
+/* Scroll reveal (added by site.js; content is always visible without JS) */
+.rv-hide{opacity:0;transform:translateY(18px)}
+.rv-show{opacity:1;transform:none;transition:opacity .8s ease,transform .8s ease}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-portrait::before{animation:none}
+  .rv-hide{opacity:1;transform:none}
+  .btn,.cross-card{transition:none}
+}
+@media(max-width:720px){section{padding:60px 0}}
+@media(max-width:820px){
+  .hero-portrait{width:104px}
+  .hero-proof{display:none}
+  header[style*="min-height"]{padding:36px 0 40px!important}
+}

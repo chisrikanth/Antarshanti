@@ -1,0 +1,40 @@
+[
+ {
+  "@context": "https://schema.org",
+  "@type": [
+   "LocalBusiness",
+   "HealthAndBeautyBusiness"
+  ],
+  "@id": "https://antarshanti.co.in/#business",
+  "name": "Antarshanti Healing",
+  "url": "https://antarshanti.co.in/",
+  "image": "https://antarshanti.co.in/og-image.png",
+  "telephone": "+919985133161",
+  "description": "Jyotish, Bach Flower therapy and Art of Living Happiness Program with Srikanth, online and in Hyderabad.",
+  "address": {
+   "@type": "PostalAddress",
+   "addressLocality": "Hyderabad",
+   "addressRegion": "Telangana",
+   "addressCountry": "IN"
+  },
+  "areaServed": [
+   "Hyderabad",
+   "India",
+   "Online"
+  ],
+  "openingHoursSpecification": [
+   {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+     "Monday",
+     "Wednesday",
+     "Friday",
+     "Saturday"
+    ]
+   }
+  ],
+  "sameAs": [
+   "https://www.instagram.com/antarshanti.co.in/"
+  ]
+ }
+]
