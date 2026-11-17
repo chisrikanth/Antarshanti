@@ -1,6 +1,29 @@
 # Release process: nothing reaches antarshanti.co.in until you approve it
 
-## The three environments
+## Environments (updated)
+| Environment | Git branch | Database | Payments | Address |
+|---|---|---|---|---|
+| **Production** | `main` | `antarshanti-prod` | Razorpay **live** keys | antarshanti.co.in |
+| **Staging** (stable test link) | `staging` | `antarshanti-test` | Razorpay **test** keys | `https://staging--aquamarine-croquembouche-26e205.netlify.app` |
+| **Feature branches** | e.g. `claude/stoic-cori-xrotsf` | `antarshanti-test` | test keys | `https://<branch>--aquamarine-croquembouche-26e205.netlify.app` |
+| **Pull request previews** | PR into `main` | `antarshanti-test` | test keys | `https://deploy-preview-<n>--aquamarine-croquembouche-26e205.netlify.app` |
+
+Every non-production page shows a dark **TEST SITE** strip at the top, so nobody mistakes it for the live site.
+
+**Flow:** feature branch → merge into `staging` → you review the staging address → merge `staging` into `main` → production updates.
+
+## Netlify environment variables, one value per deploy context
+Netlify → Site configuration → Environment variables → *Add a variable* → choose **Different value for each deploy context**.
+| Variable | Production | Deploy Previews + Branch deploys |
+|---|---|---|
+| `SUPABASE_URL` | `https://kntohzyxzoucymrmriva.supabase.co` | `https://rnofqxmfwqiogtlchkbp.supabase.co` |
+| `SUPABASE_SERVICE_KEY` | prod project's service_role key | test project's service_role key |
+| `RAZORPAY_KEY_ID` | `rzp_live_...` | `rzp_test_...` |
+| `RAZORPAY_KEY_SECRET` | live secret | test secret |
+
+Safety net in code: a test address refuses to use a live Razorpay key or the production database, and production refuses test keys or the test database. A wrong setting shows an error instead of moving real money or data.
+
+## The three environments (original notes)
 | Environment | Branch | Address | Who sees it |
 |---|---|---|---|
 | **Production** | `main` | antarshanti.co.in | Everyone |

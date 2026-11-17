@@ -4,15 +4,19 @@ Living list. Newest items are added at the top of each section; tick items off b
 Last updated: 17 Nov 2026.
 
 ## Do these first (only you can)
-- [ ] **Add the Supabase secret key to Netlify** so the check-in can save. Netlify → Site configuration → Environment variables:
-  - `SUPABASE_URL` = `https://kntohzyxzoucymrmriva.supabase.co`
-  - `SUPABASE_SERVICE_KEY` = the **service_role** key from Supabase → Project Settings → API Keys. I do not have it and must not (it never goes in the repo).
+- [ ] **Create Razorpay TEST keys** (Razorpay dashboard → switch to *Test Mode* → Account & Settings → API Keys → Generate Test Key). You get a Key ID `rzp_test_...` and a secret.
+- [ ] **Add 4 variables in Netlify, with a different value per deploy context** (Environment variables → Add a variable → *Different value for each deploy context*). The exact table is in `docs/RELEASE-PROCESS.md`:
+  - `SUPABASE_URL`: production `https://kntohzyxzoucymrmriva.supabase.co`; previews and branch deploys `https://rnofqxmfwqiogtlchkbp.supabase.co`.
+  - `SUPABASE_SERVICE_KEY`: the **service_role** key of each project (Supabase → project → Project Settings → API Keys). I cannot see these and they never go in the repo.
+  - `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`: live for Production, test for previews and branch deploys.
+  A mistake here cannot move real money or write to the wrong database: the server refuses and shows an error.
 - [ ] **Open the Netlify preview** of this branch and click through every page on your phone, then tell me what to change.
 - [ ] **Send the Happiness registration link** whenever you have it (I will add the batch).
 - [ ] **Review the draft Privacy, Terms and Refund pages** (`docs/policy-decisions.md`); they stay hidden from Google until you approve.
 
 ## Supabase project (created 17 Nov 2026)
-- Name `antarshanti-prod`, region Mumbai (ap-south-1, nearest to Hyderabad; Supabase has no Hyderabad region). Free plan.
+- Two projects, both Mumbai, both Free: `antarshanti-prod` (real data, antarshanti.co.in) and `antarshanti-test` (sample data, all test addresses). Process: `docs/DATABASE-CHANGES.md`.
+- Production: name `antarshanti-prod`, region Mumbai (ap-south-1, nearest to Hyderabad; Supabase has no Hyderabad region). Free plan.
 - Tables: `checkin_responses` (private, server only), `batches`, `testimonials`, `site_settings` (public read-only for live items). Security advisor: clean (the one INFO note is intentional).
 - Free projects pause after 7 days of no activity. A keep-alive job and a backup export are still to be added.
 - The website reads dates and testimonials from this project first, then falls back to `data/site.json`.

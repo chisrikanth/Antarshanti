@@ -4,7 +4,8 @@
      2. data/site.json (default; edit on GitHub, Netlify republishes).
    Pages wait on  AS_READY.then(function(c){ ... })  and read  AS_CONTENT.
    A batch with an `end` date (YYYY-MM-DD) disappears automatically the day after. */
-var AS_SUPABASE = { url: 'https://kntohzyxzoucymrmriva.supabase.co', anonKey: 'sb_publishable_llW9rx_MQwoEg-gVuWncDg_KtqkUH6G' };   // e.g. url:'https://xxxx.supabase.co', anonKey:'<publishable key>' (safe to be public; RLS protects data)
+/* AS_SUPABASE (url + publishable key) is generated per environment into assets/env.js at build time. */
+if (typeof AS_SUPABASE === 'undefined') { var AS_SUPABASE = { url: '', anonKey: '' }; }
 
 var AS_CONTENT = { batches: [], testimonials: { home: [], jyotish: [], bach: [], happiness: [] }, announcement: null, links: { whatsapp: '919985133161' } };
 

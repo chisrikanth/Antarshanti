@@ -199,10 +199,10 @@ navKey: "bach"
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({amount:AMOUNTS[selSession],currency:'INR',receipt:'bach_'+Date.now()})
     })
-    .then(function(r){ if(!r.ok) throw new Error('order-failed'); return r.json(); })
+    .then(function(r){ if(!r.ok) return r.json().then(function(j){ var e=new Error((j&&j.error)||'order-failed'); e.server=true; throw e; },function(){ throw new Error('order-failed'); }); return r.json(); })
     .then(function(order){
       var rzp=new Razorpay({
-        key:RAZORPAY_KEY_ID,
+        key:order.key_id||RAZORPAY_KEY_ID,
         amount:order.amount,
         currency:order.currency,
         name:'Antarshanti',
@@ -242,9 +242,9 @@ navKey: "bach"
       });
       rzp.open();
     })
-    .catch(function(){
+    .catch(function(err){
       setPayBtnState(false);
-      setStatus('⚠ Could not start payment. Please try again, or WhatsApp Srikanth.',false);
+      setStatus(err&&err.server&&err.message!=='order-failed'?('⚠ '+err.message):'⚠ Could not start payment. Please try again, or WhatsApp Srikanth.',false);
     });
   }
   document.getElementById('pay-btn').addEventListener('click',payNow);

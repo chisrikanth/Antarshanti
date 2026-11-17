@@ -11,10 +11,12 @@
 {% endif %}{% if extraCss %}<link rel="stylesheet" href="assets/{{ extraCss }}">
 {% endif %}<link rel="stylesheet" href="assets/site.css">
 <link rel="stylesheet" href="assets/theme.css">
+<script src="assets/env.js"></script>
 <script src="assets/content.js"></script>
 </head>
 <body>
-{% block topbar %}{% endblock %}
+{% if not env.isProduction %}<div style="background:#2F2418;color:#FFE9CC;text-align:center;padding:6px 12px;font:600 12px/1.4 sans-serif;letter-spacing:.06em">TEST SITE · {{ env.context | upper }} · not the live website · no real payments · sample data</div>
+{% endif %}{% block topbar %}{% endblock %}
 {% block navigation %}{% include "partials/nav.njk" %}{% endblock %}
 {% block content %}{% endblock %}
 {% block footer %}{% include "partials/footer.njk" %}{% endblock %}

@@ -7,6 +7,7 @@
 // there's nothing to `npm install` and nothing that can go stale.
 
 const https = require('https');
+const { paymentKeyProblem } = require('./lib/env');
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
@@ -21,6 +22,13 @@ exports.handler = async function (event) {
       statusCode: 500,
       body: JSON.stringify({ error: 'Razorpay keys are not configured on the server' })
     };
+  }
+
+  // Never let a test address create a live-money order (or production use test keys).
+  const keyProblem = paymentKeyProblem(event, keyId);
+  if (keyProblem) {
+    console.error('create-order blocked:', keyProblem);
+    return { statusCode: 403, body: JSON.stringify({ error: keyProblem }) };
   }
 
   let payload;
@@ -80,6 +88,7 @@ exports.handler = async function (event) {
     return {
       statusCode: 200,
       body: JSON.stringify({
+        key_id: keyId,            // public Key ID, so the page uses whichever key this deploy context has
         order_id: order.id,
         amount: order.amount,
         currency: order.currency

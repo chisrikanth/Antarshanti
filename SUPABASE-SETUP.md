@@ -1,5 +1,7 @@
 # Check-in survey: Supabase + Netlify setup
 
+> **Update:** there are now two projects (production and test) and the SQL lives in `supabase/migrations/`. Use `docs/DATABASE-CHANGES.md` for any change and `docs/RELEASE-PROCESS.md` for the per-environment Netlify variables.
+>
 > **Status 17 Nov 2026:** steps 1–3 are done. Project `antarshanti-prod` (Mumbai) exists at `https://kntohzyxzoucymrmriva.supabase.co` and the tables, views and read-only policies are applied. What remains for you is step 4: add `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` in Netlify, then redeploy.
 
 

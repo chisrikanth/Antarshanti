@@ -4,3 +4,7 @@
 
 [functions]
   directory = "netlify/functions"
+
+# Keeps both Free-plan Supabase projects from pausing for inactivity.
+[functions."keep-alive"]
+  schedule = "0 6 */3 * *"

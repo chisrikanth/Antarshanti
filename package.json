@@ -7,7 +7,8 @@
   },
   "scripts": {
     "build": "eleventy",
-    "start": "eleventy --serve"
+    "start": "eleventy --serve",
+    "test": "node tests/guards.test.js"
   },
   "repository": {
     "type": "git",

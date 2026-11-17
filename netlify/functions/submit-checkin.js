@@ -9,6 +9,8 @@
 //                          (NOT the anon/public key — this one bypasses row-level security
 //                          so it must only ever be used server-side, never in the browser)
 
+const { databaseProblem } = require('./lib/env');
+
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -20,6 +22,13 @@ exports.handler = async function (event) {
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
     console.error('Missing SUPABASE_URL or SUPABASE_SERVICE_KEY env vars');
     return { statusCode: 500, body: JSON.stringify({ error: 'Server not configured' }) };
+  }
+
+  // Keep test traffic out of the production database (and the reverse).
+  const dbProblem = databaseProblem(event, SUPABASE_URL);
+  if (dbProblem) {
+    console.error('submit-checkin blocked:', dbProblem);
+    return { statusCode: 503, body: JSON.stringify({ error: 'Not saved: this address is not connected to the right database.' }) };
   }
 
   let data;
