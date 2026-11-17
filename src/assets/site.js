@@ -128,6 +128,7 @@ var AS_CONFIG = {
   /* ---------- 7. Video facade: <div class="vid" data-yt="ID" data-title="…" [data-wide]> ---------- */
   function initVideos() {
     [].slice.call(document.querySelectorAll('.vid[data-yt]')).forEach(function (el) {
+      if (el.getAttribute('data-ready')) return; el.setAttribute('data-ready', '1');
       var id = el.getAttribute('data-yt'), title = el.getAttribute('data-title') || 'Video';
       var short = !el.hasAttribute('data-wide');
       el.innerHTML =
@@ -172,7 +173,7 @@ var AS_CONFIG = {
     });
   }
 
-  window.AS = { money: money, track: track, attribution: attribution, page: page };
+  window.AS = { initVideos: initVideos, money: money, track: track, attribution: attribution, page: page };
   function money(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
   function initPrices() {
     if (typeof AS_CONTENT === 'undefined') return;

@@ -34,6 +34,8 @@ Tick items by changing `[ ]` to `[x]`. Claude re-reads this at the start of each
 - [ ] **D1. Booking widget shows 7 days only.** With the calendar you can open up to 45 days ahead; want a "next week" button? (small improvement, not started)
 - [ ] **D2. Get notified of new bookings** (WhatsApp or email). Suggested after the calendar link-up, since calendar events notify your phone.
 - [ ] **D3. Check-in wording** was changed to bands (no 0 to 100 score). Please read the results screen once on staging and say if the tone is right.
+- [ ] **D6. Check-in next-step wording (new).** Read the results on staging once. In particular please confirm you are happy with this sentence about Sudarshan Kriya: *"Several published studies report lower stress and anxiety after learning it, and many people simply find it deeply relaxing."* If you can, give me one specific study link (for example from the Art of Living research page) and I will link it; that makes the sentence stronger and safer.
+- [ ] **D7. Watch the two short videos on the check-in results:** Sudarshan Kriya `gWwhIPAajfw` and Bach Flower `Cm5DVzkOo_U` (chosen by title). Say if you want others.
 - [ ] **D4. Telugu and Hindi:** who will review the translations?
 - [ ] **D5. Bach headline** now says "Gentle support for the feelings words cannot reach". Happy with it?
 

@@ -157,3 +157,22 @@ header[style*="min-height"] > .wrap[style*="max-width"] > *{max-width:600px}
 .consent-line{display:flex;gap:9px;align-items:flex-start;font-size:.84rem;color:var(--dim);margin:2px 0 12px}
 .consent-line input{margin-top:3px;accent-color:var(--sun-deep)}
 .hold-status{font-size:.86rem;margin-top:8px;min-height:1.2em}
+
+/* Check-in questions: the card never changes size, so the options stay exactly where you expect them */
+.q-stem{min-height:2.7em}
+.q-text{min-height:calc(1.2em * 3);line-height:1.2}
+@media(min-width:560px){.q-stem{min-height:1.4em}}
+.opt{min-height:54px}
+
+/* Next-step card with a short video */
+.ns-intro{font-size:.95rem;color:var(--body);margin-bottom:12px;line-height:1.7}
+.next-step{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:18px;align-items:start;margin-bottom:10px}
+.next-step .vid{width:150px;box-shadow:none}
+.next-step h3{font-size:1.2rem;margin-bottom:2px}
+.next-step .ns-sub{font-size:.8rem;color:var(--dim);margin-bottom:8px}
+.next-step p{font-size:.92rem;margin-bottom:12px}
+@media(max-width:520px){.next-step{grid-template-columns:1fr}.next-step .vid{width:150px;margin:0 auto}}
+.talk-card{padding:24px;margin:18px 0;text-align:center;background:linear-gradient(135deg,#FFF1DC,#FFFBF3)}
+.talk-card h3{font-size:1.2rem;margin-bottom:6px}
+.talk-card p{font-size:.92rem;color:var(--dim);margin-bottom:14px}
+@media(max-width:380px){.q-text{min-height:calc(1.2em * 4)}}
