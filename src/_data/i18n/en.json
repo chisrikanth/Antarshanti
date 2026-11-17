@@ -1,0 +1,261 @@
+{
+ "chrome": {
+  "nav": {
+   "home": "Home",
+   "jyotish": "Jyotish",
+   "bach": "Bach Flower",
+   "happiness": "Happiness Program",
+   "checkin": "Free Check-In"
+  },
+  "whatsappSrikanth": "WhatsApp Srikanth",
+  "footer": {
+   "location": "Srikanth · Hyderabad, India",
+   "hours": "Consultations online · Mon, Wed, Fri, Sat",
+   "whatsapp": "WhatsApp",
+   "instagram": "Instagram",
+   "privacy": "Privacy",
+   "terms": "Terms",
+   "refunds": "Refunds",
+   "fine": "Antarshanti offerings are complementary wellness services and do not replace medical, psychological, legal or financial advice. Personal details are kept strictly confidential and stored with your consent."
+  }
+ },
+ "checkin": {
+  "seoTitle": "Free 5-Minute Emotional Wellbeing Check-In | Antarshanti Healing",
+  "seoDescription": "A free, private 5-minute reflection on stress, mood, mindfulness, self-esteem and emotional balance, with a gentle suggestion of what may help. Not a diagnosis.",
+  "topbar": "A gentle self-reflection tool from Antarshanti Healing",
+  "talkStrip": {
+   "prompt": "Prefer to talk it through?",
+   "link": "Chat with Srikanth on WhatsApp",
+   "message": "Namaste Srikanth, I am doing the check-in and would like to talk."
+  },
+  "consent": {
+   "eyebrow": "Screening Tool · Free & Confidential",
+   "h1": "Free 5-Minute Wellbeing Check-In",
+   "intro": "Life can be exciting, overwhelming, confusing, and everything in between. This short questionnaire helps you pause and reflect on your emotional wellbeing — worry, mood, mindfulness, self-esteem, and how you handle emotions.",
+   "tags": [
+    "Mindfulness",
+    "Self-esteem",
+    "Worry and tension",
+    "Feeling low",
+    "Emotional balance"
+   ],
+   "notices": [
+    "This is a self-reflection tool, not a diagnostic instrument",
+    "Takes about 4–5 minutes · 25 questions",
+    "Your responses are kept confidential",
+    "You may skip any question that makes you uncomfortable",
+    "You may close this page at any time"
+   ],
+   "agree": "I agree to participate voluntarily in this self-reflection questionnaire. I understand this is for educational and self-awareness purposes only, and does not replace medical or psychological advice.",
+   "begin": "Begin Check-In →"
+  },
+  "question": {
+   "stem": "Over the past two weeks, how often has this been true for you?",
+   "back": "← Back",
+   "skip": "Skip this question →"
+  },
+  "results": {
+   "eyebrow": "Your Wellbeing Snapshot",
+   "calculating": "Calculating..."
+  },
+  "how": {
+   "summary": "How are these worked out?",
+   "body": "Each area has five questions, each scored 0 to 4 and added up (0 to 20). We group the total into four bands. The bands are a simple guide, inspired by the way common screening tools group scores. They are not clinically validated, they cover only the last two weeks, and a skipped question is never counted as zero. They cannot diagnose anything."
+  },
+  "disclaimer": "This check-in is a self-reflection tool, not a diagnosis. If how you feel stays heavy or gets worse, please speak to a doctor or counsellor.",
+  "save": {
+   "title": "Want Srikanth to look at your results?",
+   "text": "Optional — share your name and WhatsApp number and he'll personally follow up with a note. Your details are kept confidential and stored only with your consent.",
+   "name": "Name",
+   "namePh": "Your name",
+   "phone": "WhatsApp number",
+   "phonePh": "+91 XXXXX XXXXX",
+   "email": "Email (optional)",
+   "emailPh": "you@example.com",
+   "btn": "Save My Results"
+  },
+  "talk": {
+   "title": "Not sure where to start?",
+   "text": "Talk to Srikanth on WhatsApp. He can help you choose between Sudarshan Kriya and Bach Flower remedies, or simply listen.",
+   "btn": "Talk to Srikanth on WhatsApp",
+   "message": "Namaste Srikanth, I did the check-in and would like to talk."
+  },
+  "js": {
+   "options": [
+    "Never",
+    "Rarely",
+    "Sometimes",
+    "Often",
+    "Always"
+   ],
+   "sections": {
+    "mindfulness": {
+     "title": "Mindfulness",
+     "items": [
+      "Noticed small sensory details around you — light, sound, smell",
+      "Paused before reacting instead of responding on autopilot",
+      "Noticed your breath or body without trying to change it",
+      "Did ordinary tasks — eating, walking, showering — with full attention",
+      "Observed your emotions arise without being swept away by them"
+     ]
+    },
+    "selfEsteem": {
+     "title": "Self-esteem",
+     "items": [
+      "Felt satisfied with who you are",
+      "Felt confident in your own judgment and decisions",
+      "Felt you handle challenges about as well as most people",
+      "Felt worthy of respect and care, including your own",
+      "Spoke to yourself with the same kindness you'd offer a friend"
+     ]
+    },
+    "anxiety": {
+     "title": "Worry and tension",
+     "items": [
+      "Felt nervous, worried or on edge",
+      "Found it hard to switch off racing thoughts",
+      "Felt your heart race or body tense for no clear reason",
+      "Avoided a task or situation because it felt overwhelming",
+      "Expected something to go wrong, even without evidence"
+     ]
+    },
+    "depression": {
+     "title": "Feeling low",
+     "items": [
+      "Lost interest in things you'd usually enjoy",
+      "Felt low, flat or hopeless",
+      "Had noticeably low energy or motivation",
+      "Struggled with sleep — too little or too much",
+      "Had thoughts that life isn't worth living, or of hurting yourself"
+     ]
+    },
+    "emotionRegulation": {
+     "title": "Emotional balance",
+     "items": [
+      "Managed to calm yourself down once upset",
+      "Understood what triggered a strong emotion, even after the fact",
+      "Let a difficult feeling pass without acting on it impulsively",
+      "Expressed what you felt in words rather than bottling it up",
+      "Stayed steady in your responses even under emotional pressure"
+     ]
+    }
+   },
+   "bands": {
+    "distress": [
+     {
+      "label": "Doing well",
+      "note": "You have felt little of this over the past two weeks. That is good to see."
+     },
+     {
+      "label": "A little now and then",
+      "note": "Some days have felt tense or low. That is common and often passes."
+     },
+     {
+      "label": "Showing up often",
+      "note": "This has been with you quite a bit lately. Looking after yourself and talking it through can help."
+     },
+     {
+      "label": "Heavy right now",
+      "note": "This has been weighing on you a lot lately. Talking to a doctor or counsellor is a good step, and you do not have to manage it alone."
+     }
+    ],
+    "strength": [
+     {
+      "label": "Just beginning",
+      "note": "A good place to start. Small daily practices can help this grow."
+     },
+     {
+      "label": "Growing",
+      "note": "You already have some of this to build on."
+     },
+     {
+      "label": "Steady",
+      "note": "This is a dependable part of how you cope."
+     },
+     {
+      "label": "A real strength",
+      "note": "One of your clear strengths. Keep nurturing it."
+     }
+    ]
+   },
+   "stepsAria": "{label}, step {n} of 4",
+   "groups": {
+    "resources": "Your inner resources",
+    "feeling": "How you have been feeling"
+   },
+   "rowNotEnough": "Not enough answers to show this area. That is fine, you can skip anything you prefer.",
+   "snap": {
+    "none": {
+     "title": "Not enough answers for a snapshot",
+     "label": "If you would like, go back and answer a few more questions. You can skip any you prefer."
+    },
+    "steady": {
+     "title": "Things look steady right now",
+     "label": "This is a snapshot of the last two weeks. A good time to keep doing what works for you."
+    },
+    "attention": {
+     "titleGoodOne": "Some things are going well, and one area is asking for care",
+     "titleGoodMany": "Some things are going well, and {n} areas are asking for care",
+     "titleNone": "Several areas are asking for some care right now",
+     "label": "That is worth some attention, and it is also very common. You do not have to handle it alone: talking with someone can make it feel lighter."
+    },
+    "mild": {
+     "titleGoodOne": "Some things are going well, and one area could use some care",
+     "titleGoodMany": "Some things are going well, and {n} areas could use some care",
+     "titleNoneOne": "One area could use some care",
+     "titleNoneMany": "{n} areas could use some care",
+     "label": "That is common, and it is a snapshot of the last two weeks, not a verdict."
+    }
+   },
+   "crisis": {
+    "title": "You don't have to carry this alone",
+    "intro": "One of your answers suggests you may be having a very hard time right now. Please talk to someone today. Tele-MANAS is the Government of India's free, confidential helpline.",
+    "name": "Tele-MANAS · Government of India",
+    "avail": "Free · 24 hours · many languages",
+    "call": "Call 14416",
+    "more": "More information: <a href=\"https://telemanas.mohfw.gov.in\" target=\"_blank\" rel=\"noopener\">telemanas.mohfw.gov.in</a>. If you are in immediate danger, call 112 or go to your nearest hospital. Please also consider speaking with a qualified doctor.",
+    "skipped": "If things ever feel too heavy, Tele-MANAS (<a href=\"tel:14416\">14416</a>) is free, confidential and open 24 hours.",
+    "highTitle": "Whenever you feel ready",
+    "highBody": "Srikanth is happy to listen on WhatsApp. Please keep a doctor or counsellor in the loop too. When you feel steadier, he can also tell you about gentle supports such as a breathing practice or Bach Flower remedies.",
+    "highBtn": "Talk to Srikanth on WhatsApp"
+   },
+   "next": {
+    "eyebrow": "A good next step",
+    "intro": {
+     "stress": "Your answers point to some tension and a busy mind. If it stays heavy or starts to affect daily life, please see a doctor or counsellor. Alongside that, a breathing practice can be a good support.",
+     "heavy": "Your answers point to some emotional heaviness. If it stays heavy or starts to affect daily life, please see a doctor or counsellor. Alongside that, a gentle one-to-one approach can be a good support.",
+     "steady": "Your answers look steady. A simple daily breathing practice is a lovely way to keep it that way."
+    },
+    "sky": {
+     "name": "Sudarshan Kriya",
+     "sub": "A breathing practice, taught in the Art of Living Happiness Program",
+     "cta": "See the next Happiness Program",
+     "ytTitle": "What Sudarshan Kriya is",
+     "body": "Sudarshan Kriya is a rhythmic breathing practice. Several published studies report lower stress and anxiety after learning it, and many people simply find it deeply relaxing."
+    },
+    "bach": {
+     "name": "Bach Flower remedies",
+     "sub": "A gentle, one-to-one approach",
+     "cta": "Book a Bach Flower session",
+     "ytTitle": "Which Bach Flower remedy is right for you?",
+     "body": "Bach Flower remedies are a gentle, personalised approach that many people use to support their mood and emotional balance. Srikanth matches them to how you have been feeling."
+    },
+    "jyotishName": "a Jyotish conversation",
+    "steadyLine": "Thinking about direction or timing? <a href=\"/jyotish.html#booking-widget\" data-label=\"next:jyotish\">A Jyotish conversation</a> can help. Or <a href=\"/bach.html#booking-widget\" data-label=\"next:bach\">Bach Flower remedies</a> if you would like extra emotional support.",
+    "bothLine": "Many people try both: <a href=\"{otherUrl}\" data-label=\"next:{otherKey}\">{other}</a> works well alongside {primary}.",
+    "waSuggested": "Namaste Srikanth, I did the check-in. {name} was suggested for me and I would like to talk about it.",
+    "youtubeOpen": "Open on YouTube"
+   },
+   "saveMsg": {
+    "needContact": "Please share at least a WhatsApp number or email so Srikanth can reach you.",
+    "needComplete": "Please complete the check-in first.",
+    "saving": "Saving...",
+    "saved": "Saved — Srikanth will follow up with you personally.",
+    "savedBtn": "Saved ✓",
+    "error": "Couldn't save right now, but your reflection above is still yours — feel free to screenshot it or message it on WhatsApp.",
+    "retry": "Try Again"
+   },
+   "waTalk": "Namaste Srikanth, I did the check-in and would like to talk."
+  }
+ }
+}

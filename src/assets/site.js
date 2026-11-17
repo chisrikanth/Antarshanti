@@ -134,7 +134,7 @@ var AS_CONFIG = {
       el.innerHTML =
         '<div class="vid-frame"><img src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" alt="' + title.replace(/"/g, '&quot;') + '" loading="lazy" width="480" height="360" onerror="this.style.display=\'none\'">' +
         '<button class="vid-play" type="button" aria-label="Play: ' + title.replace(/"/g, '&quot;') + '"><span></span></button></div>' +
-        '<div class="vid-cap">' + title + '<a href="https://www.youtube.com/' + (short ? 'shorts/' : 'watch?v=') + id + '" target="_blank" rel="noopener">Open on YouTube ↗</a></div>';
+        '<div class="vid-cap">' + title + '<a href="https://www.youtube.com/' + (short ? 'shorts/' : 'watch?v=') + id + '" target="_blank" rel="noopener">' + (el.getAttribute('data-open') || 'Open on YouTube') + ' ↗</a></div>';
       el.querySelector('.vid-play').addEventListener('click', function () {
         var f = document.createElement('iframe');
         f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
@@ -173,6 +173,21 @@ var AS_CONFIG = {
     });
   }
 
+  /* ---------- 10. Suggest (never force) the visitor's phone language if a translation of this page exists ---------- */
+  function langSuggest() {
+    var links = [].slice.call(document.querySelectorAll('link[rel="alternate"][hreflang][data-banner]'));
+    if (!links.length) return;
+    var current = (document.documentElement.getAttribute('lang') || 'en').toLowerCase();
+    var want = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    if (want === current || read('as_lang_no')) return;
+    var hit = links.filter(function (l) { return l.getAttribute('hreflang') === want; })[0];
+    if (!hit) return;
+    var bar = document.createElement('div'); bar.className = 'lang-banner'; bar.setAttribute('lang', want);
+    bar.innerHTML = '<a href="' + esc(new URL(hit.href, location.href).pathname) + '">' + esc(hit.getAttribute('data-banner')) + '</a><button type="button">' + esc(hit.getAttribute('data-no')) + '</button>';
+    bar.querySelector('button').addEventListener('click', function () { store('as_lang_no', '1'); bar.remove(); });
+    document.body.insertBefore(bar, document.body.firstChild);
+  }
+
   window.AS = { initVideos: initVideos, money: money, track: track, attribution: attribution, page: page };
   function money(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
   function initPrices() {
@@ -189,7 +204,7 @@ var AS_CONFIG = {
     bar.innerHTML = '✦ ' + esc(a.text) + (a.href ? ' <a href="' + esc(a.href) + '">' + esc(a.linkText || 'Learn more') + '</a>' : '') + ' ✦';
   }
   function ready() {
-    tagAll(); floatingWA(); initVideos(); initReveal();
+    tagAll(); floatingWA(); initVideos(); initReveal(); langSuggest();
     (typeof AS_READY !== 'undefined' ? AS_READY : Promise.resolve()).then(function () { initTestimonials(); announce(); initPrices(); });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready); else ready();

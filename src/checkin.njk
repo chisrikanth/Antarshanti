@@ -1,40 +1,37 @@
 ---
-permalink: "/checkin.html"
-path: "/checkin"
-title: "Free 5-Minute Emotional Wellbeing Check-In | Antarshanti Healing"
-description: "A free, private 5-minute reflection on stress, mood, mindfulness, self-esteem and emotional balance, with a gentle suggestion of what may help. Not a diagnosis."
+pagination:
+  data: languages
+  size: 1
+  alias: lang
+  addAllPagesToCollections: true
+i18nKey: checkin
+basePage: checkin
+basePath: /checkin
 extraCss: "checkin-only.css"
 navKey: "checkin"
 ---
 {% extends "layouts/base.njk" %}
-{% block topbar %}{% raw %}<div class="topbar">✦ A gentle self-reflection tool from Antarshanti Healing ✦</div>{% endraw %}{% endblock %}
-{% block navigation %}{% include "partials/nav.njk" %}
-{% raw %}<div class="talk-strip"><span>Prefer to talk it through?</span> <a href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+am+doing+the+check-in+and+would+like+to+talk." target="_blank" rel="noopener" data-label="talk-strip">Chat with Srikanth on WhatsApp</a></div>{% endraw %}{% endblock %}
-{% block content %}{% raw %}<section class="checkin-shell">
+{% block topbar %}{% set c = t.checkin %}<div class="topbar">✦ {{ c.topbar }} ✦</div>{% endblock %}
+{% block navigation %}{% set c = t.checkin %}{% include "partials/nav.njk" %}
+<div class="talk-strip"><span>{{ c.talkStrip.prompt }}</span> <a href="https://wa.me/919985133161?text={{ c.talkStrip.message | urlencode }}" target="_blank" rel="noopener" data-label="talk-strip">{{ c.talkStrip.link }}</a></div>{% endblock %}
+{% block content %}{% set c = t.checkin %}<section class="checkin-shell">
   <div class="narrow">
 
     <!-- CONSENT SCREEN -->
     <div class="screen active" id="screen-consent">
       <div class="card consent-card">
-        <div class="eyebrow" style="color:var(--saffron);margin-bottom:10px">Screening Tool · Free &amp; Confidential</div>
-        <h1 style="font-size:clamp(1.6rem,4vw,2.1rem);margin-bottom:14px">Free 5-Minute Wellbeing Check-In</h1>
-        <p style="font-size:.98rem;color:var(--body)">Life can be exciting, overwhelming, confusing, and everything in between. This short questionnaire helps you pause and reflect on your emotional wellbeing — anxiety, mood, mindfulness, self-esteem, and how you handle emotions.</p>
-        <div class="tag-row">
-          <span class="tag">Mindfulness</span><span class="tag">Self-esteem</span><span class="tag">Worry and tension</span>
-          <span class="tag">Feeling low</span><span class="tag">Emotional balance</span>
-        </div>
-        <ul class="notice-list">
-          <li>This is a self-reflection tool, not a diagnostic instrument</li>
-          <li>Takes about 4–5 minutes · 25 questions</li>
-          <li>Your responses are kept confidential</li>
-          <li>You may skip any question that makes you uncomfortable</li>
-          <li>You may close this page at any time</li>
+        <div class="eyebrow" style="color:var(--saffron);margin-bottom:10px">{{ c.consent.eyebrow }}</div>
+        <h1 style="font-size:clamp(1.6rem,4vw,2.1rem);margin-bottom:14px">{{ c.consent.h1 }}</h1>
+        <p style="font-size:.98rem;color:var(--body)">{{ c.consent.intro }}</p>
+        <div class="tag-row">{% for tag in c.consent.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+        <ul class="notice-list">{% for n in c.consent.notices %}
+          <li>{{ n }}</li>{% endfor %}
         </ul>
         <label class="consent-check">
           <input type="checkbox" id="consent-checkbox">
-          <span>I agree to participate voluntarily in this self-reflection questionnaire. I understand this is for educational and self-awareness purposes only, and does not replace medical or psychological advice.</span>
+          <span>{{ c.consent.agree }}</span>
         </label>
-        <button class="btn btn-gold" id="btn-begin" disabled style="width:100%">Begin Check-In →</button>
+        <button class="btn btn-gold" id="btn-begin" disabled style="width:100%">{{ c.consent.begin }}</button>
       </div>
     </div>
 
@@ -42,18 +39,18 @@ navKey: "checkin"
     <div class="screen" id="screen-question">
       <div class="progress-wrap">
         <div class="progress-top">
-          <span class="progress-domain" id="q-domain-label">Anxiety</span>
+          <span class="progress-domain" id="q-domain-label"></span>
           <span class="progress-count" id="q-count-label">1 / 25</span>
         </div>
         <div class="progress-track"><div class="progress-fill" id="q-progress-fill" style="width:4%"></div></div>
       </div>
       <div class="card q-card">
-        <div class="q-stem">Over the past two weeks, how often has this been true for you?</div>
+        <div class="q-stem">{{ c.question.stem }}</div>
         <div class="q-text" id="q-text">—</div>
         <div class="options" id="q-options"></div>
         <div class="q-nav">
-          <span class="skip-link" id="btn-back">← Back</span>
-          <span class="skip-link" id="btn-skip">Skip this question →</span>
+          <span class="skip-link" id="btn-back">{{ c.question.back }}</span>
+          <span class="skip-link" id="btn-skip">{{ c.question.skip }}</span>
         </div>
       </div>
     </div>
@@ -63,8 +60,8 @@ navKey: "checkin"
       <div id="crisis-slot"></div>
 
       <div class="card overall-card">
-        <div class="eyebrow" style="color:var(--saffron);margin-bottom:8px">Your Wellbeing Snapshot</div>
-        <div class="overall-title" id="overall-title">Calculating...</div>
+        <div class="eyebrow" style="color:var(--saffron);margin-bottom:8px">{{ c.results.eyebrow }}</div>
+        <div class="overall-title" id="overall-title">{{ c.results.calculating }}</div>
         <div class="overall-label" id="overall-label"></div>
       </div>
 
@@ -72,96 +69,56 @@ navKey: "checkin"
 
       <div id="path-slot"></div>
 
-      <details class="how-it-works"><summary>How are these worked out?</summary>
-        <p>Each area has five questions, each scored 0 to 4 and added up (0 to 20). We group the total into four bands. The bands are a simple guide, inspired by the way common screening tools group scores. They are not clinically validated, they cover only the last two weeks, and a skipped question is never counted as zero. They cannot diagnose anything.</p>
+      <details class="how-it-works"><summary>{{ c.how.summary }}</summary>
+        <p>{{ c.how.body }}</p>
       </details>
 
       <div class="disclaimer-box">
-        This check-in is a self-reflection tool, not a diagnosis. If how you feel stays heavy or gets worse, please speak to a doctor or counsellor.
+        {{ c.disclaimer }}
       </div>
 
       <div class="results-bottom">
       <div class="card save-card">
-        <h3>Want Srikanth to look at your results?</h3>
-        <p>Optional — share your name and WhatsApp number and he'll personally follow up with a note. Your details are kept confidential and stored only with your consent.</p>
-        <div class="field"><label for="f-name">Name</label><input type="text" id="f-name" placeholder="Your name"></div>
-        <div class="field"><label for="f-phone">WhatsApp number</label><input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX"></div>
-        <div class="field"><label for="f-email">Email (optional)</label><input type="email" id="f-email" placeholder="you@example.com"></div>
-        <button class="btn btn-gold" id="btn-save" style="width:100%">Save My Results</button>
+        <h3>{{ c.save.title }}</h3>
+        <p>{{ c.save.text }}</p>
+        <div class="field"><label for="f-name">{{ c.save.name }}</label><input type="text" id="f-name" placeholder="{{ c.save.namePh }}"></div>
+        <div class="field"><label for="f-phone">{{ c.save.phone }}</label><input type="tel" id="f-phone" placeholder="{{ c.save.phonePh }}"></div>
+        <div class="field"><label for="f-email">{{ c.save.email }}</label><input type="email" id="f-email" placeholder="{{ c.save.emailPh }}"></div>
+        <button class="btn btn-gold" id="btn-save" style="width:100%">{{ c.save.btn }}</button>
         <div class="save-status" id="save-status"></div>
       </div>
 
       <div class="card talk-card" id="wa-row">
-        <h3>Not sure where to start?</h3>
-        <p>Talk to Srikanth on WhatsApp. He can help you choose between Sudarshan Kriya and Bach Flower remedies, or simply listen.</p>
-        <a class="btn btn-wa" id="wa-alt" href="https://wa.me/919985133161?text=Namaste+Srikanth,+I+did+the+check-in+and+would+like+to+talk." target="_blank" rel="noopener">Talk to Srikanth on WhatsApp</a>
+        <h3>{{ c.talk.title }}</h3>
+        <p>{{ c.talk.text }}</p>
+        <a class="btn btn-wa" id="wa-alt" href="https://wa.me/919985133161?text={{ c.talk.message | urlencode }}" target="_blank" rel="noopener">{{ c.talk.btn }}</a>
       </div>
       </div>
     </div>
 
   </div>
 </section>
+{% endblock %}
 
-{% endraw %}{% endblock %}
-
-{% block scripts %}{% raw %}<script>
+{% block scripts %}{% set c = t.checkin %}<script>
+/* All visible text comes from the language file (src/_data/i18n/{{ lang.code }}.json). */
+const T = {{ c.js | dump | safe }};
+const LANG = '{{ lang.code }}';
+const fmt = (s, v) => String(s).replace(/\{(\w+)\}/g, (m, k) => (v && v[k] !== undefined ? v[k] : m));
+{% raw %}
 /* ---------------------------------------------------------
-   DATA
+   DATA  (areas keep the same keys in every language so saved data stays comparable)
 --------------------------------------------------------- */
-const SECTIONS = [
-  {
-    key:'mindfulness', title:'Mindfulness', direction:'strength', color:'sky',
-    items:[
-      'Noticed small sensory details around you — light, sound, smell',
-      'Paused before reacting instead of responding on autopilot',
-      'Noticed your breath or body without trying to change it',
-      'Did ordinary tasks — eating, walking, showering — with full attention',
-      'Observed your emotions arise without being swept away by them'
-    ]
-  },
-  {
-    key:'selfEsteem', title:'Self-esteem', direction:'strength', color:'gold',
-    items:[
-      'Felt satisfied with who you are',
-      'Felt confident in your own judgment and decisions',
-      'Felt you handle challenges about as well as most people',
-      'Felt worthy of respect and care, including your own',
-      "Spoke to yourself with the same kindness you'd offer a friend"
-    ]
-  },
-  {
-    key:'anxiety', title:'Worry and tension', direction:'distress', color:'lotus',
-    items:[
-      'Felt nervous, worried or on edge',
-      'Found it hard to switch off racing thoughts',
-      'Felt your heart race or body tense for no clear reason',
-      'Avoided a task or situation because it felt overwhelming',
-      'Expected something to go wrong, even without evidence'
-    ]
-  },
-  {
-    key:'depression', title:'Feeling low', direction:'distress', color:'lotus', crisisIndex:4,
-    items:[
-      "Lost interest in things you'd usually enjoy",
-      'Felt low, flat or hopeless',
-      'Had noticeably low energy or motivation',
-      'Struggled with sleep — too little or too much',
-      "Had thoughts that life isn't worth living, or of hurting yourself"
-    ]
-  },
-  {
-    key:'emotionRegulation', title:'Emotional balance', direction:'strength', color:'leaf',
-    items:[
-      'Managed to calm yourself down once upset',
-      'Understood what triggered a strong emotion, even after the fact',
-      'Let a difficult feeling pass without acting on it impulsively',
-      'Expressed what you felt in words rather than bottling it up',
-      'Stayed steady in your responses even under emotional pressure'
-    ]
-  }
+const SECTION_META = [
+  { key:'mindfulness',       direction:'strength', color:'sky' },
+  { key:'selfEsteem',        direction:'strength', color:'gold' },
+  { key:'anxiety',           direction:'distress', color:'lotus' },
+  { key:'depression',        direction:'distress', color:'lotus', crisisIndex:4 },
+  { key:'emotionRegulation', direction:'strength', color:'leaf' }
 ];
+const SECTIONS = SECTION_META.map(m => ({ ...m, title: T.sections[m.key].title, items: T.sections[m.key].items }));
 
-const OPTIONS = ['Never','Rarely','Sometimes','Often','Always']; // scored 0-4
+const OPTIONS = T.options; // scored 0-4
 
 // Flatten into a single question list, each tagged with its section
 const QUESTIONS = [];
@@ -255,30 +212,13 @@ function scoreDomain(sec){
 }
 
 // Four gentle bands per area. Inspired by the proportions used in common screening tools (e.g. GAD-7, PHQ-9),
-// but NOT a clinically validated scale. They describe the last two weeks only.
-const BANDS = {
-  distress: [
-    { max:4,  label:'Doing well',            note:'You have felt little of this over the past two weeks. That is good to see.', color:'var(--leaf)' },
-    { max:9,  label:'A little now and then', note:'Some days have felt tense or low. That is common and often passes.', color:'var(--gold)' },
-    { max:14, label:'Showing up often',      note:'This has been with you quite a bit lately. Looking after yourself and talking it through can help.', color:'var(--saffron)' },
-    { max:20, label:'Heavy right now',       note:'This has been weighing on you a lot lately. Talking to a doctor or counsellor is a good step, and you do not have to manage it alone.', color:'var(--lotus)' }
-  ],
-  strength: [
-    { max:4,  label:'Just beginning',        note:'A good place to start. Small daily practices can help this grow.', color:'var(--gold)' },
-    { max:9,  label:'Growing',               note:'You already have some of this to build on.', color:'var(--sky)' },
-    { max:14, label:'Steady',                note:'This is a dependable part of how you cope.', color:'var(--leaf)' },
-    { max:20, label:'A real strength',       note:'One of your clear strengths. Keep nurturing it.', color:'var(--leaf)' }
-  ]
-};
+// but NOT a clinically validated scale. They describe the last two weeks only. (Wording: language file.)
+const BAND_MAX = [4, 9, 14, 20];
+const BAND_COLOR = { distress:['var(--leaf)','var(--gold)','var(--saffron)','var(--lotus)'], strength:['var(--gold)','var(--sky)','var(--leaf)','var(--leaf)'] };
 function bandFor(direction, raw){
-  const list = BANDS[direction === 'distress' ? 'distress' : 'strength'];
-  const i = list.findIndex(b => raw <= b.max);
-  return { ...list[i], index: i, steps: i + 1 };
-}
-
-function barColor(colorName){
-  const map = { lotus:'var(--lotus)', sky:'var(--sky)', gold:'var(--gold)', leaf:'var(--leaf)', saffron:'var(--saffron)' };
-  return map[colorName] || 'var(--saffron)';
+  const kind = direction === 'distress' ? 'distress' : 'strength';
+  const i = BAND_MAX.findIndex(m => raw <= m);
+  return { ...T.bands[kind][i], color: BAND_COLOR[kind][i], index: i, steps: i + 1 };
 }
 
 let lastComputed = null;
@@ -303,13 +243,13 @@ function computeAndRenderResults(){
     const box = document.createElement('div');
     box.className = 'crisis-box';
     box.innerHTML = `
-      <h3>You don't have to carry this alone</h3>
-      <p>One of your answers suggests you may be having a very hard time right now. Please talk to someone today. Tele-MANAS is the Government of India's free, confidential helpline.</p>
+      <h3>${T.crisis.title}</h3>
+      <p>${T.crisis.intro}</p>
       <div class="helpline-main">
-        <div><span class="hname">Tele-MANAS · Government of India</span><span class="hnum">14416</span><span class="havail">Free · 24 hours · many languages</span></div>
-        <a class="btn btn-gold btn-sm" href="tel:14416">Call 14416</a>
+        <div><span class="hname">${T.crisis.name}</span><span class="hnum">14416</span><span class="havail">${T.crisis.avail}</span></div>
+        <a class="btn btn-gold btn-sm" href="tel:14416">${T.crisis.call}</a>
       </div>
-      <p class="crisis-small">More information: <a href="https://telemanas.mohfw.gov.in" target="_blank" rel="noopener">telemanas.mohfw.gov.in</a>. If you are in immediate danger, call 112 or go to your nearest hospital. Please also consider speaking with a qualified doctor.</p>
+      <p class="crisis-small">${T.crisis.more}</p>
     `;
     crisisSlot.appendChild(box);
   }
@@ -321,24 +261,23 @@ function computeAndRenderResults(){
   const care = shown.filter(isCare).length, good = shown.filter(isGood).length;
   const heavy = shown.some(d => d.sec.direction === 'distress' && d.sum >= 15);
   const titleEl = document.getElementById('overall-title'), labelEl = document.getElementById('overall-label');
-  const nArea = n => n === 1 ? 'one area' : n + ' areas';
+  const S = T.snap;
   if(!shown.length){
-    titleEl.textContent = 'Not enough answers for a snapshot';
-    labelEl.textContent = 'If you would like, go back and answer a few more questions. You can skip any you prefer.';
+    titleEl.textContent = S.none.title; labelEl.textContent = S.none.label;
   } else if(care === 0){
-    titleEl.textContent = 'Things look steady right now';
-    labelEl.textContent = 'This is a snapshot of the last two weeks. A good time to keep doing what works for you.';
+    titleEl.textContent = S.steady.title; labelEl.textContent = S.steady.label;
   } else if(care >= 3 || heavy){
-    titleEl.textContent = (good > 0 ? 'Some things are going well, and ' + nArea(care) + ' ' + (care === 1 ? 'is' : 'are') + ' asking for care' : 'Several areas are asking for some care right now');
-    labelEl.textContent = 'That is worth some attention, and it is also very common. You do not have to handle it alone: talking with someone can make it feel lighter.';
+    titleEl.textContent = good > 0 ? (care === 1 ? S.attention.titleGoodOne : fmt(S.attention.titleGoodMany, { n: care })) : S.attention.titleNone;
+    labelEl.textContent = S.attention.label;
   } else {
-    titleEl.textContent = (good > 0 ? 'Some things are going well, and ' + nArea(care) + ' could use some care' : nArea(care).replace(/^o/, 'O') + ' could use some care');
-    labelEl.textContent = 'That is common, and it is a snapshot of the last two weeks, not a verdict.';
+    titleEl.textContent = good > 0 ? (care === 1 ? S.mild.titleGoodOne : fmt(S.mild.titleGoodMany, { n: care }))
+                                   : (care === 1 ? S.mild.titleNoneOne : fmt(S.mild.titleNoneMany, { n: care }));
+    labelEl.textContent = S.mild.label;
   }
   // If the safety question was skipped, still make sure help is visible.
   if(!crisisFlag && crisisVal === undefined){
     const n = document.createElement('p'); n.className = 'crisis-small'; n.style.margin = '0 0 18px';
-    n.innerHTML = 'If things ever feel too heavy, Tele-MANAS (<a href="tel:14416">14416</a>) is free, confidential and open 24 hours.';
+    n.innerHTML = T.crisis.skipped;
     crisisSlot.appendChild(n);
   }
 
@@ -347,8 +286,8 @@ function computeAndRenderResults(){
   domainWrap.innerHTML = '';
   // Positive first: inner resources, then how you have been feeling.
   const groups = [
-    { head:'Your inner resources', list: domainScores.filter(d => d.sec.direction === 'strength') },
-    { head:'How you have been feeling', list: domainScores.filter(d => d.sec.direction === 'distress') }
+    { head:T.groups.resources, list: domainScores.filter(d => d.sec.direction === 'strength') },
+    { head:T.groups.feeling, list: domainScores.filter(d => d.sec.direction === 'distress') }
   ];
   groups.forEach(g => {
     const col = document.createElement('div'); col.className = 'result-col'; domainWrap.appendChild(col);
@@ -357,7 +296,7 @@ function computeAndRenderResults(){
       const row = document.createElement('div');
       row.className = 'domain-row';
       if(d.sum === null){
-        row.innerHTML = `<div class="domain-top"><span class="domain-name">${d.sec.title}</span></div><div class="domain-note">Not enough answers to show this area. That is fine, you can skip anything you prefer.</div>`;
+        row.innerHTML = `<div class="domain-top"><span class="domain-name">${d.sec.title}</span></div><div class="domain-note">${T.rowNotEnough}</div>`;
         col.appendChild(row); return;
       }
       const band = bandFor(d.sec.direction, d.sum);
@@ -367,7 +306,7 @@ function computeAndRenderResults(){
           <span class="domain-name">${d.sec.title}</span>
           <span class="domain-band" style="background:${band.color}22;color:var(--ink)">${band.label}</span>
         </div>
-        <div class="steps4" role="img" aria-label="${band.label}, step ${band.steps} of 4">${steps}</div>
+        <div class="steps4" role="img" aria-label="${fmt(T.stepsAria, { label: band.label, n: band.steps })}">${steps}</div>
         <div class="domain-note">${band.note}</div>
       `;
       col.appendChild(row);
@@ -376,23 +315,12 @@ function computeAndRenderResults(){
 }
 
 /* ---------------------------------------------------------
-   PATH SUGGESTION — a gentle pointer, never a diagnosis.
-   stress/energy -> Happiness Program; emotional heaviness -> Bach;
-   steady + looking for direction/timing -> Jyotish.
+   NEXT STEP — a gentle pointer, never a diagnosis.
+   tension -> Sudarshan Kriya first; emotional heaviness -> Bach first; steady -> daily breathing practice.
 --------------------------------------------------------- */
 const NEXT = {
-  sky:{ name:'Sudarshan Kriya', sub:'A breathing practice, taught in the Art of Living Happiness Program', url:'happiness.html#register', cta:'See the next Happiness Program', path:'happiness',
-    yt:'gWwhIPAajfw', ytTitle:'What Sudarshan Kriya is',
-    body:'Sudarshan Kriya is a rhythmic breathing practice. Several published studies report lower stress and anxiety after learning it, and many people simply find it deeply relaxing.' },
-  bach:{ name:'Bach Flower remedies', sub:'A gentle, one-to-one approach', url:'bach.html#booking-widget', cta:'Book a Bach Flower session', path:'bach',
-    yt:'Cm5DVzkOo_U', ytTitle:'Which Bach Flower remedy is right for you?',
-    body:'Bach Flower remedies are a gentle, personalised approach that many people use to support their mood and emotional balance. Srikanth matches them to how you have been feeling.' },
-  jyotish:{ name:'a Jyotish conversation', url:'jyotish.html#booking-widget' }
-};
-const INTRO = {
-  stress:'Your answers point to some tension and a busy mind. If it stays heavy or starts to affect daily life, please see a doctor or counsellor. Alongside that, a breathing practice can be a good support.',
-  heavy:'Your answers point to some emotional heaviness. If it stays heavy or starts to affect daily life, please see a doctor or counsellor. Alongside that, a gentle one-to-one approach can be a good support.',
-  steady:'Your answers look steady. A simple daily breathing practice is a lovely way to keep it that way.'
+  sky:  { ...T.next.sky,  url:'/happiness.html#register',  path:'happiness', yt:'gWwhIPAajfw' },
+  bach: { ...T.next.bach, url:'/bach.html#booking-widget', path:'bach',      yt:'Cm5DVzkOo_U' }
 };
 function suggestLead(domainScores){
   const pct = {};
@@ -408,10 +336,10 @@ function suggestLead(domainScores){
   return stress >= heavy ? 'stress' : 'heavy';
 }
 const waLink = (msg) => 'https://wa.me/919985133161?text=' + encodeURIComponent(msg);
-const WA_TALK = waLink('Namaste Srikanth, I did the check-in and would like to talk.');
-function optionCard(o, key, primary){
-  return '<div class="card next-step '+(primary ? 'primary' : '')+'">' +
-    '<div class="vid" data-yt="'+o.yt+'" data-title="'+o.ytTitle+'"></div>' +
+const WA_TALK = waLink(T.waTalk);
+function optionCard(o, key){
+  return '<div class="card next-step primary">' +
+    '<div class="vid" data-yt="'+o.yt+'" data-title="'+o.ytTitle+'" data-open="'+T.next.youtubeOpen+'"></div>' +
     '<div><h3>'+o.name+'</h3><div class="ns-sub">'+o.sub+'</div><p>'+o.body+'</p>' +
     '<a class="btn btn-gold btn-sm" href="'+o.url+'" data-label="next:'+key+'">'+o.cta+' →</a></div></div>';
 }
@@ -421,7 +349,7 @@ function renderPathSuggestion(domainScores, crisisFlag, crisisVal){
   slot.innerHTML = '';
   if(crisisFlag && crisisVal >= 3){
     // Often / Always on the safety question: support first. No programme cards here, only a human to talk to.
-    slot.innerHTML = '<div class="card path-primary"><h3>Whenever you feel ready</h3><p>Srikanth is happy to listen on WhatsApp. Please keep a doctor or counsellor in the loop too. When you feel steadier, he can also tell you about gentle supports such as a breathing practice or Bach Flower remedies.</p><a class="btn btn-wa btn-sm" target="_blank" rel="noopener" data-label="talk-crisis" href="'+WA_TALK+'">Talk to Srikanth on WhatsApp</a></div>';
+    slot.innerHTML = '<div class="card path-primary"><h3>'+T.crisis.highTitle+'</h3><p>'+T.crisis.highBody+'</p><a class="btn btn-wa btn-sm" target="_blank" rel="noopener" data-label="talk-crisis" href="'+WA_TALK+'">'+T.crisis.highBtn+'</a></div>';
     return 'support';
   }
   const lead = suggestLead(domainScores);
@@ -429,14 +357,14 @@ function renderPathSuggestion(domainScores, crisisFlag, crisisVal){
   const primaryKey = lead === 'heavy' ? 'bach' : 'sky';
   const otherKey = primaryKey === 'sky' ? 'bach' : 'sky';
   const secondLine = lead === 'steady'
-    ? 'Thinking about direction or timing? <a href="'+NEXT.jyotish.url+'" data-label="next:jyotish">A Jyotish conversation</a> can help. Or <a href="'+NEXT.bach.url+'" data-label="next:bach">Bach Flower remedies</a> if you would like extra emotional support.'
-    : 'Many people try both: <a href="'+NEXT[otherKey].url+'" data-label="next:'+otherKey+'">'+NEXT[otherKey].name+'</a> works well alongside '+NEXT[primaryKey].name+'.';
+    ? T.next.steadyLine
+    : fmt(T.next.bothLine, { otherUrl: NEXT[otherKey].url, otherKey: otherKey, other: NEXT[otherKey].name, primary: NEXT[primaryKey].name });
   slot.innerHTML =
-    '<div class="path-wrap"><div class="eyebrow" style="color:var(--saffron);margin-bottom:8px">A good next step</div>' +
-    '<p class="ns-intro">'+INTRO[lead]+'</p>' + optionCard(NEXT[primaryKey], primaryKey, true) +
+    '<div class="path-wrap"><div class="eyebrow" style="color:var(--saffron);margin-bottom:8px">'+T.next.eyebrow+'</div>' +
+    '<p class="ns-intro">'+T.next.intro[lead]+'</p>' + optionCard(NEXT[primaryKey], primaryKey) +
     '<p class="path-also">'+secondLine+'</p></div>';
   if(window.AS && AS.initVideos) AS.initVideos();
-  waAlt.href = waLink('Namaste Srikanth, I did the check-in. ' + NEXT[primaryKey].name + ' was suggested for me and I would like to talk about it.');
+  waAlt.href = waLink(fmt(T.next.waSuggested, { name: NEXT[primaryKey].name }));
   waAlt.removeAttribute('data-wa-tagged');
   return NEXT[primaryKey].path;
 }
@@ -450,14 +378,15 @@ document.getElementById('btn-save').addEventListener('click', async () => {
   const name = document.getElementById('f-name').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
   const email = document.getElementById('f-email').value.trim();
+  const M = T.saveMsg;
 
   if(!phone && !email){
-    statusEl.textContent = 'Please share at least a WhatsApp number or email so Srikanth can reach you.';
+    statusEl.textContent = M.needContact;
     statusEl.className = 'save-status show err';
     return;
   }
   if(!lastComputed){
-    statusEl.textContent = 'Please complete the check-in first.';
+    statusEl.textContent = M.needComplete;
     statusEl.className = 'save-status show err';
     return;
   }
@@ -467,6 +396,7 @@ document.getElementById('btn-save').addEventListener('click', async () => {
     phone: phone || null,
     email: email || null,
     consent: true,
+    language: LANG,
     crisisFlag: lastComputed.crisisFlag,
     overallScore: lastComputed.overall,
     domainScores: lastComputed.domainScores.reduce((acc, d) => {
@@ -479,8 +409,9 @@ document.getElementById('btn-save').addEventListener('click', async () => {
     submittedAt: new Date().toISOString()
   };
 
+  const label = btn.textContent;
   btn.disabled = true;
-  btn.textContent = 'Saving...';
+  btn.textContent = M.saving;
   try {
     const res = await fetch('/.netlify/functions/submit-checkin', {
       method: 'POST',
@@ -488,16 +419,16 @@ document.getElementById('btn-save').addEventListener('click', async () => {
       body: JSON.stringify(payload)
     });
     if(!res.ok) throw new Error('Save failed');
-    statusEl.textContent = "Saved — Srikanth will follow up with you personally.";
+    statusEl.textContent = M.saved;
     statusEl.className = 'save-status show ok';
-    btn.textContent = 'Saved ✓';
+    btn.textContent = M.savedBtn;
     if(window.AS) AS.track('checkin_saved', { path: lastComputed.path || '' });
   } catch(err){
     console.error(err);
-    statusEl.textContent = "Couldn't save right now, but your reflection above is still yours — feel free to screenshot it or message it on WhatsApp.";
+    statusEl.textContent = M.error;
     statusEl.className = 'save-status show err';
     btn.disabled = false;
-    btn.textContent = 'Try Again';
+    btn.textContent = M.retry;
   }
 });
-</script>{% endraw %}{% endblock %}
+{% endraw %}</script>{% endblock %}

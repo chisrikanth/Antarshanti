@@ -37,9 +37,11 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 - [ ] **D3. Check-in wording** was changed to bands (no 0 to 100 score). Please read the results screen once on staging and say if the tone is right.
 - [ ] **D6. Check-in next-step wording (new).** Read the results on staging once. In particular please confirm you are happy with this sentence about Sudarshan Kriya: *"Several published studies report lower stress and anxiety after learning it, and many people simply find it deeply relaxing."* If you can, give me one specific study link (for example from the Art of Living research page) and I will link it; that makes the sentence stronger and safer.
 - [ ] **D7. Watch the two short videos on the check-in results:** Sudarshan Kriya `gWwhIPAajfw` and Bach Flower `Cm5DVzkOo_U` (chosen by title). Say if you want others.
-- [ ] **D4. Telugu and Hindi:** who will review the translations?
+- [ ] **D4. Get the Telugu and Hindi check-in reviewed by a native speaker** (2 people if possible). Guide, a ready WhatsApp message, and the word choices to check are in `docs/TRANSLATION-REVIEW.md`. Staging links: `/te/checkin` and `/hi/checkin`. Nothing goes live in these languages until you flip `src/_data/i18n/review.json`.
 - [ ] **D8. Happiness page headline changed** from "Don't settle for happy-ish" (felt like pressure) to "A calmer mind, one breath at a time". Also removed "why haven't you tried it yet?". Happy with both?
 - [ ] **D5. Bach headline** now says "Gentle support for the feelings words cannot reach". Happy with it?
+
+- [ ] **D9. Tell Claude which Telugu/Hindi pages to translate next** (suggested order: Home, Happiness Program, then Bach and Jyotish).
 
 ## E. Operating notes (no action unless something looks wrong)
 - Databases: `antarshanti-prod` (real data) and `antarshanti-test` (sample data), both Mumbai, Free plan. Process for changes: `docs/DATABASE-CHANGES.md`. Free projects pause after 7 days idle; a scheduled keep-alive handles this once on production.
@@ -54,4 +56,4 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 5. Quotes from other sites (Art of Living, etc.) only with that site's permission, naming the source.
 
 ## Done so far
-Site rebuilt on Eleventy; Golden Hour theme; check-in with gentler band results and a single Tele-MANAS helpline plus always-on WhatsApp option; Bach/Jyotish wording made non-promissory; two Supabase projects with row-level security; server-side pricing from the database; Razorpay webhook; slot reservation with a database-level no-double-booking guarantee; staging branch and safety guards between test and live.
+Telugu and Hindi check-in drafts built behind a review gate; Site rebuilt on Eleventy; Golden Hour theme; check-in with gentler band results and a single Tele-MANAS helpline plus always-on WhatsApp option; Bach/Jyotish wording made non-promissory; two Supabase projects with row-level security; server-side pricing from the database; Razorpay webhook; slot reservation with a database-level no-double-booking guarantee; staging branch and safety guards between test and live.

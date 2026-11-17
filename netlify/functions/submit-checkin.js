@@ -78,7 +78,8 @@ exports.handler = async function (event) {
     fbclid: clip(at.fbclid),
     landing_page: clip(at.landing_page),
     referrer: clip(at.referrer),
-    suggested_path: clip(data.suggestedPath)
+    suggested_path: clip(data.suggestedPath),
+    language: clip(data.language)
   };
 
   const insert = (body) => fetch(`${SUPABASE_URL}/rest/v1/checkin_responses`, {

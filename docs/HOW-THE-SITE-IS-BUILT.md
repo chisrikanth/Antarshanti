@@ -10,7 +10,8 @@
 ## Where to edit things
 | You want to change | Edit this file |
 |---|---|
-| Menu items (add or rename a page) | `src/_data/nav.json` |
+| Menu items (add or rename a page) | `src/_data/nav.json` (links) and `src/_data/i18n/en.json` (labels, per language) |
+| Telugu / Hindi text; switching a language on for the live site | `src/_data/i18n/te.json`, `hi.json`; `review.json` |
 | Footer, logo, top of every page | `src/_includes/partials/` |
 | Colours, fonts feel, spacing for the whole site | `src/assets/theme.css` |
 | Text on a page | `src/index.njk`, `src/jyotish.njk`, `src/bach.njk`, `src/happiness.njk` |
@@ -26,4 +27,4 @@
 
 ## Next simplifications (not done yet)
 - (done 17 Nov) The check-in page now uses the shared header, footer and styles; only `src/assets/checkin-only.css` is specific to it.
-- Add Telugu and Hindi as `/te` and `/hi` folders using the same layout, with the text in language files.
+- Telugu and Hindi: the check-in is done as a pattern (`src/checkin.njk` + `src/_data/i18n/*.json` + `src/checkin.11tydata.js`). The remaining pages follow the same pattern; see `docs/TRANSLATION-REVIEW.md`.

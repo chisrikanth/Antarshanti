@@ -2,27 +2,27 @@
  {
   "key": "home",
   "label": "Home",
-  "href": "index.html"
+  "href": "/index.html"
  },
  {
   "key": "jyotish",
   "label": "Jyotish",
-  "href": "jyotish.html"
+  "href": "/jyotish.html"
  },
  {
   "key": "bach",
   "label": "Bach Flower",
-  "href": "bach.html"
+  "href": "/bach.html"
  },
  {
   "key": "happiness",
   "label": "Happiness Program",
-  "href": "happiness.html"
+  "href": "/happiness.html"
  },
  {
   "key": "checkin",
   "label": "Free Check-In",
-  "href": "checkin.html",
+  "href": "/checkin.html",
   "cta": true
  }
 ]
