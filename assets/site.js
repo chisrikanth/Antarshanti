@@ -147,9 +147,9 @@ var AS_CONFIG = {
   /* ---------- 8. Testimonials: <div data-testimonials="bach"></div> inside a <section> ---------- */
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function initTestimonials() {
-    if (typeof AS_TESTIMONIALS === 'undefined') return;
+    if (typeof AS_CONTENT === 'undefined') return;
     [].slice.call(document.querySelectorAll('[data-testimonials]')).forEach(function (el) {
-      var items = AS_TESTIMONIALS[el.getAttribute('data-testimonials')] || [];
+      var items = (AS_CONTENT.testimonials || {})[el.getAttribute('data-testimonials')] || [];
       var sec = el.closest('section');
       if (!items.length) { if (sec && sec.hasAttribute('data-hide-empty')) sec.hidden = true; el.innerHTML = ''; return; }
       if (sec) sec.hidden = false;
@@ -161,7 +161,27 @@ var AS_CONFIG = {
     });
   }
 
+  /* ---------- 9. Gentle scroll reveal (skipped for reduced motion) ---------- */
+  function initReveal() {
+    if (!('IntersectionObserver' in window) || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('rv-hide'); e.target.classList.add('rv-show'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    [].slice.call(document.querySelectorAll('main section .wrap > *, section:not(.checkin-shell) .wrap > *')).forEach(function (el) {
+      if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('rv-hide'); io.observe(el); }
+    });
+  }
+
   window.AS = { track: track, attribution: attribution, page: page };
-  function ready() { tagAll(); floatingWA(); initVideos(); initTestimonials(); }
+  function announce() {
+    if (typeof AS_CONTENT === 'undefined') return;
+    var a = AS_CONTENT.announcement, bar = document.querySelector('.topbar[data-announce]');
+    if (!a || !bar) return;
+    bar.innerHTML = '✦ ' + esc(a.text) + (a.href ? ' <a href="' + esc(a.href) + '">' + esc(a.linkText || 'Learn more') + '</a>' : '') + ' ✦';
+  }
+  function ready() {
+    tagAll(); floatingWA(); initVideos(); initReveal();
+    (typeof AS_READY !== 'undefined' ? AS_READY : Promise.resolve()).then(function () { initTestimonials(); announce(); });
+  }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready); else ready();
 })();

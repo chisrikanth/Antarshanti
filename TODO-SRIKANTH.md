@@ -3,6 +3,17 @@
 Living list. Newest items are added at the top of each section; tick items off by changing `[ ]` to `[x]`.
 Last updated: 1 Oct 2026.
 
+## Next Happiness batch dates (suggestions, not yet on the site)
+Your last batches ran Thu to Sun evenings (1–4 Oct, 22–25 Oct), about three weeks apart. Same pattern would give:
+- Thu 3 – Sun 6 Dec 2026
+- Thu 24 – Sun 27 Dec 2026 (holiday week, people have time; or skip if you travel)
+- Thu 14 – Sun 17 Jan 2027
+Pick what suits you, get the Art of Living registration link for each, then add it to `data/site.json` (copy the `_batch_example`). It disappears by itself after its `end` date.
+
+## Changing dates and links without touching code
+- Everything that changes (batches, registration links, announcement bar, WhatsApp number, testimonials) lives in `data/site.json`. Edit it on GitHub (open the file, pencil icon, commit); Netlify republishes in about a minute.
+- For zero deploys, apply `supabase/site_content.sql` and fill `AS_SUPABASE` in `assets/content.js`; then you edit rows in Supabase's Table Editor and the site updates on next load. Falls back to `data/site.json` if Supabase is unreachable.
+
 ## Before any ad money is spent
 - [ ] **Preview the site** on a real phone (see "How to preview" below).
 - [ ] **Confirm the Happiness batch** in `assets/batches.js`: Thu 22 – Sun 25 Oct 2026, evening, online (Zoom), registration `https://aolt.in/1061195`.

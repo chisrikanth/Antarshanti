@@ -1,0 +1,43 @@
+{
+  "_help": "Edit this file to change dates, links, the home announcement and testimonials. No code changes needed. Commit on GitHub (the pencil icon on this file) and Netlify republishes in about a minute. For changes with NO deploy at all, see supabase/site_content.sql (optional live mode).",
+
+  "announcement": {
+    "text": "",
+    "linkText": "",
+    "href": ""
+  },
+
+  "links": {
+    "whatsapp": "919985133161"
+  },
+
+  "batches": [
+  ],
+
+  "_batch_example": {
+    "date": "Thu 3 – Sun 6 Dec 2026",
+    "time": "Evening · 6:00–8:30 PM IST",
+    "mode": "Online (Zoom)",
+    "language": "",
+    "seats": "",
+    "fee": "By donation to the Art of Living Foundation",
+    "registerUrl": "https://aolt.in/XXXXXXX",
+    "end": "2026-12-06"
+  },
+
+  "testimonials": {
+    "home": [],
+    "jyotish": [],
+    "bach": [],
+    "happiness": []
+  },
+
+  "_testimonial_example": {
+    "quote": "Exact words, with permission.",
+    "name": "Priya",
+    "role": "Software engineer",
+    "city": "Hyderabad",
+    "source": "",
+    "url": ""
+  }
+}
