@@ -99,6 +99,7 @@ navKey: "bach"
     <p class="med-note">Bach Flower therapy is complementary care and is not a substitute for medical care. Please keep seeing your doctor for any medical condition.</p>
   </div>
 </div>
+<script src="assets/booking.js"></script>
 <script>
 (function(){
   var SLOTS = {"Mon": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Wed": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Fri": ["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "05:00 PM", "06:00 PM"], "Sat": ["09:00 AM", "10:00 AM", "11:00 AM", "03:00 PM", "04:00 PM", "05:00 PM"]};
@@ -132,7 +133,7 @@ navKey: "bach"
     for(var i=0;i<7;i++){
       var d=new Date(today); d.setDate(today.getDate()+i);
       var dname=DAYS[d.getDay()];
-      var avail=SLOTS.hasOwnProperty(dname);
+      var avail=SLOTS.hasOwnProperty(dname)&&ASBook.dayHasFree(d,SLOTS[dname]);
       var btn=document.createElement('div');
       btn.className='day-btn'+(avail?'':' disabled')+(selDay&&selDay.toDateString()===d.toDateString()?' selected':'');
       btn.innerHTML='<div class="dname">'+dname+'</div><div class="dnum">'+d.getDate()+'</div><div style="font-size:.7rem;color:inherit;opacity:.75">'+MONTHS[d.getMonth()]+'</div>';
@@ -159,9 +160,11 @@ navKey: "bach"
     sl.textContent='Available times — '+selDay.toDateString();
     times.forEach(function(t){
       var s=document.createElement('div');
-      s.className='slot'+(t===selTime?' selected':'');
+      var st=ASBook.state(selDay,t);
+      s.className='slot'+(t===selTime?' selected':'')+(st!=='free'?' taken':'');
+      if(st==='taken') s.title='Already booked';
       s.textContent=t;
-      s.onclick=function(){
+      s.onclick=st!=='free'?null:function(){
         selTime=t; renderSlots();
         if(window.AS) AS.track('slot_selected',{label:selSession});
         showConfirm();
@@ -198,9 +201,9 @@ navKey: "bach"
     fetch('/.netlify/functions/create-order',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({service:'bach_consultation',slot:document.getElementById('confirm-text').textContent,receipt:'bach_'+Date.now()})
+      body:JSON.stringify({service:'bach_consultation',slot:document.getElementById('confirm-text').textContent,slot_start:ASBook.iso(selDay,selTime),receipt:'bach_'+Date.now()})
     })
-    .then(function(r){ if(!r.ok) return r.json().then(function(j){ var e=new Error((j&&j.error)||'order-failed'); e.server=true; throw e; },function(){ throw new Error('order-failed'); }); return r.json(); })
+    .then(function(r){ if(!r.ok) return r.json().then(function(j){ var e=new Error((j&&j.error)||'order-failed'); e.server=true; e.status=r.status; throw e; },function(){ throw new Error('order-failed'); }); return r.json(); })
     .then(function(order){
       var rzp=new Razorpay({
         key:order.key_id||RAZORPAY_KEY_ID,
@@ -245,11 +248,13 @@ navKey: "bach"
     })
     .catch(function(err){
       setPayBtnState(false);
+      if(err&&err.status===409){ selTime=null; document.getElementById('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
       setStatus(err&&err.server&&err.message!=='order-failed'?('⚠ '+err.message):'⚠ Could not start payment. Please try again, or WhatsApp Srikanth.',false);
     });
   }
   document.getElementById('pay-btn').addEventListener('click',payNow);
   renderDays(); renderSlots();
+  ASBook.load().then(function(d){ if(d){ SLOTS=ASBook.slotsFromRules(d.rules); } renderDays(); renderSlots(); });
 })();
 </script>
       </div>

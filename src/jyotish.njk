@@ -95,11 +95,21 @@ navKey: "jyotish"
       <p style="font-weight:700;color:var(--ink);font-size:.97rem;margin-bottom:8px">
         ✦ <span id="confirm-text"></span>
       </p>
+      <div id="hold-form" class="hold-form">
+        <p style="font-size:.88rem;color:var(--body);margin-bottom:10px">To hold this time for you, please share a name and your WhatsApp number. Srikanth will message you there.</p>
+        <div class="field"><label for="h-name">Your name</label><input type="text" id="h-name" autocomplete="name" maxlength="80"></div>
+        <div class="field"><label for="h-phone">WhatsApp number</label><input type="tel" id="h-phone" autocomplete="tel" placeholder="+91 XXXXX XXXXX"></div>
+        <input type="text" id="h-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0">
+        <label class="consent-line"><input type="checkbox" id="h-consent"><span>I agree that Srikanth may contact me on WhatsApp about this booking.</span></label>
+        <button type="button" class="btn btn-gold btn-sm" id="hold-btn" style="width:100%">Hold this slot</button>
+        <div id="hold-status" class="hold-status" role="status"></div>
+      </div>
+      <div id="after-hold" style="display:none">
       <p style="font-size:.88rem;color:var(--body);margin-bottom:16px">
         Here is what happens next:
       </p>
       <ol class="steps3">
-        <li><b>1</b><span>Your slot is held as soon as you pick it.</span></li>
+        <li><b>1</b><span>Your slot is held for you (done).</span></li>
         <li><b>2</b><span>Send your birth date, exact time and place on WhatsApp so I can prepare. I confirm within 24 hours.</span></li>
         <li><b>3</b><span>After the session, contribute whatever it was worth to you — only if it helped.</span></li>
       </ol>
@@ -115,10 +125,12 @@ navKey: "jyotish"
           </div>
         </div>
       </div>
+      </div>
     </div>
     <div class="availability-note">Slots reflect Srikanth's current availability · IST (India Standard Time)</div>
   </div>
 </div>
+<script src="assets/booking.js"></script>
 <script>
 (function(){
   var SLOTS = {"Mon": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Wed": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Fri": ["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "05:00 PM", "06:00 PM"], "Sat": ["09:00 AM", "10:00 AM", "11:00 AM", "03:00 PM", "04:00 PM", "05:00 PM"]};
@@ -150,7 +162,7 @@ navKey: "jyotish"
     for(var i=0;i<7;i++){
       var d=new Date(today); d.setDate(today.getDate()+i);
       var dname=DAYS[d.getDay()];
-      var avail=SLOTS.hasOwnProperty(dname);
+      var avail=SLOTS.hasOwnProperty(dname)&&ASBook.dayHasFree(d,SLOTS[dname]);
       var btn=document.createElement('div');
       btn.className='day-btn'+(avail?'':' disabled')+(selDay&&selDay.toDateString()===d.toDateString()?' selected':'');
       btn.innerHTML='<div class="dname">'+dname+'</div><div class="dnum">'+d.getDate()+'</div><div style="font-size:.7rem;color:inherit;opacity:.75">'+MONTHS[d.getMonth()]+'</div>';
@@ -177,9 +189,11 @@ navKey: "jyotish"
     sl.textContent='Available times — '+selDay.toDateString();
     times.forEach(function(t){
       var s=document.createElement('div');
-      s.className='slot'+(t===selTime?' selected':'');
+      var st=ASBook.state(selDay,t);
+      s.className='slot'+(t===selTime?' selected':'')+(st!=='free'?' taken':'');
+      if(st==='taken') s.title='Already booked';
       s.textContent=t;
-      s.onclick=function(){
+      s.onclick=st!=='free'?null:function(){
         selTime=t; renderSlots();
         if(window.AS) AS.track('slot_selected',{label:'jyotish'});
         showConfirm();
@@ -197,8 +211,41 @@ navKey: "jyotish"
     var u=document.getElementById('upi-btn');
     u.href='upi://pay?pa='+encodeURIComponent(UPI_ID)+'&pn='+encodeURIComponent(UPI_NAME)+'&cu=INR';
     document.getElementById('bconfirm').className='booking-confirm show';
+    document.getElementById('hold-form').style.display='block';
+    document.getElementById('after-hold').style.display='none';
+    document.getElementById('hold-status').textContent='';
   }
+  function holdSlot(){
+    var st=document.getElementById('hold-status'), btn=document.getElementById('hold-btn');
+    var name=document.getElementById('h-name').value.trim(), phone=document.getElementById('h-phone').value.trim();
+    st.style.color='#C62828';
+    if(name.length<2){ st.textContent='Please enter your name.'; return; }
+    if(!/^\+?\d{10,13}$/.test(phone.replace(/[\s\-()]/g,''))){ st.textContent='Please enter a valid WhatsApp number.'; return; }
+    if(!document.getElementById('h-consent').checked){ st.textContent='Please tick the box so Srikanth may contact you.'; return; }
+    btn.disabled=true; btn.textContent='Holding…'; st.textContent='';
+    fetch('/.netlify/functions/reserve-slot',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({service:'jyotish_consultation',slot_start:ASBook.iso(selDay,selTime),name:name,phone:phone,consent:true,website:document.getElementById('h-website').value})})
+    .then(function(r){ return r.json().then(function(j){ return {ok:r.ok,status:r.status,j:j}; }); })
+    .then(function(x){
+      btn.disabled=false; btn.textContent='Hold this slot';
+      if(x.ok){
+        var txt=document.getElementById('confirm-text').textContent;
+        document.getElementById('confirm-text').textContent='Held for you: '+txt.replace(/^[^—]*— /,'');
+        document.getElementById('hold-form').style.display='none';
+        document.getElementById('after-hold').style.display='block';
+        var w=document.getElementById('wa-btn');
+        w.href='https://wa.me/919985133161?text='+encodeURIComponent('Namaste Srikanth, this is '+name+'. I have held '+txt.replace(/^[^—]*— /,'')+' for a Jyotish consultation. My birth details: ');
+        w.removeAttribute('data-wa-tagged');
+        if(window.AS) AS.track('slot_held',{label:'jyotish'});
+      } else {
+        st.textContent=x.j&&x.j.error?x.j.error:'Could not hold the slot. Please try again or message Srikanth on WhatsApp.';
+        if(x.status===409){ selTime=null; document.getElementById('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
+      }
+    }).catch(function(){ btn.disabled=false; btn.textContent='Hold this slot'; st.textContent='Could not reach the server. Please try again or message Srikanth on WhatsApp.'; });
+  }
+  document.getElementById('hold-btn').addEventListener('click',holdSlot);
   renderDays(); renderSlots();
+  ASBook.load().then(function(d){ if(d){ SLOTS=ASBook.slotsFromRules(d.rules); } renderDays(); renderSlots(); });
 })();
 </script>
       </div>

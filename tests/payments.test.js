@@ -1,6 +1,8 @@
 const assert = require('assert'), crypto = require('crypto'), https = require('https'), path = require('path'), { EventEmitter } = require('events');
 const fx = (f) => require(path.join(__dirname, '..', 'netlify', 'functions', f));
 const ev = (host, body, headers) => ({ httpMethod: 'POST', headers: { host, ...(headers || {}) }, body: typeof body === 'string' ? body : JSON.stringify(body || {}) });
+const { nextMondayNineIst, RULES } = require('./helpers');
+const SLOT = nextMondayNineIst();
 const TEST_HOST = 'staging--aquamarine-croquembouche-26e205.netlify.app';
 
 // ---- mocks
@@ -19,6 +21,9 @@ global.fetch = async (url, init) => {
     if (dbMode === 'empty') return { ok: true, status: 200, json: async () => [] };
     return { ok: true, status: 200, json: async () => [{ amount_inr: Number(dbMode.split(':')[1]) }] };
   }
+  if (url.includes('/availability_rules?')) return { ok: true, status: 200, json: async () => RULES };
+  if (url.includes('/slot_blocks?')) return { ok: true, status: 200, json: async () => [] };
+  if (url.includes('/bookings') && (init && init.method) === 'POST') return { ok: true, status: 201, json: async () => [{ id: 'bk_1' }] };
   if (url.includes('select=amount_inr,paid_amount_inr')) return { ok: true, status: 200, json: async () => [{ amount_inr: 1500, paid_amount_inr: 1 }] };
   return { ok: true, status: 201, text: async () => '', json: async () => [] };
 };
@@ -29,15 +34,15 @@ process.env.RAZORPAY_WEBHOOK_SECRET = 'whsec';
 (async () => {
   const co = fx('create-order.js'), wh = fx('razorpay-webhook.js');
   // 1 tampered amount is ignored; server price (1500) is used
-  let r = await co.handler(ev(TEST_HOST, { service: 'bach_consultation', amount: 100, slot: 'Tue 10 AM' }));
+  let r = await co.handler(ev(TEST_HOST, { service: 'bach_consultation', amount: 100, slot: 'Tue 10 AM', slot_start: SLOT }));
   assert.equal(r.statusCode, 200); assert.equal(razorpayBody.amount, 150000); assert.equal(razorpayBody.notes.slot, 'Tue 10 AM');
   assert.equal(JSON.parse(r.body).price_inr, 1500);
   const logged = dbCalls.find(c => c.url.includes('/payments?on_conflict'));
   assert.ok(logged && JSON.parse(logged.body).amount_inr === 1500); console.log('tampered amount 100 ignored -> charged', razorpayBody.amount / 100, '(from database); order logged');
   // 2 service removed/inactive -> refuse
-  dbMode = 'empty'; r = await co.handler(ev(TEST_HOST, { service: 'bach_consultation' })); assert.equal(r.statusCode, 404); console.log('inactive service ->', r.statusCode);
+  dbMode = 'empty'; r = await co.handler(ev(TEST_HOST, { service: 'bach_consultation', slot_start: SLOT })); assert.equal(r.statusCode, 404); console.log('inactive service ->', r.statusCode);
   // 3 database down -> default price, booking still works
-  dbMode = 'down'; r = await co.handler(ev(TEST_HOST, { service: 'bach_consultation', amount: 5 })); assert.equal(r.statusCode, 200); assert.equal(razorpayBody.amount, 100000); console.log('database down -> default price', razorpayBody.amount / 100);
+  dbMode = 'down'; r = await co.handler(ev(TEST_HOST, { service: 'bach_consultation', amount: 5, slot_start: SLOT })); assert.equal(r.statusCode, 200); assert.equal(razorpayBody.amount, 100000); console.log('database down -> default price', razorpayBody.amount / 100);
   // 4 unknown service while db down -> 400
   r = await co.handler(ev(TEST_HOST, { service: 'free_gold' })); assert.equal(r.statusCode, 400); console.log('unknown service ->', r.statusCode);
 

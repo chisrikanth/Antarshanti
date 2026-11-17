@@ -1,90 +1,50 @@
-# Notes for Srikanth: things only you can do
+# Srikanth's to-do list (kept up to date by Claude)
 
-Living list. Newest items are added at the top of each section; tick items off by changing `[ ]` to `[x]`.
-Last updated: 17 Nov 2026.
+Tick items by changing `[ ]` to `[x]`. Claude re-reads this at the start of each session and reminds you of the next few open items.
+**Last updated: 17 Nov 2026.**
 
-## Check-in wording to approve
-- The helpline shown to someone in distress is now **only Tele-MANAS (14416)** with its official website `telemanas.mohfw.gov.in` (found via a secondary source; please click it once to confirm), plus "call 112 if in immediate danger". KIRAN and Vandrevala were removed at your request.
-- "Talk to Srikanth on WhatsApp" is at the top of every check-in screen and again at the bottom of the results.
-- Results say: keep gently watching how you feel; see a qualified doctor or counsellor if it stays heavy; Sudarshan Kriya is mentioned only as something many people enjoy to unwind. No program is pitched to someone whose answers raised the safety flag.
+## A. Blocking: the site cannot take real bookings until these are done
+- [ ] **A1. Razorpay TEST keys.** Razorpay dashboard, Test Mode, Account & Settings, API Keys, Generate Test Key.
+- [ ] **A2. Netlify variables, one value per deploy context.** Table in `docs/RELEASE-PROCESS.md`. Needs: `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` (service_role key of each project, from Supabase Project Settings, API Keys), `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`. Production gets live values; previews and branch deploys get test values.
+- [ ] **A3. Razorpay webhook** (once in Live mode for production, once in Test mode for staging). URLs and events: `docs/PAYMENTS-AND-PRICES.md`.
+- [ ] **A4. Test the full payment flow on staging** with a Razorpay test card: pick a slot, pay, then check Supabase tables `payments` (status `paid`) and `bookings` (status `booked`).
+- [ ] **A5. Test slot clashes on staging:** open the Bach page in two browsers, pick the same slot; the second one must be refused. Try the Jyotish "Hold this slot" too.
+- [ ] **A6. Staging review feedback.** You said you tested staging and shared suggestions, but I did not receive them. Please paste them again.
 
-## Do these first (only you can)
-- [ ] **Create Razorpay TEST keys** (Razorpay dashboard → switch to *Test Mode* → Account & Settings → API Keys → Generate Test Key). You get a Key ID `rzp_test_...` and a secret.
-- [ ] **Add 4 variables in Netlify, with a different value per deploy context** (Environment variables → Add a variable → *Different value for each deploy context*). The exact table is in `docs/RELEASE-PROCESS.md`:
-  - `SUPABASE_URL`: production `https://kntohzyxzoucymrmriva.supabase.co`; previews and branch deploys `https://rnofqxmfwqiogtlchkbp.supabase.co`.
-  - `SUPABASE_SERVICE_KEY`: the **service_role** key of each project (Supabase → project → Project Settings → API Keys). I cannot see these and they never go in the repo.
-  - `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`: live for Production, test for previews and branch deploys.
-  - `RAZORPAY_WEBHOOK_SECRET`: a long random text you choose; add the webhook in Razorpay (live and test mode) as described in `docs/PAYMENTS-AND-PRICES.md`.
-  A mistake here cannot move real money or write to the wrong database: the server refuses and shows an error.
-- [ ] **Open the Netlify preview** of this branch and click through every page on your phone, then tell me what to change.
-- [ ] **Send the Happiness registration link** whenever you have it (I will add the batch).
-- [ ] **Review the draft Privacy, Terms and Refund pages** (`docs/policy-decisions.md`); they stay hidden from Google until you approve.
+## B. Before going live (merge `staging` into `main`)
+- [ ] **B1. Review the draft Privacy, Terms and Refund pages** (`docs/policy-decisions.md`). They are hidden from Google and unlinked until you approve. Razorpay expects them. The booking form now stores name and WhatsApp number, so the Privacy page needs your OK on that.
+- [ ] **B2. Open `telemanas.mohfw.gov.in`** once to confirm it is the official Tele-MANAS site (shown in the check-in safety box).
+- [ ] **B3. Decide:** Jyotish confirmation window (site says "within 24 hours").
+- [ ] **B4. Turn on Netlify "Stop auto publishing"** and protect `main` on GitHub (see `docs/RELEASE-PROCESS.md`), so nothing reaches antarshanti.co.in without your click.
+- [ ] **B5. Look at `bookings` in Supabase** (view `upcoming_bookings`) as your daily booking list. There is no automatic notification yet (see D2).
 
-## Supabase project (created 17 Nov 2026)
-- Two projects, both Mumbai, both Free: `antarshanti-prod` (real data, antarshanti.co.in) and `antarshanti-test` (sample data, all test addresses). Process: `docs/DATABASE-CHANGES.md`.
-- Production: name `antarshanti-prod`, region Mumbai (ap-south-1, nearest to Hyderabad; Supabase has no Hyderabad region). Free plan.
-- Tables: `checkin_responses` (private, server only), `batches`, `testimonials`, `site_settings` (public read-only for live items). Security advisor: clean (the one INFO note is intentional).
-- Free projects pause after 7 days of no activity. A keep-alive job and a backup export are still to be added.
-- The website reads dates and testimonials from this project first, then falls back to `data/site.json`.
+## C. For ads and growth
+- [ ] **C1. Analytics IDs** at the top of `assets/site.js`: Meta Pixel, GA4, optionally Plausible. Nothing is tracked until you add them.
+- [ ] **C2. Happiness batch:** send me the registration link and dates when you have them (suggested: Thu 3 to Sun 6 Dec, Thu 24 to Sun 27 Dec, Thu 14 to Sun 17 Jan). Add to the `batches` table in Supabase (production) or `src/data/site.json`.
+- [ ] **C3. Preview every video** (Happiness 3, Bach 3, Jyotish 2), picked by title only. Delete a `data-yt` line to remove one.
+- [ ] **C4. Testimonials:** collect real ones with consent (method below), add to Supabase table `testimonials` (tick `consent_on_file` and `approved`).
+- [ ] **C5. Record a 45 to 60 second video of you per service,** ending with the check-in link.
+- [ ] **C6. Google Business Profile** for Hyderabad (online services); ask past clients for reviews.
+- [ ] **C7. Weekly WhatsApp broadcast** note and a QR code to `/checkin` on Happiness Program materials.
 
-## Next Happiness batch dates (suggestions, not yet on the site)
-Your last batches ran Thu to Sun evenings (1–4 Oct, 22–25 Oct), about three weeks apart. Same pattern would give:
-- Thu 3 – Sun 6 Dec 2026
-- Thu 24 – Sun 27 Dec 2026 (holiday week, people have time; or skip if you travel)
-- Thu 14 – Sun 17 Jan 2027
-Pick what suits you, get the Art of Living registration link for each, then add it to `data/site.json` (copy the `_batch_example`). It disappears by itself after its `end` date.
+## D. Decisions waiting for you / ideas
+- [ ] **D1. Google Calendar link-up** (proposal in the chat): choose a separate bookings calendar or not; create the Google service account. Not started until you say go.
+- [ ] **D2. Get notified of new bookings** (WhatsApp or email). Suggested after the calendar link-up, since calendar events notify your phone.
+- [ ] **D3. Check-in wording** was changed to bands (no 0 to 100 score). Please read the results screen once on staging and say if the tone is right.
+- [ ] **D4. Telugu and Hindi:** who will review the translations?
+- [ ] **D5. Bach headline** now says "Gentle support for the feelings words cannot reach". Happy with it?
 
-## Changing dates and links without touching code
-- Everything that changes (batches, registration links, announcement bar, WhatsApp number, testimonials) lives in `data/site.json`. Edit it on GitHub (open the file, pencil icon, commit); Netlify republishes in about a minute.
-- For zero deploys, apply `supabase/site_content.sql` and fill `AS_SUPABASE` in `assets/content.js`; then you edit rows in Supabase's Table Editor and the site updates on next load. Falls back to `data/site.json` if Supabase is unreachable.
+## E. Operating notes (no action unless something looks wrong)
+- Databases: `antarshanti-prod` (real data) and `antarshanti-test` (sample data), both Mumbai, Free plan. Process for changes: `docs/DATABASE-CHANGES.md`. Free projects pause after 7 days idle; a scheduled keep-alive handles this once on production.
+- Change a price: Supabase `services` table (no deploy). Change availability: `availability_rules` (weekly times) and `slot_blocks` (days off). Details: `docs/BOOKING.md`.
+- Before a large ad campaign: move **production only** to Supabase Pro (about USD 25/month) and export `checkin_responses`.
 
-## Before any ad money is spent
-- [ ] **Preview the site** on a real phone (see "How to preview" below).
-- [ ] **Confirm the Happiness batch** in `assets/batches.js`: Thu 22 – Sun 25 Oct 2026, evening, online (Zoom), registration `https://aolt.in/1061195`.
-  - The time shown is 6:00–8:30 PM IST, copied from the 1–4 Oct flyer. Confirm it for the 22–25 Oct batch.
-  - The link came from the 1–4 Oct flyer. Open it and confirm it registers people for the **22–25 Oct** batch, not the earlier one.
-  - Add seats and language if you want them shown.
-- [ ] **Add tracking IDs** at the top of `assets/site.js`: `metaPixelId`, `ga4Id`, optionally `plausibleDomain`. Nothing is tracked until you do.
-- [ ] **Run the Supabase setup**: `SUPABASE-SETUP.md`. It takes about 15 minutes.
-- [ ] **Watch every video** (Happiness 3, Bach 3, Jyotish 2). They were picked by title only. Delete a `data-yt` line to remove one.
-- [ ] Decide the Jyotish **confirmation window**. The site now says "within 24 hours" everywhere.
-- [ ] Replace the placeholder portrait crop if you have a better, high-resolution photo (`assets/srikanth.webp`).
+## How to collect testimonials (suggested)
+1. Two to three days after a session or batch, send: *"Namaste, I hope the session is still helping. If it did, would you share one or two lines in your own words? May I show it on my website with your first name and city? Totally fine to say no."*
+2. Ask one easy question: *"What was different for you afterwards?"*
+3. Keep the screenshot of the reply as proof of consent. Show first name, role and city only. Never edit the meaning.
+4. Do not ask anyone who is going through a hard time. Aim for 3 per service to start.
+5. Quotes from other sites (Art of Living, etc.) only with that site's permission, naming the source.
 
-## Testimonials (none collected yet)
-Nothing is shown to visitors until you add real ones. The three older Happiness testimonials were removed because they were not collected from named people.
-What the site does now: Happiness links to the Art of Living page. Bach, Jyotish and home stay hidden until filled.
-
-**Suggested way to collect them**
-1. After each session or batch, 2–3 days later, send a WhatsApp note: *"Namaste, I hope the session is still helping. If it did help, would you share one or two lines in your own words? May I show it on my website with your first name and city? Totally fine to say no."*
-2. Ask one easy question instead of "a testimonial": *"What was different for you after the session?"* People answer that more honestly.
-3. Keep the screenshot of the reply as proof of consent. Save it in a folder.
-4. Use first name, role and city only. Never use a full name or phone number.
-5. Never edit the meaning. Light typo fixes are fine. Never invent or merge quotes.
-6. For people in distress, do not ask for a testimonial while they are going through it.
-7. Good moments to ask: end of the 4-day Happiness batch (ask the group on the last day), 2 weeks after a Bach consultation, after a Jyotish "that was accurate" message.
-8. Add them to `assets/testimonials.js` (one entry each, the format is explained in the file). The right section appears automatically.
-9. Aim for 3 per service to start. Even 1–2 real ones beat none.
-
-**Using quotes from other sites.** Quotes on the Art of Living site belong to the participants and Art of Living. Show them only with permission, name the source, and do not present them as your own clients. I could not fetch the site, so no quotes were copied. If you get permission, paste the exact text and I will add it with the source line.
-
-## FeelBetter profile learnings (pending)
-- [ ] I cannot open your FeelBetter profile from my environment (the site is blocked for me). Paste its text here, or save the page as PDF into the repo, and I will carry over what works: bio wording, credentials, session description, FAQs, reviews (only your own, with their permission).
-- [ ] Bach booking runs on Razorpay only; no FeelBetter link remains on the site.
-
-## Content only you can supply
-- [ ] A real number of sessions or years, only if true (hero proof line).
-- [ ] A 45–60 second video of you for each service, ending with the check-in link. Better than third-party clips.
-- [ ] Google Business Profile for Hyderabad (online services), and ask past clients for reviews.
-- [ ] A weekly WhatsApp broadcast note (idea, next batch date, open slots).
-- [ ] A QR code to `/checkin` on Happiness Program materials.
-
-## After the first two weeks of ads
-- [ ] In Supabase, update `status` and `revenue_inr` on leads; read `campaign_scoreboard`.
-- [ ] Ask the Art of Living coordinator how many people registered through your link.
-- [ ] Keep only the campaigns that produce WhatsApp chats or registrations.
-
-## How to preview
-1. **Netlify branch deploy** (best, because payments and the check-in save work): Netlify → your site → Site configuration → Build & deploy → Branches and deploy previews → set **Branch deploys** to include `claude/stoic-cori-xrotsf`. Netlify builds it; open **Deploys** to find its address (it looks like `claude-stoic-cori-xrotsf--yoursite.netlify.app`). Do not go live yet.
-2. **Pull request preview:** if you ask me to open a pull request, Netlify can build a preview from it automatically.
-3. **On your computer:** clone the repo, check out the branch, run `npx http-server -p 8080`, open `http://localhost:8080`. Pages and the check-in questions work; saving to Supabase and payments need a Netlify deploy.
-4. Test on a real phone for the sticky bar and the "Open my UPI app" button.
+## Done so far
+Site rebuilt on Eleventy; Golden Hour theme; check-in with gentler band results and a single Tele-MANAS helpline plus always-on WhatsApp option; Bach/Jyotish wording made non-promissory; two Supabase projects with row-level security; server-side pricing from the database; Razorpay webhook; slot reservation with a database-level no-double-booking guarantee; staging branch and safety guards between test and live.

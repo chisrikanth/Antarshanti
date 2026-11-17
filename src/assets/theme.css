@@ -145,3 +145,15 @@ header[style*="min-height"] > .wrap[style*="max-width"] > *{max-width:600px}
 .how-it-works{margin:14px 0 0;font-size:.84rem;color:var(--dim)}
 .how-it-works summary{cursor:pointer;font-weight:600;color:#A04F14}
 .how-it-works p{margin-top:8px;line-height:1.7}
+
+/* Booking: taken slots + hold form */
+.slot.taken{opacity:.42;text-decoration:line-through;cursor:not-allowed;background:var(--paper-2)}
+.slot.taken:hover{transform:none;border-color:var(--line)}
+.hold-form{margin-bottom:10px}
+.hold-form .field{margin-bottom:10px}
+.hold-form .field label{display:block;font-size:.8rem;font-weight:700;color:var(--dim);margin-bottom:4px}
+.hold-form .field input{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:.94rem;background:#fff}
+.hold-form .field input:focus{outline:none;border-color:var(--sun-deep)}
+.consent-line{display:flex;gap:9px;align-items:flex-start;font-size:.84rem;color:var(--dim);margin:2px 0 12px}
+.consent-line input{margin-top:3px;accent-color:var(--sun-deep)}
+.hold-status{font-size:.86rem;margin-top:8px;min-height:1.2em}

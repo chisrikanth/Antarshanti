@@ -9,6 +9,7 @@
 const https = require('https');
 const { paymentKeyProblem } = require('./lib/env');
 const { config: dbConfig, rest, getPrice } = require('./lib/db');
+const { loadSchedule, checkSlot, reserve, release, HOLD_MINUTES } = require('./lib/booking');
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
@@ -51,6 +52,19 @@ exports.handler = async function (event) {
   const slot = payload.slot ? String(payload.slot).slice(0, 120) : '';
   const receipt = (payload.receipt || ('rcpt_' + Date.now())).toString().slice(0, 40);
 
+  // Hold the chosen time for a few minutes so nobody else can take it while this visitor pays.
+  // (If the database is unreachable we do not block the booking; the webhook will flag any clash.)
+  const cfg = dbConfig(event);
+  let bookingId = null;
+  if (cfg) {
+    const schedule = await loadSchedule(cfg);
+    const check = checkSlot(payload.slot_start, schedule);
+    if (!check.ok) return { statusCode: check.status, body: JSON.stringify({ error: check.error }) };
+    const held = await reserve(cfg, { service_key: service, slot_start: check.date.toISOString(), status: 'held', hold_expires_at: new Date(Date.now() + HOLD_MINUTES * 60000).toISOString() });
+    if (held.taken) return { statusCode: 409, body: JSON.stringify({ error: 'Sorry, that time was just taken. Please pick another.' }) };
+    if (held.error) console.error(held.error); else bookingId = held.id;
+  }
+
   const orderData = JSON.stringify({ amount: amount, currency: currency, receipt: receipt, notes: { service: service, slot: slot } });
   const auth = Buffer.from(keyId + ':' + keySecret).toString('base64');
 
@@ -91,9 +105,9 @@ exports.handler = async function (event) {
     });
 
     // Record the expected amount so the webhook can check what was actually paid (best effort).
-    const cfg = dbConfig(event);
     if (cfg) {
       try {
+        if (bookingId) await rest(cfg, `bookings?id=eq.${encodeURIComponent(bookingId)}`, { method: 'PATCH', body: JSON.stringify({ razorpay_order_id: order.id }) });
         await rest(cfg, 'payments?on_conflict=razorpay_order_id', {
           method: 'POST',
           headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
@@ -113,6 +127,7 @@ exports.handler = async function (event) {
       })
     };
   } catch (err) {
+    if (cfg && bookingId) await release(cfg, bookingId);   // payment could not start: free the slot again
     return { statusCode: 502, body: JSON.stringify({ error: err.message }) };
   }
 };

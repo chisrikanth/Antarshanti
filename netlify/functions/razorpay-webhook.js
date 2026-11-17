@@ -50,6 +50,12 @@ exports.handler = async function (event) {
         method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: JSON.stringify(row)
       });
       if (!r.ok) { console.error('webhook save failed', r.status, await r.text()); return { statusCode: 500, body: 'save failed' }; } // Razorpay retries
+      // Confirm the held slot. If the hold had expired and someone else took the time, flag it for a human.
+      const bk = await rest(cfg, `bookings?razorpay_order_id=eq.${encodeURIComponent(orderId)}&status=in.(held,expired)`, { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: JSON.stringify({ status: 'booked', hold_expires_at: null }) });
+      if (bk.status === 409) {
+        await rest(cfg, `bookings?razorpay_order_id=eq.${encodeURIComponent(orderId)}&status=in.(held,expired)`, { method: 'PATCH', body: JSON.stringify({ status: 'conflict', notes: 'Paid after the hold expired and the time was taken. Refund or reschedule.' }) });
+        console.error('SLOT CONFLICT AFTER PAYMENT: refund or reschedule', orderId);
+      } else if (!bk.ok) console.error('booking confirm failed', bk.status);
       // Flag if the captured amount differs from what the server expected.
       const chk = await rest(cfg, `payments?select=amount_inr,paid_amount_inr&razorpay_order_id=eq.${encodeURIComponent(orderId)}&limit=1`);
       if (chk.ok) { const [p] = await chk.json(); if (p && p.amount_inr && p.paid_amount_inr && p.amount_inr !== p.paid_amount_inr) console.error('AMOUNT MISMATCH', orderId, p); }
