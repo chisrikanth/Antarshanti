@@ -1,7 +1,7 @@
 # Telugu and Hindi: status and how to get them reviewed
 
 ## Where each page's notes are (start here)
-**Newest first: Part 5 (17 Nov, later in the day) supersedes anything in Parts 1 to 4 that it contradicts. Open items for you are in `TODO-SRIKANTH.md` (D4); AI-side follow-ups are in `docs/AI-ACTIONS.md`.**
+**Newest first: Part 6 (18 Nov, questions) and Part 5 (17 Nov, later in the day) supersede anything in Parts 1 to 4 that it contradicts. Open items for you are in `TODO-SRIKANTH.md` (D4); AI-side follow-ups are in `docs/AI-ACTIONS.md`.**
 
 Every page has its own list of doubts, written by the translator at the time. Each row says: the key in the language file | what was used | why unsure | alternative. Go page by page.
 
@@ -17,6 +17,7 @@ Every page has its own list of doubts, written by the translator at the time. Ea
 | Terms of Use | Part 4 |
 | Refund Policy | Part 4 |
 | Check-in plain-words changes, all pages | Part 3 ("Plain-words pass") |
+| **All questions (check-in 25 items, FAQs, prompts) rewritten to sound natural** | **Part 6** |
 | **Second read-through (all pages): natural headlines, everyday words, questions for you** | **Part 5**, and the line-by-line before/after list in `docs/TRANSLATION-CHANGES-LOG.md` |
 
 **How to give feedback:** send "page, item number or key, your replacement". Or edit `src/_data/i18n/te.json` / `hi.json` yourself (keys are named in every row). Nothing goes live until the flags in `src/_data/i18n/review.json` are set to true.
@@ -716,6 +717,8 @@ key | now says | other options | why
 9. **Reflexive verbs.** When you do something for yourself, Telugu uses రిజిస్టర్ / బుక్ **చేసుకోండి**, not **చేయండి**. The WhatsApp messages already did this. The buttons did not.
 
 ## Telugu: questions for you (context-dependent choices)
+**Settled on 18 Nov: the owner said the existing headings are fine and "नर्म" is fine, so the heading questions below (1 to 3, 10) need no action. Items 4 to 9 stay open for the native reviewers.**
+
 1. **Jyotish hero.** I propose "మీ జాతకం, / మీ జీవితానికి అద్దం." (your chart, a mirror to your life). It matches the site's message that Jyotish is for reflection, not prediction. The other option, "గ్రహాల గమనంలో, / మీ జీవిత గమనం.", has more rhythm but sounds more like fate. Which do you prefer?
 2. **Happiness hero.** I propose "ఒక్కో శ్వాసతో, / మనసు మరింత ప్రశాంతం." The more poetic option is "శ్వాస మీద ధ్యాస, / మనసుకు ప్రశాంతత." (it rhymes, but drops "calmer"). Whichever you choose should also go into topbar.text and cta.text.
 3. **Emotional Wellness eyebrow.** Which do you prefer: "మనసుకు ఊరట" (comfort for the mind), "మనసుకు హాయి", or the current "మనసు ఆరోగ్యం"? The current one is grammatically loose and sounds clinical.
@@ -848,3 +851,182 @@ The patch file `hi_natural.json` sits next to this note. It has 89 changes: 71 n
 5. **Address form in running text.** Booking errors and Privacy say "श्रीकांत जी", while check-in, Bach and Jyotish running text say plain "श्रीकांत" (with वे). The address decision is final, so I did not touch this. Just confirm the mix is intended: "जी" in messages and legal text, plain name in page copy.
 6. **Headlines with alternatives.** These 9 are in the patch: home.hero.title, home.kind.eyebrow, happiness.whatIs.title, happiness.learn.title, jyotish.whatIs.title, bach.hero.titleA, bach.whatIs.title, bach.who.title, bach.learn.title. The Jyotish hero ("अपनी ज़िंदगी को पढ़िए / सितारों के ज़रिए") and the Happiness hero ("शांत मन, एक-एक साँस से") were kept as they are.
 7. **Still open from earlier lists (not decided here):** "समुदाय और संगत" vs "सत्संग"; "दान के आधार पर" vs "योगदान"; "अख़बार वाले" in the Jyotish FAQ; "हीलिंग"; "लॉन्ग-SKY"; Refund's extra words "या खराब हो जाए".
+
+
+---
+
+# Part 6: all questions rewritten to sound natural (18 Nov 2026)
+
+You said the questions read like literal translations, especially in Telugu (examples: "మనసు ఎలా ఉంది?" and "మాట్లాడి చెప్పుకోవాలనుకుంటున్నారా?"). All of them were reviewed and rewritten as a Hyderabad speaker would actually ask them. Line-by-line before/after with two alternatives each: `docs/TRANSLATION-CHANGES-LOG.md` (last two sections). Staging: `/te/checkin`, `/hi/checkin`, and the FAQ on each page.
+
+**The main idea (both languages):** the old card showed a full closed question and, under it, a bare report-like statement, which is what read as a translation. Now the stem starts the sentence and each of the 25 items finishes it, so the pair reads like one spoken question. In Telugu: "గత రెండు వారాల్లో, ఎంత తరచుగా…" then "దిగులుగా, ఖాళీగా, ఏ ఆశా లేనట్టు అనిపించింది?". In Hindi: "पिछले दो हफ़्तों में कितनी बार ऐसा हुआ कि…" then "आपको …". Two answer labels were changed to what people really answer (Telugu "అరుదుగా" → "ఎప్పుడో ఒకసారి", "తరచుగా" → "చాలాసార్లు"; Hindi "शायद ही कभी" → "बहुत कम"). Scoring is unchanged: every item keeps its meaning and its positive/negative direction. I tested all 25 questions on a 320 px and 390 px phone in Telugu and Hindi: nothing overflows and the card does not jump around.
+
+**Examples you flagged:** the check-in title "మనసు ఎలా ఉంది? 5 నిమిషాల ఉచిత చెక్-ఇన్" is now "మీ మనసు కోసం 5 నిమిషాల ఉచిత చెక్-ఇన్" (question-style alternative: "ఈ మధ్య మనసు బాగుంటోందా?"); "మాట్లాడి చెప్పుకోవాలనుకుంటున్నారా?" is now "మనసు విప్పి మాట్లాడాలని ఉందా?"; "ఎక్కడ మొదలుపెట్టాలో తెలియడం లేదా?" is now "…తోచడం లేదా?". Also fixed: the Telugu self-harm item used "బాధపెట్టుకోవడం", which usually means hurting your feelings; it now says clearly that the person may hurt themselves ("హాని చేసుకోవాలనే ఆలోచనలు"), keeping the item gentle but unmistakable.
+
+**Please have a Telugu-speaking counsellor, or someone you trust, read the safety item first** (Feeling low, item 5) in both languages. It is the one line where wording matters most.
+
+**Settled by you on 18 Nov (no action left):** the existing page headings and the Part 5 "questions for you" about heroes and eyebrows are fine as they are; the word "नर्म" stays.
+
+## Telugu notes, the 25 items and questions for you
+
+Patch file: `te_questions.json` in this folder. It has 43 changes, and each one has two alternatives. te.json itself was not edited. Every `old` value matches te.json exactly, and numbers, symbols and HTML are unchanged (checked by script).
+
+### Rule of thumb: how Telugu asks these questions
+
+1. **Ask the question a counsellor would ask out loud.** English questionnaires put a question on top ("How often has this been true?") and a statement under it ("Felt low"). Telugu does not split it like that. A Hyderabad counsellor says **"గత రెండు వారాల్లో, ఎంత తరచుగా దిగులుగా అనిపించింది?"**, which is one sentence. So the stem now **opens** the sentence ("గత రెండు వారాల్లో, ఎంత తరచుగా…") and each item **finishes** it, ending with "?". The old pair read as two separate lines: a full question and then a report about the reader ("…గమనించారు"). That is the "literal translation" feeling the owner noticed.
+2. **The answer has to be what a person would actually say back.** To "ఎంత తరచుగా…?" people answer *అస్సలు లేదు / ఎప్పుడో ఒకసారి / కొన్నిసార్లు / చాలాసార్లు / ఎప్పుడూ*. "అరుదుగా" and "తరచుగా" are written words. "తరచుగా" also just repeated the question.
+3. **Do not copy the "Do you want to…? / Ready to…?" shape.** "…చెప్పుకోవాలనుకుంటున్నారా?", "…చూపించాలనుకుంటున్నారా?" and "…సిద్ధమా?" are translated UI patterns. Telugu offers and invites with **"…ఉందా?"** (మాట్లాడాలని ఉందా?), **"…మంటారా?"** (చూడమంటారా?) and **"…దామా?"** (ముందడుగు వేద్దామా?).
+4. **Use the spoken idiom when one exists.** Examples: తోచడం లేదా (not sure), మనసు విప్పి మాట్లాడటం (talk it through), మనసు పెట్టి (with full attention), ఉన్నట్టే (as it is), ఆలోచనలు పరుగులు తీయడం (racing thoughts), గుండె దడ, ఒళ్లు బిగుసుకుపోవడం, కుదురు లేకపోవడం (on edge), లోపలే దాచుకోవడం (bottling up), తొణకకుండా (steady), బతకడం ఎందుకని. Hyderabad loanwords that people really use are fine: రియాక్ట్, అప్‌సెట్, ఫ్రెండ్.
+5. **Avoid written postpositions and connectors**, such as -పై, వంటి, ప్రతి, సవాళ్లు, ఆధారం, స్పందించకుండా, మతపరమైన. Use మీద, లాంటి, ఒక్కో, కష్టాలు, కారణం, రియాక్ట్ అవకుండా, మతానికి సంబంధించిన.
+6. **A bare "మనసు ఎలా ఉంది?" is not something you say to a stranger.** Telugu speakers ask "ఎలా ఉన్నారు?" or "ఈ మధ్య … బాగుంటోందా?". The page title and h1 are now a warm statement: "మీ మనసు కోసం 5 నిమిషాల ఉచిత చెక్-ఇన్".
+
+### How the visitor now reads one card
+
+> గత రెండు వారాల్లో, ఎంత తరచుగా…
+> **దిగులుగా, ఖాళీగా, ఏ ఆశా లేనట్టు అనిపించింది?**
+> ○ అస్సలు లేదు ○ ఎప్పుడో ఒకసారి ○ కొన్నిసార్లు ○ చాలాసార్లు ○ ఎప్పుడూ
+
+Each item was read aloud with the stem and all five labels. For example, "ఎంత తరచుగా… మీ గురించి మీకు తృప్తిగా అనిపించింది? — చాలాసార్లు." works as a natural question and answer for all 25 items.
+
+**Things to know before applying:**
+- The stem, the two labels and the 25 items should go in **together**. The new stem needs items that end in "?". If you prefer stem alternative 2 ("…ఇలా ఎన్నిసార్లు జరిగింది?"), the items would need to drop the "?". The scoring order is unchanged (0 to 4).
+- Five items are 1 to 4 code points longer than before, mostly because of the added "?". The longest new item has 75 code points, and the longest old one had 84, so everything still fits inside the 4-line card height the phone layout keeps for Telugu. Nineteen items are now shorter and one is the same length.
+- The h1 and SEO title are on the owner's example list, so they changed even though they are headings. No other hero title or eyebrow was touched.
+
+### The 25 items
+
+| # | Area (polarity) | English | New Telugu (reads after "గత రెండు వారాల్లో, ఎంత తరచుగా…") | Note |
+|---|---|---|---|---|
+| 1 | Mindfulness (+) | Noticed small sensory details around you — light, sound, smell | చుట్టూ వెలుతురు, శబ్దం, వాసన లాంటి చిన్న విషయాలు గమనించారు? | Dash-list folded into the sentence |
+| 2 | Mindfulness (+) | Paused before reacting instead of responding on autopilot | అలవాటుగా వెంటనే రియాక్ట్ అవకుండా, ఒక్క క్షణం ఆగారు? | "స్పందించకుండా" is too written |
+| 3 | Mindfulness (+) | Noticed your breath or body without trying to change it | శ్వాసను, శరీరాన్ని మార్చాలని చూడకుండా ఉన్నట్టే గమనించారు? | Old wording could be read as "change your body" |
+| 4 | Mindfulness (+) | Did ordinary tasks — eating, walking, showering — with full attention | తినడం, నడవడం, స్నానం లాంటి పనులు మనసు పెట్టి చేశారు? | Uses the idiom మనసు పెట్టి |
+| 5 | Mindfulness (+) | Observed your emotions arise without being swept away by them | మనసులో ఏదైనా భావం వస్తుంటే, దానిలో మునిగిపోకుండా గమనించారు? | "భావాలు పుడుతున్నప్పుడు" was a calque |
+| 6 | Self-esteem (+) | Felt satisfied with who you are | మీ గురించి మీకు తృప్తిగా అనిపించింది? | |
+| 7 | Self-esteem (+) | Felt confident in your own judgment and decisions | మీ ఆలోచన మీద, నిర్ణయాల మీద నమ్మకంగా అనిపించింది? | Small fix |
+| 8 | Self-esteem (+) | Felt you handle challenges about as well as most people | కష్టాలను చాలామందిలాగే మీరూ ఎదుర్కోగలరనిపించింది? | "సవాళ్లు" is a poster word |
+| 9 | Self-esteem (+) | Felt worthy of respect and care, including your own | మీ దృష్టిలో కూడా మీరు గౌరవానికి, ఆప్యాయతకు తగినవారని అనిపించింది? | Medium confidence. Old version was 84 code points and stacked. "మీ దృష్టిలో కూడా" carries "including your own" |
+| 10 | Self-esteem (+) | Spoke to yourself with the same kindness you'd offer a friend | ఫ్రెండ్‌తో మాట్లాడేంత ఆప్యాయంగా, మీతో మీరు మాట్లాడుకున్నారు? | "ఫ్రెండ్" is gender-neutral |
+| 11 | Worry (−) | Felt nervous, worried or on edge | కంగారుగా, ఆందోళనగా, కుదురు లేనట్టు అనిపించింది? | Old version reused the "మనసు నిలకడ" area title |
+| 12 | Worry (−) | Found it hard to switch off racing thoughts | ఆలోచనలు పరుగులు తీస్తుంటే, ఆపుకోవడం కష్టమైంది? | Uses an existing idiom |
+| 13 | Worry (−) | Felt your heart race or body tense for no clear reason | కారణం తెలియకుండానే గుండె దడదడలాడింది, లేదా ఒళ్లు బిగుసుకుపోయింది? | Body words people actually use |
+| 14 | Worry (−) | Avoided a task or situation because it felt overwhelming | ఏదైనా పనో, పరిస్థితో మరీ భారమనిపించి తప్పించుకున్నారు? | |
+| 15 | Worry (−) | Expected something to go wrong, even without evidence | కారణం లేకపోయినా, ఏదో చెడు జరగబోతోందనిపించింది? | "ఆధారం" sounds legal |
+| 16 | Feeling low (−) | Lost interest in things you'd usually enjoy | మామూలుగా నచ్చేవాటిపై కూడా ఆసక్తి పోయింది? | |
+| 17 | Feeling low (−) | Felt low, flat or hopeless | దిగులుగా, ఖాళీగా, ఏ ఆశా లేనట్టు అనిపించింది? | Was already close |
+| 18 | Feeling low (−) | Had noticeably low energy or motivation | శక్తి, ఉత్సాహం బాగా తగ్గినట్టు అనిపించింది? | Was already close |
+| 19 | Feeling low (−) | Struggled with sleep — too little or too much | నిద్ర సరిగా పట్టలేదు, లేదా మరీ ఎక్కువ నిద్రపోయారు? | "నిద్రలో ఇబ్బంది" meant trouble *during* sleep |
+| 20 | Feeling low (−) **SAFETY** | Had thoughts that life isn't worth living, or of hurting yourself | బతకడం ఎందుకని అనిపించింది, లేదా మీకు మీరే హాని చేసుకోవాలనే ఆలోచనలు వచ్చాయి? | See question 1 below |
+| 21 | Emotional balance (+) | Managed to calm yourself down once upset | అప్‌సెట్ అయ్యాక, మీ మనసును మీరే శాంతపరచుకున్నారు? | "కలత చెందిన" is too written |
+| 22 | Emotional balance (+) | Understood what triggered a strong emotion, even after the fact | మనసు బాగా కదిలినప్పుడు, ఎందుకలా అయిందో తర్వాతైనా అర్థమైంది? | Medium confidence. "బలమైన భావం" was a calque |
+| 23 | Emotional balance (+) | Let a difficult feeling pass without acting on it impulsively | మనసుకు కష్టంగా ఉన్నప్పుడు, తొందరపడకుండా అది తగ్గేవరకు ఆగారు? | |
+| 24 | Emotional balance (+) | Expressed what you felt in words rather than bottling it up | మనసులో ఉన్నది లోపలే దాచుకోకుండా, మాటల్లో చెప్పారు? | |
+| 25 | Emotional balance (+) | Stayed steady in your responses even under emotional pressure | మనసు ఒత్తిడిలో ఉన్నా, తొణకకుండా స్పందించారు? | Uses the idiom తొణకకుండా |
+
+Labels: Never **అస్సలు లేదు** (kept) · Rarely **ఎప్పుడో ఒకసారి** (was అరుదుగా) · Sometimes **కొన్నిసార్లు** (kept) · Often **చాలాసార్లు** (was తరచుగా) · Always **ఎప్పుడూ** (kept).
+
+### Other questions and prompts changed (18)
+
+The stem, the 2 labels, the h1/SEO title, the talk strip, "how is this worked out", the save title, three "not sure where to begin" lines, the Happiness CTA (it still had the "సిద్ధమా?" pattern), 4 Happiness FAQs, 1 Jyotish FAQ and 1 Bach FAQ. Full reasons are in the JSON.
+
+**Reviewed and kept on purpose, because they already sound natural:**
+- "…అంటే ఏమిటి?" (×6)
+- jyotish.cta.title మీ జాతకం ఒకసారి చూద్దామా?
+- bach.cta.title మొదలుపెడదామా?
+- home.cta.title (settled in Part 5)
+- jyotish.faq 0, 1 and 3
+- bach.faq 0, 1 and 2
+- the "మీకు ఏ బాచ్ ఫ్లవర్ రెమెడీ సరిపోతుంది?" video titles
+- "మొత్తం 38 రెమెడీలను కలిపి తీసుకోవచ్చా?"
+- happiness.register.btnWa "సందేహాలా?"
+- checkin.js.next.steadyLine
+- bach.who.title
+
+### Questions for the owner
+
+1. **Safety item (#20).** I used "బతకడం ఎందుకని అనిపించింది" (felt "why live?"). This is how people actually say it, and it is neither dramatic nor softened. "మీకు మీరే హాని చేసుకోవాలనే ఆలోచనలు" is the standard, unmistakable self-harm wording. The old "బాధపెట్టుకోవడం" usually means hurting your feelings, which weakens a safety question. The other option is "బతికి లాభం లేదని అనిపించింది", which is a little closer to "not worth living" but harsher. Which one sounds right to you? Since the crisis box depends on this item, please also have it read by a Telugu-speaking counsellor or a Tele-MANAS-style reference if you can.
+2. **Loanwords.** Should I keep "రియాక్ట్" (#2), "అప్‌సెట్" (#21) and "ఫ్రెండ్" (#10)? They are how Hyderabad speaks. If you would rather have pure Telugu, the alternatives in the JSON have స్పందించకుండా / కలత చెందాక / స్నేహితుడు.
+3. **h1 and page title.** These are now statements ("మీ మనసు కోసం 5 నిమిషాల ఉచిత చెక్-ఇన్"). If you would like to keep a question there, the natural one is "ఈ మధ్య మనసు బాగుంటోందా?" ("has your mind been alright lately?"). Which do you prefer?
+4. **"ఇది ఎవరి కోసం?"** (bach.who.eyebrow) was left as it is, because it is common in Telugu ads. A more spoken option is "ఎవరికి ఉపయోగపడవచ్చు?". Should I change it?
+5. **home.band.text** still lists "మనసు ఎలా ఉంది, ఎంత నిలకడగా ఉంది" inside a sentence. It is not a question to the visitor, so I left it. If the open "మూడ్" decision (Part 5, question 7) goes ahead, it could become "ఒత్తిడి, మూడ్, మనసు నిలకడ గురించి…".
+
+
+## Hindi notes, the 25 items and questions for you
+
+Patch: `hi_questions.json` (same folder). 39 changes (22 high, 17 medium): stem 1, answer labels 1, check-in statements 25, other questions/prompts 12. hi.json itself is not edited.
+
+### Rule of thumb used
+
+1. **Read it aloud as one question.** Stem + statement + answer must sound like one person asking another. The old stem ("…ऐसा कितनी बार हुआ?") was a closed question followed by a subject-less fragment ("खुद से संतुष्टि महसूस हुई"), so it read like a form. The new stem ends in **"कि…"** ("पिछले दो हफ़्तों में कितनी बार ऐसा हुआ कि…"), which is how Hindi speakers actually ask "how often did…", and every statement is now a full clause with its subject (आपने / आपको / आपका / मन में) that completes it. Each statement still reads as a full sentence on its own.
+2. **Say the idea, not the English shape.** Calques removed: "racing thoughts" -> "ख़याल रुकने का नाम ही नहीं ले रहे थे"; "lost interest" -> "मन नहीं लगा"; "expressed in words" -> "मन की बात कहकर बताई"; "no clear reason" -> "बिना किसी ख़ास वजह के"; "even after the fact" -> "चाहे बाद में ही सही"; "Ready to…?" -> "…चाहेंगे?"; "read your chart" -> "कुंडली दिखाना".
+3. **Everyday words over formal ones:** प्रतिक्रिया, स्थिति, ऊर्जा, संतुष्टि, आदर/देखभाल -> झट से कुछ कहना-करना, बात, एनर्जी, तसल्ली, इज़्ज़त/परवाह.
+4. **Gender-neutral by grammar.** Hindi verbs carry gender, so every statement uses ने / को / का constructions (आपने देखा, आपको लगा, आपका मन रहा), which read the same for a man or a woman. Two old lines ended in masculine "लेते हैं / करते"; both fixed.
+5. **Polarity and meaning unchanged.** Positive areas still describe the good thing happening; Worry and Feeling low still describe the difficulty. Nothing is softened into "a little" or hardened into "never".
+6. **Length.** Statements stay within about ±10 characters of the current Hindi (the safety item is 85 vs 80; one line got shorter).
+
+### Stem and answer labels
+
+- Stem: **पिछले दो हफ़्तों में कितनी बार ऐसा हुआ कि…**
+- Labels: कभी नहीं · **बहुत कम** (was "शायद ही कभी", a textbook "rarely") · कभी-कभी · अक्सर · हमेशा
+
+Read aloud: *पिछले दो हफ़्तों में कितनी बार ऐसा हुआ कि… आपका ध्यान आसपास की छोटी-छोटी चीज़ों पर गया — रोशनी, आवाज़, खुशबू* -> कभी नहीं / बहुत कम / कभी-कभी / अक्सर / हमेशा.
+
+### The 25 statements
+
+| area | English | new Hindi | note |
+|---|---|---|---|
+| Mindfulness (+) 1 | Noticed small sensory details around you — light, sound, smell | आपका ध्यान आसपास की छोटी-छोटी चीज़ों पर गया — रोशनी, आवाज़, खुशबू | Adds the subject so it completes the stem; "बातों" (matters/talk) -> "चीज़ों" for sensory details. |
+| Mindfulness (+) 2 | Paused before reacting instead of responding on autopilot | आपने झट से कुछ कहने या करने से पहले एक पल रुककर सोचा | "बिना सोचे प्रतिक्रिया देने के बजाय" is a literal "instead of reacting on autopilot"; "प्रतिक्रिया" is bookish. "झट से" carries the autopilot idea. |
+| Mindfulness (+) 3 | Noticed your breath or body without trying to change it | आपने साँस या शरीर पर बस ध्यान दिया, उसे बदलने की कोशिश नहीं की | The stacked "बिना बदलने की कोशिश किए महसूस किया" is hard to read in one go; split into two plain clauses. |
+| Mindfulness (+) 4 | Did ordinary tasks — eating, walking, showering — with full attention | आपने खाना, चलना, नहाना जैसे रोज़ के काम पूरे ध्यान से किए | Only adds "आपने" so the line completes the stem; the rest was already natural. |
+| Mindfulness (+) 5 | Observed your emotions arise without being swept away by them | आपने भावनाओं को उठते देखा, उनमें बहे बिना | "भावनाओं में बहे बिना उन्हें उठते हुए देखा" follows English order; this leads with the subject and a plain verb, and stays gender-neutral. |
+| Self-esteem (+) 1 | Felt satisfied with who you are | आप जैसे हैं, उससे आपको तसल्ली महसूस हुई | "खुद से संतुष्टि महसूस हुई" drops "who you are" and sounds formal; "आप जैसे हैं" is how people say it. |
+| Self-esteem (+) 2 | Felt confident in your own judgment and decisions | आपको अपनी समझ और अपने फ़ैसलों पर भरोसा रहा | "भरोसा महसूस हुआ" (felt trust) is literal; "भरोसा रहा" is the idiom. Adds subject for the stem. |
+| Self-esteem (+) 3 | Felt you handle challenges about as well as most people | आपको लगा कि मुश्किलें सँभालने में आप ज़्यादातर लोगों से कम नहीं | Old line was long and ended in masculine "संभाल लेते हैं"; "…से कम नहीं" is the everyday way to say "about as well as most people" and is gender-neutral. |
+| Self-esteem (+) 4 | Felt worthy of respect and care, including your own | आपको लगा कि आप इज़्ज़त और परवाह के हक़दार हैं — दूसरों की भी, अपनी भी | "दूसरों से और खुद से भी आदर और देखभाल के हक़दार" is a dense noun chain; "इज़्ज़त/परवाह" are the spoken words and the tag "दूसरों की भी, अपनी भी" keeps "including your own". |
+| Self-esteem (+) 5 | Spoke to yourself with the same kindness you'd offer a friend | आपने खुद से भी उतने ही प्यार से बात की, जितने प्यार से किसी दोस्त से | Adds subject; drops the trailing masculine "करते" (the verb is understood), so it reads the same for everyone. |
+| Worry (−) 1 | Felt nervous, worried or on edge | आपको घबराहट, चिंता या बेचैनी महसूस हुई | Only adds "आपको" so it completes the stem; wording was already natural. |
+| Worry (−) 2 | Found it hard to switch off racing thoughts | दिमाग़ में ख़याल रुकने का नाम ही नहीं ले रहे थे | "दौड़ते विचारों को शांत करना" is a literal "switch off racing thoughts"; "रुकने का नाम नहीं ले रहे थे" is the everyday idiom for exactly that. |
+| Worry (−) 3 | Felt your heart race or body tense for no clear reason | बिना किसी ख़ास वजह के आपका दिल तेज़ धड़का या शरीर में तनाव रहा | "साफ़ वजह" is a literal "clear reason"; "बिना किसी ख़ास वजह के" is the idiom. Adds subject. |
+| Worry (−) 4 | Avoided a task or situation because it felt overwhelming | कोई काम या बात बहुत भारी लगी, इसलिए आपने उसे टाल दिया | "स्थिति" is formal; "बात" covers a situation in speech. Adds "आपने". |
+| Worry (−) 5 | Expected something to go wrong, even without evidence | कोई वजह न होते हुए भी आपको लगा कि कुछ गड़बड़ होने वाली है | "भले ही ऐसा लगने की कोई वजह न हो" is a long literal of "even without evidence"; shorter and spoken. "गड़बड़" = "go wrong". |
+| Feeling low (−) 1 | Lost interest in things you'd usually enjoy | जिन चीज़ों में आमतौर पर मज़ा आता है, उनमें आपका मन नहीं लगा | "दिलचस्पी कम हो गई" is a direct "lost interest"; "मन नहीं लगा" is how people say it. |
+| Feeling low (−) 2 | Felt low, flat or hopeless | आपका मन उदास, बुझा-बुझा या निराश रहा | "…लगा" (seemed) -> "रहा" (stayed): you are asked how you felt, not how the mood seemed. Adds subject. |
+| Feeling low (−) 3 | Had noticeably low energy or motivation | आपकी एनर्जी या कुछ करने का मन काफ़ी कम रहा | "ऊर्जा" is bookish; "एनर्जी" is what people say. "कुछ भी" dropped (it hardened "low" towards "none"). |
+| Feeling low (−) 4 | Struggled with sleep — too little or too much | आपकी नींद गड़बड़ रही — या तो बहुत कम, या बहुत ज़्यादा | "नींद की परेशानी रही" is translation-like; "नींद गड़बड़ रही" is everyday, and "या तो… या…" keeps both sides. |
+| Feeling low (−) 5 | Had thoughts that life isn't worth living, or of hurting yourself | मन में ख़याल आया कि ज़िंदगी जीने लायक नहीं है, या खुद को नुकसान पहुँचाने का ख़याल आया | SAFETY ITEM: meaning unchanged ("life isn't worth living" and "hurting yourself" both explicit; "नुकसान पहुँचाना" kept to match the crisis box and footer). Only "विचार" -> spoken "ख़याल" and a subject so it completes the stem. Owner to confirm. |
+| Emotional balance (+) 1 | Managed to calm yourself down once upset | परेशान होने के बाद आपने अपने मन को शांत कर लिया | Adds subject; otherwise kept. |
+| Emotional balance (+) 2 | Understood what triggered a strong emotion, even after the fact | किसी तेज़ भावना की वजह आपको समझ आई — चाहे बाद में ही सही | "भले ही बाद में" is clipped; "चाहे बाद में ही सही" is the natural idiom for "even after the fact". |
+| Emotional balance (+) 3 | Let a difficult feeling pass without acting on it impulsively | आपने किसी भारी एहसास को जल्दबाज़ी में कुछ किए बिना गुज़र जाने दिया | "मुश्किल भावना" is a literal "difficult feeling", and the one-clause original stacks two participles; "भारी एहसास" is how people say it, and the subject now completes the stem. |
+| Emotional balance (+) 4 | Expressed what you felt in words rather than bottling it up | आपने मन की बात अंदर दबाने के बजाय कहकर बताई | "जो महसूस हुआ, उसे शब्दों में कहा" is a literal "expressed in words"; "मन की बात कहकर बताई" is everyday and shorter. |
+| Emotional balance (+) 5 | Stayed steady in your responses even under emotional pressure | भावनाओं के दबाव में भी आपने खुद को सँभाले रखा | "बर्ताव संतुलित रहा" is formal; "खुद को सँभाले रखा" is the spoken way to say "stayed steady". |
+
+### Other questions and prompts
+
+key | now | proposed | why
+---|---|---|---
+`checkin.talkStrip.prompt` | बात करके देखना चाहेंगे? | सवालों के बजाय सीधे बात करना चाहेंगे? | "बात करके देखना" means "try talking", and loses "prefer"; this says "rather talk than answer questions?".
+`checkin.how.summary` | यह कैसे निकाला जाता है? | ये नतीजे कैसे निकाले जाते हैं? | "यह कैसे निकाला जाता है?" has no noun ("how is this taken out?"); naming the results makes it clear.
+`checkin.save.title` | क्या चाहेंगे कि श्रीकांत आपके नतीजे देखें? | क्या आप चाहेंगे कि श्रीकांत आपके नतीजे देखें? | Restores "आप"; without it the line is clipped and can read as "would (he) like…".
+`checkin.js.next.steadyLine` | दिशा या समय के बारे में सोच रहे हैं?  | ज़िंदगी की दिशा या सही समय को लेकर मन में सवाल हैं?  | "दिशा या समय के बारे में सोच रहे हैं?" is a literal "Thinking about direction or timing?" (and masculine); "मन में सवाल हैं" is natural and neutral. Links untouched.
+`home.cta.title` | अपनी हीलिंग यात्रा शुरू करने के लिए तैयार हैं? | अपनी हीलिंग यात्रा शुरू करना चाहेंगे? | "…के लिए तैयार हैं?" copies "Ready to…?"; Hindi invites with "…चाहेंगे?". Same lesson as the Telugu "సిద్ధమా?".
+`happiness.cta.title` | अगला कदम उठाने के लिए तैयार हैं? | अगला कदम उठाना चाहेंगे? | Same "Ready to…?" calque; shorter and warmer.
+`jyotish.cta.title` | अपनी कुंडली पढ़वाने के लिए तैयार हैं? | अपनी कुंडली दिखाना चाहेंगे? | "कुंडली पढ़वाने के लिए तैयार हैं?" is a calque; in Hindi you "show your kundli" (कुंडली दिखाना) to a jyotishi.
+`bach.cta.title` | शुरू करने के लिए तैयार हैं? | तो चलिए, शुरू करें? | Same "Ready to begin?" calque; "चलिए, शुरू करें?" is the everyday invitation.
+`happiness.register.btnWa` | सवाल है? श्रीकांत को व्हाट्सऐप करें | कोई सवाल? श्रीकांत को व्हाट्सऐप करें | "सवाल है?" sounds abrupt; "कोई सवाल?" is the natural short form on a button.
+`jyotish.faq.0.q` | क्या मुझे अपने जन्म का सही समय पता होना ज़रूरी है? | क्या जन्म का सही समय पता होना ज़रूरी है? | "क्या मुझे अपने जन्म का…" is a word-for-word "Do I need to know my…"; Hindi FAQs drop the pronouns.
+`jyotish.faq.1.q` | क्या ज्योतिष भविष्य बताने के लिए है? | क्या ज्योतिष का मतलब भविष्य बताना है? | "भविष्य बताने के लिए है" is a literal "is about"; "का मतलब … है" is how people ask it.
+`bach.faq.3.q` | क्या इन्हें दवा के साथ लिया जा सकता है? | क्या इन्हें दवाइयों के साथ ले सकते हैं? | Passive "लिया जा सकता है" is formal; "ले सकते हैं" is spoken.
+
+### Checked and left as they are (already natural)
+`checkin.question.skip`, `checkin.talk.title` / `home.topbar.text` / `home.band.title` ("समझ नहीं आ रहा कहाँ से शुरू करें?"), `checkin.js.snap.none.label`, `checkin.consent.notices.3`, `happiness.hero.btnWhat`, all "… क्या है?" eyebrows, `bach.who.eyebrow`, `happiness.faq.0–3.q`, `jyotish.faq.3.q`, `bach.faq.0–2.q`, the video titles (`bach.whatIs.videos.0/2`, `checkin.js.next.bach.ytTitle`; they mirror video titles), WhatsApp pre-filled messages. `checkin.consent.h1` and `checkin.seoTitle` are headings, not questions, in Hindi, and the owner is happy with headings: not changed (see question 2). `jyotish.faq.2.q` ("अख़बार वाले…") is still an open item from Part 5: not touched.
+
+### Questions for the owner
+
+1. **Safety item (Feeling low 5).** Meaning is unchanged; only "विचार" became the spoken "ख़याल" and the sentence now completes the stem. I kept "नुकसान पहुँचाना" because the crisis box and footer use it. "चोट पहुँचाना" (hurt) is more direct and closer to "hurting yourself". Keep "नुकसान" for consistency, or switch all three places to "चोट"?
+2. **Check-in heading.** Telugu now opens with a question ("మనసు ఎలా ఉంది?"). Do you want the Hindi heading to match, for example "मन कैसा है? 5 मिनट का मुफ़्त चेक-इन", or keep "मन का मुफ़्त 5-मिनट चेक-इन" (unchanged in this patch)?
+3. **"हमेशा" for "Always".** With "कितनी बार ऐसा हुआ कि…", "हमेशा" works. Some people prefer "हर बार". I kept "हमेशा" to keep the English scale exact.
+4. **CTA questions.** I replaced the four "…के लिए तैयार हैं?" titles with "…चाहेंगे?" / "चलिए, शुरू करें?". "तैयार हैं?" is common in ads, so it is not wrong. If you like its energy, keep any of them.
+5. **"एनर्जी"** (Feeling low 3) instead of "ऊर्जा". It is how people speak; "जोश" is the Hindi option if you prefer no English word there.
+6. **Self-esteem 3: "ज़्यादातर लोगों से कम नहीं"** for "about as well as most people". It is the everyday idiom. The more literal option "…सँभालना आपको भी ज़्यादातर लोगों जितना ही आता है" is in the alternatives.
+
