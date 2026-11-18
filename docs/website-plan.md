@@ -160,7 +160,7 @@ Priority 2: missing trust and legal basics
 
 Priority 3: payment and booking consistency
 - Jyotish shows no fixed fee and a voluntary contribution via a PhonePe QR, yet the widget says "Book & pay securely" with UPI, cards and netbanking. Decide one model.
-- Bach Flower is Rs 1,000 per consultation with remedy bottles billed separately, booked through a FeelBetter widget.
+- Bach Flower is Rs 1,000 per consultation with remedy bottles billed separately, booked on this site and paid online through Razorpay (the old third-party widget has been removed).
 - Confirmation time is stated three ways on the Jyotish page: "instantly", "within 2 hours", "within 24 hrs".
 - "Open my UPI app" link on the Jyotish page points to "#". Fix or remove.
 - Birth details are collected over WhatsApp, not on the site. Fine, but tell people what is collected and why.
@@ -312,7 +312,7 @@ Rule: Claude proposes, Srikanth approves, then Claude acts.
 4. Razorpay: live or test mode? Are terms, privacy and refund pages published?
 5. Which free offer from section 11?
 6. Who reviews Telugu and Hindi text?
-7. Is the FeelBetter booking widget on the Bach Flower page your own, or a third-party service? Where do its bookings and payments go?
+7. (Resolved) Bach Flower bookings and payments are handled on this site through Razorpay; no third-party booking widget is used.
 8. Jyotish pricing: the page says no fixed fee (voluntary contribution via PhonePe QR) but the widget says "Book & pay securely". Which model do you want?
 
 ---

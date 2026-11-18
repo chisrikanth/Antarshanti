@@ -20,10 +20,10 @@ Not legal advice — have a qualified person review before publishing; then remo
 
 ### Refunds (proposed defaults, written into `refund.html` as firm numbers)
 - [ ] **Srikanth must confirm every number:** full refund if cancelled 24+ hours before the slot; one free reschedule; no refund after the session has taken place; refunds to the original payment method within 5-7 working days.
-- [ ] **Extra proposals added by the writer, not in the brief:** (a) if Srikanth cancels or cannot hold a session, the client may choose a full refund or a new slot at no charge; (b) damaged remedy bottle: ask for a photo and report soon after arrival, with no fixed deadline. Keep, change or delete.
+- [ ] **Extra proposals added by the writer, not in the brief:** (a) if Srikanth cancels or cannot hold a session, the client may choose a full refund or a new slot at no charge; (b) damaged remedy bottle: ask for a photo and report soon after arrival, with no fixed deadline. Keep or change.
 - [ ] **Razorpay expects a published refund policy** on the site. Publish this page (remove `noindex`, link it from the footer on all pages) before relying on Razorpay live payments.
-- [ ] **Jyotish.** Contribution is voluntary with no refund process; mistaken contributions can be raised by contacting us. Confirm.
-- [ ] **Happiness Program.** Payments go to Art of Living; their policy applies. Confirm that the wording is acceptable to Art of Living.
+- [x] **Jyotish.** Contribution is voluntary with no refund process; mistaken contributions can be raised by contacting us. Confirmed by Srikanth.
+- [x] **Happiness Program.** Payments go to Art of Living; their policy applies. Confirmed by Srikanth.
 
 ### Terms
 - [ ] **Governing law and courts.** Written as the laws of India, courts at Hyderabad. Confirm.
