@@ -11,7 +11,7 @@ exports.handler = async function () {
   const results = [];
   for (const p of PROJECTS) {
     try {
-      const r = await fetch(`${p.url}/rest/v1/site_settings?select=key&limit=1`, { headers: { apikey: p.key, Authorization: `Bearer ${p.key}` } });
+      const r = await fetch(`${p.url}/rest/v1/site_settings?select=key&limit=1`, { headers: { apikey: p.key } });
       results.push(`${p.name}:${r.status}`);
     } catch (e) { results.push(`${p.name}:error`); }
   }

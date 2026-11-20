@@ -29,7 +29,7 @@ var AS_READY = (function () {
     });
   }
   function fromSupabase() {
-    var h = { apikey: AS_SUPABASE.anonKey, Authorization: 'Bearer ' + AS_SUPABASE.anonKey };
+    var h = { apikey: AS_SUPABASE.anonKey };   // new-style publishable keys go in the apikey header only
     var base = AS_SUPABASE.url.replace(/\/$/, '') + '/rest/v1/';
     return Promise.all([
       get(base + 'batches?select=*&order=sort.asc,starts_on.asc', h),

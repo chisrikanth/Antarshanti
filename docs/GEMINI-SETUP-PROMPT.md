@@ -79,9 +79,9 @@ Netlify: <https://app.netlify.com> > site **aquamarine-croquembouche-26e205** > 
 
 **Step 1. Add `SUPABASE_SERVICE_KEY` (this is why the staging slots check says `{"live":false}`)**
 1. Supabase dashboard > project **antarshanti-test** (reference `rnofqxmfwqiogtlchkbp`) > **Project Settings** > **API Keys**.
-2. Open the tab **Legacy anon, service_role API keys**, find **service_role**, click **Reveal**, copy it (it starts with `eyJ`). The newer **secret key** (starts `sb_secret_`) also works. Never use the anon or publishable key.
+2. Supabase is retiring the legacy keys in early 2027, so use the **new secret key**: open the **Secret keys** tab (not the legacy tab), click **Create new secret key**, name it for example `netlify-staging`, and copy the value (it starts with `sb_secret_`). The website code supports it (it sends the secret key in the `apikey` header only, as Supabase requires). The old `service_role` key (starts `eyJ`) also still works until it is retired.
 3. In Netlify: **Add a variable** > **Add a single variable**. Key: `SUPABASE_SERVICE_KEY`. Choose **Different value for each deploy context**. Paste the TEST key for **Deploy Previews** and for **Branch deploys**. Tick **Contains secret values**. Scopes: leave Builds, Functions and Runtime ticked. **Create variable**.
-4. Production: leave empty for now, or (if Netlify insists on a value) paste the key of the **antarshanti-prod** project (reference `kntohzyxzoucymrmriva`). Never put the test key in Production.
+4. Production: leave empty for now, or (if Netlify insists on a value) paste a secret key of the **antarshanti-prod** project (reference `kntohzyxzoucymrmriva`). Never put the test key in Production.
 
 **Step 2. Razorpay TEST keys for staging**
 1. Razorpay Dashboard > switch the toggle at the top to **Test Mode** > Account and Settings > **API Keys** > **Generate Test Key**. Copy the **Key Id** (starts `rzp_test_`) and the **Key Secret** (shown only once).
