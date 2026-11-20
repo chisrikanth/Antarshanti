@@ -8,7 +8,7 @@
 |---|---|---|
 | 0 | **Shared context** (paste first, once) | Gives Gemini the whole picture so it can think for itself instead of following steps blindly |
 | 1 | **Decide the structure, then create the calendars** | Gemini works out: one Google account or two, one calendar or several |
-| 2 | **Add your availability** (the "Open" events) | This is how you control which times the website offers |
+| 2 | **Add your availability** (the "Open" events), plus **2b: extend weekday evenings to 9 PM** | This is how you control which times the website offers |
 | 3 | **Google Cloud: the robot account and the sharing** | The website needs a "service account" to read and write only these calendars |
 | 4 | **Netlify settings and the live test** | Puts the details into the website's settings and proves it works on the staging site |
 | 5 | **Razorpay (test mode) checks** | Needed before the Bach Flower payment flow can be tested |
@@ -46,6 +46,43 @@ These were already present before: `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`, 
 2. Paste **Prompt 1**, then 2, 3 and so on, one at a time, in the same chat, waiting for each to finish. Skip a prompt if the answer is "already done".
 3. At the end paste **Prompt 6**. Copy its report and paste it to Claude (in this project). Claude will fix anything that does not work.
 4. If Gemini asks you something that is not covered, answer it or tell it to decide.
+
+---
+
+## Where things stand (checked in Netlify on 21 Nov 2026, names and contexts only)
+
+| Item | State |
+|---|---|
+| Prompts 0 to 2 (context, calendars, Open events) | done by you with Gemini (cannot be verified from Claude's side: it has no access to your Google account) |
+| `GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CALENDAR_ID` | **present** in Production, Branch deploys and Deploy Previews, flagged secret. The values are hidden, so it cannot be seen whether the Production and TEST calendar IDs are different. Please confirm that they are |
+| `GOOGLE_CALENDAR_ENV` | production / test / test (correct) |
+| `SUPABASE_URL` | production / test / test (correct, now flagged secret; fine) |
+| `SUPABASE_SERVICE_KEY` | **missing** (without it the booking database is not used and saved check-ins and bookings fail) |
+| `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` | now secret-flagged and listed per context, but the staging contexts still end in the same characters as the **live** key: **test keys not yet added**, so staging payments are refused by the safety lock |
+| `RAZORPAY_WEBHOOK_SECRET` | **missing** |
+| Staging redeployed after the new variables? | pushing the 9 PM schedule change to the `staging` branch on 21 Nov triggers a fresh staging deploy |
+| Calendar actually shared with the robot (Prompt 3)? | **not yet checked**; the way to find out is the slots check below |
+
+**The one-minute test.** Open this in your browser (Claude cannot reach netlify.app from here):
+`https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots`
+- Text containing `"mode":"calendar"` and a `days` list = the calendar works.
+- `"mode":"weekly"` = something is missing or wrong; paste what you see to Claude, or use the troubleshooting list in Prompt 4.
+
+---
+
+## How the website reads the calendar: by title, or by Free/Busy?
+
+**Both matter, in two different ways.** This is exactly what the code does:
+
+| What the website looks at | What it decides |
+|---|---|
+| **The title**: starts with the word **Open** or **Available** (capital or small letters, nothing in front of it, so no emoji or symbol before it) | "This is a window when I take sessions." Slots are offered inside it. |
+| **Any other title** (Busy, Travel, Doctor, a booking, anything) | "I am not available." It blocks the slots it overlaps. |
+| **The Show-as setting: Busy or Free** | Whether the event counts at all. **Free** events are ignored completely, whatever their title. So an Open event must be **Busy** (the default in Google Calendar). A blocker must also be **Busy** to block. |
+| **All-day or timed** | A timed Open event is a window. An all-day Open event is ignored (it has no hours). Any other all-day event blocks the whole day (India time). |
+| **Cancelled / declined** | Ignored. |
+
+So: **title says what it is (Open window or a blocker); Busy/Free says whether it counts.** The colour, the description and the guests do not matter. The website itself writes booking events as Busy, titled "Jyotish: Name (requested)" or "Bach Flower consultation (paid)".
 
 ---
 
@@ -131,10 +168,10 @@ End by telling me what, if anything, you need from me.
 TASK 2: Put my availability into the calendars, then verify it.
 
 My weekly pattern (India time). I want to be open every day and not restrict visitors: on working days I only take the morning and evening windows I already use (I work a day job), and on weekends every hour from 9 AM to 9 PM is open. If a particular time does not suit me on a given day, I will add a Busy event in the calendar myself, so please do NOT try to be clever about my preferences. Each row becomes a repeating weekly event titled exactly "Open" in the calendar named Antarshanti Bookings:
-- Monday, Tuesday, Wednesday, Thursday: 09:00 to 12:00 and 17:00 to 20:00
-- Friday: 09:00 to 13:00 and 17:00 to 19:00
+- Monday, Tuesday, Wednesday, Thursday: 09:00 to 12:00 and 17:00 to 21:00
+- Friday: 09:00 to 13:00 and 17:00 to 21:00
 - Saturday and Sunday: 09:00 to 21:00 (one single long window each day)
-(These windows produce exactly these one-hour slots: Mon to Thu 9, 10, 11 AM and 5, 6, 7 PM; Fri 9, 10, 11 AM, 12 noon and 5, 6 PM; Sat and Sun every hour from 9 AM to 8 PM, the last slot ending at 9 PM. For Mon to Thu you can use one series per window and set it to repeat weekly on those four days in one go if Google allows; otherwise four separate series.)
+(These windows produce exactly these one-hour slots: Mon to Thu 9, 10, 11 AM and 5, 6, 7, 8 PM; Fri 9, 10, 11 AM, 12 noon and 5, 6, 7, 8 PM; Sat and Sun every hour from 9 AM to 8 PM, the last slot ending at 9 PM. For Mon to Thu you can use one series per window and set it to repeat weekly on those four days in one go if Google allows; otherwise four separate series.)
 
 Rules for every Open event you create:
 - Create it in the correct calendar, not in my main calendar. After creating, confirm which calendar it sits in.
@@ -152,6 +189,27 @@ When done:
 1. Read both calendars back for the next 14 days and list every event: calendar, title, start, end, repeat rule, Show as, time zone.
 2. Check each slot the website would offer in the next 7 days from those events (apply the one-hour rule) and show it as a short table for the production calendar. Compare with my slots above and tell me any difference. Also tell me if a very long window (9 AM to 9 PM on weekends) causes any problem or is better split in two (it should not; the website simply cuts it into one-hour slots).
 3. Tell me about anything that looks risky (for example a time zone mismatch, an event on the wrong calendar, a series that starts in the past).
+```
+
+---
+
+## Prompt 2b: extend the weekday evenings to 9 PM (use this if Prompt 2 was already run with the older times)
+
+```text
+FOLLOW-UP TO TASK 2: I have decided to open the weekday evenings until 9 PM. The calendar named Antarshanti Bookings already has repeating Open events from Task 2. Please CHANGE those existing events instead of creating duplicates:
+- Monday to Thursday evening series: change from 17:00-20:00 to 17:00-21:00.
+- Friday evening series: change from 17:00-19:00 to 17:00-21:00.
+- Leave the morning series (Mon to Thu 09:00-12:00, Friday 09:00-13:00) and the weekend series (Saturday and Sunday 09:00-21:00) as they are.
+When you edit a repeating event, apply the change to ALL events in the series, not only this one.
+Do not touch the Antarshanti TEST calendar and do not touch my main calendar.
+
+Then read the calendar back for the next 14 days and show me every event in a table: calendar, title, start, end, repeat rule, Show as (Busy or Free), time zone. Check these rules and tell me about every violation, then fix the violations in Antarshanti Bookings:
+1. The title of each availability event starts with the word Open (no emoji or symbol in front of it).
+2. Show as is Busy (not Free) on every Open event.
+3. They are timed events in the India time zone, not all-day.
+4. No two Open events overlap each other and there are no duplicates.
+5. No other event in the calendar has a title starting with Open or Available.
+Finally list the slots the website would offer next Monday, next Friday and next Saturday (one-hour slots from the start of each Open window).
 ```
 
 ---
@@ -254,7 +312,7 @@ TASK 6: Final audit. Assume nothing: check everything again from scratch and rep
 
 Please verify, and give me a table with Item | Expected | What I actually see | OK / Problem:
 1. Google accounts and calendars: which account owns Antarshanti Bookings and Antarshanti TEST; both private; time zone India; no other calendar is shared with the service account; my main calendar is not shared with it.
-2. Antarshanti Bookings contains repeating Open events matching: Mon to Thu 09-12 and 17-20, Fri 09-13 and 17-19, Sat and Sun 09-21; every one is Busy (not Free), timed, India time zone, in the right calendar. No other event in either calendar starts with Open or Available.
+2. Antarshanti Bookings contains repeating Open events matching: Mon to Fri 09-12 (Fri 09-13) and 17-21, Sat and Sun 09-21; every one is Busy (not Free), timed, India time zone, in the right calendar. No other event in either calendar starts with Open or Available.
 3. Antarshanti TEST contains only test events (the single Open event; clean up leftover test bookings).
 4. Google Cloud: project antarshanti-site, Calendar API enabled, one service account antarshanti-booking with no project roles, exactly one active key (delete any extra or unused keys), no key file left in Drive or Gemini history.
 5. Netlify variables (names and contexts only, never values): GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY (secret), GOOGLE_CALENDAR_ID (different for Production and for Branch deploys / Deploy Previews), GOOGLE_CALENDAR_ENV (production / test / test), SUPABASE_URL (production DB / test DB / test DB), SUPABASE_SERVICE_KEY (two different values), RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET (live for Production, test for the other two contexts), RAZORPAY_WEBHOOK_SECRET (different per mode). Say which are secret-flagged. Make sure no calendar or test value is set for Production by mistake, and no live Razorpay key applies to staging.
@@ -281,7 +339,7 @@ Then write a REPORT FOR MY CODING ASSISTANT that I can copy and paste to it. Pla
 | Lead time / horizon | not offered if less than 2 hours away or more than 45 days ahead |
 | Prices | Bach Flower consultation Rs 1,000 (set in the database, not in the site); Jyotish has no fixed fee |
 | Booking widget | shows 7 days at a time and pages up to 6 weeks ahead |
-| Weekly availability (decided 20 Nov 2026) | every day: Mon to Thu 09:00-12:00 and 17:00-20:00; Fri 09:00-13:00 and 17:00-19:00; Sat and Sun 09:00-21:00. Anything unsuitable is blocked by a Busy event in the calendar. The same pattern is stored as the fallback in the database and in the website code |
+| Weekly availability (decided 20 Nov 2026) | every day: Mon to Thu 09:00-12:00 and 17:00-21:00; Fri 09:00-13:00 and 17:00-21:00; Sat and Sun 09:00-21:00 (weekday evenings extended to 9 PM on 21 Nov 2026). Anything unsuitable is blocked by a Busy event in the calendar. The same pattern is stored as the fallback in the database and in the website code |
 | Webhook (production) | https://antarshanti.co.in/.netlify/functions/razorpay-webhook |
 | Webhook (staging, test mode) | https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/razorpay-webhook |
 | Slots check (staging) | https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots |
@@ -292,9 +350,9 @@ Then write a REPORT FOR MY CODING ASSISTANT that I can copy and paste to it. Pla
 |---|---|---|---|---|---|
 | GOOGLE_CALENDAR_ENV | production | test | test | no | **set by Claude** |
 | SUPABASE_URL | production DB | test DB | test DB | no | **set by Claude** |
-| GOOGLE_CLIENT_EMAIL | robot email | same | same | no | to do (prompt 3, 4) |
-| GOOGLE_PRIVATE_KEY | robot key | same | same | **yes** | to do (only Srikanth pastes) |
-| GOOGLE_CALENDAR_ID | Bookings calendar | TEST calendar | TEST calendar | no | to do |
+| GOOGLE_CLIENT_EMAIL | robot email | same | same | yes (flagged) | **set 21 Nov** |
+| GOOGLE_PRIVATE_KEY | robot key | same | same | **yes** | **set 21 Nov** |
+| GOOGLE_CALENDAR_ID | Bookings calendar | TEST calendar | TEST calendar | yes (flagged) | **set 21 Nov** (confirm production and test IDs differ) |
 | SUPABASE_SERVICE_KEY | production service key | test service key | test service key | **yes** | to do (only Srikanth pastes) |
 | RAZORPAY_KEY_ID | live (exists, all contexts) | test key id | test key id | no | live exists; test values to do |
 | RAZORPAY_KEY_SECRET | live (exists, all contexts) | test secret | test secret | **yes** | live exists (not yet marked secret); test values to do |

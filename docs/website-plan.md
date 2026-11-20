@@ -136,7 +136,7 @@ Expected extra monthly cost: none beyond the domain renewal and Razorpay per-tra
 
 - Four pages: Home, Jyotish, Bach Flower, Happiness Program. Home has WhatsApp and Instagram links.
 - Home offers three paths with a call to action each. Main button: "Book Jyotish Reading", which goes to a booking widget on the Jyotish page. Also "Bach Flower Therapy", "Register for Happiness Program" and WhatsApp.
-- Hours shown: online consultations every day of the week (weekday slots in the mornings and evenings, weekends 9 AM to 9 PM; changed 20 Nov 2026). Location shown: Hyderabad.
+- Hours shown: online consultations every day of the week (weekday slots in the mornings and 5 to 9 PM evenings, weekends 9 AM to 9 PM; changed 21 Nov 2026). Location shown: Hyderabad.
 - About section says 20+ years in corporate technology with a large multinational. Srikanth confirmed it stays: it describes who he is and names no employer. Keep it generic. Never add the employer name, job title or LinkedIn link. Worth checking your employment terms for any rule on disclosing outside business activity (not legal advice).
 - Disclaimer present: complementary services, not a replacement for medical, psychological, legal or financial advice.
 - Privacy line: personal details kept confidential and stored with consent. Needs a real consent step on every form.

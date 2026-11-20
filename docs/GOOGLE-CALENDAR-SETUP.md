@@ -113,7 +113,7 @@ Do this first in the **TEST** calendar, then in **Bookings** when you are happy.
 
 1. Create an event titled exactly `Open` (it may continue, e.g. `Open - online`) for **tomorrow-after-next, 10:00 to 13:00** India time (it must be at least 2 hours in the future).
 2. That is all. The website will offer 10:00, 11:00 and 12:00 that day.
-3. For your real weekly pattern, make **repeating** events. Example for the Bookings calendar (the pattern decided on 20 Nov 2026): `Open` every Monday to Thursday 09:00-12:00 and again 17:00-20:00; Friday 09:00-13:00 and 17:00-19:00; Saturday and Sunday 09:00-21:00 (add a `Busy` event whenever a time does not suit you). (In Google Calendar: create the event > **Does not repeat** > **Weekly on Monday** > save. For several days, **Custom**.)
+3. For your real weekly pattern, make **repeating** events. Example for the Bookings calendar (the pattern decided on 20 Nov 2026): `Open` every Monday to Thursday 09:00-12:00 and again 17:00-21:00; Friday 09:00-13:00 and 17:00-21:00; Saturday and Sunday 09:00-21:00 (add a `Busy` event whenever a time does not suit you). (In Google Calendar: create the event > **Does not repeat** > **Weekly on Monday** > save. For several days, **Custom**.)
 
 ---
 
