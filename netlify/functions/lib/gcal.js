@@ -146,7 +146,7 @@ async function createEvent(c, { summary, description, startIso, bookingId }) {
   const start = new Date(startIso), end = new Date(start.getTime() + SLOT_MINUTES * 60000);
   const ev = await gfetch(c, `/calendars/${encodeURIComponent(c.calendarId)}/events`, {
     method: 'POST',
-    body: JSON.stringify({ summary, description, start: { dateTime: start.toISOString() }, end: { dateTime: end.toISOString() },
+    body: JSON.stringify({ summary, description, start: { dateTime: start.toISOString(), timeZone: 'Asia/Kolkata' }, end: { dateTime: end.toISOString(), timeZone: 'Asia/Kolkata' },
       transparency: 'opaque', extendedProperties: { private: { antarshantiBooking: bookingId || 'yes' } } })
   });
   memo = { key: '', at: 0, value: null };

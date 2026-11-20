@@ -761,7 +761,12 @@
    "cancelled": "Payment cancelled.",
    "failedMsg": "⚠ Payment failed: {reason}",
    "startFail": "⚠ Could not start payment. Please try again, or WhatsApp Srikanth.",
-   "medNote": "Bach Flower remedies are a gentle complement to medical care, not a replacement. Please keep seeing your doctor for any medical condition."
+   "medNote": "Bach Flower remedies are a gentle complement to medical care, not a replacement. Please keep seeing your doctor for any medical condition.",
+   "paidLine": "Booked: {session} — {slot}",
+   "paidTitle": "Payment received. Your session is booked.",
+   "paidNext": "Please share a little about how you have been feeling on WhatsApp so Srikanth can prepare.",
+   "bookAnother": "Book another session",
+   "waMsgPaid": "Namaste Srikanth, I have paid for a Bach Flower consultation on {slot}."
   },
   "testimonials": {
    "eyebrow": "What clients say",

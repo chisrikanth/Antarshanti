@@ -71,7 +71,7 @@ global.fetch = async (url, init) => {
 
   // Jyotish request flow + validations
   bookings = [];
-  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '98765 43210', consent: true })); assert.equal(r.statusCode, 200); assert.equal(bookings[0].status, 'requested'); assert.equal(bookings[0].contact_phone, '9876543210'); console.log('Jyotish request -> slot held as requested (phone normalised)');
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '98765 43210', consent: true })); assert.equal(r.statusCode, 200); assert.equal(bookings[0].status, 'requested'); assert.equal(bookings[0].contact_phone, '+919876543210'); console.log('Jyotish request -> slot held as requested (spaces removed, +91 added to a 10-digit number)');
   r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '123', consent: true })); assert.equal(r.statusCode, 400);
   r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '9876543210', consent: false })); assert.equal(r.statusCode, 400); console.log('bad phone / no consent -> 400');
   const n = bookings.length; r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Bot', phone: '9876543211', consent: true, website: 'spam.com' })); assert.equal(bookings.length, n); console.log('honeypot filled -> nothing saved');

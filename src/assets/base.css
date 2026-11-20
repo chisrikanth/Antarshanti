@@ -236,3 +236,7 @@ img,svg{max-width:100%}
   .slots-grid{grid-template-columns:repeat(2,1fr)}
 }
 .two-col>*{min-width:0}
+
+.paid-box{border:1.5px solid var(--leaf);background:#F3FAEA;border-radius:12px;padding:14px 16px;margin:4px 0 10px}
+.paid-box .paid-title{font-weight:700;color:#2E7D32;font-size:1rem;margin:0 0 6px}
+.paid-box .paid-next{font-size:.88rem;color:var(--body);margin:0 0 12px}

@@ -15,9 +15,11 @@ exports.handler = async function (event) {
   const service = String(p.service || '');
   if (!SERVICES.has(service)) return json(400, { error: 'Unknown service.' });
   const name = String(p.name || '').trim();
-  const phone = String(p.phone || '').replace(/[\s\-()]/g, '');
+  let phone = String(p.phone || '').replace(/[\s\-()]/g, '');
   if (name.length < 2 || name.length > 80) return json(400, { code: 'name', error: 'Please enter your name.' });
   if (!/^\+?\d{10,13}$/.test(phone)) return json(400, { code: 'phone', error: 'Please enter a valid WhatsApp number.' });
+  // A number typed without a country code is taken as an Indian number (+91), so WhatsApp links always work.
+  if (/^\d{10}$/.test(phone)) phone = '+91' + phone; else if (/^91\d{10}$/.test(phone)) phone = '+' + phone;
   if (p.consent !== true) return json(400, { code: 'consent', error: 'Please tick the box so Srikanth may contact you about this booking.' });
 
   const cfg = config(event);

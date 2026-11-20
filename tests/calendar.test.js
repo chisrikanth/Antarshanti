@@ -92,7 +92,7 @@ global.fetch = async (url, init) => {
   r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('09:00'), name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 200);
   const evt = created[0].body; assert.ok(created[0].url.includes(encodeURIComponent(process.env.GOOGLE_CALENDAR_ID)));
   assert.equal(new Date(evt.start.dateTime).getTime(), new Date(at('09:00')).getTime()); assert.equal(new Date(evt.end.dateTime).getTime() - new Date(evt.start.dateTime).getTime(), 3600000);
-  assert.ok(evt.summary.includes('Ravi') && evt.description.includes('9876543210')); assert.ok(evt.extendedProperties.private.antarshantiBooking);
+  assert.ok(evt.summary.includes('Ravi') && evt.description.includes('+919876543210')); assert.ok(evt.extendedProperties.private.antarshantiBooking);
   assert.ok(dbPatches.some((p) => p.body.calendar_event_id === 'gev_1')); console.log('Jyotish request -> event created in the bookings calendar (60 min) and linked to the booking');
   d = JSON.parse((await sl.handler(ev('GET'))).body); assert.deepEqual(d.days[day], ['17:00']); console.log('that time is no longer offered');
 

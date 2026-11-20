@@ -88,11 +88,21 @@ navKey: "bach"
       <p style="font-weight:700;color:var(--ink);font-size:.97rem;margin-bottom:8px">
         ✦ <span id="confirm-text"></span>
       </p>
+      <div id="pay-zone">
       <p style="font-size:.88rem;color:var(--body);margin-bottom:10px">{{ k.intro | replace('{price}', P) | safe }}</p>
       <div id="pay-status" style="font-size:.85rem;margin-bottom:10px;min-height:1.2em"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button id="pay-btn" class="btn btn-gold btn-sm" type="button">{{ k.payBtn | replace('{price}', P) | safe }}</button>
         <a id="wa-btn" class="btn btn-wa btn-sm" href="https://wa.me/919985133161?text={{ k.waMsgFirst | urlencode }}" target="_blank">{{ t.chrome.whatsappSrikanth }}</a>
+      </div>
+      </div>
+      <div id="paid-box" class="paid-box" style="display:none" role="status">
+        <p class="paid-title">✓ {{ k.paidTitle }}</p>
+        <p class="paid-next">{{ k.paidNext }}</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a id="wa-paid" class="btn btn-wa btn-sm" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ t.chrome.whatsappSrikanth }}</a>
+          <button id="book-another" class="btn btn-outline btn-sm" type="button">{{ k.bookAnother }}</button>
+        </div>
       </div>
     </div>
     <div class="availability-note">{{ b.availNote }}</div>
@@ -195,6 +205,26 @@ navKey: "bach"
     document.getElementById('bconfirm').className='booking-confirm show';
   }
 
+  // After a successful payment: replace the pay button with a clear "booked" box so nobody pays twice.
+  function showPaid(){
+    document.getElementById('pay-zone').style.display='none';
+    document.getElementById('confirm-text').textContent=ASBook.fmt(K.paidLine,{session:selSession,slot:slotText});
+    document.getElementById('wa-paid').href='https://wa.me/919985133161?text='+encodeURIComponent(ASBook.fmt(K.waMsgPaid,{slot:slotText}));
+    document.getElementById('paid-box').style.display='block';
+    document.getElementById('slots-grid').style.pointerEvents='none';
+    ASBook.load();
+  }
+  function bookAnother(){
+    document.getElementById('paid-box').style.display='none';
+    document.getElementById('pay-zone').style.display='block';
+    document.getElementById('slots-grid').style.pointerEvents='';
+    document.getElementById('bconfirm').className='booking-confirm';
+    selDay=null; selTime=null; setStatus('',true); setPayBtnState(false);
+    ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); });
+    renderDays(); renderSlots();
+  }
+  document.getElementById('book-another').addEventListener('click',bookAnother);
+
   // ── Razorpay Standard Checkout ────────────────────────────────────────────
   function payLabel(){ return ASBook.fmt(K.payBtn,{price:'<span data-price="bach_consultation">'+AS.money(currentPrice())+'</span>'}); }
   function setPayBtnState(busy){
@@ -241,7 +271,7 @@ navKey: "bach"
             setPayBtnState(false);
             if(result.success){
               if(window.AS) AS.track('payment_success',{value:currentPrice()});
-              setStatus(K.payOk,true);
+              showPaid();
             } else {
               setStatus(ASBook.fmt(K.payUnverified,{id:response.razorpay_payment_id}),false);
             }
