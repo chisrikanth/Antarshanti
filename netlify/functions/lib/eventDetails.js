@@ -50,7 +50,7 @@ function bachEvent(b) {
       line('Name', name || '(not given)'),
       line('Phone / WhatsApp', phone),
       line('Chat', waLink(phone)),
-      line('Email', clean(b.email, 120)),
+      line('Email', /@razorpay\.com$/i.test(String(b.email || '')) ? '' : clean(b.email, 120)),   // Razorpay fills void@razorpay.com when no email was given
       line('Service', 'Bach Flower consultation, 60 minutes'),
       line('When', whenIst(b.slotStart)),
       `Status: PAID and confirmed${b.amountInr ? ` (Rs ${Number(b.amountInr).toLocaleString('en-IN')}${b.method ? ' via ' + clean(b.method, 20).toUpperCase() : ''})` : ''}. Ask how they have been feeling before the session; the remedy bottle, if wanted, is billed separately.`,

@@ -1,17 +1,17 @@
 # Srikanth's to-do list (kept up to date by Claude)
 
 Tick items by changing `[ ]` to `[x]`. Claude re-reads this at the start of each session and reminds you of the next few open items.
-**Last updated: 17 Nov 2026 (later).** AI-side follow-ups are tracked separately in `docs/AI-ACTIONS.md`.
+**Last updated: 20 Nov 2026.** AI-side follow-ups are tracked separately in `docs/AI-ACTIONS.md`.
 Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (lower pressure and fear; tell the truth, not a rosy story).
 
 ## A. Blocking: the site cannot take real bookings until these are done
 - [x] **A1. Razorpay TEST keys** generated and added to Netlify for Branch deploys and Deploy Previews (20 Nov). Production still has the live keys.
-- [ ] **A2. Netlify variables, one value per deploy context.** Done on 20 Nov: Google (email, key, calendar ID), `GOOGLE_CALENDAR_ENV`, `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` and Razorpay keys for staging/previews, `RAZORPAY_WEBHOOK_SECRET` (all three contexts). Still to do at go-live: `SUPABASE_SERVICE_KEY` for Production (production project secret key), and confirm the live Razorpay webhook. Step-by-step: `docs/GEMINI-SETUP-PROMPT.md` (Netlify steps).
-- [ ] **A3. Razorpay webhook** (once in Live mode for production, once in Test mode for staging). URLs and events: `docs/PAYMENTS-AND-PRICES.md`.
-- [ ] **A4. Test the full payment flow on staging** with a Razorpay test card: pick a slot, pay, then check Supabase tables `payments` (status `paid`) and `bookings` (status `booked`).
-- [ ] **A5. Test slot clashes on staging:** open the Bach page in two browsers, pick the same slot; the second one must be refused. Try the Jyotish "Hold this slot" too.
-- [ ] **A7. Google Calendar setup:** (can be done by Gemini: see `docs/GEMINI-SETUP-PROMPT.md`) follow `docs/GOOGLE-CALENDAR-SETUP.md` (about 45 minutes): create the two calendars (Bookings + TEST), the Google Cloud robot account, share both calendars with it, add 4 Netlify variables (`GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CALENDAR_ID`, `GOOGLE_CALENDAR_ENV`). Until then the site simply uses the weekly schedule.
-- [ ] **A8. Test the calendar on staging** (Part 6 of that guide) and tell Claude the result or any error text. The code has not yet run against your real Google account.
+- [ ] **A2. Netlify variables, one value per deploy context.** Staging and previews are complete (20 Nov). **Still missing for Production: `SUPABASE_SERVICE_KEY`** (secret key of the production Supabase project). Step by step: `docs/GO-LIVE.md` section 2.
+- [ ] **A3. Razorpay webhook.** Test-mode webhook for staging: **done and working** (20 Nov). Live-mode webhook: create at go-live (step 4 in `docs/GO-LIVE.md`), because the live site does not have the function until the merge.
+- [x] **A4. Full payment flow on staging: passed** (20 Nov, two test payments: payment row `paid`, booking `booked`, calendar event with name, phone, email, chat link and payment details).
+- [ ] **A5. Slot clashes:** the database rule and the tests prove a second booking for the same time is refused. Quick visual check: on the staging Bach page, Mon 23 Nov at 6 PM should show greyed (taken) because of your test payment. Optional: try to pay for it from a second browser.
+- [x] **A7. Google Calendar setup: done** (two calendars, robot account, sharing, Netlify variables), 20 Nov.
+- [x] **A8. Calendar tested on staging: works** (slots read from the TEST calendar, busy events block, bookings and paid bookings appear in it), 20 Nov.
 - [x] **A9. Availability.** Changed 20 Nov: no `Open` events are needed any more. Your normal hours are in the database (Mon-Thu 9-12 and 5-9 PM, Fri 9-1 and 5-9 PM, Sat-Sun 9 AM-9 PM) and the calendar only shows what is busy. Delete the old `Open` events from both calendars (Prompt 2 in `docs/GEMINI-SETUP-PROMPT.md` does it); they are harmless if left.
 - [ ] **A6. Staging review feedback.** You said you tested staging and shared suggestions, but I did not receive them. Please paste them again.
 
@@ -21,6 +21,9 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 - [ ] **B3. Decide:** Jyotish confirmation window (site says "within 24 hours").
 - [ ] **B4. Turn on Netlify "Stop auto publishing"** and protect `main` on GitHub (see `docs/RELEASE-PROCESS.md`), so nothing reaches antarshanti.co.in without your click.
 - [ ] **B5. Look at `bookings` in Supabase** (view `upcoming_bookings`) as your daily booking list. There is no automatic notification yet (see D2).
+
+## F. Go-live
+The full sequence, with who does what, is in `docs/GO-LIVE.md`. Nothing is published until you say go.
 
 ## C. For ads and growth
 - [ ] **C1. Analytics IDs** at the top of `assets/site.js`: Meta Pixel, GA4, optionally Plausible. Nothing is tracked until you add them.
@@ -33,7 +36,7 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 
 ## D. Decisions waiting for you / ideas
 - [x] **D1. Booking widget "Next week" button** (done: you can page up to 6 weeks ahead).
-- [ ] **D2. Get notified of new bookings** (WhatsApp or email). Suggested after the calendar link-up, since calendar events notify your phone.
+- [ ] **D2. New-booking notifications.** Bookings now appear as events in the Bookings calendar with all details. To get a phone notification when one is added: Google Calendar > Antarshanti Bookings > Settings > Event notifications > New events (Notification or Email). Say if you also want WhatsApp or email from the website itself.
 - [ ] **D3. Check-in wording** was changed to bands (no 0 to 100 score). Please read the results screen once on staging and say if the tone is right.
 - [ ] **D6. Check-in next-step wording (new).** Read the results on staging once. In particular please confirm you are happy with this sentence about Sudarshan Kriya: *"Several published studies report lower stress and anxiety after learning it, and many people simply find it deeply relaxing."* If you can, give me one specific study link (for example from the Art of Living research page) and I will link it; that makes the sentence stronger and safer.
 - [ ] **D7. Watch the two short videos on the check-in results:** Sudarshan Kriya `gWwhIPAajfw` and Bach Flower `Cm5DVzkOo_U` (chosen by title). Say if you want others.
