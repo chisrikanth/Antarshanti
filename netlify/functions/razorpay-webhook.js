@@ -9,6 +9,7 @@
 const crypto = require('crypto');
 const { config: dbConfig, rest } = require('./lib/db');
 const { addToCalendar } = require('./lib/booking');
+const { normalizePhone, bachEvent } = require('./lib/eventDetails');
 
 function validSignature(rawBody, signature, secret) {
   if (!signature || !secret) return false;
@@ -52,7 +53,7 @@ exports.handler = async function (event) {
       });
       if (!r.ok) { console.error('webhook save failed', r.status, await r.text()); return { statusCode: 500, body: 'save failed' }; } // Razorpay retries
       // Confirm the held slot. If the hold had expired and someone else took the time, flag it for a human.
-      const bk = await rest(cfg, `bookings?razorpay_order_id=eq.${encodeURIComponent(orderId)}&status=in.(held,expired)`, { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: JSON.stringify({ status: 'booked', hold_expires_at: null }) });
+      const bk = await rest(cfg, `bookings?razorpay_order_id=eq.${encodeURIComponent(orderId)}&status=in.(held,expired)`, { method: 'PATCH', headers: { Prefer: 'return=representation' }, body: JSON.stringify(Object.assign({ status: 'booked', hold_expires_at: null }, pay && pay.contact ? { contact_phone: normalizePhone(pay.contact) } : {}, pay && pay.notes && pay.notes.name ? { contact_name: String(pay.notes.name).slice(0, 80) } : {})) });
       if (bk.status === 409) {
         await rest(cfg, `bookings?razorpay_order_id=eq.${encodeURIComponent(orderId)}&status=in.(held,expired)`, { method: 'PATCH', body: JSON.stringify({ status: 'conflict', notes: 'Paid after the hold expired and the time was taken. Refund or reschedule.' }) });
         console.error('SLOT CONFLICT AFTER PAYMENT: refund or reschedule', orderId);
@@ -61,7 +62,8 @@ exports.handler = async function (event) {
         // Put the paid booking on the Antarshanti Bookings calendar (once).
         const rows = await bk.json().catch(() => []);
         for (const row of rows || []) {
-          await addToCalendar(event, cfg, row, 'Bach Flower consultation (paid)', `Razorpay order: ${orderId}\nSlot chosen: ${(pay && pay.notes && pay.notes.slot) || ''}\nStatus: paid and confirmed.`);
+          const ce = bachEvent({ name: pay && pay.notes && pay.notes.name, contact: pay && pay.contact, email: pay && pay.email, method: pay && pay.method, amountInr: paidInr, orderId, paymentId: pay && pay.id, slotLabel: pay && pay.notes && pay.notes.slot, slotStart: row.slot_start, lang: pay && pay.notes && pay.notes.lang, bookingId: row.id });
+          await addToCalendar(event, cfg, row, ce.summary, ce.description);
         }
       }
       // Flag if the captured amount differs from what the server expected.

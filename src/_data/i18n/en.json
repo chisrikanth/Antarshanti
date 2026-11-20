@@ -766,7 +766,9 @@
    "paidTitle": "Payment received. Your session is booked.",
    "paidNext": "Please share a little about how you have been feeling on WhatsApp so Srikanth can prepare.",
    "bookAnother": "Book another session",
-   "waMsgPaid": "Namaste Srikanth, I have paid for a Bach Flower consultation on {slot}."
+   "waMsgPaid": "Namaste Srikanth, I have paid for a Bach Flower consultation on {slot}.",
+   "nameLabel": "Your name",
+   "errName": "Please enter your name."
   },
   "testimonials": {
    "eyebrow": "What clients say",

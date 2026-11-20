@@ -92,7 +92,9 @@ global.fetch = async (url, init) => {
   r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('09:00'), name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 200);
   const evt = created[0].body; assert.ok(created[0].url.includes(encodeURIComponent(process.env.GOOGLE_CALENDAR_ID)));
   assert.equal(new Date(evt.start.dateTime).getTime(), new Date(at('09:00')).getTime()); assert.equal(new Date(evt.end.dateTime).getTime() - new Date(evt.start.dateTime).getTime(), 3600000);
-  assert.ok(evt.summary.includes('Ravi') && evt.description.includes('+919876543210')); assert.ok(evt.extendedProperties.private.antarshantiBooking);
+  assert.ok(evt.summary.includes('Ravi') && evt.description.includes('+919876543210'));
+  ['Name: Ravi', 'WhatsApp: +919876543210', 'Chat: https://wa.me/919876543210', 'When: ', ' IST', 'REQUESTED', 'Booking ID: '].forEach((t) => assert.ok(evt.description.includes(t), 'event should contain: ' + t));
+  console.log('Jyotish event shows name, WhatsApp number, chat link, time, status and booking id'); assert.ok(evt.extendedProperties.private.antarshantiBooking);
   assert.ok(dbPatches.some((p) => p.body.calendar_event_id === 'gev_1')); console.log('Jyotish request -> event created in the bookings calendar (60 min) and linked to the booking');
   d = JSON.parse((await sl.handler(ev('GET'))).body); assert.deepEqual(d.days[day], ['17:00']); console.log('that time is no longer offered');
 
@@ -114,11 +116,14 @@ global.fetch = async (url, init) => {
   googleDown = false;
   // ---- paid Bach booking confirmed by the webhook -> calendar event
   process.env.RAZORPAY_WEBHOOK_SECRET = 'wh'; const wh = fx('razorpay-webhook.js'); gcal.resetCache();
-  const evtBody = JSON.stringify({ event: 'payment.captured', payload: { payment: { entity: { id: 'pay_9', order_id: 'order_W', amount: 100000, notes: { service: 'bach_consultation', slot: 'Mon 5 PM' } } } } });
+  const evtBody = JSON.stringify({ event: 'payment.captured', payload: { payment: { entity: { id: 'pay_9', order_id: 'order_W', amount: 100000, contact: '+919988776655', email: 'ravi@example.com', method: 'upi', notes: { service: 'bach_consultation', slot: 'Mon 5 PM', name: 'Ravi K', lang: 'te' } } } } });
   const before = created.length;
   r = await wh.handler({ httpMethod: 'POST', headers: { host: 'staging--x.netlify.app', 'x-razorpay-signature': crypto.createHmac('sha256', 'wh').update(evtBody).digest('hex') }, body: evtBody });
   assert.equal(r.statusCode, 200); assert.equal(created.length, before + 1); const be = created[created.length - 1].body;
-  assert.ok(be.summary.includes('Bach') && be.summary.includes('paid') && be.description.includes('order_W')); assert.equal(new Date(be.start.dateTime).getTime(), new Date(at('17:00')).getTime());
+  assert.ok(be.summary.includes('Bach') && be.summary.includes('paid') && be.summary.includes('Ravi K') && be.description.includes('order_W'));
+  ['Name: Ravi K', 'Phone / WhatsApp: +919988776655', 'Chat: https://wa.me/919988776655', 'Email: ravi@example.com', 'Rs 1,000 via UPI', 'Razorpay payment: pay_9', 'Page language: Telugu'].forEach((t) => assert.ok(be.description.includes(t), 'Bach event should contain: ' + t));
+  assert.ok(dbPatches.some((x) => x.body.contact_phone === '+919988776655' && x.body.contact_name === 'Ravi K'), 'booking row gets the payer name and phone');
+  console.log('Bach event shows name, phone, chat link, email, amount and method, Razorpay ids and language; booking row updated with name and phone'); assert.equal(new Date(be.start.dateTime).getTime(), new Date(at('17:00')).getTime());
   console.log('paid Bach booking (webhook) -> calendar event "' + be.summary + '" at 5 PM');
   console.log('ALL CALENDAR TESTS PASSED');
 })().catch((e) => { console.error('FAIL', e); process.exit(1); });

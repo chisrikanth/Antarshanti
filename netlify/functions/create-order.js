@@ -50,6 +50,8 @@ exports.handler = async function (event) {
   const amount = price.amountInr * 100;   // paise
   const currency = 'INR';
   const slot = payload.slot ? String(payload.slot).slice(0, 120) : '';
+  const buyerName = String(payload.name || '').replace(/[\r\n]+/g, ' ').trim().slice(0, 80);
+  const lang = ['en', 'te', 'hi'].includes(payload.lang) ? payload.lang : 'en';
   const receipt = (payload.receipt || ('rcpt_' + Date.now())).toString().slice(0, 40);
 
   // Hold the chosen time for a few minutes so nobody else can take it while this visitor pays.
@@ -60,12 +62,12 @@ exports.handler = async function (event) {
     const schedule = await loadSchedule(cfg, event);
     const check = checkSlot(payload.slot_start, schedule);
     if (!check.ok) return { statusCode: check.status, body: JSON.stringify({ code: check.code, error: check.error }) };
-    const held = await reserve(cfg, { service_key: service, slot_start: check.date.toISOString(), status: 'held', hold_expires_at: new Date(Date.now() + HOLD_MINUTES * 60000).toISOString() });
+    const held = await reserve(cfg, { service_key: service, slot_start: check.date.toISOString(), status: 'held', hold_expires_at: new Date(Date.now() + HOLD_MINUTES * 60000).toISOString(), contact_name: buyerName || null, notes: 'Page language: ' + lang });
     if (held.taken) return { statusCode: 409, body: JSON.stringify({ code: 'slot_taken', error: 'Sorry, that time was just taken. Please pick another.' }) };
     if (held.error) console.error(held.error); else bookingId = held.id;
   }
 
-  const orderData = JSON.stringify({ amount: amount, currency: currency, receipt: receipt, notes: { service: service, slot: slot } });
+  const orderData = JSON.stringify({ amount: amount, currency: currency, receipt: receipt, notes: { service: service, slot: slot, name: buyerName, lang: lang } });
   const auth = Buffer.from(keyId + ':' + keySecret).toString('base64');
 
   const options = {

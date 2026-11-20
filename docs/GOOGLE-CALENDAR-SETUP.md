@@ -172,8 +172,11 @@ Google Calendar does not automatically copy events between two of your own calen
 3. When you create a new event that blocks sessions, create it in *Antarshanti Bookings* from the start.
 Small tip: name the blocker `Busy` and keep the real details on your main calendar only.
 
-**What appears in the calendar**
-The booking events contain the client's **name and WhatsApp number** (Jyotish) or order number (Bach). Do not share the Antarshanti Bookings calendar with anyone else. The Privacy page should mention this (it is on your to-do list).
+**What appears in each booking event** (so you never have to look anywhere else)
+- **Jyotish request** (title `Jyotish: <name> (requested)`): name, WhatsApp number, a tap-to-chat link, the service, the exact time in India time, the status ("requested; confirm on WhatsApp within 24 hours; they will send birth details there"), the language of the page they used, the booking ID and when it was requested.
+- **Bach Flower, paid** (title `Bach Flower consultation (paid): <name>`): name, phone and email as given to Razorpay, a tap-to-chat link, the amount and payment method (UPI, card...), the time, Razorpay order and payment IDs, the language of the page and the booking ID. No card details are ever stored.
+- The Bach page now asks for the visitor's **name** before payment (phone and email come from Razorpay's own checkout).
+These events contain personal details. Do not share the Antarshanti Bookings calendar with anyone else. The Privacy page should mention that names, phone numbers and emails are kept in this calendar (on your to-do list).
 
 **Cancelling a booking**
 Delete (or move) the calendar event **and** set `status` to `cancelled` for that row in the `bookings` table. The website does not delete calendar events by itself.

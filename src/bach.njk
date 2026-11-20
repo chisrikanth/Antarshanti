@@ -90,6 +90,7 @@ navKey: "bach"
       </p>
       <div id="pay-zone">
       <p style="font-size:.88rem;color:var(--body);margin-bottom:10px">{{ k.intro | replace('{price}', P) | safe }}</p>
+      <div class="field" style="margin-bottom:10px"><label for="b-name">{{ k.nameLabel }}</label><input type="text" id="b-name" autocomplete="name" maxlength="80"></div>
       <div id="pay-status" style="font-size:.85rem;margin-bottom:10px;min-height:1.2em"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button id="pay-btn" class="btn btn-gold btn-sm" type="button">{{ k.payBtn | replace('{price}', P) | safe }}</button>
@@ -239,12 +240,14 @@ navKey: "bach"
   }
   function payNow(){
     if(!selDay||!selTime) return;
+    var buyer=document.getElementById('b-name').value.trim();
+    if(buyer.length<2){ setStatus(K.errName,false); document.getElementById('b-name').focus(); return; }
     if(window.AS) AS.track('pay_click',{value:currentPrice()});
     setPayBtnState(true); setStatus('',true);
     fetch('/.netlify/functions/create-order',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({service:'bach_consultation',slot:SESSION_EN+' — '+slotText,slot_start:ASBook.iso(selDay,selTime),receipt:'bach_'+Date.now()})
+      body:JSON.stringify({service:'bach_consultation',name:buyer,lang:LANG,slot:SESSION_EN+' — '+slotText,slot_start:ASBook.iso(selDay,selTime),receipt:'bach_'+Date.now()})
     })
     .then(function(r){ if(!r.ok) return r.json().then(function(j){ var e=new Error((j&&j.error)||'order-failed'); e.server=true; e.j=j; e.status=r.status; throw e; },function(){ throw new Error('order-failed'); }); return r.json(); })
     .then(function(order){
@@ -255,6 +258,7 @@ navKey: "bach"
         name:'Antarshanti',
         description:SESSION_EN,
         order_id:order.order_id,
+        prefill:{name:buyer},
         theme:{color:'#B8406A'},
         handler:function(response){
           fetch('/.netlify/functions/verify-payment',{
