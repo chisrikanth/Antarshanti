@@ -49,18 +49,18 @@ These were already present before: `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`, 
 
 ---
 
-## Where things stand (checked in Netlify on 21 Nov 2026, names and contexts only)
+## Where things stand (checked in Netlify on 20 Nov 2026, names and contexts only)
 
 | Item | State |
 |---|---|
-| Prompts 0 to 1 (context, calendars) and the old Prompt 2 (Open events) | done by you with Gemini. **The logic changed on 21 Nov: Open events are no longer needed** (see the next section); the new Prompt 2 removes them. Claude cannot see your Google account, so this is unverified |
+| Prompts 0 to 1 (context, calendars) and the old Prompt 2 (Open events) | done by you with Gemini. **The logic changed on 20 Nov: Open events are no longer needed** (see the next section); the new Prompt 2 removes them. Claude cannot see your Google account, so this is unverified |
 | `GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CALENDAR_ID` | **present** in Production, Branch deploys and Deploy Previews, flagged secret. The values are hidden, so it cannot be seen whether the Production and TEST calendar IDs are different. Please confirm that they are |
 | `GOOGLE_CALENDAR_ENV` | production / test / test (correct) |
 | `SUPABASE_URL` | production / test / test (correct, now flagged secret; fine) |
 | `SUPABASE_SERVICE_KEY` | **missing** (without it the booking database is not used and saved check-ins and bookings fail) |
 | `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` | now secret-flagged and listed per context, but the staging contexts still end in the same characters as the **live** key: **test keys not yet added**, so staging payments are refused by the safety lock |
-| `RAZORPAY_WEBHOOK_SECRET` | **created by Claude on 21 Nov** (secret-flagged): one value for Production (the live-mode webhook) and one for Branch deploys and Deploy Previews (the test-mode webhook). Claude gave you the two values in chat so you can paste them into the Razorpay webhook forms |
-| Staging redeployed after the new variables? | pushing the 9 PM schedule change to the `staging` branch on 21 Nov triggers a fresh staging deploy |
+| `RAZORPAY_WEBHOOK_SECRET` | **created by Claude on 20 Nov** (secret-flagged): one value for Production (the live-mode webhook) and one for Branch deploys and Deploy Previews (the test-mode webhook). Claude gave you the two values in chat so you can paste them into the Razorpay webhook forms |
+| Staging redeployed after the new variables? | pushing the 9 PM schedule change to the `staging` branch on 20 Nov triggers a fresh staging deploy |
 | Calendar actually shared with the robot (Prompt 3)? | **not yet checked**; the way to find out is the slots check below |
 
 **The one-minute test.** Open this in your browser (Claude cannot reach netlify.app from here):
@@ -73,7 +73,36 @@ These were already present before: `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`, 
 
 ---
 
-## How the website reads the calendar (changed 21 Nov 2026: default open, the calendar only blocks)
+## Netlify variables: the exact steps (do these yourself; they contain secrets)
+
+Netlify: <https://app.netlify.com> > site **aquamarine-croquembouche-26e205** > **Project configuration** (Site configuration) > **Environment variables**. Click a variable's name to see and edit its value for each context (Production, Deploy Previews, Branch deploys). The little eye icon reveals a hidden value.
+
+**Step 1. Add `SUPABASE_SERVICE_KEY` (this is why the staging slots check says `{"live":false}`)**
+1. Supabase dashboard > project **antarshanti-test** (reference `rnofqxmfwqiogtlchkbp`) > **Project Settings** > **API Keys**.
+2. Open the tab **Legacy anon, service_role API keys**, find **service_role**, click **Reveal**, copy it (it starts with `eyJ`). The newer **secret key** (starts `sb_secret_`) also works. Never use the anon or publishable key.
+3. In Netlify: **Add a variable** > **Add a single variable**. Key: `SUPABASE_SERVICE_KEY`. Choose **Different value for each deploy context**. Paste the TEST key for **Deploy Previews** and for **Branch deploys**. Tick **Contains secret values**. Scopes: leave Builds, Functions and Runtime ticked. **Create variable**.
+4. Production: leave empty for now, or (if Netlify insists on a value) paste the key of the **antarshanti-prod** project (reference `kntohzyxzoucymrmriva`). Never put the test key in Production.
+
+**Step 2. Razorpay TEST keys for staging**
+1. Razorpay Dashboard > switch the toggle at the top to **Test Mode** > Account and Settings > **API Keys** > **Generate Test Key**. Copy the **Key Id** (starts `rzp_test_`) and the **Key Secret** (shown only once).
+2. In Netlify click `RAZORPAY_KEY_ID`: for **Branch deploys** and **Deploy Previews** replace the value with the test Key Id. Leave **Production** untouched (it is the live key).
+3. Do the same for `RAZORPAY_KEY_SECRET` with the test Key Secret. Keep both flagged secret.
+
+**Step 3. Check the two calendar IDs are different**
+Click `GOOGLE_CALENDAR_ID` and reveal each value. **Production** must be the ID of **Antarshanti Bookings**; **Branch deploys** and **Deploy Previews** must be the ID of **Antarshanti TEST**. (Google Calendar > the calendar's Settings and sharing > Integrate calendar > Calendar ID.) The website also checks the calendar's name, but get this right anyway.
+
+**Step 4. Razorpay test webhook** (the secret already exists in Netlify; Claude created it)
+Razorpay Test Mode > Account and Settings > **Webhooks** > Add: URL `https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/razorpay-webhook`, events `payment.captured`, `order.paid`, `payment.failed`, secret = the test value Claude gave you in chat (it ends in `PfRa`). The **live** webhook for antarshanti.co.in is created only at go-live, after `staging` is merged into `main`, with the other value (ends `vqZg`).
+
+**Step 5. Make staging use the new values**
+Environment variable changes only apply to the **next deploy**. Netlify > **Deploys** > change the branch filter to **staging** > open the latest deploy > **Retry deploy** > **Clear cache and deploy site**. (Or tell Claude and it will push a harmless change to the staging branch.)
+
+**Step 6. Check**
+Open `https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots`. You want `"live":true`, `"mode":"calendar"` and `"calendarName":"Antarshanti TEST"`. Then try a Jyotish test booking on the staging page (use a fake name, phone 9999999999).
+
+---
+
+## How the website reads the calendar (changed 20 Nov 2026: default open, the calendar only blocks)
 
 **The idea:** your normal weekly hours are stored in the website's database and are **open by default**. The Google calendar is only asked one question: *"is anything busy at this time?"* If yes, that slot disappears. You never create availability events.
 
@@ -315,7 +344,7 @@ Then write a REPORT FOR MY CODING ASSISTANT that I can copy and paste to it. Pla
 | Lead time / horizon | not offered if less than 2 hours away or more than 45 days ahead |
 | Prices | Bach Flower consultation Rs 1,000 (set in the database, not in the site); Jyotish has no fixed fee |
 | Booking widget | shows 7 days at a time and pages up to 6 weeks ahead |
-| Weekly availability (decided 20-21 Nov 2026) | stored in the database (table availability_rules) and open by default: Mon to Thu 09:00-12:00 and 17:00-21:00; Fri 09:00-13:00 and 17:00-21:00; Sat and Sun 09:00-21:00. The calendar only blocks (any busy event). A copy is kept in the website code as an outage fallback |
+| Weekly availability (decided 20 Nov 2026) | stored in the database (table availability_rules) and open by default: Mon to Thu 09:00-12:00 and 17:00-21:00; Fri 09:00-13:00 and 17:00-21:00; Sat and Sun 09:00-21:00. The calendar only blocks (any busy event). A copy is kept in the website code as an outage fallback |
 | Webhook (production) | https://antarshanti.co.in/.netlify/functions/razorpay-webhook |
 | Webhook (staging, test mode) | https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/razorpay-webhook |
 | Slots check (staging) | https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots |
@@ -326,9 +355,9 @@ Then write a REPORT FOR MY CODING ASSISTANT that I can copy and paste to it. Pla
 |---|---|---|---|---|---|
 | GOOGLE_CALENDAR_ENV | production | test | test | no | **set by Claude** |
 | SUPABASE_URL | production DB | test DB | test DB | no | **set by Claude** |
-| GOOGLE_CLIENT_EMAIL | robot email | same | same | yes (flagged) | **set 21 Nov** |
-| GOOGLE_PRIVATE_KEY | robot key | same | same | **yes** | **set 21 Nov** |
-| GOOGLE_CALENDAR_ID | Bookings calendar | TEST calendar | TEST calendar | yes (flagged) | **set 21 Nov** (confirm production and test IDs differ) |
+| GOOGLE_CLIENT_EMAIL | robot email | same | same | yes (flagged) | **set 20 Nov** |
+| GOOGLE_PRIVATE_KEY | robot key | same | same | **yes** | **set 20 Nov** |
+| GOOGLE_CALENDAR_ID | Bookings calendar | TEST calendar | TEST calendar | yes (flagged) | **set 20 Nov** (confirm production and test IDs differ) |
 | SUPABASE_SERVICE_KEY | production service key | test service key | test service key | **yes** | to do (only Srikanth pastes) |
 | RAZORPAY_KEY_ID | live (exists, all contexts) | test key id | test key id | no | live exists; test values to do |
 | RAZORPAY_KEY_SECRET | live (exists, all contexts) | test secret | test secret | **yes** | live exists (not yet marked secret); test values to do |

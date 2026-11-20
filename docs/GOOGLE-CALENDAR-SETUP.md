@@ -20,7 +20,7 @@ Your **main calendar is never read or touched** by the website. Reminders, famil
 A small robot account (a "service account") gives the website permission to read and write only those two calendars. Nothing else in your Google account is reachable.
 
 ### How the website decides what to offer (the rules)
-*(Changed on 21 Nov 2026: the calendar now only has to show what is **busy**. You no longer create "Open" events.)*
+*(Changed on 20 Nov 2026: the calendar now only has to show what is **busy**. You no longer create "Open" events.)*
 1. Your **normal weekly hours** live in the database (Supabase table `availability_rules`): Mon to Thu 9-12 and 5-9 PM, Friday 9-1 and 5-9 PM, Saturday and Sunday 9 AM to 9 PM. Inside those hours the website offers **60-minute slots**, on the hour.
 2. **Anything in the Antarshanti Bookings calendar blocks the slots it overlaps:** an appointment, `Busy`, `Travel`, a doctor visit, a booking made through the site. All-day events (for example `Away`) block the whole day. A time that you have not blocked is simply open.
 3. Events you set to **Free** (not Busy) and cancelled events are ignored, so you can keep reminders and notes in the calendar without blocking anything.

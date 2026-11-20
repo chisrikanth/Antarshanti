@@ -12,7 +12,7 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 - [ ] **A5. Test slot clashes on staging:** open the Bach page in two browsers, pick the same slot; the second one must be refused. Try the Jyotish "Hold this slot" too.
 - [ ] **A7. Google Calendar setup:** (can be done by Gemini: see `docs/GEMINI-SETUP-PROMPT.md`) follow `docs/GOOGLE-CALENDAR-SETUP.md` (about 45 minutes): create the two calendars (Bookings + TEST), the Google Cloud robot account, share both calendars with it, add 4 Netlify variables (`GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CALENDAR_ID`, `GOOGLE_CALENDAR_ENV`). Until then the site simply uses the weekly schedule.
 - [ ] **A8. Test the calendar on staging** (Part 6 of that guide) and tell Claude the result or any error text. The code has not yet run against your real Google account.
-- [x] **A9. Availability.** Changed 21 Nov: no `Open` events are needed any more. Your normal hours are in the database (Mon-Thu 9-12 and 5-9 PM, Fri 9-1 and 5-9 PM, Sat-Sun 9 AM-9 PM) and the calendar only shows what is busy. Delete the old `Open` events from both calendars (Prompt 2 in `docs/GEMINI-SETUP-PROMPT.md` does it); they are harmless if left.
+- [x] **A9. Availability.** Changed 20 Nov: no `Open` events are needed any more. Your normal hours are in the database (Mon-Thu 9-12 and 5-9 PM, Fri 9-1 and 5-9 PM, Sat-Sun 9 AM-9 PM) and the calendar only shows what is busy. Delete the old `Open` events from both calendars (Prompt 2 in `docs/GEMINI-SETUP-PROMPT.md` does it); they are harmless if left.
 - [ ] **A6. Staging review feedback.** You said you tested staging and shared suggestions, but I did not receive them. Please paste them again.
 
 ## B. Before going live (merge `staging` into `main`)
