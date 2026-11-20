@@ -28,10 +28,10 @@ Nothing here happens without Srikanth's say-so. Today (20 Nov 2026) the live sit
 |---|---|---|
 | 1 | Merge `staging` into `main` (Claude can do it when told, as a pull request you approve) | you say go, Claude |
 | 2 | Netlify builds the deploy and holds it (auto publishing is off). Open that deploy's **preview link** | you |
-| 3 | On the preview link: home page loads, `/.netlify/functions/slots` shows `"mode":"calendar"` and `"calendarName":"Antarshanti Bookings"` (not TEST), the Bach page shows the price | you, Claude reads the output |
+| 3 | On the preview link check only what you can see: pages load and look right in English, the Bach page shows the price. **The booking functions will say `{"live":false}` on a preview link, on purpose:** the safety locks refuse to use the production database, calendar and live Razorpay key on any address other than antarshanti.co.in. So the real function checks happen right after publishing (step 6); rollback is one click | you |
 | 4 | Razorpay **Live Mode** > Webhooks > add: URL `https://antarshanti.co.in/.netlify/functions/razorpay-webhook`, events `payment.captured`, `order.paid`, `payment.failed`, secret = the live value (ends `vqZg`, stored in Netlify Production) | you |
 | 5 | **Publish deploy** in Netlify | you |
-| 6 | Live check: pages, sitemap, language switcher absent, check-in saves a row in the **production** database, Jyotish hold creates an event in **Antarshanti Bookings** | Claude (database and calendar) with you on the site |
+| 6 | Live check on antarshanti.co.in: `/.netlify/functions/slots` shows `"mode":"calendar"` and `"calendarName":"Antarshanti Bookings"` (not TEST); pages and sitemap; language switcher absent; a check-in saves a row in the **production** database; a Jyotish hold creates an event in **Antarshanti Bookings** (delete it afterwards) | Claude (database and calendar) with you on the site |
 | 7 | **One real payment test:** in the production database set `services.bach_consultation.amount_inr` to **1**, pay Rs 1 with a real UPI app, check the payment row, booking and calendar event, **refund it in Razorpay**, then set the price back to **1000** | you pay, Claude checks and resets |
 | 8 | Delete the test rows and calendar events from production | Claude |
 
