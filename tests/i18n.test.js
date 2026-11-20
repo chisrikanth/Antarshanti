@@ -31,6 +31,7 @@ const codes = new Set();
   const s = fs.readFileSync(path.join(__dirname, '..', 'netlify', 'functions', f), 'utf8');
   (s.match(/code: '(\w+)'/g) || []).forEach((m) => codes.add(m.slice(7, -1)));
 });
+['dob', 'tob', 'pob'].forEach((c) => codes.add(c));   // birth-detail codes are chosen at run time in reserve-slot.js
 ['en', 'te', 'hi'].forEach((l) => {
   const errs = load(l + '.json').booking.errors;
   const missing = [...codes].filter((c) => !errs[c]);

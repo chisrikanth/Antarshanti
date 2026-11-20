@@ -29,3 +29,11 @@ If someone pays after their 15 minute hold expired and another person took the t
 - No automatic confirmation or reminder messages, and no notification to you when a booking arrives.
 - Cancelling in Supabase frees the slot but does not refund or message the visitor.
 - Google Calendar sync is built (see `docs/GOOGLE-CALENDAR-SETUP.md`) and switches on only after you complete that setup. When on, the weekly schedule is open unless the calendar shows something busy.
+
+## Jyotish birth details (added 20 Nov 2026)
+The Jyotish booking form now collects the birth details, so nobody has to send them on WhatsApp:
+- **Fields:** name, WhatsApp number, date of birth (day / month / year), time of birth (hour / minute / AM-PM, or "I do not know the exact time" with an optional rough note), place of birth, gender (optional), area to focus on (optional), and one consent tick that also covers using the details to prepare the reading.
+- **Checks (page and server):** the date must exist (no 31 Feb) and cannot be in the future or before 1900; the time is required unless "do not know" is ticked; the place needs at least 2 characters with a letter. Errors are shown in English, Telugu or Hindi and the field is highlighted.
+- **Where it is stored:** `bookings.birth_details` (one private JSON value; migration `20261120000008_jyotish_birth_details.sql`, applied to both the test and the production Supabase projects). It also appears in the calendar event description under BIRTH DETAILS. Visitors cannot read it.
+- **Privacy page:** the old sentence "birth details are not entered on this website" was removed; the "Booking details" bullet now names the birth details (en, te, hi).
+- **Tests:** `tests/birth.test.js` (in `npm test`).

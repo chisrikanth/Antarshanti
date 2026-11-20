@@ -98,6 +98,27 @@ navKey: "jyotish"
         <p style="font-size:.88rem;color:var(--body);margin-bottom:10px">{{ k.holdIntro }}</p>
         <div class="field"><label for="h-name">{{ k.nameLabel }}</label><input type="text" id="h-name" autocomplete="name" maxlength="80"></div>
         <div class="field"><label for="h-phone">{{ k.phoneLabel }}</label><input type="tel" id="h-phone" autocomplete="tel" placeholder="{{ k.phonePh }}"></div>
+        <p class="hf-section">✦ {{ k.birthTitle }}</p>
+        <div class="field"><label for="h-day">{{ k.dobLabel }}</label>
+          <div class="row3">
+            <select id="h-day" aria-label="{{ k.dayPh }}"><option value="">{{ k.dayPh }}</option>{% for i in range(1, 32) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}</select>
+            <select id="h-month" aria-label="{{ k.monthPh }}"><option value="">{{ k.monthPh }}</option>{% for m in b.months %}<option value="{{ loop.index }}">{{ m }}</option>{% endfor %}</select>
+            <select id="h-year" aria-label="{{ k.yearPh }}"><option value="">{{ k.yearPh }}</option></select>
+          </div>
+        </div>
+        <div class="field"><label for="h-hour">{{ k.tobLabel }}</label>
+          <div class="row3" id="tob-row">
+            <select id="h-hour" aria-label="{{ k.hourPh }}"><option value="">{{ k.hourPh }}</option>{% for i in range(1, 13) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}</select>
+            <select id="h-min" aria-label="{{ k.minPh }}"><option value="">{{ k.minPh }}</option>{% for i in range(0, 60) %}<option value="{{ i }}">{% if i < 10 %}0{% endif %}{{ i }}</option>{% endfor %}</select>
+            <select id="h-ampm" aria-label="AM / PM"><option value="am">{{ k.am }}</option><option value="pm">{{ k.pm }}</option></select>
+          </div>
+          <p class="hf-hint">{{ k.ampmHint }}</p>
+          <label class="check-inline"><input type="checkbox" id="h-tob-unknown"><span>{{ k.tobUnknown }}</span></label>
+          <input type="text" id="h-tob-approx" maxlength="60" placeholder="{{ k.tobApproxPh }}" style="display:none;margin-top:8px">
+        </div>
+        <div class="field"><label for="h-pob">{{ k.pobLabel }}</label><input type="text" id="h-pob" autocomplete="off" maxlength="120" placeholder="{{ k.pobPh }}"></div>
+        <div class="field"><label for="h-gender">{{ k.genderLabel }}</label><select id="h-gender">{% for key, val in k.genderOpts %}<option value="{% if key != 'none' %}{{ key }}{% endif %}">{{ val }}</option>{% endfor %}</select></div>
+        <div class="field"><label for="h-focus">{{ k.focusLabel }}</label><select id="h-focus"><option value="">{{ k.focusBlank }}</option>{% for key, val in k.focusOpts %}<option value="{{ key }}">{{ val }}</option>{% endfor %}</select></div>
         <input type="text" id="h-website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0">
         <label class="consent-line"><input type="checkbox" id="h-consent"><span>{{ k.consent }}</span></label>
         <button type="button" class="btn btn-gold btn-sm" id="hold-btn" style="width:100%">{{ k.holdBtn }}</button>
@@ -225,30 +246,55 @@ navKey: "jyotish"
     document.getElementById('after-hold').style.display='none';
     document.getElementById('hold-status').textContent='';
   }
+  (function(){   // years, newest first
+    var y=document.getElementById('h-year'), now=new Date().getFullYear();
+    for(var i=now;i>=1920;i--){ var o=document.createElement('option'); o.value=i; o.textContent=i; y.appendChild(o); }
+  })();
+  var $=function(id){ return document.getElementById(id); };
+  $('h-tob-unknown').addEventListener('change',function(){
+    var u=this.checked;
+    $('tob-row').style.opacity=u?'.45':'1'; ['h-hour','h-min','h-ampm'].forEach(function(i){ $(i).disabled=u; });
+    $('h-tob-approx').style.display=u?'block':'none';
+  });
+  function mark(ids){ ids.forEach(function(i){ $(i).classList.add('invalid'); }); $(ids[0]).focus(); }
+  ['h-name','h-phone','h-day','h-month','h-year','h-hour','h-min','h-pob'].forEach(function(i){ var e=$(i); var f=function(){ e.classList.remove('invalid'); }; e.addEventListener('input',f); e.addEventListener('change',f); });
   function holdSlot(){
-    var st=document.getElementById('hold-status'), btn=document.getElementById('hold-btn');
-    var name=document.getElementById('h-name').value.trim(), phone=document.getElementById('h-phone').value.trim();
+    var st=$('hold-status'), btn=$('hold-btn');
+    var name=$('h-name').value.trim(), phone=$('h-phone').value.trim();
+    [].forEach.call(document.querySelectorAll('.hold-form .invalid'),function(e){ e.classList.remove('invalid'); });
     st.style.color='#C62828';
-    if(name.length<2){ st.textContent=K.errName; return; }
-    if(!/^\+?\d{10,13}$/.test(phone.replace(/[\s\-()]/g,''))){ st.textContent=K.errPhone; return; }
-    if(!document.getElementById('h-consent').checked){ st.textContent=K.errConsent; return; }
+    if(name.length<2){ st.textContent=K.errName; mark(['h-name']); return; }
+    if(!/^\+?\d{10,13}$/.test(phone.replace(/[\s\-()]/g,''))){ st.textContent=K.errPhone; mark(['h-phone']); return; }
+    var d=+$('h-day').value, m=+$('h-month').value, y=+$('h-year').value, today=new Date();
+    var dt=new Date(y,m-1,d);
+    if(!d||!m||!y||dt.getFullYear()!==y||dt.getMonth()!==m-1||dt.getDate()!==d||dt>today){ st.textContent=K.errDob; mark(['h-day','h-month','h-year']); return; }
+    var unknown=$('h-tob-unknown').checked, tob='';
+    if(!unknown){
+      var hh=$('h-hour').value, mm=$('h-min').value;
+      if(hh===''||mm===''){ st.textContent=K.errTob; mark(['h-hour','h-min']); return; }
+      tob=('0'+(((+hh)%12)+($('h-ampm').value==='pm'?12:0))).slice(-2)+':'+('0'+mm).slice(-2);
+    }
+    var pob=$('h-pob').value.trim();
+    if(pob.length<2||!/\p{L}/u.test(pob)){ st.textContent=K.errPob; mark(['h-pob']); return; }
+    if(!$('h-consent').checked){ st.textContent=K.errConsent; return; }
+    var birth={dob:y+'-'+('0'+m).slice(-2)+'-'+('0'+d).slice(-2),tob:tob,tob_unknown:unknown,tob_approx:unknown?$('h-tob-approx').value.trim():'',pob:pob,gender:$('h-gender').value,focus:$('h-focus').value};
     btn.disabled=true; btn.textContent=K.holding; st.textContent='';
     fetch('/.netlify/functions/reserve-slot',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({service:'jyotish_consultation',lang:LANG,slot_start:ASBook.iso(selDay,selTime),name:name,phone:phone,consent:true,website:document.getElementById('h-website').value})})
+      body:JSON.stringify({service:'jyotish_consultation',lang:LANG,slot_start:ASBook.iso(selDay,selTime),name:name,phone:phone,birth:birth,consent:true,website:$('h-website').value})})
     .then(function(r){ return r.json().then(function(j){ return {ok:r.ok,status:r.status,j:j}; }); })
     .then(function(x){
       btn.disabled=false; btn.textContent=K.holdBtn;
       if(x.ok){
-        document.getElementById('confirm-text').textContent=ASBook.fmt(K.held,{slot:slotText});
-        document.getElementById('hold-form').style.display='none';
-        document.getElementById('after-hold').style.display='block';
-        var w=document.getElementById('wa-btn');
+        $('confirm-text').textContent=ASBook.fmt(K.held,{slot:slotText});
+        $('hold-form').style.display='none';
+        $('after-hold').style.display='block';
+        var w=$('wa-btn');
         w.href='https://wa.me/919985133161?text='+encodeURIComponent(ASBook.fmt(K.waMsg,{name:name,slot:slotText}));
         w.removeAttribute('data-wa-tagged');
         if(window.AS) AS.track('slot_held',{label:K.track});
       } else {
         st.textContent=ASBook.err(x.j)||K.failed;
-        if(x.status===409){ selTime=null; document.getElementById('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
+        if(x.status===409){ selTime=null; $('bconfirm').className='booking-confirm'; ASBook.load().then(function(d){ if(d&&d.rules){ SLOTS=ASBook.slotsFromRules(d.rules);} renderDays(); renderSlots(); }); }
       }
     }).catch(function(){ btn.disabled=false; btn.textContent=K.holdBtn; st.textContent=K.unreachable; });
   }

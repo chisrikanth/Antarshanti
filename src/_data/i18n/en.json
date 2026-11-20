@@ -272,8 +272,8 @@
   },
   "hero": {
    "eyebrow": "Antarshanti · Inner peace",
-   "title": "Purity in heart. Clarity in mind.<br>Sincerity in action.",
-   "intro": "Jyotish, Bach Flower Therapy and the Happiness Program each touch the heart, the mind and the way you act, in their own way. Begin with any one, and the others open up gently.",
+   "title": "Clarity in mind. Purity in heart.<br>Sincerity in action.",
+   "intro": "Jyotish, Bach Flower Therapy and the Happiness Program each touch the mind, the heart and the way you act, in their own way. Begin with any one, and the others open up gently.",
    "waMessage": "Namaste Srikanth, I would like to know more.",
    "portraitAlt": "Srikanth, Art of Living teacher, Bach Flower therapist and Jyotish practitioner",
    "attr": "— Gurudev Sri Sri Ravi Shankar",
@@ -562,7 +562,10 @@
    "service_closed": "This service is not open for online booking right now. Please message Srikanth on WhatsApp.",
    "too_many": "You already have two open requests. Please message Srikanth on WhatsApp to change them.",
    "hold_failed": "Could not hold the slot. Please try again or message Srikanth on WhatsApp.",
-   "generic": "Something went wrong. Please try again, or message Srikanth on WhatsApp."
+   "generic": "Something went wrong. Please try again, or message Srikanth on WhatsApp.",
+   "dob": "Please choose a valid date of birth.",
+   "tob": "Please choose your time of birth, or tick that you do not know it.",
+   "pob": "Please enter your place of birth."
   }
  },
  "jyotish": {
@@ -609,11 +612,11 @@
   },
   "book": {
    "tabName": "Jyotish Consultation",
-   "holdIntro": "To hold this time for you, please share a name and your WhatsApp number. Srikanth will message you there.",
+   "holdIntro": "To hold this time for you, please share your birth details, your name and your WhatsApp number. Srikanth will prepare with them and message you there.",
    "nameLabel": "Your name",
    "phoneLabel": "WhatsApp number",
    "phonePh": "+91 XXXXX XXXXX",
-   "consent": "I agree that Srikanth may contact me on WhatsApp about this booking.",
+   "consent": "I agree that Srikanth may contact me on WhatsApp and use these details to prepare my reading.",
    "holdBtn": "Hold this slot",
    "holding": "Holding…",
    "errName": "Please enter your name.",
@@ -625,18 +628,54 @@
    "next": "Here is what happens next:",
    "steps": [
     "Your slot is held for you (done).",
-    "Send your birth date, exact time and place on WhatsApp so I can prepare. I confirm within 24 hours.",
+    "Your birth details came with the booking, so I can prepare in advance. I confirm within 24 hours. If there is more you want to tell me, WhatsApp is open.",
     "After the session, contribute whatever it was worth to you — only if it helped."
    ],
    "payTitle": "Contribute what feels right",
    "paySub": "Scan the code, or tap below to pay from the phone you are holding. There is no set amount and none is expected — give after the session, if it helped.",
    "qrAlt": "PhonePe QR code to contribute to Antarshanti",
-   "waBtn": "Send birth details on WhatsApp",
+   "waBtn": "WhatsApp Srikanth",
    "waMsgFirst": "Namaste Srikanth, I have booked a slot for a Jyotish consultation.",
-   "waMsg": "Namaste Srikanth, this is {name}. I have held {slot} for a Jyotish consultation. My birth details: ",
+   "waMsg": "Namaste Srikanth, this is {name}. I have held {slot} for a Jyotish consultation.",
    "upiBtn": "Open my UPI app →",
    "payFine": "Your slot is held either way. A contribution is never a condition for the session.",
-   "track": "jyotish"
+   "track": "jyotish",
+   "birthTitle": "Your birth details",
+   "dobLabel": "Date of birth",
+   "dayPh": "Day",
+   "monthPh": "Month",
+   "yearPh": "Year",
+   "tobLabel": "Time of birth",
+   "hourPh": "Hour",
+   "minPh": "Min",
+   "am": "AM",
+   "pm": "PM",
+   "tobUnknown": "I do not know the exact time",
+   "tobApproxPh": "Roughly, if you know: early morning, evening… (optional)",
+   "pobLabel": "Place of birth",
+   "pobPh": "Town or city, state, country",
+   "genderLabel": "Gender (optional)",
+   "genderOpts": {
+    "none": "Prefer not to say",
+    "female": "Female",
+    "male": "Male",
+    "other": "Other"
+   },
+   "focusLabel": "What would you like to focus on? (optional)",
+   "focusBlank": "Choose…",
+   "focusOpts": {
+    "career": "Career and work",
+    "relationships": "Marriage and relationships",
+    "family": "Family and children",
+    "money": "Money",
+    "education": "Education",
+    "general": "General life direction",
+    "other": "Something else"
+   },
+   "errDob": "Please choose a valid date of birth.",
+   "errTob": "Please choose your time of birth, or tick that you do not know it.",
+   "errPob": "Please enter your place of birth.",
+   "ampmHint": "AM = midnight to noon, PM = noon to midnight."
   },
   "testimonials": {
    "eyebrow": "What clients say",
@@ -660,8 +699,8 @@
     "a": "Quite different. Vedic astrology uses your exact birth chart across 16 divisional charts, planetary periods, and classical techniques. A Sun-sign column uses one of dozens of factors."
    },
    {
-    "q": "What do I share after booking?",
-    "a": "Date of birth, exact time of birth, and place of birth — sent over WhatsApp after booking. You can also share the main area of life you want to focus on."
+    "q": "What do I share when booking?",
+    "a": "Your date, exact time and place of birth go into the booking form, so nothing needs to be sent separately. If you do not know the exact time, say so — I can work with what you remember. You can also tell us which area of life you want to focus on."
    }
   ],
   "cta": {
@@ -850,7 +889,7 @@
    },
    {
     "h": "What we collect and why",
-    "html": "<ul>\n<li><strong>Wellbeing check-in.</strong> The check-in has 25 questions. It is a self-reflection tool, not a diagnosis. If you choose to save your result, we store your answers and scores along with the name and WhatsApp number you enter, and an email address if you choose to give one. We use this so that Srikanth can follow up if you ask him to, and so you can come back to your result.</li>\n<li><strong>How you found us.</strong> If a link you clicked carries campaign tags (utm_ values), we note them, along with the page you landed on and the website you came from (the domain only). We use this to understand which of our efforts reach people.</li>\n<li><strong>WhatsApp messages.</strong> If you message us, we see your number and what you write. For a Jyotish consultation, you share birth details with Srikanth on WhatsApp. They are not entered on this website.</li>\n<li><strong>Bach Flower payments.</strong> The Rs 1,000 consultation fee is paid online through Razorpay. Razorpay handles your card, UPI or bank details. This site never sees or stores them. We keep the order ID and payment ID that Razorpay gives us, so we can match a payment to a booking and process refunds.</li>\n<li><strong>Jyotish contributions.</strong> Jyotish is donation-based. If you choose to contribute by UPI after your session, you do it in your own UPI app. This site does not collect or process it.</li>\n<li><strong>Booking details.</strong> When you book a session, we keep the details you give: your name and WhatsApp number (for a paid session, the phone number and email you gave at payment). They are kept in a private booking record and in a private Google Calendar that only Srikanth can open. We keep them so that he can contact you easily and prepare for your session.</li>\n<li><strong>Usage analytics.</strong> We may use Google Analytics, Meta Pixel or Plausible to count page views and button clicks. These tools load only if we have switched them on. If they are on, they may set cookies or similar identifiers in your browser.</li>\n</ul>\n<p>We do not store any health diagnosis about you. The check-in is not a medical tool.</p>"
+    "html": "<ul>\n<li><strong>Wellbeing check-in.</strong> The check-in has 25 questions. It is a self-reflection tool, not a diagnosis. If you choose to save your result, we store your answers and scores along with the name and WhatsApp number you enter, and an email address if you choose to give one. We use this so that Srikanth can follow up if you ask him to, and so you can come back to your result.</li>\n<li><strong>How you found us.</strong> If a link you clicked carries campaign tags (utm_ values), we note them, along with the page you landed on and the website you came from (the domain only). We use this to understand which of our efforts reach people.</li>\n<li><strong>WhatsApp messages.</strong> If you message us, we see your number and what you write.</li>\n<li><strong>Bach Flower payments.</strong> The Rs 1,000 consultation fee is paid online through Razorpay. Razorpay handles your card, UPI or bank details. This site never sees or stores them. We keep the order ID and payment ID that Razorpay gives us, so we can match a payment to a booking and process refunds.</li>\n<li><strong>Jyotish contributions.</strong> Jyotish is donation-based. If you choose to contribute by UPI after your session, you do it in your own UPI app. This site does not collect or process it.</li>\n<li><strong>Booking details.</strong> When you book a session, we keep the details you give: your name and WhatsApp number (for a paid session, the phone number and email you gave at payment). For a Jyotish consultation we also keep the birth details you enter in the booking form: date, time and place of birth, and optionally gender and the area of life you want to focus on. They are kept in a private booking record and in a private Google Calendar that only Srikanth can open. We keep them so that he can contact you easily and prepare your reading.</li>\n<li><strong>Usage analytics.</strong> We may use Google Analytics, Meta Pixel or Plausible to count page views and button clicks. These tools load only if we have switched them on. If they are on, they may set cookies or similar identifiers in your browser.</li>\n</ul>\n<p>We do not store any health diagnosis about you. The check-in is not a medical tool.</p>"
    },
    {
     "h": "Consent and how to withdraw it",

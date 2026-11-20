@@ -1,9 +1,10 @@
 // netlify/functions/reserve-slot.js  (POST)
 // For contribution-based sessions (Jyotish): no payment, so we ask for a name and WhatsApp number
-// (with consent) and hold the slot until Srikanth confirms. Paid sessions reserve inside create-order.
+// (with consent) and their birth details, and hold the slot until Srikanth confirms. Paid sessions reserve inside create-order.
 const { config, rest } = require('./lib/db');
 const { loadSchedule, checkSlot, reserve, addToCalendar } = require('./lib/booking');
 const { normalizePhone, jyotishEvent } = require('./lib/eventDetails');
+const { validateBirth } = require('./lib/birth');
 
 const SERVICES = new Set(['jyotish_consultation']);
 const json = (statusCode, obj) => ({ statusCode, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj) });
@@ -20,6 +21,8 @@ exports.handler = async function (event) {
   if (name.length < 2 || name.length > 80) return json(400, { code: 'name', error: 'Please enter your name.' });
   if (!/^\+?\d{10,13}$/.test(phone)) return json(400, { code: 'phone', error: 'Please enter a valid WhatsApp number.' });
   phone = normalizePhone(phone);   // a number typed without a country code is taken as +91, so WhatsApp links work
+  const birth = validateBirth(p.birth);
+  if (!birth.ok) return json(400, { code: birth.code, error: birth.code === 'dob' ? 'Please enter a valid date of birth.' : birth.code === 'tob' ? 'Please enter your time of birth, or tick that you do not know it.' : 'Please enter your place of birth.' });
   const lang = ['en', 'te', 'hi'].includes(p.lang) ? p.lang : 'en';
   if (p.consent !== true) return json(400, { code: 'consent', error: 'Please tick the box so Srikanth may contact you about this booking.' });
 
@@ -36,10 +39,10 @@ exports.handler = async function (event) {
     if (open.ok && (await open.json()).length >= 2) return json(429, { code: 'too_many', error: 'You already have two open requests. Please message Srikanth on WhatsApp to change them.' });
   } catch (e) { console.error('limit check:', e.message); }
 
-  const r = await reserve(cfg, { service_key: service, slot_start: check.date.toISOString(), status: 'requested', contact_name: name, contact_phone: phone, consent: true, notes: 'Page language: ' + lang });
+  const r = await reserve(cfg, { service_key: service, slot_start: check.date.toISOString(), status: 'requested', contact_name: name, contact_phone: phone, consent: true, birth_details: birth.value, notes: 'Page language: ' + lang });
   if (r.taken) return json(409, { code: 'slot_taken', error: 'Sorry, that time was just taken. Please pick another.' });
   if (r.error) { console.error(r.error); return json(502, { code: 'hold_failed', error: 'Could not hold the slot. Please try again or message Srikanth on WhatsApp.' }); }
-  const ce = jyotishEvent({ name, phone, slotStart: check.date.toISOString(), lang, bookingId: r.id });
+  const ce = jyotishEvent({ name, phone, birth: birth.value, slotStart: check.date.toISOString(), lang, bookingId: r.id });
   await addToCalendar(event, cfg, { id: r.id, slot_start: check.date.toISOString() }, ce.summary, ce.description);
   return json(200, { ok: true, id: r.id });
 };

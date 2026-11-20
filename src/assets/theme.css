@@ -279,3 +279,12 @@ html[lang="te"] .hero-grid h1,html[lang="hi"] .hero-grid h1{font-size:clamp(1.8r
 @media(min-width:821px){.hero-intro h1{max-width:760px}.hero-intro p{max-width:640px}}
 .hero-intro .hero-attr{margin-top:12px!important;margin-bottom:0!important;font-size:.9rem!important;font-style:italic;letter-spacing:.06em;color:var(--saffron)}
 .hero-intro .hero-note{margin-top:14px!important;margin-bottom:0!important;font-size:.95rem!important;color:var(--dim);letter-spacing:.03em}
+.hold-form .field select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 8px;font:inherit;font-size:.92rem;background:#fff;color:var(--ink);min-width:0}
+.hold-form .field select:focus{outline:none;border-color:var(--sun-deep)}
+.hold-form .row3{display:flex;gap:8px}.hold-form .row3>select{flex:1 1 0}.hold-form .row3>select:last-child{flex:1.15 1 0}
+.hold-form .invalid{border-color:#C62828!important;background:#FFF5F5!important}
+.hf-section{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--saffron);margin:14px 0 8px}
+.hf-hint{font-size:.76rem;color:var(--dim);margin:6px 0 0}
+.check-inline{display:flex;gap:8px;align-items:flex-start;font-size:.86rem;color:var(--body);margin-top:8px;font-weight:500!important}
+.check-inline input{width:auto!important;margin-top:3px}
+.hold-form .field .check-inline{display:flex}

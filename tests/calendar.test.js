@@ -1,3 +1,4 @@
+const BIRTH = { dob: '1990-03-14', tob: '06:35', pob: 'Hyderabad, Telangana, India', gender: 'male', focus: 'career' };
 const assert = require('assert'), crypto = require('crypto'), path = require('path');
 const { nextMondayNineIst, RULES } = require('./helpers');
 const lib = (f) => require(path.join(__dirname, '..', 'netlify', 'functions', 'lib', f));
@@ -87,9 +88,9 @@ global.fetch = async (url, init) => {
   googleEvents = ev1; gcal.resetCache();
 
   // ---- booking a slot that is not open (the 10:00 hour is blocked by the dentist)
-  let r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('10:00'), name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 400); console.log('booking a blocked 10:00 ->', r.statusCode, JSON.parse(r.body).error);
+  let r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('10:00'), name: 'Ravi', phone: '9876543210', consent: true, birth: BIRTH })); assert.equal(r.statusCode, 400); console.log('booking a blocked 10:00 ->', r.statusCode, JSON.parse(r.body).error);
   // ---- booking an open slot writes it to the calendar
-  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('09:00'), name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 200);
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('09:00'), name: 'Ravi', phone: '9876543210', consent: true, birth: BIRTH })); assert.equal(r.statusCode, 200);
   const evt = created[0].body; assert.ok(created[0].url.includes(encodeURIComponent(process.env.GOOGLE_CALENDAR_ID)));
   assert.equal(new Date(evt.start.dateTime).getTime(), new Date(at('09:00')).getTime()); assert.equal(new Date(evt.end.dateTime).getTime() - new Date(evt.start.dateTime).getTime(), 3600000);
   assert.ok(evt.summary.includes('Ravi') && evt.description.includes('+919876543210'));
@@ -111,7 +112,7 @@ global.fetch = async (url, init) => {
   // ---- Google down -> falls back to the weekly schedule, booking still works
   googleDown = true; gcal.resetCache(); const created0 = created.length;
   d = JSON.parse((await sl.handler(ev('GET'))).body); assert.equal(d.calendarError, true); assert.deepEqual(d.days, {});
-  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('09:00'), name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 400); assert.equal(created.length, created0);
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('09:00'), name: 'Ravi', phone: '9876543210', consent: true, birth: BIRTH })); assert.equal(r.statusCode, 400); assert.equal(created.length, created0);
   console.log('calendar configured but unreadable -> NO times offered and booking refused (fails closed, so appointments are never ignored)');
   googleDown = false;
   // ---- paid Bach booking confirmed by the webhook -> calendar event

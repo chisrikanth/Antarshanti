@@ -1,3 +1,4 @@
+const BIRTH = { dob: '1990-03-14', tob: '06:35', pob: 'Hyderabad, Telangana, India', gender: 'male', focus: 'career' };
 const assert = require('assert'), https = require('https'), path = require('path'), { EventEmitter } = require('events');
 const { nextMondayNineIst, RULES } = require('./helpers');
 const fx = (f) => require(path.join(__dirname, '..', 'netlify', 'functions', f));
@@ -58,7 +59,7 @@ global.fetch = async (url, init) => {
   // second visitor, same slot -> refused (Bach)
   r = await co.handler(ev('POST', { service: 'bach_consultation', slot_start: SLOT })); assert.equal(r.statusCode, 409); console.log('visitor B same slot (Bach) ->', r.statusCode, JSON.parse(r.body).error);
   // third visitor wants it for Jyotish -> also refused (one calendar)
-  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 409); console.log('visitor C same slot (Jyotish) ->', r.statusCode);
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '9876543210', consent: true, birth: BIRTH })); assert.equal(r.statusCode, 409); console.log('visitor C same slot (Jyotish) ->', r.statusCode);
   d = JSON.parse((await sl.handler(ev('GET'))).body); assert.equal(d.taken.length, 1); console.log('slots endpoint now lists it as taken');
 
   // webhook confirms A
@@ -71,13 +72,17 @@ global.fetch = async (url, init) => {
 
   // Jyotish request flow + validations
   bookings = [];
-  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '98765 43210', consent: true })); assert.equal(r.statusCode, 200); assert.equal(bookings[0].status, 'requested'); assert.equal(bookings[0].contact_phone, '+919876543210'); console.log('Jyotish request -> slot held as requested (spaces removed, +91 added to a 10-digit number)');
-  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '123', consent: true })); assert.equal(r.statusCode, 400);
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '98765 43210', consent: true, birth: BIRTH })); assert.equal(r.statusCode, 200); assert.equal(bookings[0].status, 'requested'); assert.equal(bookings[0].contact_phone, '+919876543210'); console.log('Jyotish request -> slot held as requested (spaces removed, +91 added to a 10-digit number)');
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '123', consent: true, birth: BIRTH })); assert.equal(r.statusCode, 400);
   r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '9876543210', consent: false })); assert.equal(r.statusCode, 400); console.log('bad phone / no consent -> 400');
-  const n = bookings.length; r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Bot', phone: '9876543211', consent: true, website: 'spam.com' })); assert.equal(bookings.length, n); console.log('honeypot filled -> nothing saved');
+  assert.equal(bookings[0].birth_details.pob, 'Hyderabad, Telangana, India'); assert.equal(bookings[0].birth_details.dob, '1990-03-14');
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 400); assert.equal(JSON.parse(r.body).code, 'dob');
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Ravi', phone: '9876543210', consent: true, birth: Object.assign({}, BIRTH, { pob: '' }) })); assert.equal(r.statusCode, 400); assert.equal(JSON.parse(r.body).code, 'pob');
+  console.log('birth details saved with the request; missing or bad birth details -> 400');
+  const n = bookings.length; r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: SLOT, name: 'Bot', phone: '9876543211', consent: true, birth: BIRTH, website: 'spam.com' })); assert.equal(bookings.length, n); console.log('honeypot filled -> nothing saved');
   // hoarding limit
   const s2 = new Date(new Date(SLOT).getTime() + 3600000).toISOString(), s3 = new Date(new Date(SLOT).getTime() + 7200000).toISOString();
-  await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: s2, name: 'Ravi', phone: '9876543210', consent: true }));
-  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: s3, name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 429); console.log('third open request from one number ->', r.statusCode);
+  await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: s2, name: 'Ravi', phone: '9876543210', consent: true, birth: BIRTH }));
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: s3, name: 'Ravi', phone: '9876543210', consent: true, birth: BIRTH })); assert.equal(r.statusCode, 429); console.log('third open request from one number ->', r.statusCode);
   console.log('ALL BOOKING TESTS PASSED');
 })().catch((e) => { console.error('FAIL', e); process.exit(1); });

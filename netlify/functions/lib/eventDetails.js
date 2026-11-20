@@ -22,6 +22,18 @@ function whenIst(isoOrMs) {
 const clean = (s, n) => String(s == null ? '' : s).replace(/[\r\n]+/g, ' ').trim().slice(0, n || 200);
 const line = (k, v) => (v ? `${k}: ${v}` : null);
 
+const FOCUS = { career: 'Career and work', relationships: 'Marriage and relationships', family: 'Family and children', money: 'Money', education: 'Education', general: 'General life direction', other: 'Something else' };
+const GENDER = { female: 'Female', male: 'Male', other: 'Other' };
+function birthLines(bd) {
+  if (!bd) return ['Birth details: not given. Ask for birth date, exact time and place on WhatsApp.'];
+  const [y, m, d] = String(bd.dob).split('-').map(Number);
+  let tob = 'not known';
+  if (!bd.tob_unknown && /^\d\d:\d\d$/.test(bd.tob || '')) { const h = +bd.tob.slice(0, 2); tob = `${h % 12 || 12}:${bd.tob.slice(3)} ${h >= 12 ? 'PM' : 'AM'}`; }
+  else if (bd.tob_approx) tob = 'not known (they say: ' + clean(bd.tob_approx, 60) + ')';
+  return ['BIRTH DETAILS', line('Date of birth', `${d} ${MONTHS[m - 1]} ${y}`), line('Time of birth', tob), line('Place of birth', clean(bd.pob, 120)),
+    line('Gender', GENDER[bd.gender] || null), line('Wants to focus on', FOCUS[bd.focus] || null)];
+}
+
 // Jyotish request (contribution based, confirmed by Srikanth on WhatsApp)
 function jyotishEvent(b) {
   const phone = normalizePhone(b.phone), name = clean(b.name, 80);
@@ -33,7 +45,8 @@ function jyotishEvent(b) {
       line('Chat', waLink(phone)),
       line('Service', 'Jyotish consultation, 60 minutes (no fixed fee; contribution after the session)'),
       line('When', whenIst(b.slotStart)),
-      'Status: REQUESTED. Message them on WhatsApp to confirm (promised within 24 hours). They will send birth date, exact time and place there.',
+      'Status: REQUESTED. Message them on WhatsApp to confirm (promised within 24 hours).',
+      ...birthLines(b.birth),
       line('Page language', LANGS[b.lang] || null),
       line('Booking ID', clean(b.bookingId, 60)),
       line('Requested on', whenIst(Date.now()))
