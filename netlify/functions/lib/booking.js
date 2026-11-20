@@ -8,8 +8,11 @@ const MIN_LEAD_MINUTES = 120;     // cannot book a slot starting sooner than thi
 const MAX_DAYS_AHEAD = 45;
 
 // Used only if the schedule table cannot be read (keeps booking possible during an outage).
-const DEFAULT_RULES = { 1: ['09:00','10:00','11:00','17:00','18:00','19:00'], 3: ['09:00','10:00','11:00','17:00','18:00','19:00'],
-                        5: ['09:00','10:00','11:00','12:00','17:00','18:00'], 6: ['09:00','10:00','11:00','15:00','16:00','17:00'] };
+// Keep in step with src/_data/weeklySlots.json and the availability_rules table (the table is the source of truth).
+const WEEKDAY_SLOTS = ['09:00','10:00','11:00','17:00','18:00','19:00','20:00'];
+const ALL_DAY_SLOTS = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00'];
+const DEFAULT_RULES = { 0: ALL_DAY_SLOTS, 1: WEEKDAY_SLOTS, 2: WEEKDAY_SLOTS, 3: WEEKDAY_SLOTS, 4: WEEKDAY_SLOTS,
+                        5: ['09:00','10:00','11:00','12:00','17:00','18:00','19:00','20:00'], 6: ALL_DAY_SLOTS };
 
 // India has no daylight saving: IST is always UTC+5:30, so we can compute without a timezone library.
 function istParts(date) {
@@ -35,7 +38,30 @@ async function weeklySchedule(cfg) {
   }
 }
 
-// If the Google calendar is configured and readable, IT decides availability (calendar always wins).
+// Every slot start (ms) the weekly schedule offers over the next `days` days, minus whole days off and anything that
+// overlaps a busy calendar event. The weekly schedule is the DEFAULT: a time is open unless something blocks it.
+function ruleSlotStarts(rules, blockedYmds, busy, nowMs, days, minutes) {
+  const len = (minutes || 60) * 60000, out = new Set(), blocked = new Set(blockedYmds || []);
+  for (let i = 0; i <= days; i++) {
+    const t = istParts(new Date(nowMs + i * 86400000));
+    if (blocked.has(t.ymd)) continue;
+    (rules[t.weekday] || []).forEach((hm) => {
+      const s = new Date(`${t.ymd}T${hm}:00+05:30`).getTime();
+      if (isNaN(s) || s < nowMs) return;
+      if (busy.some((b) => b.start < s + len && b.end > s)) return;
+      out.add(s);
+    });
+  }
+  return out;
+}
+
+// If the Google calendar is configured and readable it BLOCKS times: the weekly schedule (database table) says when
+// Srikanth normally takes sessions, and any busy event in the calendar (appointment, travel, a booking) removes the
+// slots it overlaps. Events titled "Open"/"Available" are optional EXTRA windows outside the weekly pattern.
+// If the calendar IS configured but cannot be read right now (Google down, calendar not shared, wrong ID), we FAIL
+// CLOSED: no times are offered until it can be read. Falling back to the weekly schedule would silently ignore
+// Srikanth's appointments, which is exactly what the calendar exists to prevent. (When no calendar is configured at
+// all, the weekly schedule alone is used. The database still prevents any double booking either way.)
 // If it is configured but cannot be read right now, fall back to the weekly schedule so booking keeps working
 // (the database still prevents any double booking).
 async function loadSchedule(cfg, event) {
@@ -43,9 +69,16 @@ async function loadSchedule(cfg, event) {
   if (c) {
     try {
       const now = Date.now();
-      const { open, busy } = await gcal.readCalendar(c, now, now + (MAX_DAYS_AHEAD + 1) * 86400000);
-      return { mode: 'calendar', fromDb: true, slotSet: gcal.openSlotStarts(open, busy, [], now, gcal.SLOT_MINUTES), blocked: [], rules: {} };
-    } catch (e) { console.error('calendar unreadable, using weekly schedule:', e.message); }
+      const weekly = await weeklySchedule(cfg);
+      const { open, busy, name } = await gcal.readCalendar(c, now, now + (MAX_DAYS_AHEAD + 1) * 86400000);
+      const blocked = new Set(weekly.blocked);
+      const slotSet = ruleSlotStarts(weekly.rules, weekly.blocked, busy, now, MAX_DAYS_AHEAD + 1, gcal.SLOT_MINUTES);
+      gcal.openSlotStarts(open, busy, [], now, gcal.SLOT_MINUTES).forEach((ms) => { if (!blocked.has(istParts(new Date(ms)).ymd)) slotSet.add(ms); });
+      return { mode: 'calendar', fromDb: weekly.fromDb, calendarName: name || null, slotSet, blocked: [], rules: {} };
+    } catch (e) {
+      console.error('calendar unreadable, offering no times until it can be read:', e.message);
+      return { mode: 'calendar', fromDb: true, calendarName: null, calendarError: true, slotSet: new Set(), blocked: [], rules: {} };
+    }
   }
   return weeklySchedule(cfg);
 }
@@ -107,4 +140,4 @@ async function addToCalendar(event, cfg, booking, summary, description) {
   } catch (e) { console.error('calendar event not created:', e.message); return null; }
 }
 
-module.exports = { addToCalendar, weeklySchedule, HOLD_MINUTES, MIN_LEAD_MINUTES, MAX_DAYS_AHEAD, DEFAULT_RULES, istParts, loadSchedule, checkSlot, reserve, release, takenSlots, expireHolds };
+module.exports = { ruleSlotStarts, addToCalendar, weeklySchedule, HOLD_MINUTES, MIN_LEAD_MINUTES, MAX_DAYS_AHEAD, DEFAULT_RULES, istParts, loadSchedule, checkSlot, reserve, release, takenSlots, expireHolds };

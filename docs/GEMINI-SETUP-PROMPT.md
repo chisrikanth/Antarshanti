@@ -8,7 +8,7 @@
 |---|---|---|
 | 0 | **Shared context** (paste first, once) | Gives Gemini the whole picture so it can think for itself instead of following steps blindly |
 | 1 | **Decide the structure, then create the calendars** | Gemini works out: one Google account or two, one calendar or several |
-| 2 | **Add your availability** (the "Open" events), plus **2b: extend weekday evenings to 9 PM**, **2c: mirror the pattern into the TEST calendar** | This is how you control which times the website offers |
+| 2 | **Simplify the calendars**: no availability events are needed any more; remove the old "Open" events and keep only what is busy | The website now treats your normal weekly hours as open and only reads the calendar for what blocks them |
 | 3 | **Google Cloud: the robot account and the sharing** | The website needs a "service account" to read and write only these calendars |
 | 4 | **Netlify settings and the live test** | Puts the details into the website's settings and proves it works on the staging site |
 | 5 | **Razorpay (test mode) checks** | Needed before the Bach Flower payment flow can be tested |
@@ -53,13 +53,13 @@ These were already present before: `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`, 
 
 | Item | State |
 |---|---|
-| Prompts 0 to 2 (context, calendars, Open events) | done by you with Gemini (cannot be verified from Claude's side: it has no access to your Google account) |
+| Prompts 0 to 1 (context, calendars) and the old Prompt 2 (Open events) | done by you with Gemini. **The logic changed on 21 Nov: Open events are no longer needed** (see the next section); the new Prompt 2 removes them. Claude cannot see your Google account, so this is unverified |
 | `GOOGLE_CLIENT_EMAIL`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CALENDAR_ID` | **present** in Production, Branch deploys and Deploy Previews, flagged secret. The values are hidden, so it cannot be seen whether the Production and TEST calendar IDs are different. Please confirm that they are |
 | `GOOGLE_CALENDAR_ENV` | production / test / test (correct) |
 | `SUPABASE_URL` | production / test / test (correct, now flagged secret; fine) |
 | `SUPABASE_SERVICE_KEY` | **missing** (without it the booking database is not used and saved check-ins and bookings fail) |
 | `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` | now secret-flagged and listed per context, but the staging contexts still end in the same characters as the **live** key: **test keys not yet added**, so staging payments are refused by the safety lock |
-| `RAZORPAY_WEBHOOK_SECRET` | **missing** |
+| `RAZORPAY_WEBHOOK_SECRET` | **created by Claude on 21 Nov** (secret-flagged): one value for Production (the live-mode webhook) and one for Branch deploys and Deploy Previews (the test-mode webhook). Claude gave you the two values in chat so you can paste them into the Razorpay webhook forms |
 | Staging redeployed after the new variables? | pushing the 9 PM schedule change to the `staging` branch on 21 Nov triggers a fresh staging deploy |
 | Calendar actually shared with the robot (Prompt 3)? | **not yet checked**; the way to find out is the slots check below |
 
@@ -67,23 +67,30 @@ These were already present before: `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`, 
 `https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots`
 - Text containing `"mode":"calendar"` and a `days` list = the calendar works.
 - `{"live":false}` = the website cannot reach its **database**: `SUPABASE_SERVICE_KEY` is missing (or `SUPABASE_URL` / the key is wrong) for the staging contexts. The calendar is never even tried in that case, so this is NOT a Google problem. Fix: add `SUPABASE_SERVICE_KEY` for Branch deploys and Deploy Previews (the key of the TEST Supabase project), then redeploy staging.
-- `"mode":"weekly"` = the database works but the calendar is not connected or something Google-side is wrong; paste what you see to Claude, or use the troubleshooting list in Prompt 4.
+- `"mode":"weekly"` = the database works but the calendar is not connected; paste what you see to Claude, or use the troubleshooting list in Prompt 4.
+- `"calendarError":true` with an empty `days` list = the calendar is connected but Google could not be read (not shared with the robot, wrong ID, key problem). The website deliberately offers nothing then.
+- The text also contains `"calendarName"`. On staging it must say **Antarshanti TEST**. If it says Antarshanti Bookings, the wrong calendar ID is in the staging variables.
 
 ---
 
-## How the website reads the calendar: by title, or by Free/Busy?
+## How the website reads the calendar (changed 21 Nov 2026: default open, the calendar only blocks)
 
-**Both matter, in two different ways.** This is exactly what the code does:
+**The idea:** your normal weekly hours are stored in the website's database and are **open by default**. The Google calendar is only asked one question: *"is anything busy at this time?"* If yes, that slot disappears. You never create availability events.
 
-| What the website looks at | What it decides |
+| In the calendar | What the website does |
 |---|---|
-| **The title**: starts with the word **Open** or **Available** (capital or small letters, nothing in front of it, so no emoji or symbol before it) | "This is a window when I take sessions." Slots are offered inside it. |
-| **Any other title** (Busy, Travel, Doctor, a booking, anything) | "I am not available." It blocks the slots it overlaps. |
-| **The Show-as setting: Busy or Free** | Whether the event counts at all. **Free** events are ignored completely, whatever their title. So an Open event must be **Busy** (the default in Google Calendar). A blocker must also be **Busy** to block. |
-| **All-day or timed** | A timed Open event is a window. An all-day Open event is ignored (it has no hours). Any other all-day event blocks the whole day (India time). |
-| **Cancelled / declined** | Ignored. |
+| **Any timed event** (Busy, Doctor, Travel, a reminder, a booking made by the site) | Blocks the one-hour slots it overlaps, even by one minute |
+| **An all-day event** (for example Away) | Blocks that whole day (India time) |
+| **Show as: Free** on an event | The event is **ignored** (use this for reminders you want to keep on the calendar without blocking anything) |
+| **Cancelled** event | Ignored |
+| **A title starting with Open or Available** (optional, rare) | Adds an **extra** bookable window outside your weekly hours (for a special one-off time). It never blocks. Old Open events from the first setup are therefore harmless, but should be deleted to keep the calendar tidy |
+| Colour, description, guests | Do not matter |
 
-So: **title says what it is (Open window or a blocker); Busy/Free says whether it counts.** The colour, the description and the guests do not matter. The website itself writes booking events as Busy, titled "Jyotish: Name (requested)" or "Bach Flower consultation (paid)".
+**Normal weekly hours** (database table availability_rules): Monday to Thursday 9 AM to 12 noon and 5 PM to 9 PM; Friday 9 AM to 1 PM and 5 PM to 9 PM; Saturday and Sunday 9 AM to 9 PM. Changing these permanently means editing that table (or asking Claude); one-off changes are a Busy event.
+
+**If the calendar is connected but unreadable** (Google problem, calendar not shared, wrong ID) the website **offers no times** and visitors are told to message you on WhatsApp. This is deliberate: guessing would ignore your appointments. It stays strict until the calendar can be read again.
+
+**Why this design:** an "Open" event for every available hour fills the calendar with coloured blocks that sit on top of real bookings, so you cannot see at a glance when you are actually free. Now the calendar shows only things that really happen (bookings and your commitments), and everything else is free.
 
 ---
 
@@ -97,19 +104,19 @@ I run Antarshanti Healing from Hyderabad, India, by myself. I offer (1) online J
 
 WHY I NEED GOOGLE CALENDAR
 Visitors pick a time slot on the Jyotish and Bach Flower pages. I want my Google Calendar to be the single source of truth for when I am available, so that I can control everything from my phone with no coding:
-- I create events titled "Open" for the times I take sessions. The website offers one-hour slots inside those windows.
-- Any other event in that calendar (Busy, Travel, a doctor visit) blocks those hours.
+- My normal weekly hours are stored in the website's database, so times inside them are open by default. I do NOT want to create availability events in the calendar; they clutter it and visually collide with real bookings.
+- Any event in that calendar (Busy, Travel, a doctor visit, a reminder) blocks the hours it overlaps, unless it is marked Free.
 - When someone books, the website writes an event into the same calendar, which then blocks that time automatically. That is how double booking is avoided. (The database also refuses double bookings as a second safety net.)
 The website talks to Google through a "service account" (a robot Google account with its own email address and a JSON key file). The robot is given access to only the calendars I share with it.
 
 HOW THE WEBSITE USES THE CALENDAR (this is exactly what the code does; please check each point against what is actually possible in Google Calendar)
-1. An event whose title starts with the word Open or Available (not case sensitive, for example "Open", "Open - online", "Available") is an availability window. Only timed events count; an all-day "Open" is ignored.
-2. Inside a window it offers 60-minute slots starting at the window start. A window 09:00-12:00 offers 9:00, 10:00 and 11:00.
-3. Any other event blocks the slots it overlaps, including all-day events (an all-day event blocks that whole day, India time).
-4. Events marked Free (the "Show as: Free" setting, also called transparent) and cancelled events are ignored. IMPORTANT: an Open event must therefore be left as Busy (the default). If an Open event is set to Free it is ignored and no times are offered.
+1. Normal hours come from the database, not from the calendar: Monday to Thursday 09:00-12:00 and 17:00-21:00; Friday 09:00-13:00 and 17:00-21:00; Saturday and Sunday 09:00-21:00. Inside them the website offers 60-minute slots on the hour.
+2. Any timed event in the calendar blocks the slots it overlaps (by even one minute). An all-day event blocks that whole day (India time).
+3. Events marked Free (the "Show as: Free" setting, also called transparent) and cancelled events are ignored.
+4. An event whose title starts with the word Open or Available is optional and rare: it ADDS an extra window outside the normal hours and never blocks. Events like that left over from an earlier attempt are harmless but I want them deleted.
 5. When a booking is made the site creates a 60-minute event in the same calendar, marked Busy, titled "Jyotish: <name> (requested)" or "Bach Flower consultation (paid)". The Jyotish event description contains the client's name and WhatsApp number.
-6. The site never offers a time less than 2 hours from now or more than 45 days ahead. It reads up to 250 events at once.
-7. The calendar always wins. A weekly schedule stored in the database is only a fallback if the calendar cannot be read. If the calendar is connected but there are no Open events, no times are offered.
+6. The site never offers a time less than 2 hours from now or more than 45 days ahead.
+7. If the calendar is connected but cannot be read, the site offers no times at all (it fails closed) so that my appointments are never ignored.
 8. The site authenticates with the scope https://www.googleapis.com/auth/calendar, using a service account key (JWT). It does NOT support signing in as me with a password or OAuth. If service-account access turns out to be impossible for me, tell me; the website code would need to change and Claude (my coding assistant) would have to do that.
 
 SAFETY DESIGN I WANT PRESERVED
@@ -120,7 +127,7 @@ SAFETY DESIGN I WANT PRESERVED
 - Time zone is India Standard Time (Asia/Kolkata, GMT+05:30) everywhere.
 
 WHAT IS FIXED AND WHAT IS YOURS TO DECIDE
-Fixed by the website code: separate calendar IDs for production and test; Open/Busy rules above; service-account authentication; the four Netlify variables GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY, GOOGLE_CALENDAR_ID, GOOGLE_CALENDAR_ENV.
+Fixed by the website code: separate calendar IDs for production and test; the blocking rules above; service-account authentication; the four Netlify variables GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY, GOOGLE_CALENDAR_ID, GOOGLE_CALENDAR_ENV.
 Yours to decide and justify: how many Google accounts and calendars to use (see Prompt 1), colours, notification settings, and any extra safeguards you think are wise.
 
 HOW I WANT YOU TO WORK
@@ -145,7 +152,7 @@ Step 1. Look at my Google account(s) that you can see. Tell me which Google acco
 
 Step 2. Think about these questions and decide. Give me a decision memo of at most 15 lines: the recommendation, the main reason for each choice, and the main risk of each choice.
 (a) Accounts: Is it fine for the production and test calendars to live inside the same Google account I use every day? Or is it better to create a separate Google account for the business (for example a dedicated Gmail or a Google Workspace user) that owns the booking calendars, and have me add that calendar to my daily view? Think about: client names and phone numbers in booking events, how clearly personal and business data are separated, what happens if I lose access to or close one account, 2-step verification and recovery, organisation policies that can block service-account keys or block sharing with outside addresses (common on Workspace work accounts), whether the Google Cloud project should be in the same account, and notifications on my phone. If you recommend a new account, tell me exactly what I must do to create it (you probably cannot), and then continue with the plan assuming it exists.
-(b) Calendars: The website needs exactly one calendar per environment (one for production, one for test), and Jyotish and Bach bookings share the same production calendar so that they cannot clash. Is there a good reason to add anything else (for example a third calendar that only I use to show "Open" windows, or a separate calendar for the Happiness Program dates)? Check whether it would work with the rules in the context message: the website reads Open windows AND blocking events from the same calendar ID, so any design with more calendars must still end with one calendar per environment that contains the Open events. Do not add things that do not clearly help me.
+(b) Calendars: The website needs exactly one calendar per environment (one for production, one for test), and Jyotish and Bach bookings share the same production calendar so that they cannot clash. Is there a good reason to add anything else (for example a separate calendar for the Happiness Program dates)? Check whether it would work with the rules in the context message: the website reads the blocking events and writes the bookings in the same calendar ID, so any design with more calendars must still end with one calendar per environment that contains my busy events and the bookings. Do not add things that do not clearly help me.
 (c) Test: Is a separate calendar inside the same account enough for the test environment, or should the test calendar be in a different account? The key requirement: a mistake on the staging site must never be able to write into the real calendar.
 (d) My personal events: The website must not read my main calendar, so personal events (doctor, travel) do not block slots automatically. What is the simplest option I will actually keep up with: create such events directly in the booking calendar, add a short "Busy" blocker there, or something smarter and safe? Check whether Google Calendar offers any built-in way to mirror free/busy from my personal calendar into another calendar of mine without exposing details, and whether it is reliable. If not sure, recommend the manual way.
 (e) Notifications: I would like to be told on my phone when a booking appears. Recommend settings for the production calendar (for example notification when a new event is created, a daily agenda email, default reminders), and say what to avoid so that I am not flooded.
@@ -163,67 +170,22 @@ End by telling me what, if anything, you need from me.
 
 ---
 
-## Prompt 2: add the availability ("Open" events)
+## Prompt 2: simplify the calendars (no availability events needed)
 
 ```text
-TASK 2: Put my availability into the calendars, then verify it.
+TASK 2: Simplify the calendars. I have changed how the website works: my normal weekly hours are now stored in the website's database and are open by default, so I do NOT want any availability events in Google Calendar. The calendars should only show what is really busy (bookings and my commitments).
 
-My weekly pattern (India time). I want to be open every day and not restrict visitors: on working days I only take the morning and evening windows I already use (I work a day job), and on weekends every hour from 9 AM to 9 PM is open. If a particular time does not suit me on a given day, I will add a Busy event in the calendar myself, so please do NOT try to be clever about my preferences. Each row becomes a repeating weekly event titled exactly "Open" in the calendar named Antarshanti Bookings:
-- Monday, Tuesday, Wednesday, Thursday: 09:00 to 12:00 and 17:00 to 21:00
-- Friday: 09:00 to 13:00 and 17:00 to 21:00
-- Saturday and Sunday: 09:00 to 21:00 (one single long window each day)
-(These windows produce exactly these one-hour slots: Mon to Thu 9, 10, 11 AM and 5, 6, 7, 8 PM; Fri 9, 10, 11 AM, 12 noon and 5, 6, 7, 8 PM; Sat and Sun every hour from 9 AM to 8 PM, the last slot ending at 9 PM. For Mon to Thu you can use one series per window and set it to repeat weekly on those four days in one go if Google allows; otherwise four separate series.)
+In the calendars named Antarshanti Bookings and Antarshanti TEST:
+1. Find every event whose title starts with Open or Available (these were created earlier: repeating weekly series, plus a one-off test event). Delete them. For repeating series delete ALL events of the series, not just one. Do not delete any other events in Antarshanti Bookings.
+2. In Antarshanti TEST only, I created some test events myself (for example Busy - Doctor and Reminder - Tentative). Leave those; tell me what is there.
+3. Do not touch my main calendar and do not change sharing or settings.
 
-Rules for every Open event you create:
-- Create it in the correct calendar, not in my main calendar. After creating, confirm which calendar it sits in.
-- Title exactly: Open  (nothing else in front of it).
-- Timed event, not all-day. India time zone.
-- Show as: Busy (leave the default). It must NOT be set to Free.
-- Repeat weekly on that weekday, with no end date, or ending far in the future (at least one year). Make one repeating series per time window, so I can later delete a single day with "This event".
-- No guests, no video call link, no description needed. Visibility default.
+Then read both calendars back for the next 14 days and show a plain list, one line per event, in the form: calendar | title | start | end | repeats | Show as (Busy or Free) | all-day or timed. Tell me:
+- that no event starting with Open or Available is left in either calendar;
+- for every remaining event whether it will block bookings (Busy) or be ignored (Free);
+- for the calendar named Antarshanti Bookings, whether it is now empty apart from real commitments (it should have no events I did not create).
 
-For the TEST calendar (Antarshanti TEST): create ONE single, non-repeating Open event on the day after tomorrow from 10:00 to 13:00 India time (it must start more than 2 hours in the future). That should offer 10:00, 11:00 and 12:00 slots for my first test. Do not copy my weekly pattern into the test calendar yet.
-
-Important safety rule: never name any other event in either calendar starting with the word Open or Available, because the website would treat it as a window. For example, a personal event called "Open house" would wrongly create bookable slots. Use titles like Busy, Away, Travel instead.
-
-When done:
-1. Read both calendars back for the next 14 days and list every event: calendar, title, start, end, repeat rule, Show as, time zone.
-2. Check each slot the website would offer in the next 7 days from those events (apply the one-hour rule) and show it as a short table for the production calendar. Compare with my slots above and tell me any difference. Also tell me if a very long window (9 AM to 9 PM on weekends) causes any problem or is better split in two (it should not; the website simply cuts it into one-hour slots).
-3. Tell me about anything that looks risky (for example a time zone mismatch, an event on the wrong calendar, a series that starts in the past).
-```
-
----
-
-## Prompt 2b: extend the weekday evenings to 9 PM (use this if Prompt 2 was already run with the older times)
-
-```text
-FOLLOW-UP TO TASK 2: I have decided to open the weekday evenings until 9 PM. The calendar named Antarshanti Bookings already has repeating Open events from Task 2. Please CHANGE those existing events instead of creating duplicates:
-- Monday to Thursday evening series: change from 17:00-20:00 to 17:00-21:00.
-- Friday evening series: change from 17:00-19:00 to 17:00-21:00.
-- Leave the morning series (Mon to Thu 09:00-12:00, Friday 09:00-13:00) and the weekend series (Saturday and Sunday 09:00-21:00) as they are.
-When you edit a repeating event, apply the change to ALL events in the series, not only this one.
-Do not touch the Antarshanti TEST calendar and do not touch my main calendar.
-
-Then read the calendar back for the next 14 days and show me every event in a table: calendar, title, start, end, repeat rule, Show as (Busy or Free), time zone. Check these rules and tell me about every violation, then fix the violations in Antarshanti Bookings:
-1. The title of each availability event starts with the word Open (no emoji or symbol in front of it).
-2. Show as is Busy (not Free) on every Open event.
-3. They are timed events in the India time zone, not all-day.
-4. No two Open events overlap each other and there are no duplicates.
-5. No other event in the calendar has a title starting with Open or Available.
-Finally list the slots the website would offer next Monday, next Friday and next Saturday (one-hour slots from the start of each Open window).
-```
-
----
-
-## Prompt 2c: copy the weekly pattern into the TEST calendar (so the staging site shows realistic times)
-
-```text
-FOLLOW-UP TO TASK 2: The staging (test) website reads only the calendar named Antarshanti TEST. At the moment that calendar has just one test Open event, while the weekly pattern is only in Antarshanti Bookings. I want the staging site to behave like the real one, so please copy the same weekly Open pattern into Antarshanti TEST:
-- Monday to Thursday: 09:00-12:00 and 17:00-21:00
-- Friday: 09:00-13:00 and 17:00-21:00
-- Saturday and Sunday: 09:00-21:00
-All are repeating weekly events titled exactly "Open", Show as Busy, timed, India time zone.
-Create them ONLY in Antarshanti TEST. Do not change Antarshanti Bookings and do not touch my main calendar. Remove the single one-off test Open event from Antarshanti TEST so that nothing overlaps. Then read Antarshanti TEST back for the next 14 days (calendar, title, start, end, repeat rule, Show as, time zone) and confirm: no duplicates, no overlaps, no other event starts with Open or Available.
+For my own understanding, please also write 4 lines on how I should now use the calendar: how to block a few hours, how to block a whole day, how to keep a reminder from blocking, and where to see bookings.
 ```
 
 ---
@@ -284,8 +246,8 @@ C. Razorpay (see Prompt 5 for how to get the values). The variables RAZORPAY_KEY
 
 D. Deploy and test the staging site
 1. Trigger a deploy of the staging branch (Deploys, Trigger deploy, Deploy site, pick branch staging). Never deploy or publish the main branch in this task.
-2. Open https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots . The text should contain "mode":"calendar" and a "days" list that includes the day of my test Open event. If it says "mode":"weekly", the calendar is not connected; use this checklist: all four Google variables exist for the Branch deploys context; GOOGLE_CALENDAR_ENV is test there; the calendar ID is the TEST calendar; the calendar is shared with the service account with "Make changes to events"; the private key was pasted completely; a new deploy ran after the variables were saved. Check the function log (Netlify, Logs, Functions, slots) for messages such as: google auth failed: invalid_grant (key pasted wrongly), google calendar 404 (wrong calendar ID or not shared), google calendar 403 (wrong permission or API not enabled), calendar disabled: GOOGLE_CALENDAR_ENV is ... (label mismatch).
-3. On the staging Jyotish page (https://staging--aquamarine-croquembouche-26e205.netlify.app/jyotish.html) pick the test day: the slots shown must match the Open event.
+2. Open https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots . The text should contain "mode":"calendar" and a "days" list with my normal weekly hours (no Open events are needed any more) and "calendarName" saying Antarshanti TEST. If calendarName says Antarshanti Bookings, the staging variable GOOGLE_CALENDAR_ID wrongly holds the real calendar: fix it. If you see "calendarError":true the calendar could not be read. If it says "mode":"weekly", the calendar is not connected; use this checklist: all four Google variables exist for the Branch deploys context; GOOGLE_CALENDAR_ENV is test there; the calendar ID is the TEST calendar; the calendar is shared with the service account with "Make changes to events"; the private key was pasted completely; a new deploy ran after the variables were saved. Check the function log (Netlify, Logs, Functions, slots) for messages such as: google auth failed: invalid_grant (key pasted wrongly), google calendar 404 (wrong calendar ID or not shared), google calendar 403 (wrong permission or API not enabled), calendar disabled: GOOGLE_CALENDAR_ENV is ... (label mismatch).
+3. On the staging Jyotish page (https://staging--aquamarine-croquembouche-26e205.netlify.app/jyotish.html) pick any day: the slots shown must match my normal weekly hours for that weekday (Mon to Thu 9, 10, 11 AM and 5 to 8 PM; Fri 9 to 12 AM/noon and 5 to 8 PM; Sat and Sun 9 AM to 8 PM), minus anything busy in the TEST calendar.
 4. Book one slot with a clearly fake name (for example "Test Gemini") and phone 9999999999, tick the consent box, press the hold button. Within a few seconds a new event "Jyotish: Test Gemini (requested)" should appear in the Antarshanti TEST calendar, and that slot should disappear from the page after reload.
 5. Add an event titled Busy in the TEST calendar over another slot; after about 30 seconds and a reload that slot must vanish.
 6. Clean up: delete these test events from the TEST calendar. Do not touch the Antarshanti Bookings calendar during tests. Ask me to delete the test row from the TEST Supabase database (the bookings table), unless you can do it safely yourself.
@@ -326,8 +288,8 @@ TASK 6: Final audit. Assume nothing: check everything again from scratch and rep
 
 Please verify, and give me a table with Item | Expected | What I actually see | OK / Problem:
 1. Google accounts and calendars: which account owns Antarshanti Bookings and Antarshanti TEST; both private; time zone India; no other calendar is shared with the service account; my main calendar is not shared with it.
-2. Antarshanti Bookings contains repeating Open events matching: Mon to Fri 09-12 (Fri 09-13) and 17-21, Sat and Sun 09-21; every one is Busy (not Free), timed, India time zone, in the right calendar. No other event in either calendar starts with Open or Available.
-3. Antarshanti TEST contains only test events (the single Open event; clean up leftover test bookings).
+2. Antarshanti Bookings contains no availability events: no event starts with Open or Available, and nothing is in it that I did not create (apart from real bookings written by the site).
+3. Antarshanti TEST contains only test events I want (no Open events; clean up leftover test bookings).
 4. Google Cloud: project antarshanti-site, Calendar API enabled, one service account antarshanti-booking with no project roles, exactly one active key (delete any extra or unused keys), no key file left in Drive or Gemini history.
 5. Netlify variables (names and contexts only, never values): GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY (secret), GOOGLE_CALENDAR_ID (different for Production and for Branch deploys / Deploy Previews), GOOGLE_CALENDAR_ENV (production / test / test), SUPABASE_URL (production DB / test DB / test DB), SUPABASE_SERVICE_KEY (two different values), RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET (live for Production, test for the other two contexts), RAZORPAY_WEBHOOK_SECRET (different per mode). Say which are secret-flagged. Make sure no calendar or test value is set for Production by mistake, and no live Razorpay key applies to staging.
 6. Live test results: the staging slots endpoint says "mode":"calendar"; the Jyotish test hold created a calendar event; a Busy event blocked a slot; the Bach test payment (if run) was captured and created a calendar event.
@@ -353,7 +315,7 @@ Then write a REPORT FOR MY CODING ASSISTANT that I can copy and paste to it. Pla
 | Lead time / horizon | not offered if less than 2 hours away or more than 45 days ahead |
 | Prices | Bach Flower consultation Rs 1,000 (set in the database, not in the site); Jyotish has no fixed fee |
 | Booking widget | shows 7 days at a time and pages up to 6 weeks ahead |
-| Weekly availability (decided 20 Nov 2026) | every day: Mon to Thu 09:00-12:00 and 17:00-21:00; Fri 09:00-13:00 and 17:00-21:00; Sat and Sun 09:00-21:00 (weekday evenings extended to 9 PM on 21 Nov 2026). Anything unsuitable is blocked by a Busy event in the calendar. The same pattern is stored as the fallback in the database and in the website code |
+| Weekly availability (decided 20-21 Nov 2026) | stored in the database (table availability_rules) and open by default: Mon to Thu 09:00-12:00 and 17:00-21:00; Fri 09:00-13:00 and 17:00-21:00; Sat and Sun 09:00-21:00. The calendar only blocks (any busy event). A copy is kept in the website code as an outage fallback |
 | Webhook (production) | https://antarshanti.co.in/.netlify/functions/razorpay-webhook |
 | Webhook (staging, test mode) | https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/razorpay-webhook |
 | Slots check (staging) | https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots |

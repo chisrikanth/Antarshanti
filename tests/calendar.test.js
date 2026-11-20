@@ -13,7 +13,7 @@ process.env.SUPABASE_URL = 'https://rnofqxmfwqiogtlchkbp.supabase.co'; process.e
 
 const SLOT = nextMondayNineIst(), day = SLOT.slice(0, 10);   // a future Monday, India date
 const at = (hm) => `${day}T${hm}:00+05:30`;
-let googleEvents = [], googleDown = false, created = [], tokenReqs = 0, bookings = [], dbPatches = [];
+let calName = 'Antarshanti TEST', googleEvents = [], googleDown = false, created = [], tokenReqs = 0, bookings = [], dbPatches = [];
 global.fetch = async (url, init) => {
   const method = (init && init.method) || 'GET'; const ok = (j, st) => ({ ok: true, status: st || 200, json: async () => j, text: async () => '' });
   if (url === 'https://oauth2.googleapis.com/token') {
@@ -26,6 +26,7 @@ global.fetch = async (url, init) => {
   if (url.startsWith('https://www.googleapis.com/calendar/v3/')) {
     assert.equal(init.headers.Authorization, 'Bearer tok');
     if (googleDown) return { ok: false, status: 500, text: async () => 'down', json: async () => ({}) };
+    if (method === 'GET' && !url.includes('/events')) return ok({ summary: calName });
     if (method === 'GET') { assert.ok(url.includes('singleEvents=true')); return ok({ items: googleEvents }); }
     const body = JSON.parse(init.body); created.push({ url, body }); return ok({ id: 'gev_' + created.length });
   }
@@ -72,6 +73,19 @@ global.fetch = async (url, init) => {
   assert.equal(d.mode, 'calendar'); assert.deepEqual(d.days[day], ['09:00', '17:00']); assert.ok(tokenReqs >= 1);
   console.log('slots endpoint: mode=calendar, offers', JSON.stringify(d.days[day]), 'for', day, '(signed JWT verified)');
 
+  // ---- default open: the weekly schedule is open unless a busy event blocks it; "Open" titles are not needed
+  const monRules = ['09:00', '10:00', '11:00'];
+  const slotsFor = async (events) => { googleEvents = events; gcal.resetCache(); const x = JSON.parse((await sl.handler(ev('GET'))).body); assert.equal(x.mode, 'calendar'); return x.days[day]; };
+  assert.deepEqual(await slotsFor([]), monRules); console.log('empty calendar -> the whole weekly schedule is offered (no Open events needed)');
+  assert.deepEqual(await slotsFor([{ summary: 'Dentist', start: { dateTime: at('10:30') }, end: { dateTime: at('11:30') } }]), ['09:00']); console.log('a busy 10:30-11:30 appointment removes the 10:00 and 11:00 slots');
+  assert.deepEqual(await slotsFor([{ summary: 'Birthday lunch', transparency: 'transparent', start: { dateTime: at('10:00') }, end: { dateTime: at('11:00') } }]), monRules); console.log('an event marked Free does not block');
+  assert.deepEqual(await slotsFor([{ summary: 'Anything', status: 'cancelled', start: { dateTime: at('10:00') }, end: { dateTime: at('11:00') } }]), monRules); console.log('a cancelled event does not block');
+  assert.equal(await slotsFor([{ summary: 'Away', start: { date: day }, end: { date: new Date(new Date(day + 'T12:00:00Z').getTime() + 86400000).toISOString().slice(0, 10) } }]), undefined); console.log('an all-day event blocks that whole day');
+  assert.deepEqual(await slotsFor([{ summary: 'Open', start: { dateTime: at('09:00') }, end: { dateTime: at('12:00') } }]), monRules); console.log('a leftover "Open" event neither blocks nor changes anything inside the weekly schedule');
+  assert.deepEqual(await slotsFor([{ summary: 'Open - special', start: { dateTime: at('14:00') }, end: { dateTime: at('15:00') } }]), [...monRules, '14:00']); console.log('an optional "Open" event adds an extra window outside the weekly schedule');
+  assert.deepEqual(await slotsFor([{ summary: 'Open - special', start: { dateTime: at('14:00') }, end: { dateTime: at('15:00') } }, { summary: 'Busy', start: { dateTime: at('14:00') }, end: { dateTime: at('15:00') } }]), monRules); console.log('a busy event also blocks an extra window');
+  googleEvents = ev1; gcal.resetCache();
+
   // ---- booking a slot that is not open (the 10:00 hour is blocked by the dentist)
   let r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('10:00'), name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 400); console.log('booking a blocked 10:00 ->', r.statusCode, JSON.parse(r.body).error);
   // ---- booking an open slot writes it to the calendar
@@ -82,9 +96,21 @@ global.fetch = async (url, init) => {
   assert.ok(dbPatches.some((p) => p.body.calendar_event_id === 'gev_1')); console.log('Jyotish request -> event created in the bookings calendar (60 min) and linked to the booking');
   d = JSON.parse((await sl.handler(ev('GET'))).body); assert.deepEqual(d.days[day], ['17:00']); console.log('that time is no longer offered');
 
+  // ---- name guard: the calendar's own name must agree with the environment
+  gcal.resetCache(); d = JSON.parse((await sl.handler(ev('GET'))).body); assert.equal(d.mode, 'calendar'); assert.equal(d.calendarName, 'Antarshanti TEST'); console.log('slots reports which calendar it reads: ' + d.calendarName);
+  calName = 'Antarshanti Bookings'; gcal.resetCache(); const createdG = created.length;
+  d = JSON.parse((await sl.handler(ev('GET'))).body); assert.equal(d.calendarError, true); assert.deepEqual(d.days, {}); assert.equal(created.length, createdG);
+  console.log('staging pointed at the real "Antarshanti Bookings" calendar -> refused: no times offered, nothing written');
+  assert.ok(gcal.nameProblem({ label: 'production' }, 'Antarshanti TEST'), 'real site must refuse a TEST calendar');
+  assert.equal(gcal.nameProblem({ label: 'production' }, 'Antarshanti Bookings'), null); assert.equal(gcal.nameProblem({ label: 'test' }, null), null);
+  console.log('real site refuses a calendar named TEST; unreadable name keeps the other locks only');
+  calName = 'Antarshanti TEST'; gcal.resetCache();
+
   // ---- Google down -> falls back to the weekly schedule, booking still works
   googleDown = true; gcal.resetCache(); const created0 = created.length;
-  d = JSON.parse((await sl.handler(ev('GET'))).body); assert.equal(d.mode, 'weekly'); console.log('Google unreachable -> falls back to weekly schedule (mode=' + d.mode + ')');
+  d = JSON.parse((await sl.handler(ev('GET'))).body); assert.equal(d.calendarError, true); assert.deepEqual(d.days, {});
+  r = await rs.handler(ev('POST', { service: 'jyotish_consultation', slot_start: at('09:00'), name: 'Ravi', phone: '9876543210', consent: true })); assert.equal(r.statusCode, 400); assert.equal(created.length, created0);
+  console.log('calendar configured but unreadable -> NO times offered and booking refused (fails closed, so appointments are never ignored)');
   googleDown = false;
   // ---- paid Bach booking confirmed by the webhook -> calendar event
   process.env.RAZORPAY_WEBHOOK_SECRET = 'wh'; const wh = fx('razorpay-webhook.js'); gcal.resetCache();

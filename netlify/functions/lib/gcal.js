@@ -1,9 +1,9 @@
 // Google Calendar integration (service account, no npm dependencies).
 //
-// The "Antarshanti Bookings" calendar is the source of truth for availability:
-//   * An event whose title starts with "Open" (or "Available") is a window when Srikanth takes sessions.
-//     Slots of SLOT_MINUTES are offered inside it, starting at the window's start time.
-//   * Any OTHER timed event (travel, "Busy", a booking written by this site) blocks the slots it overlaps.
+// The "Antarshanti Bookings" calendar BLOCKS times (the weekly schedule in the database says when Srikanth normally works):
+//   * Any timed event (travel, "Busy", a doctor visit, a booking written by this site) blocks the slots it overlaps.
+//   * An event whose title starts with "Open" (or "Available") is optional: it adds an EXTRA window outside the
+//     weekly pattern (slots of SLOT_MINUTES from its start). It is not needed in normal use and never blocks.
 //   * An all-day event that is not "Open" blocks that whole day (India time).
 //   * Events marked "Free" (transparent) are ignored.
 // Srikanth's personal calendar is never read: only the calendar shared with the service account is.
@@ -30,7 +30,7 @@ function enabled(event) {
     console.error(`calendar disabled: GOOGLE_CALENDAR_ENV is "${label || 'missing'}" but this address is ${wantProd ? 'production' : 'a test address'}`);
     return null;
   }
-  return { email, key: key.replace(/\\n/g, '\n'), calendarId: cal };
+  return { email, key: key.replace(/\\n/g, '\n'), calendarId: cal, label };
 }
 
 const b64url = (b) => Buffer.from(b).toString('base64').replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
@@ -90,22 +90,59 @@ function openSlotStarts(open, busy, takenMs, nowMs, minutes) {
   return out;
 }
 
+// Second safety lock, in case a calendar ID is pasted into the wrong Netlify context: the calendar's own name must
+// agree with the environment. A calendar whose name contains the word "test" is a TEST calendar; the real site refuses
+// it, and a test address refuses any calendar whose name does not contain "test". If Google will not tell us the
+// name, the lock stays open (the event calls that follow would fail anyway) and the other locks still apply.
+const nameCache = {};
+async function calendarName(c) {
+  if (nameCache[c.calendarId] !== undefined) return nameCache[c.calendarId];
+  try {
+    const d = await gfetch(c, `/calendars/${encodeURIComponent(c.calendarId)}`);
+    nameCache[c.calendarId] = String(d.summary || '');
+    return nameCache[c.calendarId];
+  } catch (e) { console.error('calendar name unreadable:', e.message); return null; }
+}
+function nameProblem(c, name) {
+  if (!name) return null;
+  const looksTest = /test/i.test(name);
+  if (c.label === 'test' && !looksTest) return `calendar name guard: this is a test address but the calendar "${name}" does not look like a TEST calendar`;
+  if (c.label === 'production' && looksTest) return `calendar name guard: this is the real site but the calendar "${name}" looks like a TEST calendar`;
+  return null;
+}
+async function assertRightCalendar(c) {
+  const name = await calendarName(c);
+  const problem = nameProblem(c, name);
+  if (problem) { console.error(problem); throw new Error(problem); }
+  return name;
+}
+
 async function listEvents(c, fromMs, toMs) {
-  const q = new URLSearchParams({ timeMin: new Date(fromMs).toISOString(), timeMax: new Date(toMs).toISOString(), singleEvents: 'true', orderBy: 'startTime', maxResults: '250', showDeleted: 'false' });
-  const data = await gfetch(c, `/calendars/${encodeURIComponent(c.calendarId)}/events?${q}`);
-  return data.items || [];
+  const items = [];
+  let pageToken = '';
+  for (let page = 0; page < 6; page++) {      // follow Google's pages so a busy calendar is never silently cut off
+    const q = new URLSearchParams({ timeMin: new Date(fromMs).toISOString(), timeMax: new Date(toMs).toISOString(), singleEvents: 'true', orderBy: 'startTime', maxResults: '250', showDeleted: 'false' });
+    if (pageToken) q.set('pageToken', pageToken);
+    const data = await gfetch(c, `/calendars/${encodeURIComponent(c.calendarId)}/events?${q}`);
+    (data.items || []).forEach((x) => items.push(x));
+    pageToken = data.nextPageToken || '';
+    if (!pageToken) return items;
+  }
+  throw new Error('calendar has too many events to read safely (over 1500 in 45 days)');
 }
 
 let memo = { key: '', at: 0, value: null };
 async function readCalendar(c, fromMs, toMs) {
   const key = c.calendarId + '|' + Math.floor(fromMs / 60000);
   if (memo.key === key && Date.now() - memo.at < 20000) return memo.value;    // tiny cache so a burst of visitors makes one Google call
-  const value = classify(await listEvents(c, fromMs, toMs));
+  const name = await assertRightCalendar(c);
+  const value = { ...classify(await listEvents(c, fromMs, toMs)), name };
   memo = { key, at: Date.now(), value };
   return value;
 }
 
 async function createEvent(c, { summary, description, startIso, bookingId }) {
+  await assertRightCalendar(c);
   const start = new Date(startIso), end = new Date(start.getTime() + SLOT_MINUTES * 60000);
   const ev = await gfetch(c, `/calendars/${encodeURIComponent(c.calendarId)}/events`, {
     method: 'POST',
@@ -116,6 +153,6 @@ async function createEvent(c, { summary, description, startIso, bookingId }) {
   return ev.id;
 }
 
-const resetCache = () => { memo = { key: '', at: 0, value: null }; };
+const resetCache = () => { memo = { key: '', at: 0, value: null }; Object.keys(nameCache).forEach((k) => delete nameCache[k]); };
 
-module.exports = { resetCache, SLOT_MINUTES, enabled, classify, openSlotStarts, readCalendar, createEvent, accessToken, OPEN_TITLE };
+module.exports = { nameProblem, resetCache, SLOT_MINUTES, enabled, classify, openSlotStarts, readCalendar, createEvent, accessToken, OPEN_TITLE };

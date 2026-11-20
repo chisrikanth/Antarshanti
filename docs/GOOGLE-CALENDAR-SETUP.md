@@ -20,13 +20,15 @@ Your **main calendar is never read or touched** by the website. Reminders, famil
 A small robot account (a "service account") gives the website permission to read and write only those two calendars. Nothing else in your Google account is reachable.
 
 ### How the website decides what to offer (the rules)
-1. In the **Antarshanti Bookings** calendar, an event whose title **starts with `Open`** (or `Available`) is a window when you take sessions. Examples: `Open`, `Open - online`, `Available`.
-2. Inside that window the website offers **60-minute slots**, starting at the window's start time. A window `09:00-12:00` offers 9:00, 10:00, 11:00. A window `09:30-12:30` offers 9:30, 10:30, 11:30.
-3. **Any other event** in that calendar blocks the slots it overlaps: `Busy`, `Travel`, `Doctor`, anything. All-day events (not named Open) block the whole day.
-4. Events you mark **Free** instead of Busy, and cancelled events, are ignored.
-5. When someone books, the website **adds an event** to the same calendar (`Jyotish: Name (requested)` or `Bach Flower consultation (paid)`), which then blocks that time automatically.
-6. The website never offers a time less than **2 hours away** or more than **45 days ahead**. (The booking widget currently shows the **next 7 days** only; paging through later weeks is a future improvement.)
-7. **The calendar always wins.** The weekly schedule you set in Supabase is only a **fallback**, used if the calendar cannot be reached or is not set up. If the calendar is connected and you have no `Open` events, the website offers **no** times (and visitors are told to message you on WhatsApp). So keep `Open` events in the calendar.
+*(Changed on 21 Nov 2026: the calendar now only has to show what is **busy**. You no longer create "Open" events.)*
+1. Your **normal weekly hours** live in the database (Supabase table `availability_rules`): Mon to Thu 9-12 and 5-9 PM, Friday 9-1 and 5-9 PM, Saturday and Sunday 9 AM to 9 PM. Inside those hours the website offers **60-minute slots**, on the hour.
+2. **Anything in the Antarshanti Bookings calendar blocks the slots it overlaps:** an appointment, `Busy`, `Travel`, a doctor visit, a booking made through the site. All-day events (for example `Away`) block the whole day. A time that you have not blocked is simply open.
+3. Events you set to **Free** (not Busy) and cancelled events are ignored, so you can keep reminders and notes in the calendar without blocking anything.
+4. When someone books, the website **adds an event** to the same calendar (`Jyotish: Name (requested)` or `Bach Flower consultation (paid)`). That event blocks the time and shows you exactly who is coming.
+5. The website never offers a time less than **2 hours away** or more than **45 days ahead**. The booking widget shows 7 days at a time and you can page ahead.
+6. **Optional:** to open a one-off time *outside* your weekly hours (a special Tuesday afternoon), add an event whose title starts with `Open` (for example `Open - special`) at that time. It adds a window; it never blocks anything. Old `Open` events created earlier are harmless but can be deleted.
+7. **If the calendar is connected but cannot be read** (Google problem, calendar no longer shared), the website offers **no times** and visitors are told to message you on WhatsApp. This is deliberate: guessing would ignore your appointments. If **no calendar is connected at all**, the weekly hours alone are used.
+8. To change your **normal weekly hours** (not a one-off), edit the `availability_rules` table in Supabase (or ask Claude). One-off changes: add a `Busy` event.
 
 ---
 
@@ -107,13 +109,14 @@ Finally, make Netlify use the new values: **Deploys** > **Trigger deploy** > **D
 
 ---
 
-## Part 5. Add your availability (about 5 minutes)
+## Part 5. Block what is not available (about 2 minutes)
 
-Do this first in the **TEST** calendar, then in **Bookings** when you are happy.
+Do this in the **TEST** calendar first, then in **Bookings** whenever you need it.
 
-1. Create an event titled exactly `Open` (it may continue, e.g. `Open - online`) for **tomorrow-after-next, 10:00 to 13:00** India time (it must be at least 2 hours in the future).
-2. That is all. The website will offer 10:00, 11:00 and 12:00 that day.
-3. For your real weekly pattern, make **repeating** events. Example for the Bookings calendar (the pattern decided on 20 Nov 2026): `Open` every Monday to Thursday 09:00-12:00 and again 17:00-21:00; Friday 09:00-13:00 and 17:00-21:00; Saturday and Sunday 09:00-21:00 (add a `Busy` event whenever a time does not suit you). (In Google Calendar: create the event > **Does not repeat** > **Weekly on Monday** > save. For several days, **Custom**.)
+1. Your normal hours already come from the database, so you do **not** create any availability events.
+2. To test: in the **TEST** calendar create an event titled `Busy` tomorrow-after-next from 10:00 to 11:00 India time (it must be at least 2 hours in the future). The website will stop offering the 10:00 slot that day and keep offering the others.
+3. For real life, put anything that stops you taking a session into **Antarshanti Bookings**: `Busy`, `Doctor`, `Travel`, or an all-day `Away`. Give a repeating block a repeating event (for example `Busy` every Tuesday 17:00-19:00 if you have a class).
+4. Mark an event **Free** (Show as: Free) if it must stay on the calendar without blocking.
 
 ---
 
@@ -122,10 +125,12 @@ Do this first in the **TEST** calendar, then in **Bookings** when you are happy.
 1. Open `https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots` in the browser. You should see text containing `"mode":"calendar"` and a `days` list that includes your Open day.
    - If you see `{"live":false}`, the website cannot reach its database: add `SUPABASE_SERVICE_KEY` (the TEST project's key) for Branch deploys and Deploy Previews in Netlify and redeploy. The calendar is only used once the database works.
    - If you see `"mode":"weekly"` instead, the calendar is not connected. Go to the troubleshooting table.
-2. Open the staging **Jyotish** page, choose that day. You should see exactly the slots from your `Open` event.
+   - If `"calendarError":true` and no days, the calendar is configured but unreadable (see the troubleshooting table; the website deliberately offers nothing).
+   - The text also shows `"calendarName"`: it must say your TEST calendar on staging and Antarshanti Bookings on the real site.
+2. Open the staging **Jyotish** page and choose that day. You should see your normal hours for that weekday.
 3. Pick a slot, enter a test name and a test phone number (for example `9999999999`), tick the box, press **Hold this slot**.
 4. Look at the **Antarshanti TEST** calendar. A new event `Jyotish: <name> (requested)` should appear at that time within a few seconds. Reload the staging page: that time is gone.
-5. In the TEST calendar add an event `Busy` for one of the other slots. Reload the staging page (wait up to 30 seconds): that slot disappears.
+5. In the TEST calendar add an event `Busy` over another slot. Reload the staging page (wait up to 30 seconds): that slot disappears. Delete the `Busy` event and it comes back.
 6. Delete the test events from the TEST calendar and the test rows from the `bookings` table in the **test** Supabase project.
 7. For a Bach test (needs the Razorpay test keys from the other to-do list), pay with a Razorpay test card. After the payment an event `Bach Flower consultation (paid)` should appear in the TEST calendar.
 
@@ -137,8 +142,8 @@ Do this first in the **TEST** calendar, then in **Bookings** when you are happy.
 | Log says `google calendar 404` | Wrong calendar ID, or the calendar is not shared with the robot | Re-copy the Calendar ID; redo Part 3 |
 | Log says `google calendar 403` | The robot has the wrong permission, or the Calendar API is not enabled | Permission must be **Make changes to events**; recheck Part 2 step 3 |
 | Log says `calendar disabled: GOOGLE_CALENDAR_ENV is ...` | Safety lock mismatch | Fix the label for that context |
-| Calendar connected but **no times** are offered | No `Open` event in the next 45 days, title does not start with `Open`/`Available`, event is all-day, or it starts less than 2 hours from now | Add a proper timed `Open` event |
-| A time you expected is missing | A `Busy` event (or an earlier booking) overlaps it. A booking that overlaps by even 1 minute blocks the slot | Move or delete the blocking event |
+| Calendar connected but **no times** are offered | `"calendarError":true`: Google could not be read (see the log). Otherwise: the weekly hours in the database are empty, or everything is covered by busy events | Check the Netlify function log; check `availability_rules` in Supabase |
+| A time you expected is missing | Any event in the calendar (Busy, a reminder, an old test event) or an earlier booking overlaps it, even by 1 minute | Move or delete the blocking event, or mark it Free |
 | Booked slot still shows after you deleted its calendar event | The booking also exists in the database | In Supabase, `bookings`, set `status` to `cancelled` for that row |
 
 To see the Netlify function log: Netlify > **Logs** > **Functions** > `slots` (or `reserve-slot`).
@@ -148,17 +153,17 @@ To see the Netlify function log: Netlify > **Logs** > **Functions** > `slots` (o
 ## Part 7. Day-to-day use and safety
 
 **Your weekly routine**
-- Keep `Open` events (ideally repeating) in **Antarshanti Bookings**. To close one day, delete just that day's occurrence (choose **This event**), or add an all-day event called `Away`.
+- Nothing to maintain for normal days: your weekly hours are open by default. To close a whole day, add an all-day event called `Away` in **Antarshanti Bookings**.
 - To block a few hours, add an event called `Busy` at those hours. No need to put details in the title.
 - Slots appear on the website within about 30 seconds of a calendar change.
 
 **Using Gemini or another assistant to manage the calendar**
 If Gemini is available in your Google Calendar, you can ask in plain words. Example prompts:
-- "On my Antarshanti Bookings calendar, create a weekly repeating event titled Open on Monday and Wednesday from 9 AM to 12 PM and 5 PM to 8 PM, India time."
+- "On my Antarshanti Bookings calendar, add an all-day event called Away from 24 to 26 December."
 - "On my Antarshanti Bookings calendar, add a Busy event next Thursday from 2 PM to 4 PM."
-- "Delete the Open event on 25 December on my Antarshanti Bookings calendar."
+- "Delete the Busy event on 25 December on my Antarshanti Bookings calendar."
 
-Always glance at the result: check the event is on the **right calendar** (colour), the title starts with `Open` or is `Busy`, and the time zone is India. I cannot confirm what Gemini can or cannot do on your account, so verify the first few.
+Always glance at the result: check the event is on the **right calendar** (colour), the event is shown as **Busy** (not Free) if it should block, and the time zone is India. I cannot confirm what Gemini can or cannot do on your account, so verify the first few.
 
 **Things on your main calendar that block bookings**
 Google Calendar does not automatically copy events between two of your own calendars, and I did not want the website reading your main calendar. Your options:

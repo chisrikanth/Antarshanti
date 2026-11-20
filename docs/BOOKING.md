@@ -10,7 +10,7 @@
 The database itself refuses a second live booking for the same time (a unique rule on `bookings`), so even two people clicking in the same second cannot both succeed. The browser is only a convenience; the server checks the schedule, lead time and availability on every request.
 
 ## With Google Calendar connected
-The **Antarshanti Bookings** calendar decides what is offered: events titled `Open` are your windows, any other event blocks, and new bookings are written back as events. Full guide: `docs/GOOGLE-CALENDAR-SETUP.md`.
+Your normal weekly hours (the `availability_rules` table below) are open by default. The **Antarshanti Bookings** calendar only has to show what is **busy**: any event in it (an appointment, `Busy`, travel, an all-day `Away`, a booking made through the site) blocks the slots it overlaps; events marked Free are ignored. New bookings are written back as events. If the calendar is configured but cannot be read, no times are offered until it can be (it never guesses). Details: `docs/GOOGLE-CALENDAR-SETUP.md`.
 
 ## What you control (Supabase, production project, Table Editor, no deploy)
 | Table | Use |
@@ -28,4 +28,4 @@ If someone pays after their 15 minute hold expired and another person took the t
 ## Still manual (honest list)
 - No automatic confirmation or reminder messages, and no notification to you when a booking arrives.
 - Cancelling in Supabase frees the slot but does not refund or message the visitor.
-- Google Calendar sync is built (see `docs/GOOGLE-CALENDAR-SETUP.md`) and switches on only after you complete that setup. When on, the calendar decides availability and the weekly schedule is a fallback.
+- Google Calendar sync is built (see `docs/GOOGLE-CALENDAR-SETUP.md`) and switches on only after you complete that setup. When on, the weekly schedule is open unless the calendar shows something busy.

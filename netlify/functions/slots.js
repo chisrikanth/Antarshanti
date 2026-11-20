@@ -21,7 +21,7 @@ exports.handler = async function (event) {
         const t = istParts(new Date(ms));
         (days[t.ymd] = days[t.ymd] || []).push(t.hm);
       });
-      return { statusCode: 200, headers, body: JSON.stringify({ live: true, mode: 'calendar', days, blocked: [], taken, leadMinutes: MIN_LEAD_MINUTES, maxDays: MAX_DAYS_AHEAD }) };
+      return { statusCode: 200, headers, body: JSON.stringify({ live: true, mode: 'calendar', calendarName: schedule.calendarName || null, calendarError: !!schedule.calendarError, days, blocked: [], taken, leadMinutes: MIN_LEAD_MINUTES, maxDays: MAX_DAYS_AHEAD }) };
     }
     return { statusCode: 200, headers, body: JSON.stringify({ live: true, mode: 'weekly', rules: schedule.rules, blocked: schedule.blocked, taken, leadMinutes: MIN_LEAD_MINUTES, maxDays: MAX_DAYS_AHEAD }) };
   } catch (e) {
