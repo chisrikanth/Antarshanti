@@ -50,7 +50,7 @@ nav{background:rgba(255,252,248,.88);backdrop-filter:blur(16px) saturate(1.15);b
 .btn-leaf{border:1.5px solid rgba(84,127,97,.5);color:var(--leaf);background:#fff}
 .btn-leaf:hover{background:var(--leaf);color:#fff}
 .btn-outline{border:1.5px solid var(--line);color:var(--dim);background:#fff}
-.btn-outline:hover{border-color:var(--sun-deep);color:#A04F14}
+.btn-outline:hover,.btn-outline:focus-visible{background:#FFF1E2;border-color:var(--sun-deep);color:#8A3F0B}
 .btn-wa{background:#25A862;color:#fff}
 .hero-link{color:#A04F14;text-decoration-color:rgba(160,79,20,.4)}
 
@@ -248,3 +248,6 @@ header p a{text-decoration:underline}
 }
 
 .hold-form .field input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px #fff inset;-webkit-text-fill-color:var(--ink)}
+
+.paid-box .btn-outline{background:#fff;color:#6B4A2F;border-color:#D9C9B5}
+.paid-box .btn-outline:hover{background:#FFF1E2;color:#8A3F0B;border-color:var(--sun-deep)}
