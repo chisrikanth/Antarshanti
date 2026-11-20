@@ -90,7 +90,7 @@ navKey: "bach"
       </p>
       <div id="pay-zone">
       <p style="font-size:.88rem;color:var(--body);margin-bottom:10px">{{ k.intro | replace('{price}', P) | safe }}</p>
-      <div class="field" style="margin-bottom:10px"><label for="b-name">{{ k.nameLabel }}</label><input type="text" id="b-name" autocomplete="name" maxlength="80"></div>
+      <div class="hold-form" style="margin-bottom:0"><div class="field"><label for="b-name">{{ k.nameLabel }}</label><input type="text" id="b-name" autocomplete="name" maxlength="80"></div></div>
       <div id="pay-status" style="font-size:.85rem;margin-bottom:10px;min-height:1.2em"></div>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button id="pay-btn" class="btn btn-gold btn-sm" type="button">{{ k.payBtn | replace('{price}', P) | safe }}</button>
