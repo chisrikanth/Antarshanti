@@ -15,7 +15,7 @@ navKey: "home"
 {% block mobilebar %}{% set c = t.home %}<div class="mobile-bar"><a class="btn btn-gold" href="#offerings">{{ c.mobileBar.explore }}</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ c.mobileBar.whatsapp }}</a></div>{% endblock %}
 {% block content %}{% set c = t.home %}
 <header class="home-hero" style="position:relative;overflow:hidden;padding:46px 0 56px">
-  <svg class="hero-deco" style="position:absolute;right:-100px;top:10px;width:470px;height:470px;pointer-events:none" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <svg class="hero-deco" style="position:absolute;left:50%;top:-110px;margin-left:-360px;width:720px;height:720px;pointer-events:none;opacity:.38" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g class="spin-el" style="transform-origin:280px 280px;animation:spin 240s linear infinite">
     <circle cx="280" cy="280" r="258" fill="none" stroke="rgba(217,164,65,.45)" stroke-width="1"/>
     <circle cx="280" cy="280" r="198" fill="none" stroke="rgba(217,164,65,.32)" stroke-width="1"/>
@@ -39,9 +39,11 @@ navKey: "home"
 
     <div class="eyebrow" style="color:var(--saffron);margin-bottom:18px">{{ c.hero.eyebrow }}</div>
     <h1 style="font-size:clamp(2.4rem,5.5vw,3.8rem);max-width:620px">{{ c.hero.title | safe }}</h1>
+    <p class="hero-attr">{{ c.hero.attr }}</p>
     <p style="font-size:1.1rem;color:var(--body);max-width:600px;margin:18px 0 0;line-height:1.75">
       {{ c.hero.intro | safe }}
     </p>
+    <p class="hero-note">{{ c.hero.note }}</p>
   </div>
 </div>
 <div id="offerings" class="wrap offerings-in-hero" style="position:relative;z-index:2;margin-top:52px">
