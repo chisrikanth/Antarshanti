@@ -66,3 +66,9 @@ The full sequence, with who does what, is in `docs/GO-LIVE.md`. Nothing is publi
 - 18 Nov: all check-in questions (25 items, stem, answer labels) and other questions/prompts rewritten to sound natural in Telugu and Hindi; you settled that the existing headings and the word "नर्म" are fine.
 - 18 Nov: Telugu (and Hindi check-in) rewritten from the meaning instead of from the English phrasing; FeelBetter references removed from the planning docs; policy-decision items confirmed (Jyotish, Happiness) and the wording of the refund proposals fixed.
 - A second read-through by a stronger editor model rewrote the Telugu headlines naturally and replaced about 140 uncommon-word uses (Part 5 of the review document).
+
+## G. Home and service pages redesign (pushed to staging 20 Nov 2026)
+- [ ] **G1. Please look at staging (English, Telugu, Hindi):** Home now opens with "Pulled in many directions? Begin with one calm step." merged with "Three paths, one destination" on a soft gradient; your photo and introduction appear only in the About section; check-in band and closing strip are centred; Jyotish orange / Bach white / Happiness green buttons; laptop view is zoomed in; service pages keep the booking strip and drop the duplicate hero buttons; every general WhatsApp button reads "WhatsApp Srikanth".
+- [ ] **G2. Telugu native-sounding pass.** Home is rewritten. Jyotish, Bach, Happiness and Check-in pages still need the same pass (transcreate from the idea, not word by word). Say go and I will do them page by page.
+- [ ] **G3. Personal-feel ideas for the top of Home** (first-person welcome, breathing circle, voice hello, testimonial line): pick any, or none.
+

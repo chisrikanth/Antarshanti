@@ -201,6 +201,7 @@ var AS_CONFIG = {
     if (typeof AS_CONTENT === 'undefined') return;
     var a = AS_CONTENT.announcement, bar = document.querySelector('.topbar[data-announce]');
     if (!a || !bar) return;
+    bar.hidden = false;
     bar.innerHTML = '✦ ' + esc(a.text) + (a.href ? ' <a href="' + esc(a.href) + '">' + esc(a.linkText || 'Learn more') + '</a>' : '') + ' ✦';
   }
   function ready() {

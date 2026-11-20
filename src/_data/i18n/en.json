@@ -26,7 +26,7 @@
   "topbar": "A gentle self-reflection tool from Antarshanti Healing",
   "talkStrip": {
    "prompt": "Prefer to talk it through?",
-   "link": "Chat with Srikanth on WhatsApp",
+   "link": "WhatsApp Srikanth",
    "message": "Namaste Srikanth, I am doing the check-in and would like to talk."
   },
   "consent": {
@@ -78,7 +78,7 @@
   "talk": {
    "title": "Not sure where to start?",
    "text": "Talk to Srikanth on WhatsApp. He can help you choose between Sudarshan Kriya and Bach Flower remedies, or simply listen.",
-   "btn": "Talk to Srikanth on WhatsApp",
+   "btn": "WhatsApp Srikanth",
    "message": "Namaste Srikanth, I did the check-in and would like to talk."
   },
   "js": {
@@ -271,13 +271,9 @@
    "whatsapp": "WhatsApp"
   },
   "hero": {
-   "eyebrow": "Jyotish and Bach Flower Consultations · Happiness Program",
-   "title": "Welcome to <em>Antarshanti</em> —<br>your path to inner peace.",
-   "intro": "I'm <strong>Srikanth</strong> — Vedic astrologer, Bach Flower Therapist, Art of Living teacher and meditation instructor, based in Hyderabad.",
-   "proof": "Art of Living teacher · Certified Bach Flower Therapist · Jyotish practitioner · Online & Hyderabad",
-   "btnPath": "Choose your path",
-   "linkCheckin": "Take the free check-in →",
-   "linkWhatsapp": "Ask on WhatsApp",
+   "eyebrow": "Antarshanti · Inner peace",
+   "title": "Pulled in many directions?<br>Begin with one calm step.",
+   "intro": "You do not have to work it all out alone. Whether you want clarity about your life, support for your feelings, or a daily practice for a quieter mind, there is a gentle place to start here.",
    "waMessage": "Namaste Srikanth, I would like to know more.",
    "portraitAlt": "Srikanth, Art of Living teacher, Bach Flower therapist and Jyotish practitioner"
   },
@@ -336,16 +332,14 @@
    "title": "Ready to begin your healing journey?",
    "text": "Book a session · Register for a program · Or just ask a question on WhatsApp",
    "jyotish": "Book Jyotish",
-   "bach": "Bach Flower",
-   "whatsapp": "WhatsApp"
+   "bach": "Bach Flower"
   }
  },
  "happiness": {
   "seoTitle": "Art of Living Happiness Program (Sudarshan Kriya) | Hyderabad & Online",
   "seoDescription": "A 3-day Art of Living Happiness Program with Sudarshan Kriya, breathwork and meditation, taught by Srikanth in Hyderabad and online. See upcoming batches and fees.",
   "topbar": {
-   "text": "Happiness Program — A calmer mind, one breath at a time ·",
-   "link": "Register for the next batch ↓"
+   "text": "Happiness Program — A calmer mind, one breath at a time"
   },
   "mobileBar": {
    "register": "Register",
@@ -355,15 +349,13 @@
    "eyebrow": "Art of Living · SKY · Meditation",
    "title": "A calmer mind,<br><span class=\"hl\">one breath at a time.</span>",
    "intro": "A 3-day experience of breathing, meditation and simple tools for a calmer, clearer day-to-day life. The Art of Living Happiness Program is built around <strong>Sudarshan Kriya (SKY)</strong> — a breathing technique that has been the subject of many published studies.",
-   "about": "The Art of Living is a global non-profit, founded in 1981, and its published research is summarised on its <a href=\"https://www.artofliving.org\" target=\"_blank\" rel=\"noopener\">website</a>. If it sounds interesting, you are welcome to join a batch whenever it feels right.",
-   "btnRegister": "Register for next program",
-   "btnWhat": "What is SKY?"
+   "about": "The Art of Living is a global non-profit, founded in 1981, and its published research is summarised on its <a href=\"https://www.artofliving.org\" target=\"_blank\" rel=\"noopener\">website</a>. If it sounds interesting, you are welcome to join a batch whenever it feels right."
   },
   "strip": {
    "title": "Register for the next Happiness Program batch",
    "text": "Online & in-person · English & Telugu · Hyderabad",
    "btnDates": "See upcoming dates ↓",
-   "btnWa": "WhatsApp to register",
+   "btnWa": "WhatsApp Srikanth",
    "waMessage": "Namaste Srikanth, I want to register for the Happiness Program."
   },
   "whatIs": {
@@ -417,7 +409,7 @@
    "title": "Join the next Happiness Program",
    "text": "Registration happens on the Art of Living site. The program is by donation to the Art of Living Foundation, and I offer it as voluntary service. Dates are shown below.",
    "fine": "Conducted in English and Telugu · Online & in-person · All levels welcome",
-   "btnWa": "Questions? WhatsApp Srikanth",
+   "btnWa": "WhatsApp Srikanth",
    "waMessage": "Namaste Srikanth, I would like to register for the next Happiness Program batch.",
    "btnFind": "Find the next batch on Art of Living ↗"
   },
@@ -575,9 +567,7 @@
   "seoTitle": "Vedic Astrology (Jyotish) Consultation Online | Antarshanti Healing",
   "seoDescription": "One-to-one Jyotish consultation online with Srikanth: birth chart, dashas and timing for career, marriage and life direction. No fixed fee — contribute what feels right.",
   "topbar": {
-   "lead": "Online Jyotish Consultations —",
-   "link": "Book your session ↓",
-   "tail": "· No fixed fee · Contribute what feels right"
+   "text": "Online Jyotish Consultations · No fixed fee · Contribute what feels right"
   },
   "mobileBar": {
    "book": "Book a session",
@@ -587,15 +577,13 @@
    "eyebrow": "Vedic Astrology",
    "titleA": "Read your life",
    "titleB": "through the stars.",
-   "intro": "Jyotish — the eye of the Vedas — is a reflective framework, not a promise about the future. It is a way to understand yourself: your temperament, the patterns you carry, which season of life you may be in, and how to move through it with more awareness.",
-   "btnBook": "Book a consultation",
-   "btnWhat": "What is Jyotish?"
+   "intro": "Jyotish — the eye of the Vedas — is a reflective framework, not a promise about the future. It is a way to understand yourself: your temperament, the patterns you carry, which season of life you may be in, and how to move through it with more awareness."
   },
   "strip": {
    "title": "Schedule your Jyotish consultation",
    "sub": "Donation-based · UPI · Slots available every day",
    "btn": "See available slots ↓",
-   "wa": "WhatsApp a question",
+   "wa": "WhatsApp Srikanth",
    "waMsg": "Namaste Srikanth, I have a question about Jyotish."
   },
   "whatIs": {
@@ -702,9 +690,7 @@
   "seoTitle": "Bach Flower Therapy Consultation Online | ₹1,000 | Antarshanti Healing",
   "seoDescription": "Personalised Bach Flower remedy consultation online with a certified Bach Flower therapist. ₹1,000 per session; a remedy bottle is billed separately, only if you want it.",
   "topbar": {
-   "lead": "Bach Flower Consultations —",
-   "link": "Book & pay online · {price}",
-   "tail": "· Personalised · Online · Complementary wellness"
+   "text": "Bach Flower Consultations · {price} · Personalised · Online · Complementary wellness"
   },
   "mobileBar": {
    "book": "Book a session",
@@ -714,15 +700,13 @@
    "eyebrow": "Emotional Wellness",
    "titleA": "Gentle support for the",
    "titleB": "feelings words cannot reach.",
-   "intro": "Bach Flower Remedies are gentle flower essences that many people use to support their emotional wellbeing through times of stress, fear, grief or self-doubt. Developed by Dr. Edward Bach, they are a well-known system of complementary emotional care, offered to support your own healing.",
-   "btnBook": "Book a session",
-   "btnWhat": "What is Bach Flower?"
+   "intro": "Bach Flower Remedies are gentle flower essences that many people use to support their emotional wellbeing through times of stress, fear, grief or self-doubt. Developed by Dr. Edward Bach, they are a well-known system of complementary emotional care, offered to support your own healing."
   },
   "strip": {
    "title": "Book your Bach Flower consultation",
    "sub": "{price} consultation · Pay securely online · Personalised for your emotional state",
    "btn": "Choose a slot ↓",
-   "wa": "WhatsApp a question",
+   "wa": "WhatsApp Srikanth",
    "waMsg": "Namaste Srikanth, I have a question about Bach Flower Therapy."
   },
   "whatIs": {

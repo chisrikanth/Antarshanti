@@ -11,10 +11,10 @@ ldKey: "jyotish"
 navKey: "jyotish"
 ---
 {% extends "layouts/base.njk" %}
-{% block topbar %}{% set c = t.jyotish %}<div class="topbar">✦ {{ c.topbar.lead }} <a href="#booking-widget">{{ c.topbar.link }}</a> {{ c.topbar.tail }} ✦</div>{% endblock %}
+{% block topbar %}{% set c = t.jyotish %}<div class="topbar">✦ {{ c.topbar.text }} ✦</div>{% endblock %}
 {% block mobilebar %}{% set c = t.jyotish %}<div class="mobile-bar"><a class="btn btn-gold" href="#booking-widget">{{ c.mobileBar.book }}</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ c.mobileBar.whatsapp }}</a></div>{% endblock %}
 {% block content %}{% set c = t.jyotish %}{% set b = t.booking %}
-<header style="position:relative;min-height:68vh;display:flex;align-items:center;overflow:hidden;padding:90px 0 70px;background:linear-gradient(160deg,#FFF7EC 0%,#FBEEDB 100%)">
+<header style="position:relative;min-height:48vh;display:flex;align-items:center;overflow:hidden;padding:70px 0 56px;background:linear-gradient(160deg,#FFF7EC 0%,#FBEEDB 100%)">
   <svg class="hero-deco" style="position:absolute;right:-140px;top:50%;transform:translateY(-50%);width:560px;height:560px;pointer-events:none" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g class="spin-el" style="transform-origin:280px 280px;animation:spin 240s linear infinite">
     <circle cx="280" cy="280" r="258" fill="none" stroke="rgba(217,164,65,.45)" stroke-width="1"/>
@@ -38,10 +38,6 @@ navKey: "jyotish"
     <div class="eyebrow" style="color:var(--saffron);margin-bottom:14px">{{ c.hero.eyebrow }}</div>
     <h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">{{ c.hero.titleA }}<br><span style="color:var(--saffron)">{{ c.hero.titleB }}</span></h1>
     <p style="font-size:1.08rem;color:var(--body);max-width:500px;margin:18px 0 30px;line-height:1.78">{{ c.hero.intro }}</p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="btn btn-gold" href="#booking-widget">{{ c.hero.btnBook }}</a>
-      <a class="btn btn-outline" href="#what-is">{{ c.hero.btnWhat }}</a>
-    </div>
   </div>
 </header>
 

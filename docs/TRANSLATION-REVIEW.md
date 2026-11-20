@@ -1137,3 +1137,11 @@ key | before | after
 - **Privacy Policy, "What we collect" and "Who sees your information":** two new bullets saying that booking details (name, WhatsApp number, and for paid sessions the phone and email given at payment) are kept in a private booking record and a private Google Calendar that only Srikanth can open, so he can contact the person easily and prepare. The English is the master; Telugu and Hindi are machine drafts. Keys: `privacy.sections.1.html` and `privacy.sections.3.html`, plus `privacy.updated`. Legal-sensitive: please have the lawyer read the English.
 - **Bach page, after payment:** `bach.book.paidTitle`, `paidNext`, `paidLine`, `bookAnother`, `waMsgPaid`, and the name field `nameLabel` / `errName` (Telugu and Hindi drafts, unreviewed).
 - **Booking messages from the server** (`booking.errors.*`) and **time labels** (`booking.periods`, `booking.timeFmt`) from earlier in the day are also still unreviewed.
+
+## Home page top section (new wording, 20 Nov 2026) — please check
+English: "Pulled in many directions? Begin with one calm step." + "You do not have to work it all out alone…"
+- Telugu headline: **అన్నీ ఒకేసారి మీద పడుతున్నాయా? / ప్రశాంతంగా మొదటి అడుగు వేయండి.** — "మీద పడుతున్నాయా" = "is it all landing on you at once". Does that sound natural, or is there a more everyday way to say "pulled in many directions"?
+- Telugu line: uses **ఆసరా** (support) and **అలవాటు** (daily habit) instead of bookish words. Check both.
+- Hindi headline: **कई तरफ़ खिंचाव महसूस हो रहा है? / एक शांत क़दम से शुरुआत कीजिए।** — "खिंचाव महसूस होना" for "pulled". Is it natural or too literal?
+- Hindi line uses **अभ्यास** (daily practice). Fine, or would **आदत** be warmer?
+- **Home Telugu rewritten again (20 Nov, native-sounding pass).** Headline now "అన్నివైపుల నుంచీ లాగేస్తున్నట్టు ఉందా? / ప్రశాంతంగా ఒక్క అడుగుతో మొదలుపెడదాం." (idea of "pulled in many directions" and the "-దాం" inclusive ending, same as the existing "మొదలుపెడదామా?"). Intro now uses **ఓదార్పు** (comfort) and **కుదుటగా** (settled). Check both.

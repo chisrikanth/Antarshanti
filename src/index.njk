@@ -11,11 +11,11 @@ ldKey: "index"
 navKey: "home"
 ---
 {% extends "layouts/base.njk" %}
-{% block topbar %}{% set c = t.home %}<div class="topbar" data-announce>✦ {{ c.topbar.text }} <a href="{{ 'checkin.html' | lhref(lang.code) }}">{{ c.topbar.link }}</a> ✦</div>{% endblock %}
+{% block topbar %}<div class="topbar" data-announce hidden></div>{% endblock %}
 {% block mobilebar %}{% set c = t.home %}<div class="mobile-bar"><a class="btn btn-gold" href="#offerings">{{ c.mobileBar.explore }}</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ c.mobileBar.whatsapp }}</a></div>{% endblock %}
 {% block content %}{% set c = t.home %}
-<header style="position:relative;min-height:80vh;display:flex;align-items:center;overflow:hidden;padding:90px 0 70px;background:linear-gradient(160deg,#FFF7EC 0%,#FBEEDB 100%)">
-  <svg class="hero-deco" style="position:absolute;right:-140px;top:50%;transform:translateY(-50%);width:560px;height:560px;pointer-events:none" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<header class="home-hero" style="position:relative;overflow:hidden;padding:46px 0 56px">
+  <svg class="hero-deco" style="position:absolute;right:-100px;top:10px;width:470px;height:470px;pointer-events:none" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g class="spin-el" style="transform-origin:280px 280px;animation:spin 240s linear infinite">
     <circle cx="280" cy="280" r="258" fill="none" stroke="rgba(217,164,65,.45)" stroke-width="1"/>
     <circle cx="280" cy="280" r="198" fill="none" stroke="rgba(217,164,65,.32)" stroke-width="1"/>
@@ -34,38 +34,18 @@ navKey: "home"
     <circle cx="280" cy="280" r="6" fill="rgba(217,107,16,.9)"/><circle cx="280" cy="280" r="2.5" fill="#FFF7EC"/>
   </g>
 </svg>
-  <div class="wrap hero-grid" style="position:relative;z-index:2">
+  <div class="wrap hero-grid hero-intro" style="position:relative;z-index:2">
   <div>
 
     <div class="eyebrow" style="color:var(--saffron);margin-bottom:18px">{{ c.hero.eyebrow }}</div>
     <h1 style="font-size:clamp(2.4rem,5.5vw,3.8rem);max-width:620px">{{ c.hero.title | safe }}</h1>
-    <p style="font-size:1.1rem;color:var(--body);max-width:540px;margin:18px 0 22px;line-height:1.75">
+    <p style="font-size:1.1rem;color:var(--body);max-width:600px;margin:18px 0 0;line-height:1.75">
       {{ c.hero.intro | safe }}
     </p>
-    <p class="hero-proof">{{ c.hero.proof }}</p>
-    <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center">
-      <a class="btn btn-gold" href="#offerings">{{ c.hero.btnPath }}</a>
-      <a class="hero-link" href="{{ 'checkin.html' | lhref(lang.code) }}">{{ c.hero.linkCheckin }}</a>
-      <a class="hero-link" href="https://wa.me/919985133161?text={{ c.hero.waMessage | urlencode }}" target="_blank" rel="noopener">{{ c.hero.linkWhatsapp }}</a>
-    </div>
   </div>
-  <div class="hero-portrait"><img src="/assets/srikanth.webp" width="280" height="280" alt="{{ c.hero.portraitAlt }}" fetchpriority="high"></div>
 </div>
-</header>
-
-<section class="checkin-band">
-  <div class="wrap checkin-band-inner">
-    <div>
-      <div class="eyebrow" style="color:var(--saffron);margin-bottom:8px">{{ c.band.eyebrow }}</div>
-      <h2>{{ c.band.title }}</h2>
-      <p>{{ c.band.text }}</p>
-    </div>
-    <a class="btn btn-gold" href="{{ 'checkin.html' | lhref(lang.code) }}">{{ c.band.btn }}</a>
-  </div>
-</section>
-
-<section id="offerings" style="padding:56px 0;background:var(--paper-2);border-top:1px solid var(--line)">
-  <div class="wrap">
+<div id="offerings" class="wrap offerings-in-hero" style="position:relative;z-index:2;margin-top:52px">
+  <div>
     <div class="eyebrow" style="color:var(--saffron);margin-bottom:10px;text-align:center">{{ c.offerings.eyebrow }}</div>
     <h2 style="font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:8px;text-align:center">{{ c.offerings.title }}</h2>
     <p style="text-align:center;color:var(--dim);max-width:600px;margin:0 auto 36px;font-size:.97rem">{{ c.offerings.intro }}</p>
@@ -91,6 +71,21 @@ navKey: "home"
         <span class="offer-ask">{{ c.offerings.happiness.ask | safe }}</span>
         <span class="btn btn-leaf btn-sm" style="align-self:flex-start;margin-top:4px">{{ c.offerings.happiness.btn }}</span>
       </a>
+    </div>
+  </div>
+</div>
+</header>
+
+<section class="checkin-band">
+  <div class="wrap checkin-band-inner">
+    <div>
+      <div class="eyebrow" style="color:var(--saffron);margin-bottom:8px">{{ c.band.eyebrow }}</div>
+      <h2>{{ c.band.title }}</h2>
+      <p>{{ c.band.text }}</p>
+    </div>
+    <div class="band-actions">
+      <a class="btn btn-gold" href="{{ 'checkin.html' | lhref(lang.code) }}">{{ c.band.btn }}</a>
+      <a class="btn btn-wa" href="https://wa.me/919985133161?text={{ c.hero.waMessage | urlencode }}" target="_blank" rel="noopener">{{ t.chrome.whatsappSrikanth }}</a>
     </div>
   </div>
 </section>
@@ -120,13 +115,13 @@ navKey: "home"
   </div>
 </section>
 
-<div class="cta-strip">
+<div class="cta-strip cta-strip-center">
   <div class="cta-strip-inner">
     <div><p>{{ c.cta.title }}</p><span>{{ c.cta.text }}</span></div>
     <div class="cta-strip-btns">
       <a class="btn btn-gold btn-sm" href="{{ 'jyotish.html' | lhref(lang.code) }}#booking-widget">{{ c.cta.jyotish }}</a>
       <a class="btn btn-lotus btn-sm" href="{{ 'bach.html' | lhref(lang.code) }}">{{ c.cta.bach }}</a>
-      <a class="btn btn-wa btn-sm" href="https://wa.me/919985133161" target="_blank">{{ c.cta.whatsapp }}</a>
+      <a class="btn btn-wa btn-sm" href="https://wa.me/919985133161" target="_blank">{{ t.chrome.whatsappSrikanth }}</a>
     </div>
   </div>
 </div>

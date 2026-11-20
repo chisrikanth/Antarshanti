@@ -12,10 +12,10 @@ ldKey: "bach"
 navKey: "bach"
 ---
 {% extends "layouts/base.njk" %}
-{% block topbar %}{% set c = t.bach %}{% set P = '<span data-price="bach_consultation">₹1,000</span>' %}<div class="topbar" style="background:var(--lotus)">✦ {{ c.topbar.lead }} <a href="#booking-widget" style="color:#FFD8E8">{{ c.topbar.link | replace('{price}', P) | safe }}</a> {{ c.topbar.tail }} ✦</div>{% endblock %}
+{% block topbar %}{% set c = t.bach %}{% set P = '<span data-price="bach_consultation">₹1,000</span>' %}<div class="topbar" style="background:var(--lotus)">✦ {{ c.topbar.text | replace('{price}', P) | safe }} ✦</div>{% endblock %}
 {% block mobilebar %}{% set c = t.bach %}<div class="mobile-bar"><a class="btn btn-gold" href="#booking-widget">{{ c.mobileBar.book }}</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ c.mobileBar.whatsapp }}</a></div>{% endblock %}
 {% block content %}{% set c = t.bach %}{% set b = t.booking %}{% set k = c.book %}{% set P = '<span data-price="bach_consultation">₹1,000</span>' %}
-<header style="position:relative;min-height:68vh;display:flex;align-items:center;overflow:hidden;padding:90px 0 70px;background:linear-gradient(160deg,#FFF7EC 0%,#FCEEE8 100%)">
+<header style="position:relative;min-height:48vh;display:flex;align-items:center;overflow:hidden;padding:70px 0 56px;background:linear-gradient(160deg,#FFF7EC 0%,#FCEEE8 100%)">
   <svg class="hero-deco" style="position:absolute;right:60px;top:50%;transform:translateY(-50%);width:480px;height:480px;pointer-events:none;opacity:.8" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <g class="spin-el" style="transform-origin:200px 200px;animation:spin 200s linear infinite reverse">
     <g stroke="rgba(90,138,62,.35)" stroke-width="1.5" fill="none">
@@ -34,10 +34,6 @@ navKey: "bach"
     <div class="eyebrow" style="color:var(--lotus);margin-bottom:14px">{{ c.hero.eyebrow }}</div>
     <h1 style="font-size:clamp(2.4rem,5vw,3.6rem)">{{ c.hero.titleA }}<br><span style="color:var(--lotus)">{{ c.hero.titleB }}</span></h1>
     <p style="font-size:1.08rem;color:var(--body);max-width:500px;margin:18px 0 30px;line-height:1.78">{{ c.hero.intro }}</p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="btn btn-lotus" href="#booking-widget">{{ c.hero.btnBook }}</a>
-      <a class="btn btn-outline" href="#what-is">{{ c.hero.btnWhat }}</a>
-    </div>
   </div>
 </header>
 

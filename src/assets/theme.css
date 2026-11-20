@@ -251,3 +251,26 @@ header p a{text-decoration:underline}
 
 .paid-box .btn-outline{background:#fff;color:#6B4A2F;border-color:#D9C9B5}
 .paid-box .btn-outline:hover{background:#FFF1E2;color:#8A3F0B;border-color:var(--sun-deep)}
+
+.band-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+@media(max-width:560px){.band-actions .btn{flex:1 1 100%;text-align:center}}
+
+@media(min-width:821px){.hero-grid{gap:36px}.hero-grid .hero-portrait img{width:236px;height:236px}.hero-grid .eyebrow{margin-bottom:12px!important}.hero-grid p{margin-top:12px!important;margin-bottom:14px!important}.hero-proof{margin:0!important}}
+
+/* intro-only home hero; centred bands; orange / white / green button trio; larger view on laptops */
+.topbar[hidden]{display:none!important}
+.hero-grid.hero-intro{display:block}
+@media(min-width:821px){.hero-intro h1,.hero-intro p{max-width:680px}}
+.checkin-band-inner{flex-direction:column;justify-content:center;text-align:center;gap:20px}
+.checkin-band p{margin-left:auto;margin-right:auto}
+.band-actions{justify-content:center}
+.cta-strip-center .cta-strip-inner{flex-direction:column;text-align:center;gap:16px}
+.cta-strip-center .cta-strip-btns{justify-content:center}
+.btn-leaf{background:linear-gradient(135deg,#6E9C7B,var(--leaf));color:#fff;border:none;box-shadow:0 8px 22px rgba(84,127,97,.28)}
+.btn-leaf:hover{background:var(--leaf);color:#fff;box-shadow:0 10px 26px rgba(84,127,97,.38)}
+@media(min-width:1100px){html{zoom:1.1}}
+@media(min-width:1500px){html{zoom:1.2}}
+.home-hero{background:linear-gradient(180deg,#FFF8EE 0%,#FDEFDB 48%,#FFE9CC 100%)}
+.home-hero .offerings-in-hero{max-width:1000px}
+.checkin-band{border-top:0!important}
+html[lang="te"] .hero-grid h1,html[lang="hi"] .hero-grid h1{font-size:clamp(1.8rem,3vw,2.3rem)!important;line-height:1.3}
