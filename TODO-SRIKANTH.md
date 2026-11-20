@@ -16,7 +16,7 @@ Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (low
 - [ ] **A6. Staging review feedback.** You said you tested staging and shared suggestions, but I did not receive them. Please paste them again.
 
 ## B. Before going live (merge `staging` into `main`)
-- [ ] **B1. Review the draft Privacy, Terms and Refund pages** (`docs/policy-decisions.md`). They are hidden from Google and unlinked until you approve. Razorpay expects them. The booking form now stores name and WhatsApp number, so the Privacy page needs your OK on that.
+- [ ] **B1. Review the draft Privacy, Terms and Refund pages** (`docs/policy-decisions.md`). They are hidden from Google and unlinked until you approve. Razorpay expects them. The Privacy page now says booking details (name, WhatsApp number, payment phone and email) are kept in a private booking record and a private Google Calendar only you can open (added 20 Nov); please read that wording.
 - [ ] **B2. Open `telemanas.mohfw.gov.in`** once to confirm it is the official Tele-MANAS site (shown in the check-in safety box).
 - [ ] **B3. Decide:** Jyotish confirmation window (site says "within 24 hours").
 - [ ] **B4. Turn on Netlify "Stop auto publishing"** and protect `main` on GitHub (see `docs/RELEASE-PROCESS.md`), so nothing reaches antarshanti.co.in without your click.

@@ -1129,3 +1129,11 @@ key | before | after
 7. Write sentences so a placeholder needs no suffix (avoids grammar slips like "రెమెడీలుతో").
 8. Turn stacked participles in front of a noun into two short sentences.
 
+
+
+---
+
+# Part 8: new strings added on 20 Nov 2026 (please include in the native review)
+- **Privacy Policy, "What we collect" and "Who sees your information":** two new bullets saying that booking details (name, WhatsApp number, and for paid sessions the phone and email given at payment) are kept in a private booking record and a private Google Calendar that only Srikanth can open, so he can contact the person easily and prepare. The English is the master; Telugu and Hindi are machine drafts. Keys: `privacy.sections.1.html` and `privacy.sections.3.html`, plus `privacy.updated`. Legal-sensitive: please have the lawyer read the English.
+- **Bach page, after payment:** `bach.book.paidTitle`, `paidNext`, `paidLine`, `bookAnother`, `waMsgPaid`, and the name field `nameLabel` / `errName` (Telugu and Hindi drafts, unreviewed).
+- **Booking messages from the server** (`booking.errors.*`) and **time labels** (`booking.periods`, `booking.timeFmt`) from earlier in the day are also still unreviewed.
