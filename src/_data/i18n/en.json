@@ -10,7 +10,7 @@
   "whatsappSrikanth": "WhatsApp Srikanth",
   "footer": {
    "location": "Srikanth · Hyderabad, India",
-   "hours": "Consultations online · Mon, Wed, Fri, Sat",
+   "hours": "Consultations online · every day",
    "whatsapp": "WhatsApp",
    "instagram": "Instagram",
    "privacy": "Privacy",
@@ -593,7 +593,7 @@
   },
   "strip": {
    "title": "Schedule your Jyotish consultation",
-   "sub": "Donation-based · UPI · Slots available Mon, Wed, Fri, Sat",
+   "sub": "Donation-based · UPI · Slots available every day",
    "btn": "See available slots ↓",
    "wa": "WhatsApp a question",
    "waMsg": "Namaste Srikanth, I have a question about Jyotish."

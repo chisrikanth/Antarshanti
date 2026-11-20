@@ -132,11 +132,11 @@ navKey: "jyotish"
   </div>
 </div>
 <script src="/assets/booking.js"></script>
-<script>var T = {{ b | dump | safe }}, K = {{ k | dump | safe }}, LANG = '{{ lang.code }}';</script>
+<script>var T = {{ b | dump | safe }}, K = {{ k | dump | safe }}, LANG = '{{ lang.code }}', WEEKLY = {{ weeklySlots | dump | safe }};</script>
 {% raw %}<script>
 (function(){
   ASBook.setT(T,LANG);
-  var SLOTS = {"Mon": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Wed": ["09:00 AM", "10:00 AM", "11:00 AM", "05:00 PM", "06:00 PM", "07:00 PM"], "Fri": ["09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "05:00 PM", "06:00 PM"], "Sat": ["09:00 AM", "10:00 AM", "11:00 AM", "03:00 PM", "04:00 PM", "05:00 PM"]};
+  var SLOTS = WEEKLY;   // built-in weekly fallback (src/_data/weeklySlots.json); the live calendar and database override it
   // ── Contribution model: no fixed fee. Set your UPI ID here. ──────────────
   var UPI_ID   = "chivukula.srikanth@ybl";   // e.g. srikanth@ybl
   var UPI_NAME = "Antarshanti";
