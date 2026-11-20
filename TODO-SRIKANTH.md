@@ -5,8 +5,8 @@ Tick items by changing `[ ]` to `[x]`. Claude re-reads this at the start of each
 Guiding principles for everything on the site: `docs/GUIDING-PRINCIPLES.md` (lower pressure and fear; tell the truth, not a rosy story).
 
 ## A. Blocking: the site cannot take real bookings until these are done
-- [ ] **A1. Razorpay TEST keys.** Razorpay dashboard, Test Mode, Account & Settings, API Keys, Generate Test Key.
-- [ ] **A2. Netlify variables, one value per deploy context.** Table in `docs/RELEASE-PROCESS.md`. Needs: `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` (service_role key of each project, from Supabase Project Settings, API Keys), `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`. Production gets live values; previews and branch deploys get test values.
+- [x] **A1. Razorpay TEST keys** generated and added to Netlify for Branch deploys and Deploy Previews (20 Nov). Production still has the live keys.
+- [ ] **A2. Netlify variables, one value per deploy context.** Done on 20 Nov: Google (email, key, calendar ID), `GOOGLE_CALENDAR_ENV`, `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` and Razorpay keys for staging/previews, `RAZORPAY_WEBHOOK_SECRET` (all three contexts). Still to do at go-live: `SUPABASE_SERVICE_KEY` for Production (production project secret key), and confirm the live Razorpay webhook. Step-by-step: `docs/GEMINI-SETUP-PROMPT.md` (Netlify steps).
 - [ ] **A3. Razorpay webhook** (once in Live mode for production, once in Test mode for staging). URLs and events: `docs/PAYMENTS-AND-PRICES.md`.
 - [ ] **A4. Test the full payment flow on staging** with a Razorpay test card: pick a slot, pay, then check Supabase tables `payments` (status `paid`) and `bookings` (status `booked`).
 - [ ] **A5. Test slot clashes on staging:** open the Bach page in two browsers, pick the same slot; the second one must be refused. Try the Jyotish "Hold this slot" too.
