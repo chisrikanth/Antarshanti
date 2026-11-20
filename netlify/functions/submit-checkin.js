@@ -10,6 +10,7 @@
 //                          so it must only ever be used server-side, never in the browser)
 
 const { databaseProblem } = require('./lib/env');
+const { authHeaders } = require('./lib/db');
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
@@ -86,8 +87,7 @@ exports.handler = async function (event) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      apikey: SUPABASE_SERVICE_KEY,
-      Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
+      ...authHeaders(SUPABASE_SERVICE_KEY),
       Prefer: 'return=minimal'
     },
     body: JSON.stringify(body)

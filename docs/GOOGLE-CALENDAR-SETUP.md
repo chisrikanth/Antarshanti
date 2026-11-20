@@ -120,6 +120,7 @@ Do this first in the **TEST** calendar, then in **Bookings** when you are happy.
 ## Part 6. Test it on the staging site (about 10 minutes)
 
 1. Open `https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots` in the browser. You should see text containing `"mode":"calendar"` and a `days` list that includes your Open day.
+   - If you see `{"live":false}`, the website cannot reach its database: add `SUPABASE_SERVICE_KEY` (the TEST project's key) for Branch deploys and Deploy Previews in Netlify and redeploy. The calendar is only used once the database works.
    - If you see `"mode":"weekly"` instead, the calendar is not connected. Go to the troubleshooting table.
 2. Open the staging **Jyotish** page, choose that day. You should see exactly the slots from your `Open` event.
 3. Pick a slot, enter a test name and a test phone number (for example `9999999999`), tick the box, press **Hold this slot**.

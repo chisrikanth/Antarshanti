@@ -13,10 +13,16 @@ function config(event) {
   return { url: url.replace(/\/$/, ''), key };
 }
 
+// Supabase has two styles of server key: the older JWT (starts eyJ, sent as apikey AND Bearer) and the newer
+// secret key (starts sb_secret_, sent as apikey only). Either works here.
+function authHeaders(key) {
+  return /^eyJ/.test(key) ? { apikey: key, Authorization: `Bearer ${key}` } : { apikey: key };
+}
+
 async function rest(cfg, path, init) {
   const res = await fetch(`${cfg.url}/rest/v1/${path}`, {
     ...init,
-    headers: { apikey: cfg.key, Authorization: `Bearer ${cfg.key}`, 'Content-Type': 'application/json', ...((init && init.headers) || {}) }
+    headers: { ...authHeaders(cfg.key), 'Content-Type': 'application/json', ...((init && init.headers) || {}) }
   });
   return res;
 }
@@ -39,4 +45,4 @@ async function getPrice(event, service) {
   return { error: 'Unknown service.', status: 400 };
 }
 
-module.exports = { config, rest, getPrice, DEFAULT_PRICES_INR };
+module.exports = { config, rest, getPrice, authHeaders, DEFAULT_PRICES_INR };

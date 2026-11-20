@@ -8,7 +8,7 @@
 |---|---|---|
 | 0 | **Shared context** (paste first, once) | Gives Gemini the whole picture so it can think for itself instead of following steps blindly |
 | 1 | **Decide the structure, then create the calendars** | Gemini works out: one Google account or two, one calendar or several |
-| 2 | **Add your availability** (the "Open" events), plus **2b: extend weekday evenings to 9 PM** | This is how you control which times the website offers |
+| 2 | **Add your availability** (the "Open" events), plus **2b: extend weekday evenings to 9 PM**, **2c: mirror the pattern into the TEST calendar** | This is how you control which times the website offers |
 | 3 | **Google Cloud: the robot account and the sharing** | The website needs a "service account" to read and write only these calendars |
 | 4 | **Netlify settings and the live test** | Puts the details into the website's settings and proves it works on the staging site |
 | 5 | **Razorpay (test mode) checks** | Needed before the Bach Flower payment flow can be tested |
@@ -66,7 +66,8 @@ These were already present before: `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`, 
 **The one-minute test.** Open this in your browser (Claude cannot reach netlify.app from here):
 `https://staging--aquamarine-croquembouche-26e205.netlify.app/.netlify/functions/slots`
 - Text containing `"mode":"calendar"` and a `days` list = the calendar works.
-- `"mode":"weekly"` = something is missing or wrong; paste what you see to Claude, or use the troubleshooting list in Prompt 4.
+- `{"live":false}` = the website cannot reach its **database**: `SUPABASE_SERVICE_KEY` is missing (or `SUPABASE_URL` / the key is wrong) for the staging contexts. The calendar is never even tried in that case, so this is NOT a Google problem. Fix: add `SUPABASE_SERVICE_KEY` for Branch deploys and Deploy Previews (the key of the TEST Supabase project), then redeploy staging.
+- `"mode":"weekly"` = the database works but the calendar is not connected or something Google-side is wrong; paste what you see to Claude, or use the troubleshooting list in Prompt 4.
 
 ---
 
@@ -210,6 +211,19 @@ Then read the calendar back for the next 14 days and show me every event in a ta
 4. No two Open events overlap each other and there are no duplicates.
 5. No other event in the calendar has a title starting with Open or Available.
 Finally list the slots the website would offer next Monday, next Friday and next Saturday (one-hour slots from the start of each Open window).
+```
+
+---
+
+## Prompt 2c: copy the weekly pattern into the TEST calendar (so the staging site shows realistic times)
+
+```text
+FOLLOW-UP TO TASK 2: The staging (test) website reads only the calendar named Antarshanti TEST. At the moment that calendar has just one test Open event, while the weekly pattern is only in Antarshanti Bookings. I want the staging site to behave like the real one, so please copy the same weekly Open pattern into Antarshanti TEST:
+- Monday to Thursday: 09:00-12:00 and 17:00-21:00
+- Friday: 09:00-13:00 and 17:00-21:00
+- Saturday and Sunday: 09:00-21:00
+All are repeating weekly events titled exactly "Open", Show as Busy, timed, India time zone.
+Create them ONLY in Antarshanti TEST. Do not change Antarshanti Bookings and do not touch my main calendar. Remove the single one-off test Open event from Antarshanti TEST so that nothing overlaps. Then read Antarshanti TEST back for the next 14 days (calendar, title, start, end, repeat rule, Show as, time zone) and confirm: no duplicates, no overlaps, no other event starts with Open or Available.
 ```
 
 ---
