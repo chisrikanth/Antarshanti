@@ -14,32 +14,26 @@ navKey: "home"
 {% block topbar %}<div class="topbar" data-announce hidden></div>{% endblock %}
 {% block mobilebar %}{% set c = t.home %}<div class="mobile-bar"><a class="btn btn-gold" href="#offerings">{{ c.mobileBar.explore }}</a><a class="btn btn-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ c.mobileBar.whatsapp }}</a></div>{% endblock %}
 {% block content %}{% set c = t.home %}
-<header class="home-hero" style="position:relative;overflow:clip;padding:46px 0 56px">
-  <!-- Signature moment: three planets (Jyotish, Bach, Happiness) spiral in to one centre as the visitor scrolls. Decorative; see src/assets/wheel.js -->
-  <div class="wheel-stage" aria-hidden="true">
-  <svg class="wheel" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" focusable="false">
-    <g class="wheel-ambient"><g class="wheel-turn">
-      <circle class="ring r1" cx="280" cy="280" r="258"/>
-      <circle class="ring r2" cx="280" cy="280" r="198"/>
-      <circle class="ring r3" cx="280" cy="280" r="135" stroke-dasharray="4 8"/>
-      <g class="spokes">
-        <line x1="280" y1="18" x2="280" y2="542"/><line x1="18" y1="280" x2="542" y2="280"/>
-        <line x1="50" y1="147" x2="510" y2="413"/><line x1="50" y1="413" x2="510" y2="147"/>
-        <line x1="147" y1="50" x2="413" y2="510"/><line x1="413" y1="50" x2="147" y2="510"/>
-      </g>
-      <g class="petals"><ellipse cx="280" cy="72" rx="7" ry="16"/><ellipse cx="280" cy="488" rx="7" ry="16"/><ellipse cx="72" cy="280" rx="16" ry="7"/><ellipse cx="488" cy="280" rx="16" ry="7"/></g>
-      <g class="ticks">
-        <circle cx="280" cy="18" r="3.5"/><circle cx="542" cy="280" r="3.5"/><circle cx="280" cy="542" r="3.5"/><circle cx="18" cy="280" r="3.5"/>
-        <circle cx="413" cy="50" r="2.5"/><circle cx="510" cy="147" r="2.5"/><circle cx="510" cy="413" r="2.5"/><circle cx="413" cy="510" r="2.5"/>
-        <circle cx="147" cy="510" r="2.5"/><circle cx="50" cy="413" r="2.5"/><circle cx="50" cy="147" r="2.5"/><circle cx="147" cy="50" r="2.5"/>
-      </g>
-    </g></g>
-    <g class="orbit-guides"><circle cx="280" cy="280" r="236"/><circle cx="280" cy="280" r="176"/><circle cx="280" cy="280" r="118"/></g>
-    <g class="bindu"><circle class="bindu-halo" cx="280" cy="280" r="46"/><circle class="bindu-core" cx="280" cy="280" r="6"/><circle cx="280" cy="280" r="2.5" fill="#FFF7EC"/></g>
-    <g class="orbit o1"><g class="planet-g"><circle class="halo" cx="280" cy="280" r="19"/><circle class="planet jy" cx="280" cy="280" r="9"/></g></g>
-    <g class="orbit o2"><g class="planet-g"><circle class="halo" cx="280" cy="280" r="19"/><circle class="planet ba" cx="280" cy="280" r="9"/></g></g>
-    <g class="orbit o3"><g class="planet-g"><circle class="halo" cx="280" cy="280" r="19"/><circle class="planet ha" cx="280" cy="280" r="9"/></g></g>
-  </svg></div>
+<header class="home-hero" style="position:relative;overflow:hidden;padding:46px 0 56px">
+  <svg class="hero-deco" style="position:absolute;left:50%;top:-110px;margin-left:-360px;width:720px;height:720px;pointer-events:none;opacity:.38" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g class="spin-el" style="transform-origin:280px 280px;animation:spin 240s linear infinite">
+    <circle cx="280" cy="280" r="258" fill="none" stroke="rgba(217,164,65,.45)" stroke-width="1"/>
+    <circle cx="280" cy="280" r="198" fill="none" stroke="rgba(217,164,65,.32)" stroke-width="1"/>
+    <circle cx="280" cy="280" r="135" fill="none" stroke="rgba(217,164,65,.22)" stroke-width="1" stroke-dasharray="4 8"/>
+    <g stroke="rgba(217,164,65,.38)" stroke-width="1">
+      <line x1="280" y1="18" x2="280" y2="542"/><line x1="18" y1="280" x2="542" y2="280"/>
+      <line x1="50" y1="147" x2="510" y2="413"/><line x1="50" y1="413" x2="510" y2="147"/>
+      <line x1="147" y1="50" x2="413" y2="510"/><line x1="413" y1="50" x2="147" y2="510"/>
+    </g>
+    <g fill="rgba(184,64,106,.38)"><ellipse cx="280" cy="72" rx="7" ry="16"/><ellipse cx="280" cy="488" rx="7" ry="16"/><ellipse cx="72" cy="280" rx="16" ry="7"/><ellipse cx="488" cy="280" rx="16" ry="7"/></g>
+    <g fill="rgba(217,107,16,.75)">
+      <circle cx="280" cy="18" r="3.5"/><circle cx="542" cy="280" r="3.5"/><circle cx="280" cy="542" r="3.5"/><circle cx="18" cy="280" r="3.5"/>
+      <circle cx="413" cy="50" r="2.5"/><circle cx="510" cy="147" r="2.5"/><circle cx="510" cy="413" r="2.5"/><circle cx="413" cy="510" r="2.5"/>
+      <circle cx="147" cy="510" r="2.5"/><circle cx="50" cy="413" r="2.5"/><circle cx="50" cy="147" r="2.5"/><circle cx="147" cy="50" r="2.5"/>
+    </g>
+    <circle cx="280" cy="280" r="6" fill="rgba(217,107,16,.9)"/><circle cx="280" cy="280" r="2.5" fill="#FFF7EC"/>
+  </g>
+</svg>
   <div class="wrap hero-grid hero-intro" style="position:relative;z-index:2">
   <div>
 
@@ -135,7 +129,7 @@ navKey: "home"
 </div>
 
 {% endblock %}
-{% block scripts %}{% set c = t.home %}<script src="/assets/wheel.js" defer></script><script>
+{% block scripts %}{% set c = t.home %}<script>
 const NEXT_BATCH = {{ c.offerings.happiness.nextBatch | dump | safe }};
 {% raw %}AS_READY.then(function(c){var e=document.getElementById('homeNextBatch');
   if(e&&c.batches.length){e.textContent=NEXT_BATCH.replace('{date}', AS_batchDate(c.batches[0]));}});
