@@ -330,7 +330,6 @@ main:focus{outline:none}
 .breathe-core{position:absolute;inset:14px;border-radius:50%;background:radial-gradient(circle at 38% 32%,var(--o1),var(--o2) 72%);box-shadow:0 8px 26px rgba(var(--glow),.35);transition:transform .9s ease,box-shadow .9s ease}
 .breathe-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(var(--ringc),.55);opacity:.95;transition:transform .9s ease,opacity .9s ease}
 .breathe-ring.r2{inset:-14px;opacity:.6}
-.breathe-count{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.15rem;color:var(--ink);pointer-events:none}
 .breathe[data-phase="in"] .breathe-core,.breathe[data-phase="hold"] .breathe-core{transform:scale(1.5);box-shadow:0 10px 34px rgba(var(--glow),.5)}
 .breathe[data-phase="in"] .breathe-ring,.breathe[data-phase="hold"] .breathe-ring{transform:scale(1.8);opacity:.45}
 .breathe[data-phase="in"] .breathe-ring.r2,.breathe[data-phase="hold"] .breathe-ring.r2{transform:scale(1.9);opacity:.3}
@@ -360,3 +359,31 @@ main:focus{outline:none}
 
 /* Video credit under the caption (whose channel it is) */
 .vid-by{display:block;margin-top:3px;font-size:.76rem;color:var(--dim)}
+
+/* ── Home: "How are you arriving today?" picker, and the short hello (Instagram) ────────────────────── */
+.pick{margin:34px auto 0;max-width:640px;text-align:center}
+.pick-q{margin:0 0 12px!important;font-weight:600;color:var(--ink);font-size:1.02rem}
+.pick-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pick-chip{min-height:44px;padding:9px 18px;border-radius:999px;border:1.5px solid rgba(217,107,16,.55);background:#fff;color:var(--ink);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer}
+.pick-chip:hover{background:var(--sun-wash)}
+.pick-chip[aria-pressed="true"]{background:#964C14;border-color:#964C14;color:#fff}
+.pick-chip:focus-visible,.pick .btn:focus-visible{outline:3px solid rgba(238,149,70,.6);outline-offset:3px}
+.pick-reply{margin:14px auto 0!important;max-width:560px;font-size:.98rem;line-height:1.7;color:var(--body)}
+.pick-reply:empty{display:none}
+.pick-care{margin:10px auto 0!important;max-width:560px;font-size:.9rem;line-height:1.65;color:var(--dim)}
+.pick-care a{color:var(--copper);text-decoration:underline}
+.pick-care[hidden],.pick-actions[hidden],.pick-actions [hidden]{display:none}
+.pick-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px}
+#offerings a[data-path]{position:relative}
+#offerings a[data-path="jyotish"]{--hl:217,107,16}#offerings a[data-path="bach"]{--hl:176,90,123}#offerings a[data-path="happiness"]{--hl:72,112,85}
+#offerings a.is-suggested{box-shadow:0 0 0 3px rgba(var(--hl),.4),0 18px 46px rgba(var(--hl),.24)!important}
+.pick-tag{position:absolute;top:-13px;left:20px;background:#fff;border:1px solid rgba(var(--hl),.55);color:var(--ink);font-size:.74rem;font-weight:700;letter-spacing:.04em;padding:3px 13px;border-radius:999px}
+.ig-hello{margin-top:22px;max-width:460px}
+.ig-play{display:flex;align-items:center;gap:14px;width:100%;padding:12px 16px;border-radius:18px;border:1px solid var(--line);background:#fff;cursor:pointer;text-align:left;font:inherit;box-shadow:var(--shadow-soft)}
+.ig-play img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex:none}
+.ig-glyph{position:relative;flex:none;width:38px;height:38px;border-radius:50%;background:#964C14}
+.ig-glyph::after{content:'';position:absolute;left:15px;top:11px;border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent #fff}
+.ig-words{display:flex;flex-direction:column;gap:2px}.ig-words b{color:var(--ink);font-size:.98rem}.ig-words i{font-style:normal;font-size:.82rem;color:var(--dim)}
+.ig-play:hover{background:var(--sun-wash)}.ig-play:focus-visible{outline:3px solid rgba(238,149,70,.6);outline-offset:3px}
+.ig-open{display:inline-block;margin-top:6px;padding:10px 4px;font-size:.84rem;color:var(--copper);text-decoration:underline}
+.ig-frame{display:block;width:100%;max-width:400px;height:min(74vh,640px);border:0;border-radius:18px;background:#fff}

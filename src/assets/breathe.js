@@ -4,12 +4,12 @@
    next batch, and "a bit uneasy" offers a WhatsApp message to Srikanth, never registration.
    Nothing is stored and the feeling answer is never sent anywhere. Analytics only counts: breathe_start,
    breathe_done, breathe_cta. All motion is CSS (theme.css, ".breathe"); with prefers-reduced-motion the orb
-   stays still and only the words and counting numbers change. Words come from data-* attributes (i18n files). */
+   stays still and only the words change. The orb has no numbers: it grows as you breathe in, softens as you breathe out and keeps its size on a hold. Words come from data-* attributes (i18n files). */
 (function () {
   var root = document.querySelector('[data-breathe]');
   if (!root) return;
   var $ = function (s) { return root.querySelector(s); };
-  var btn = $('.breathe-orb'), cap = $('.breathe-cap'), count = $('.breathe-count'), gentle = $('.breathe-gentle');
+  var btn = $('.breathe-orb'), cap = $('.breathe-cap'), gentle = $('.breathe-gentle');
   var after = $('.breathe-after'), reply = $('.breathe-reply'), ctas = $('.breathe-ctas'), chips = root.querySelectorAll('.breathe-chip');
   var ROUNDS = +root.getAttribute('data-rounds') || 3, UNIT = +root.getAttribute('data-unit') || 1000;
   var NAMES = ['in', 'hold', 'out', 'rest'];
@@ -19,7 +19,7 @@
   function nums(s) { return (s || '').split(',').map(Number); }
   var PLAN = nums(root.getAttribute('data-pattern'));            // 4,4,6,2   (in, hold, out, rest)
   var GENTLE = nums(root.getAttribute('data-gentle'));           // 4,6       (in, out)
-  var timer = null, tick = null, running = false, reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timer = null, running = false, reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function track(n, p) { try { if (window.AS && window.AS.track) window.AS.track(n, p); } catch (e) {} }
   function steps() {   // [{name, secs}, ...] for one round
@@ -28,12 +28,11 @@
   }
   function phase(k, secs) {
     root.setAttribute('data-phase', k); root.style.setProperty('--d', secs * UNIT + 'ms');
-    cap.textContent = T[k]; var left = secs; count.textContent = left;
-    clearInterval(tick); tick = setInterval(function () { left--; if (left > 0) count.textContent = left; }, UNIT);
+    cap.textContent = T[k];
   }
   function reset(keepAfter) {
-    clearTimeout(timer); clearInterval(tick); running = false;
-    root.removeAttribute('data-phase'); count.textContent = ''; cap.textContent = T.label;
+    clearTimeout(timer); running = false;
+    root.removeAttribute('data-phase'); cap.textContent = T.label;
     btn.setAttribute('aria-pressed', 'false'); gentle.disabled = false;
     if (!keepAfter) { after.hidden = true; ctas.hidden = true; reply.textContent = ''; chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); }); }
   }
@@ -44,7 +43,6 @@
   }
   function finish() {
     reset(true); cap.textContent = T.done; after.hidden = false; track('breathe_done');
-    var first = chips[0]; if (first && !reduce) { /* leave focus where it is; the orb keeps it */ }
   }
   btn.addEventListener('click', function () {
     if (running) { reset(false); return; }                        // a second tap stops it

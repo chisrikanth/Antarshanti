@@ -44,6 +44,18 @@ navKey: "home"
       {{ c.hero.intro | safe }}
     </p>
     <p class="hero-note">{{ c.hero.note }}</p>
+    {% set pk = c.pick %}<div class="pick" data-pick data-suggested="{{ pk.suggested }}" data-r0="{{ pk.replies[0] }}" data-r1="{{ pk.replies[1] }}" data-r2="{{ pk.replies[2] }}" data-r3="{{ pk.replies[3] }}">
+      <p class="pick-q" id="pickQ">{{ pk.q }}</p>
+      <div class="pick-chips" role="group" aria-labelledby="pickQ">{% for ch in pk.chips %}<button type="button" class="pick-chip" data-i="{{ loop.index0 }}" aria-pressed="false">{{ ch }}</button>{% endfor %}</div>
+      <p class="pick-reply" aria-live="polite"></p>
+      <p class="pick-care" hidden>{{ t.checkin.js.crisis.skipped | safe }}</p>
+      <div class="pick-actions" hidden>
+        <button type="button" class="btn btn-gold btn-sm pick-show">{{ pk.show }}</button>
+        <a class="btn btn-gold btn-sm pick-checkin" href="{{ 'checkin.html' | lhref(lang.code) }}">{{ t.chrome.nav.checkin }}</a>
+        <button type="button" class="btn btn-outline btn-sm pick-look">{{ pk.look }}</button>
+        <a class="btn btn-wa btn-sm pick-wa" href="https://wa.me/919985133161" target="_blank" rel="noopener">{{ t.chrome.whatsappSrikanth }}</a>
+      </div>
+    </div>
   </div>
 </div>
 <div id="offerings" class="wrap offerings-in-hero" style="position:relative;z-index:2;margin-top:52px">
@@ -52,21 +64,21 @@ navKey: "home"
     <h2 style="font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:8px;text-align:center">{{ c.offerings.title }}</h2>
     <p style="text-align:center;color:var(--dim);max-width:600px;margin:0 auto 36px;font-size:.97rem">{{ c.offerings.intro }}</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
-      <a href="{{ 'jyotish.html' | lhref(lang.code) }}" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--saffron);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+      <a data-path="jyotish" href="{{ 'jyotish.html' | lhref(lang.code) }}" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--saffron);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
         <div class="eyebrow" style="color:var(--saffron)">{{ c.offerings.jyotish.eyebrow }}</div>
         <h2 style="font-size:1.45rem">{{ c.offerings.jyotish.title }}</h2>
         <p style="font-size:.95rem;color:var(--body);line-height:1.7;flex:1">{{ c.offerings.jyotish.text }}</p>
         <span class="offer-ask">{{ c.offerings.jyotish.ask }}</span>
         <span class="btn btn-gold btn-sm" style="align-self:flex-start;margin-top:4px">{{ c.offerings.jyotish.btn }}</span>
       </a>
-      <a href="{{ 'bach.html' | lhref(lang.code) }}" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--lotus);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+      <a data-path="bach" href="{{ 'bach.html' | lhref(lang.code) }}" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--lotus);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
         <div class="eyebrow" style="color:var(--lotus)">{{ c.offerings.bach.eyebrow }}</div>
         <h2 style="font-size:1.45rem">{{ c.offerings.bach.title }}</h2>
         <p style="font-size:.95rem;color:var(--body);line-height:1.7;flex:1">{{ c.offerings.bach.text }}</p>
         <span class="offer-ask">{{ c.offerings.bach.ask | safe }}</span>
         <span class="btn btn-lotus btn-sm" style="align-self:flex-start;margin-top:4px">{{ c.offerings.bach.btn }}</span>
       </a>
-      <a href="{{ 'happiness.html' | lhref(lang.code) }}" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--leaf);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
+      <a data-path="happiness" href="{{ 'happiness.html' | lhref(lang.code) }}" style="background:var(--card);border:1px solid var(--line);border-top:3px solid var(--leaf);border-radius:var(--radius);padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:inherit;transition:box-shadow .2s,transform .2s" onmouseover="this.style.boxShadow='0 10px 30px rgba(138,59,18,.12)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='';this.style.transform=''">
         <div class="eyebrow" style="color:var(--leaf)">{{ c.offerings.happiness.eyebrow }}</div>
         <h2 style="font-size:1.45rem">{{ c.offerings.happiness.title }}</h2>
         <p style="font-size:.95rem;color:var(--body);line-height:1.7;flex:1">{{ c.offerings.happiness.text }}</p>
@@ -104,6 +116,10 @@ navKey: "home"
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:18px">{% for chip in c.about.chips %}
           <span style="border:1px solid var(--gold);border-radius:999px;padding:6px 15px;font-size:.8rem;letter-spacing:.04em;color:var(--copper);background:rgba(217,164,65,.1);font-weight:500">{{ chip }}</span>{% endfor %}
         </div>
+        {% set hl = c.hello %}<div class="ig-hello" data-ig="DeHE_4VS2IG" data-title="{{ hl.title }}" data-play="{{ hl.play }}">
+          <button type="button" class="ig-play" aria-label="{{ hl.play }}"><img src="/assets/srikanth.webp" width="64" height="64" loading="lazy" alt=""><span class="ig-glyph" aria-hidden="true"></span><span class="ig-words"><b>{{ hl.title }}</b><i>{{ hl.note }}</i></span></button>
+          <a class="ig-open" href="https://www.instagram.com/p/DeHE_4VS2IG/" target="_blank" rel="noopener">{{ hl.open }}</a>
+        </div>
       </div>
     </div>
   </div>
@@ -129,7 +145,7 @@ navKey: "home"
 </div>
 
 {% endblock %}
-{% block scripts %}{% set c = t.home %}<script>
+{% block scripts %}{% set c = t.home %}<script src="/assets/pick.js" defer></script><script src="/assets/ig.js" defer></script><script>
 const NEXT_BATCH = {{ c.offerings.happiness.nextBatch | dump | safe }};
 {% raw %}AS_READY.then(function(c){var e=document.getElementById('homeNextBatch');
   if(e&&c.batches.length){e.textContent=NEXT_BATCH.replace('{date}', AS_batchDate(c.batches[0]));}});

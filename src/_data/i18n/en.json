@@ -280,6 +280,24 @@
    "attr": "— Gurudev Sri Sri Ravi Shankar",
    "note": "Start with whichever path calls to you."
   },
+  "pick": {
+   "q": "How are you arriving today?",
+   "chips": [
+    "My mind is busy",
+    "My heart feels heavy",
+    "I want some direction",
+    "Just looking around"
+   ],
+   "replies": [
+    "When the mind is busy, many people find the breath a gentle place to start. The Happiness Program is built around it.",
+    "Some feelings are hard to put into words. Bach Flower Therapy is a gentle, complementary way to be supported with them.",
+    "A Jyotish reading looks at your temperament and the season of life you are in, so you can decide with more clarity.",
+    "Welcome. A free, private 5-minute check-in is a gentle way to begin, or look around the three paths below."
+   ],
+   "show": "Show me ↓",
+   "look": "Look at the three paths ↓",
+   "suggested": "A good place to begin"
+  },
   "band": {
    "eyebrow": "Free · Private · 5 minutes",
    "title": "Not sure where to begin?",
@@ -327,6 +345,12 @@
    ],
    "alt": "Srikanth, Art of Living teacher, Bach Flower therapist and Jyotish practitioner"
   },
+  "hello": {
+   "title": "A short hello from Srikanth",
+   "note": "Plays from Instagram when you press play.",
+   "open": "Watch on Instagram ↗",
+   "play": "Play: a short hello from Srikanth"
+  },
   "kind": {
    "eyebrow": "Kind words",
    "title": "From people I have worked with"
@@ -356,11 +380,11 @@
   },
   "breathe": {
    "label": "Start a minute of calm breathing",
-   "hint": "In for 4, hold for 4, out for 6, rest for 2. Three rounds, about 50 seconds. Stop any time.",
+   "hint": "Just follow the orb. Stop any time.",
    "in": "Breathe in…",
-   "hold": "Hold gently…",
+   "hold": "Hold…",
    "out": "Breathe out slowly…",
-   "rest": "Rest…",
+   "rest": "Hold…",
    "skipHolds": "Skip the holds (gentler)",
    "done": "Well done. Notice how you feel now.",
    "ask": "How do you feel?",

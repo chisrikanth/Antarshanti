@@ -36,7 +36,7 @@ navKey: "happiness"
     <p style="font-size:1.08rem;color:var(--body);max-width:500px;margin:18px 0 10px;line-height:1.78">{{ c.hero.intro | safe }}</p>
     {% set b = c.breathe %}<div class="breathe leaf" data-breathe data-pattern="4,4,6,2" data-gentle="4,6" data-rounds="3" data-unit="1000" data-t-in="{{ b.in }}" data-t-hold="{{ b.hold }}" data-t-out="{{ b.out }}" data-t-rest="{{ b.rest }}" data-t-label="{{ b.label }}" data-t-done="{{ b.done }}" data-r0="{{ b.reply[0] }}" data-r1="{{ b.reply[1] }}" data-r2="{{ b.reply[2] }}">
       <div class="breathe-stage">
-        <button type="button" class="breathe-orb" aria-label="{{ b.label }}" aria-pressed="false" aria-describedby="breatheCap"><i class="breathe-ring r2"></i><i class="breathe-ring"></i><i class="breathe-core"></i><span class="breathe-count" aria-hidden="true"></span></button>
+        <button type="button" class="breathe-orb" aria-label="{{ b.label }}" aria-pressed="false" aria-describedby="breatheCap"><i class="breathe-ring r2"></i><i class="breathe-ring"></i><i class="breathe-core"></i></button>
         <div class="breathe-text"><div class="breathe-cap" id="breatheCap" aria-live="polite">{{ b.label }}</div><p class="breathe-hint">{{ b.hint }}</p>
           <label class="breathe-opt"><input type="checkbox" class="breathe-gentle"> {{ b.skipHolds }}</label></div>
       </div>
