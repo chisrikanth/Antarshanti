@@ -1,4 +1,4 @@
-{% set lTerms = 'terms.html' | lhref(lang.code) %}{% set lRefund = 'refund.html' | lhref(lang.code) %}{% set lPrivacy = 'privacy.html' | lhref(lang.code) %}<main class="legal">
+{% set lTerms = 'terms.html' | lhref(lang.code) %}{% set lRefund = 'refund.html' | lhref(lang.code) %}{% set lPrivacy = 'privacy.html' | lhref(lang.code) %}<div class="legal">
 <h1>{{ c.h1 }}</h1>
 <p class="updated">{{ c.updated }}</p>
 {% if lang.code != 'en' %}<div class="note"><p>{{ t.legal.translationNote }}</p></div>
@@ -7,4 +7,4 @@
 <h2>{{ s.h }}</h2>
 {{ s.html | replace('{terms}', lTerms) | replace('{refund}', lRefund) | replace('{privacy}', lPrivacy) | safe }}
 {% endfor %}
-</main>
+</div>

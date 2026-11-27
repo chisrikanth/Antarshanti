@@ -6,7 +6,7 @@
 {% include "partials/seo.njk" %}
 {% include "partials/head-static.njk" %}
 {% if lang and lang.fontsHref %}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="{{ lang.fontsHref }}">
-{% endif %}{% if razorpay %}<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+{% endif %}{% if razorpay %}<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
 {% endif %}{% if not ownCss %}<link rel="stylesheet" href="/assets/base.css">
 {% endif %}{% if ownCss %}<link rel="stylesheet" href="/assets/checkin.css">
 {% endif %}{% if extraCss %}<link rel="stylesheet" href="/assets/{{ extraCss }}">
@@ -16,10 +16,11 @@
 <script src="/assets/content.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main">{{ t.chrome.skip }}</a>
 {% if not env.isProduction %}<div style="background:#2F2418;color:#FFE9CC;text-align:center;padding:6px 12px;font:600 12px/1.4 sans-serif;letter-spacing:.06em">TEST SITE · {{ env.context | upper }} · not the live website · no real payments · sample data</div>
 {% endif %}{% block topbar %}{% endblock %}
 {% block navigation %}{% include "partials/nav.njk" %}{% endblock %}
-{% block content %}{% endblock %}
+<main id="main" tabindex="-1">{% block content %}{% endblock %}</main>
 {% block footer %}{% include "partials/footer.njk" %}{% endblock %}
 {% block mobilebar %}{% endblock %}
 {% if not ownCss %}{% include "partials/nav-script.njk" %}{% endif %}

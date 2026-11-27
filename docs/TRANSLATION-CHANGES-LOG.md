@@ -733,3 +733,12 @@ key | before | gist | after | why
 `checkin.js.next.steadyLine` | ज़िंदगी की दिशा या सही समय को लेकर मन में सवाल हैं? <a href="/hi/jyotish.html#booking-widget" data-label="next:jyotish">ज्योतिष पर एक बातचीत</a> मदद कर सकती है। या और भावनात्मक सहारा चाहें तो <a href="/hi/bach.html#booking-widget" data-label="next:bach">बाख फ्लावर रेमेडीज़</a>। | Have questions about direction or timing in life? A Jyotish conversation can help; or Bach Flower remedies if you'd like more emotional support. | ज़िंदगी की दिशा या सही समय को लेकर मन में सवाल हैं? <a href="/hi/jyotish.html#booking-widget" data-label="next:jyotish">ज्योतिष पर एक बातचीत</a> मदद कर सकती है। या अगर मन को थोड़ा और सहारा चाहिए, तो <a href="/hi/bach.html#booking-widget" data-label="next:bach">बाख फ्लावर रेमेडीज़</a> देख सकते हैं। | Last sentence was a verbless English fragment ('Or Bach Flower remedies if…'); completed as a natural Hindi sentence. Links, URLs and 'can help' unchanged.
 `checkin.js.saveMsg.needContact` | कृपया कम से कम एक व्हाट्सऐप नंबर या ईमेल दीजिए ताकि श्रीकांत आप तक पहुँच सकें। | Please give at least a WhatsApp number or email so Srikanth can contact you. | कृपया कम से कम एक व्हाट्सऐप नंबर या ईमेल दीजिए, ताकि श्रीकांत आपसे संपर्क कर सकें। | 'आप तक पहुँच सकें' is a literal 'reach you'; 'आपसे संपर्क कर सकें' is the usual phrase.
 `checkin.js.saveMsg.error` | अभी सेव नहीं हो पाया, पर ऊपर दिखी आपकी झलक आपके पास ही है — चाहें तो स्क्रीनशॉट ले लें या व्हाट्सऐप पर भेज दें। | Couldn't save now, but the reflection above is still with you; take a screenshot or send it on WhatsApp if you like. | अभी सेव नहीं हो पाया, पर ऊपर दिखी आपकी झलक आपके पास ही है — चाहें तो इसका स्क्रीनशॉट ले लीजिए या व्हाट्सऐप पर भेज दीजिए। | Only the verbs: 'ले लें / भेज दें' -> '-लीजिए / -दीजिए' to match the आप + -इए forms used across the page; adds 'इसका' so the screenshot has an object.
+
+
+## New string, 27 Nov 2026: skip link (accessibility)
+
+Added so keyboard and screen-reader visitors can jump past the menu. Please have a native reader confirm the wording.
+
+key | en | te | hi
+---|---|---|---
+`chrome.skip` | Skip to main content | ప్రధాన కంటెంట్‌కు వెళ్లండి | मुख्य सामग्री पर जाएँ

@@ -135,7 +135,7 @@ navKey: "jyotish"
         <p class="pz-title">{{ k.payTitle }}</p>
         <p class="pz-sub">{{ k.paySub }}</p>
         <div class="pz-row">
-          <img class="pz-qr" src="/assets/phonepe-qr.png" alt="{{ k.qrAlt }}" onerror="this.style.display='none'">
+          <img class="pz-qr" src="/assets/phonepe-qr.png" alt="{{ k.qrAlt }}" width="132" height="132" loading="lazy" decoding="async" onerror="this.style.display='none'">
           <div class="pz-actions">
             <a id="wa-btn" class="btn btn-wa btn-sm" href="https://wa.me/919985133161?text={{ k.waMsgFirst | urlencode }}" target="_blank">{{ k.waBtn }}</a>
             <a id="upi-btn" class="btn btn-gold btn-sm" href="upi://pay?pa=chivukula.srikanth%40ybl&amp;pn=Antarshanti&amp;cu=INR">{{ k.upiBtn }}</a>

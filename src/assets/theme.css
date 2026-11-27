@@ -11,7 +11,7 @@
   --paper:#FFFCF8;   --paper-2:#FFF3E6;   --card:#FFFFFF;
   --ink:#2F2418;     --body:#51402F;      --dim:#74644F;
   --sun:#F4A860;     --sun-deep:#EE9546;  --sun-soft:#FBD9B0;  --sun-wash:#FFF0DC;
-  --gold:#E4B24F;    --saffron:#B0601F;   --copper:#7A4A2E;
+  --gold:#E4B24F;    --saffron:#964C14;   --copper:#7A4A2E;
   --lotus:#B05A7B;   --leaf:#547F61;      --sky:#5A87A8;
   --cta:var(--sun);  --cta-deep:var(--sun-deep); --cta-text:#3A2108; --cta-soft:#FDE7CC;
   --line:rgba(122,74,46,.15);
@@ -51,7 +51,7 @@ nav{background:rgba(255,252,248,.88);backdrop-filter:blur(16px) saturate(1.15);b
 .btn-leaf:hover{background:var(--leaf);color:#fff}
 .btn-outline{border:1.5px solid var(--line);color:var(--dim);background:#fff}
 .btn-outline:hover,.btn-outline:focus-visible{background:#FFF1E2;border-color:var(--sun-deep);color:#8A3F0B}
-.btn-wa{background:#25A862;color:#fff}
+.btn-wa{background:#16854A;color:#fff}
 .hero-link{color:#A04F14;text-decoration-color:rgba(160,79,20,.4)}
 
 .eyebrow{font-weight:700;letter-spacing:.3em;font-size:.7rem}
@@ -288,3 +288,28 @@ html[lang="te"] .hero-grid h1,html[lang="hi"] .hero-grid h1{font-size:clamp(1.8r
 .check-inline{display:flex;gap:8px;align-items:flex-start;font-size:.86rem;color:var(--body);margin-top:8px;font-weight:500!important}
 .check-inline input{width:auto!important;margin-top:3px}
 .hold-form .field .check-inline{display:flex}
+
+
+/* ── Accessibility pass (27 Nov 2026) ───────────────────────────────────── */
+/* Skip link: first Tab stop, visible only when focused */
+.skip-link{position:absolute;left:12px;top:-64px;z-index:1000;background:#2F2418;color:#FFF3E6;padding:12px 18px;border-radius:12px;font-weight:600;transition:top .15s}
+.skip-link:focus{top:10px;outline:3px solid #F4A860;outline-offset:2px}
+main:focus{outline:none}
+/* WhatsApp green with enough contrast for white text and icon (white on the old #25D366 was under 2:1) */
+.wa-float,.mobile-nav .mn-wa{background:#16854A;color:#fff}
+.wa-float{box-shadow:0 8px 24px rgba(22,133,74,.4)}
+.btn-wa:hover{box-shadow:0 6px 20px rgba(22,133,74,.4)}
+/* Small print: was 3.7:1 on the cream background */
+.fine{color:#7A5F42}
+/* Touch targets: at least 44px tall where it does not change the look */
+.logo{min-height:44px}
+.nav-links a{padding-top:3px}
+.nav-links a.nav-cta{padding:8px 16px}
+.foot-logo{display:inline-block;padding:11px 0}
+.wk-btn{min-height:44px}
+.vid-cap a{padding:12px 0;margin-top:0}
+.nav-toggle{min-width:44px;min-height:44px;align-items:center;justify-content:center}
+.lang-switch a{padding:9px 12px;display:inline-flex;align-items:center}
+.foot-contact a,.foot-links a{display:inline-block;padding:12px 0}
+.foot-links{gap:0 20px}
+@media(max-width:720px){.foot-links{gap:0}}
