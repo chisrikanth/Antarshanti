@@ -325,14 +325,14 @@ main:focus{outline:none}
    while you breathe out, and stays still again on the second hold.
    - Two static dashed rings mark "full" (outer) and "empty" (inner). The orb travels between them; on a hold the ring it
      is touching turns solid, so a hold looks like arriving and stopping.
-   - A wave runs outwards on the way in and inwards on the way out; there is no wave on a hold.
-   - Motion is transform and opacity only, one in-out easing, will-change only while a phase is running.
-   - Reduced motion: nothing scales. A small disc and a large disc cross-fade (0.2s) to show the same states.
+   - It is a balloon, not a set of sizes: breathe.js keeps ONE volume value that changes smoothly and is followed by a soft spring,
+     so there are no jumps at the start or end of a phase, and a hold settles gently. The outline moves a very little (slow low
+     waves, a touch more while air is moving) like stretched rubber. Reduced motion: nothing scales or wobbles.
    The size follows lung volume: the orb rests at a NORMAL size (lungs never empty; physiology calls it the functional residual
    capacity), grows smoothly to its LARGEST at the hold after breathing in, eases slowly back to normal (breathing out is passive
    recoil, so it starts a little faster and tails off), then holds at normal. A deep breath is roughly 2.5x the normal volume,
    which is only about 1.36x in diameter, hence --rest:.74.
-   JS sets data-phase (in / hold / out / rest) and --d (the length of the phase). */
+   JS sets data-phase (in / hold / out / rest; used for words, rings and the reduced-motion discs) and --d. */
 .breathe{--orb:232px;--rest:.74;--d:4s;--ease:cubic-bezier(.37,0,.63,1);--ease-out:cubic-bezier(.33,0,.4,1);--o1:#F1F9E8;--o2:#8DB27B;--leafc:72,112,85;margin:26px 0;max-width:600px}
 .breathe-stage{display:flex;align-items:center;gap:28px}
 .breathe-orb{position:relative;flex:none;width:var(--orb);height:var(--orb);border:0;background:none;padding:0;cursor:pointer;border-radius:50%;-webkit-tap-highlight-color:transparent}
@@ -341,29 +341,15 @@ main:focus{outline:none}
 .b-guide{border:1.5px dashed rgba(var(--leafc),.4)}
 .b-g-in{inset:0}
 .b-g-out{inset:13%}
-.b-glow{inset:-6%;background:radial-gradient(circle,rgba(var(--leafc),.30) 0,rgba(var(--leafc),.13) 46%,rgba(var(--leafc),0) 70%);transform:scale(var(--rest));opacity:.5;transition:transform .7s var(--ease),opacity .7s var(--ease)}
-.b-wave{inset:5%;border:2px solid rgba(var(--leafc),.6);opacity:0;transform:scale(var(--rest))}
-.b-body{inset:5%;transform:scale(var(--rest));transition:transform .7s var(--ease)}
-.b-sphere{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 36% 30%,var(--o1),var(--o2) 74%)}
+.b-glow{inset:-6%;background:radial-gradient(circle,rgba(var(--leafc),.30) 0,rgba(var(--leafc),.13) 46%,rgba(var(--leafc),0) 70%);transform:scale(var(--rest));opacity:.5}
+/* the balloon: an SVG blob. breathe.js sets its scale and softly moves its outline every frame (the volume follows a spring, so it never jerks) */
+.b-art .b-body{position:absolute;inset:5%;width:90%;height:90%;display:block;overflow:visible;transform:scale(var(--rest));transform-origin:50% 50%}
 .b-art .b-disc{display:none}
-/* in: grow to the outer ring */
-.breathe[data-phase="in"] .b-body,.breathe[data-phase="in"] .b-glow{transform:scale(1);transition-duration:var(--d)}
-.breathe[data-phase="in"] .b-glow{opacity:.95}
-/* hold (lungs full): the orb is still and the outer ring turns solid */
-.breathe[data-phase="hold"] .b-body,.breathe[data-phase="hold"] .b-glow{transform:scale(1);transition-duration:.05s}
-.breathe[data-phase="hold"] .b-glow{opacity:.95}
+/* hold (lungs full): the outer ring turns solid */
 .breathe[data-phase="hold"] .b-g-in{border-style:solid;border-color:rgba(var(--leafc),.75)}
-/* out: shrink to the inner ring */
-.breathe[data-phase="out"] .b-body,.breathe[data-phase="out"] .b-glow{transform:scale(var(--rest));transition-duration:var(--d);transition-timing-function:var(--ease-out)}
-/* second hold (lungs empty): still, the inner ring turns solid */
-.breathe[data-phase="rest"] .b-body,.breathe[data-phase="rest"] .b-glow{transform:scale(var(--rest));transition-duration:.05s}
+/* second hold (lungs empty): the inner ring turns solid */
 .breathe[data-phase="rest"] .b-g-out{border-style:solid;border-color:rgba(var(--leafc),.75)}
-/* waves: outwards on the way in, inwards on the way out, none on a hold */
-@keyframes b-wave-out{0%{transform:scale(var(--rest));opacity:0}20%{opacity:.5}100%{transform:scale(1.16);opacity:0}}
-@keyframes b-wave-in{0%{transform:scale(1.16);opacity:0}25%{opacity:.5}100%{transform:scale(var(--rest));opacity:0}}
-.breathe[data-phase="in"] .b-wave{animation:b-wave-out var(--d) var(--ease) both}
-.breathe[data-phase="out"] .b-wave{animation:b-wave-in var(--d) var(--ease-out) both}
-.breathe[data-phase] .b-body,.breathe[data-phase] .b-glow,.breathe[data-phase] .b-wave{will-change:transform,opacity}
+.breathe[data-live] .b-body,.breathe[data-live] .b-glow{will-change:transform,opacity}
 .breathe-cap{font-size:1.12rem;font-weight:600;letter-spacing:.03em;color:var(--ink);min-height:1.6em}
 .breathe-hint{margin:6px 0 0;font-size:.88rem;line-height:1.6;color:var(--dim)}
 .breathe-opt{display:inline-flex;align-items:center;gap:8px;margin-top:10px;min-height:44px;font-size:.88rem;color:var(--body);cursor:pointer}
