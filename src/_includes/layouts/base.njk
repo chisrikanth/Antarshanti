@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% include "partials/seo.njk" %}
 {% include "partials/head-static.njk" %}
-{% if lang and lang.fontsHref %}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="{{ lang.fontsHref }}">
-{% endif %}{% if razorpay %}<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+{% include "partials/head-fonts.njk" %}{% if razorpay %}<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
 {% endif %}{% if not ownCss %}<link rel="stylesheet" href="/assets/base.css">
 {% endif %}{% if ownCss %}<link rel="stylesheet" href="/assets/checkin.css">
 {% endif %}{% if extraCss %}<link rel="stylesheet" href="/assets/{{ extraCss }}">

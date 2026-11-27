@@ -40,7 +40,7 @@
 .batch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:18px 0 6px}
 .batch-card{background:var(--card);border:1px solid rgba(90,138,62,.35);border-left:4px solid var(--leaf);
   border-radius:var(--radius);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
-.batch-card .b-date{font-family:'Marcellus',serif;font-size:1.15rem;color:var(--ink)}
+.batch-card .b-date{font-family:'Marcellus','Marcellus Fallback',serif;font-size:1.15rem;color:var(--ink)}
 .batch-card .b-meta{font-size:.84rem;color:var(--dim);line-height:1.6}
 .batch-card .btn{margin-top:8px;align-self:flex-start}
 

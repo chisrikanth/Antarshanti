@@ -10,6 +10,9 @@ node tools/audit/gaps.js NOW                    # empty space between sections, 
 node tools/audit/fps2.js                        # scroll smoothness with the CPU slowed 4x
 node tools/audit/walk.js ./walk-out             # photographs every screen as a visitor scrolls (then look at them)
 node tools/audit/orb2.js                        # the breathing curve: normal -> largest -> normal, stillness on the holds
+node tools/audit/orbfps.js                      # the balloon under a 4x CPU slowdown on a phone
+node tools/audit/balloon_checks.js              # reduced motion, stop mid-breath, keyboard, off-screen sleep
+node tools/audit/fontcheck.js                   # font files and external hosts per page
 node tools/audit/snap.js                        # scroll-snap experiment (kept to show why snapping was rejected)
 ```
 

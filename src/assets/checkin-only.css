@@ -66,7 +66,7 @@
 .helpline .havail{font-size:.74rem;color:var(--dim)}
 
 .overall-card{padding:32px;text-align:center;margin-bottom:28px;background:linear-gradient(135deg,#FAE7CC,#FFF7EC)}
-.overall-score{font-family:'Marcellus',serif;font-size:3.2rem;color:var(--ink);line-height:1}
+.overall-score{font-family:'Marcellus','Marcellus Fallback',serif;font-size:3.2rem;color:var(--ink);line-height:1}
 .overall-score span{font-size:1.3rem;color:var(--dim)}
 .overall-label{font-size:.88rem;color:var(--dim);margin-top:6px}
 
@@ -91,7 +91,7 @@
 .field{margin-bottom:14px}
 .field label{display:block;font-size:.8rem;font-weight:700;color:var(--dim);margin-bottom:5px;letter-spacing:.02em}
 .field input,.field select{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:11px 13px;
-  font-family:'Karla',sans-serif;font-size:.94rem;color:var(--body);background:var(--paper)}
+  font-family:'Karla','Karla Fallback',sans-serif;font-size:.94rem;color:var(--body);background:var(--paper)}
 .field input:focus,.field select:focus{outline:none;border-color:var(--saffron)}
 .save-status{font-size:.85rem;margin-top:10px;display:none}
 .save-status.show{display:block}

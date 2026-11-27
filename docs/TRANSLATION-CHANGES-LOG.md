@@ -771,3 +771,10 @@ Keys: `home.pick.*` (q, chips, replies, show, look, suggested), `home.hello.*` (
 ## New string, 28 Nov 2026: breathing orb "Stop" label (te, hi)
 
 `happiness.breathe.stop`: read aloud by screen readers for the orb while the exercise is running. en: Stop the breathing exercise. te: శ్వాస అభ్యాసాన్ని ఆపండి. hi: श्वास-अभ्यास रोकें. Please have a native reader confirm.
+
+
+## Changed strings, 27 Nov 2026: privacy bullet and shorter page titles (te, hi)
+
+`privacy.sections.1.html` (new last bullet "Videos and Instagram": the video preview picture comes from YouTube/Google when a page opens; the video and Instagram load only after a press; those services may set their own cookies) and `privacy.updated` (now 27 Nov 2026). Please have a native reader check the new bullet in te and hi.
+
+Shorter `seoTitle` (search results cut titles at about 60 characters): te `home`, `happiness`; hi `home`, `happiness`, `bach`. The English titles for home, check-in, happiness, jyotish and bach are shorter too.

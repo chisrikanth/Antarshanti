@@ -1,0 +1,5 @@
+const { chromium } = require('playwright'); const B='http://127.0.0.1:8099';
+(async()=>{const b=await chromium.launch();const c=await b.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2});const pg=await c.newPage();const cdp=await c.newCDPSession(pg);await cdp.send('Emulation.setCPUThrottlingRate',{rate:4});
+await pg.goto(B+'/happiness.html',{waitUntil:'load'});await pg.evaluate(()=>document.querySelector('.breathe').scrollIntoView({block:'center'}));await pg.waitForTimeout(500);await pg.tap('.breathe-orb');
+const f=await pg.evaluate(()=>new Promise(res=>{const t=[];let l=performance.now();const s=l;(function k(n){t.push(n-l);l=n;if(n-s<6000)requestAnimationFrame(k);else res(t.slice(1))})(l)}));
+f.sort((a,b)=>a-b);console.log('orb running, phone, 4x CPU slowdown: frames',f.length,'median',f[f.length>>1].toFixed(1),'ms, 95th',f[Math.floor(f.length*.95)].toFixed(1),'ms, worst',f[f.length-1].toFixed(1),'ms, slower than 33ms:',f.filter(x=>x>33).length);await b.close();})();

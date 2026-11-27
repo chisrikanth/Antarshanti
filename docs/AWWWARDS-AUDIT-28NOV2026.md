@@ -64,3 +64,13 @@ local build of the `design/wheel-moment` branch; "lab" Lighthouse numbers use si
 Design about 6.6, Usability about 6.8 (held down by the lab LCP and CLS), Creativity about 5.6 (one real signature moment, the breathing
 orb, but the rest is calm rather than distinctive), Content about 7.0. Weighted: **about 6.5**, which is Honorable Mention territory and not
 yet a Site-of-the-Day contender. The fastest ways up: self-hosted fonts (Usability), then a second, owned piece of art direction (Creativity).
+
+
+## Follow-up, 27 Nov 2026: open items closed
+
+- **Fonts self-hosted.** Karla, Marcellus, Noto Sans Telugu and Noto Sans Devanagari are served from `/assets/fonts/` (SIL OFL, from the Fontsource npm packages). No request goes to Google Fonts any more. Only the needed subsets load (`unicode-range`): about 47 KB of fonts on an English page. Karla and Marcellus latin are preloaded; `font-display:swap`; two metric-matched fallback faces ("Karla Fallback", "Marcellus Fallback", sized from the real font metrics) so text does not jump when the real font arrives; fonts get a one-year immutable cache header. `tools/audit/fontcheck.js` lists the font files and external hosts each page uses.
+- **Breathing orb is a balloon.** One volume value follows the breathing curve through a critically damped spring; the diameter comes from the volume (cube root, a full breath is about 2.5x the normal volume); a very small low-order outline wobble (a little more while air is moving) and a touch more height when full. Stopping mid-breath deflates smoothly to normal in about a second. The loop sleeps when the orb is off screen; reduced motion draws nothing moving. Measured: largest single-frame step 0.37 px on a 58 px range; 60 fps with a 4x CPU slowdown on a phone (`tools/audit/orbfps.js`, `balloon_checks.js`).
+- **Privacy page** now says that YouTube preview pictures load when a page opens, that the video and the Instagram post load only after a press, and that those services may set their own cookies (en, te, hi; te/hi logged for native review).
+- **Page titles** shortened to about 55 characters (en all five; te home, happiness; hi home, happiness, bach).
+- **Apple touch icon** added (`/assets/apple-touch-icon.png`, the logo on the paper colour).
+- Still open: no Content-Security-Policy (needs a test of the live payment flow); second Bach Centre video is about children (your decision); confirm the Instagram post plays on the live page and the two channel handles are official; Jyotish and Bach "taste" activities need your review.

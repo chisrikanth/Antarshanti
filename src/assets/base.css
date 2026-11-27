@@ -8,9 +8,9 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--body);font-family:'Karla',sans-serif;
+body{background:var(--paper);color:var(--body);font-family:'Karla','Karla Fallback',sans-serif;
   font-size:17px;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:'Marcellus',serif;font-weight:400;line-height:1.2;color:var(--ink)}
+h1,h2,h3,h4{font-family:'Marcellus','Marcellus Fallback',serif;font-weight:400;line-height:1.2;color:var(--ink)}
 a{color:var(--copper);text-decoration:none}
 .wrap{max-width:960px;margin:0 auto;padding:0 20px}
 .eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700}
@@ -27,7 +27,7 @@ section{padding:60px 0}
 nav{position:sticky;top:0;z-index:50;background:rgba(255,247,236,.94);
   backdrop-filter:blur(14px);border-bottom:1px solid var(--line);box-shadow:0 1px 12px rgba(138,59,18,.07)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
-.logo{font-family:'Marcellus',serif;font-size:1.18rem;letter-spacing:.05em;color:var(--ink);white-space:nowrap}
+.logo{font-family:'Marcellus','Marcellus Fallback',serif;font-size:1.18rem;letter-spacing:.05em;color:var(--ink);white-space:nowrap}
 .logo em{font-style:normal;color:var(--saffron)}
 .nav-links{display:flex;gap:20px;font-size:.87rem;font-weight:500}
 .nav-links a{color:var(--dim);white-space:nowrap;transition:color .2s;padding-bottom:2px;border-bottom:2px solid transparent}
@@ -65,7 +65,7 @@ footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0
 .booking-box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
   overflow:hidden;box-shadow:0 6px 28px rgba(138,59,18,.1)}
 .booking-header{background:var(--saffron);color:#FFF7EC;padding:18px 24px}
-.booking-header h3{font-family:'Karla',sans-serif;font-size:1.05rem;font-weight:700;margin:0}
+.booking-header h3{font-family:'Karla','Karla Fallback',sans-serif;font-size:1.05rem;font-weight:700;margin:0}
 .booking-header p{font-size:.84rem;opacity:.88;margin-top:4px}
 .booking-body{padding:24px}
 /* session type tabs */
@@ -81,7 +81,7 @@ footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0
 .day-btn.selected{background:var(--saffron);border-color:var(--saffron);color:#FFF7EC}
 .day-btn.disabled{opacity:.35;cursor:not-allowed}
 .day-btn .dname{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
-.day-btn .dnum{font-size:1.25rem;font-family:'Marcellus',serif;line-height:1}
+.day-btn .dnum{font-size:1.25rem;font-family:'Marcellus','Marcellus Fallback',serif;line-height:1}
 /* time slots */
 .slots-label{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   color:var(--dim);margin-bottom:10px}
@@ -137,7 +137,7 @@ footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0
 .offering:last-of-type{border-bottom:none}
 .o-name{font-size:1rem;font-weight:700;color:var(--ink);display:block;margin-bottom:3px}
 .o-desc{font-size:.83rem;color:var(--dim)}
-.o-price{font-family:'Marcellus',serif;font-size:1.15rem;color:var(--copper);white-space:nowrap}
+.o-price{font-family:'Marcellus','Marcellus Fallback',serif;font-size:1.15rem;color:var(--copper);white-space:nowrap}
 
 @media(max-width:700px){
   .two-col{grid-template-columns:minmax(0,1fr)!important}
@@ -152,11 +152,11 @@ footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0
 .foot-mark{width:26px;height:26px;flex:none;vertical-align:-6px;margin-right:7px}
 .contribute-note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);
   border-radius:var(--radius);padding:16px 18px;margin-top:14px}
-.contribute-note .ct-head{font-family:'Marcellus',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px}
+.contribute-note .ct-head{font-family:'Marcellus','Marcellus Fallback',serif;font-size:1.05rem;color:var(--ink);margin-bottom:6px}
 .contribute-note p{font-size:.9rem;color:var(--body);line-height:1.65}
 .contribute-note p+p{margin-top:9px}
 .pay-zone{margin-top:4px}
-.pz-title{font-family:'Marcellus',serif;font-size:1rem;color:var(--ink);margin-bottom:4px}
+.pz-title{font-family:'Marcellus','Marcellus Fallback',serif;font-size:1rem;color:var(--ink);margin-bottom:4px}
 .pz-sub{font-size:.85rem;color:var(--body);margin-bottom:12px;line-height:1.6}
 .pz-row{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
 .pz-qr{width:132px;height:132px;border-radius:10px;border:1px solid var(--line);background:#fff;padding:6px;flex:none}
@@ -167,7 +167,7 @@ footer{background:var(--paper-2);border-top:1px solid var(--line);padding:48px 0
   padding:16px 18px;text-decoration:none;transition:border-color .18s,transform .18s}
 .res-card:hover{border-color:var(--gold);transform:translateY(-2px)}
 .res-kind{font-size:.71rem;letter-spacing:.09em;text-transform:uppercase;color:var(--saffron);font-weight:700}
-.res-title{display:block;font-family:'Marcellus',serif;font-size:1.02rem;color:var(--ink);margin:6px 0 5px}
+.res-title{display:block;font-family:'Marcellus','Marcellus Fallback',serif;font-size:1.02rem;color:var(--ink);margin:6px 0 5px}
 .res-desc{display:block;font-size:.85rem;color:var(--body);line-height:1.6}
 .foot-contact{font-size:.84rem;color:var(--dim);line-height:1.9}
 .foot-contact a{color:var(--dim);text-decoration:none}
