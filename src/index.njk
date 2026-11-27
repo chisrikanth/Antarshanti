@@ -106,8 +106,12 @@ navKey: "home"
 
 <section style="padding:56px 0">
   <div class="wrap">
-    <div style="display:grid;grid-template-columns:280px 1fr;gap:52px;align-items:center" class="two-col">
-      <img src="/assets/srikanth.webp" width="280" height="280" loading="lazy" alt="{{ c.about.alt }}" style="width:100%;aspect-ratio:1/1;border-radius:50%;object-fit:cover;border:3px solid var(--gold);box-shadow:0 0 0 6px rgba(217,164,65,.15),0 14px 40px rgba(138,59,18,.16)">
+    <div style="display:grid;gap:56px" class="two-col about-grid">
+      {% set hl = c.hello %}<div class="about-portrait" data-ig="DeHE_4VS2IG" data-title="{{ hl.title }}" data-play="{{ hl.play }}">
+        <button type="button" class="ig-photo" aria-label="{{ hl.play }}"><img src="/assets/srikanth.webp" width="280" height="280" loading="lazy" alt="" style="display:block;width:100%;aspect-ratio:1/1;border-radius:50%;object-fit:cover;border:3px solid var(--gold);box-shadow:0 0 0 6px rgba(217,164,65,.15),0 14px 40px rgba(138,59,18,.16)"><span class="ig-badge" aria-hidden="true"></span></button>
+        <p class="ig-cap"><b>{{ hl.title }}</b><i>{{ hl.note }}</i></p>
+        <a class="ig-open" href="https://www.instagram.com/p/DeHE_4VS2IG/" target="_blank" rel="noopener">{{ hl.open }}</a>
+      </div>
       <div>
         <div class="eyebrow" style="color:var(--saffron);margin-bottom:12px">{{ c.about.eyebrow }}</div>
         <h2 style="font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:18px">{{ c.about.title }}</h2>
@@ -115,10 +119,6 @@ navKey: "home"
         <p class="about-p">{{ c.about.p2 | safe }}</p>
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:18px">{% for chip in c.about.chips %}
           <span style="border:1px solid var(--gold);border-radius:999px;padding:6px 15px;font-size:.8rem;letter-spacing:.04em;color:var(--copper);background:rgba(217,164,65,.1);font-weight:500">{{ chip }}</span>{% endfor %}
-        </div>
-        {% set hl = c.hello %}<div class="ig-hello" data-ig="DeHE_4VS2IG" data-title="{{ hl.title }}" data-play="{{ hl.play }}">
-          <button type="button" class="ig-play" aria-label="{{ hl.play }}"><img src="/assets/srikanth.webp" width="64" height="64" loading="lazy" alt=""><span class="ig-glyph" aria-hidden="true"></span><span class="ig-words"><b>{{ hl.title }}</b><i>{{ hl.note }}</i></span></button>
-          <a class="ig-open" href="https://www.instagram.com/p/DeHE_4VS2IG/" target="_blank" rel="noopener">{{ hl.open }}</a>
         </div>
       </div>
     </div>
