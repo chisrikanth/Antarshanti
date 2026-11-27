@@ -9,10 +9,10 @@
    ========================================================================== */
 :root{
   --paper:#FFFCF8;   --paper-2:#FFF3E6;   --card:#FFFFFF;
-  --ink:#2F2418;     --body:#51402F;      --dim:#74644F;
+  --ink:#2F2418;     --body:#51402F;      --dim:#6A5B46;
   --sun:#F4A860;     --sun-deep:#EE9546;  --sun-soft:#FBD9B0;  --sun-wash:#FFF0DC;
   --gold:#E4B24F;    --saffron:#964C14;   --copper:#7A4A2E;
-  --lotus:#B05A7B;   --leaf:#547F61;      --sky:#5A87A8;
+  --lotus:#B05A7B;   --leaf:#487055;      --sky:#5A87A8;
   --cta:var(--sun);  --cta-deep:var(--sun-deep); --cta-text:#3A2108; --cta-soft:#FDE7CC;
   --line:rgba(122,74,46,.15);
   --radius:20px;
@@ -314,5 +314,184 @@ main:focus{outline:none}
 .foot-links{gap:0 20px}
 @media(max-width:720px){.foot-links{gap:0}}
 
+/* ── Home hero: "Whisper" wheel and the breathing orb (28 Nov 2026) ──────────
+   The wheel is only a faint texture: no petals, nothing opaque behind the words. Home page only. */
+.home-hero .hero-deco{opacity:.2!important;width:980px!important;height:980px!important;margin-left:-490px!important;top:-70px!important}
+.home-hero .hero-deco ellipse{display:none}
+.home-hero .hero-deco g[fill="rgba(217,107,16,.75)"]{opacity:.4}
+
+/* Happiness page: "a minute of calm breathing".
+   The orb has to be understood without reading: it GROWS while you breathe in, STAYS STILL while you hold, SHRINKS
+   while you breathe out, and stays still again on the second hold.
+   - Two static dashed rings mark "full" (outer) and "empty" (inner). The orb travels between them; on a hold the ring it
+     is touching turns solid, so a hold looks like arriving and stopping.
+   - A wave runs outwards on the way in and inwards on the way out; there is no wave on a hold.
+   - Motion is transform and opacity only, one in-out easing, will-change only while a phase is running.
+   - Reduced motion: nothing scales. A small disc and a large disc cross-fade (0.2s) to show the same states.
+   The size follows lung volume: the orb rests at a NORMAL size (lungs never empty; physiology calls it the functional residual
+   capacity), grows smoothly to its LARGEST at the hold after breathing in, eases slowly back to normal (breathing out is passive
+   recoil, so it starts a little faster and tails off), then holds at normal. A deep breath is roughly 2.5x the normal volume,
+   which is only about 1.36x in diameter, hence --rest:.74.
+   JS sets data-phase (in / hold / out / rest) and --d (the length of the phase). */
+.breathe{--orb:232px;--rest:.74;--d:4s;--ease:cubic-bezier(.37,0,.63,1);--ease-out:cubic-bezier(.33,0,.4,1);--o1:#F1F9E8;--o2:#8DB27B;--leafc:72,112,85;margin:26px 0;max-width:600px}
+.breathe-stage{display:flex;align-items:center;gap:28px}
+.breathe-orb{position:relative;flex:none;width:var(--orb);height:var(--orb);border:0;background:none;padding:0;cursor:pointer;border-radius:50%;-webkit-tap-highlight-color:transparent}
+.b-art{position:absolute;inset:0;display:block;border-radius:50%}
+.b-art>i{position:absolute;display:block;border-radius:50%}
+.b-guide{border:1.5px dashed rgba(var(--leafc),.4)}
+.b-g-in{inset:0}
+.b-g-out{inset:13%}
+.b-glow{inset:-6%;background:radial-gradient(circle,rgba(var(--leafc),.30) 0,rgba(var(--leafc),.13) 46%,rgba(var(--leafc),0) 70%);transform:scale(var(--rest));opacity:.5;transition:transform .7s var(--ease),opacity .7s var(--ease)}
+.b-wave{inset:5%;border:2px solid rgba(var(--leafc),.6);opacity:0;transform:scale(var(--rest))}
+.b-body{inset:5%;transform:scale(var(--rest));transition:transform .7s var(--ease)}
+.b-sphere{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 36% 30%,var(--o1),var(--o2) 74%)}
+.b-art .b-disc{display:none}
+/* in: grow to the outer ring */
+.breathe[data-phase="in"] .b-body,.breathe[data-phase="in"] .b-glow{transform:scale(1);transition-duration:var(--d)}
+.breathe[data-phase="in"] .b-glow{opacity:.95}
+/* hold (lungs full): the orb is still and the outer ring turns solid */
+.breathe[data-phase="hold"] .b-body,.breathe[data-phase="hold"] .b-glow{transform:scale(1);transition-duration:.05s}
+.breathe[data-phase="hold"] .b-glow{opacity:.95}
+.breathe[data-phase="hold"] .b-g-in{border-style:solid;border-color:rgba(var(--leafc),.75)}
+/* out: shrink to the inner ring */
+.breathe[data-phase="out"] .b-body,.breathe[data-phase="out"] .b-glow{transform:scale(var(--rest));transition-duration:var(--d);transition-timing-function:var(--ease-out)}
+/* second hold (lungs empty): still, the inner ring turns solid */
+.breathe[data-phase="rest"] .b-body,.breathe[data-phase="rest"] .b-glow{transform:scale(var(--rest));transition-duration:.05s}
+.breathe[data-phase="rest"] .b-g-out{border-style:solid;border-color:rgba(var(--leafc),.75)}
+/* waves: outwards on the way in, inwards on the way out, none on a hold */
+@keyframes b-wave-out{0%{transform:scale(var(--rest));opacity:0}20%{opacity:.5}100%{transform:scale(1.16);opacity:0}}
+@keyframes b-wave-in{0%{transform:scale(1.16);opacity:0}25%{opacity:.5}100%{transform:scale(var(--rest));opacity:0}}
+.breathe[data-phase="in"] .b-wave{animation:b-wave-out var(--d) var(--ease) both}
+.breathe[data-phase="out"] .b-wave{animation:b-wave-in var(--d) var(--ease-out) both}
+.breathe[data-phase] .b-body,.breathe[data-phase] .b-glow,.breathe[data-phase] .b-wave{will-change:transform,opacity}
+.breathe-cap{font-size:1.12rem;font-weight:600;letter-spacing:.03em;color:var(--ink);min-height:1.6em}
+.breathe-hint{margin:6px 0 0;font-size:.88rem;line-height:1.6;color:var(--dim)}
+.breathe-opt{display:inline-flex;align-items:center;gap:8px;margin-top:10px;min-height:44px;font-size:.88rem;color:var(--body);cursor:pointer}
+.breathe-opt input{width:20px;height:20px;accent-color:var(--leaf)}
+.breathe-after{margin-top:18px;padding-top:16px;border-top:1px solid rgba(84,127,97,.25)}
+.breathe-after[hidden],.breathe-ctas[hidden]{display:none}
+.breathe-ask{margin:0 0 10px;font-weight:600;color:var(--ink)}
+.breathe-feels{display:flex;flex-wrap:wrap;gap:10px}
+.breathe-chip{min-height:44px;padding:10px 18px;border-radius:999px;border:1.5px solid rgba(63,106,77,.5);background:#fff;color:var(--ink);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer}
+.breathe-chip:hover{background:#F1F9E8}
+.breathe-chip[aria-pressed="true"]{background:#3F6A4D;border-color:#3F6A4D;color:#fff}
+.breathe-reply{margin:14px 0 0;font-size:.96rem;line-height:1.7;color:var(--body)}
+.breathe-reply:empty,.pick-reply:empty{margin:0!important;height:0;min-height:0;overflow:hidden}
+.breathe-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.breathe-ctas [hidden]{display:none}
+.breathe-note{margin:18px 0 0;font-size:.8rem;line-height:1.6;color:var(--dim)}
+.breathe-orb:focus-visible,.breathe-chip:focus-visible,.breathe-opt input:focus-visible{outline:3px solid rgba(72,112,85,.75);outline-offset:4px}
+@media(max-width:640px){.breathe-stage{flex-direction:column;gap:16px;text-align:center}.breathe{margin-left:auto;margin-right:auto}.breathe-opt{justify-content:center}}
+@media(max-width:520px){.breathe{--orb:208px}}
+@media(prefers-reduced-motion:reduce){
+  .b-art .b-body,.b-art .b-glow,.b-art .b-wave{display:none}
+  .b-art .b-disc{display:block;opacity:0;background:radial-gradient(circle at 36% 30%,var(--o1),var(--o2) 74%);transition:opacity .2s linear}
+  .b-art .b-d-small{inset:16.7%;opacity:1}
+  .b-art .b-d-large{inset:5%}
+  .breathe[data-phase="in"] .b-art .b-d-large,.breathe[data-phase="hold"] .b-art .b-d-large{opacity:1}
+  .breathe[data-phase="in"] .b-art .b-d-small,.breathe[data-phase="hold"] .b-art .b-d-small{opacity:0}
+}
+
 /* Video credit under the caption (whose channel it is) */
 .vid-by{display:block;margin-top:3px;font-size:.76rem;color:var(--dim)}
+
+/* ── Home: "How are you arriving today?" picker, and the short hello (Instagram) ────────────────────── */
+.pick{margin:34px auto 0;max-width:640px;text-align:center}
+.pick-q{margin:0 0 12px!important;font-weight:600;color:var(--ink);font-size:1.02rem}
+.pick-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pick-chip{min-height:44px;padding:9px 18px;border-radius:999px;border:1.5px solid rgba(217,107,16,.55);background:#fff;color:var(--ink);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer}
+.pick-chip:hover{background:var(--sun-wash)}
+.pick-chip[aria-pressed="true"]{background:#964C14;border-color:#964C14;color:#fff}
+.pick-chip:focus-visible,.pick .btn:focus-visible{outline:3px solid rgba(238,149,70,.6);outline-offset:3px}
+.pick-reply{margin:14px auto 0!important;max-width:560px;font-size:.98rem;line-height:1.7;color:var(--body)}
+
+.pick-care{margin:10px auto 0!important;max-width:560px;font-size:.9rem;line-height:1.65;color:var(--dim)}
+.pick-care a{color:var(--copper);text-decoration:underline}
+.pick-care[hidden],.pick-actions[hidden],.pick-actions [hidden]{display:none}
+.pick-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px}
+#offerings a[data-path]{position:relative}
+#offerings a[data-path="jyotish"]{--hl:217,107,16}#offerings a[data-path="bach"]{--hl:176,90,123}#offerings a[data-path="happiness"]{--hl:72,112,85}
+#offerings a.is-suggested{box-shadow:0 0 0 3px rgba(var(--hl),.4),0 18px 46px rgba(var(--hl),.24)!important}
+.pick-tag{position:absolute;top:-13px;left:20px;background:#fff;border:1px solid rgba(var(--hl),.55);color:var(--ink);font-size:.74rem;font-weight:700;letter-spacing:.04em;padding:3px 13px;border-radius:999px}
+/* About: one picture of Srikanth. The photo is the play button for the short hello; pressing it plays the video in the
+   same place, so he never appears twice. The portrait is centred against the text beside it. */
+.about-grid{align-items:center}
+@media(min-width:821px){.about-grid{grid-template-columns:minmax(280px,340px) minmax(0,1fr)}}
+.about-portrait{width:100%;max-width:340px;margin:0 auto;text-align:center}
+.ig-photo{position:relative;display:block;width:100%;max-width:280px;margin:0 auto;padding:0;border:0;background:none;border-radius:50%;cursor:pointer}
+.ig-badge{position:absolute;right:7%;bottom:7%;width:60px;height:60px;border-radius:50%;background:#964C14;box-shadow:0 8px 22px rgba(122,74,46,.35);border:3px solid #fff}
+.ig-badge::after{content:'';position:absolute;left:23px;top:17px;border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent #fff}
+.ig-photo:focus-visible{outline:3px solid rgba(238,149,70,.6);outline-offset:6px}
+.ig-cap{display:flex;flex-direction:column;gap:2px;margin:18px 0 0}
+.ig-cap[hidden]{display:none}
+.ig-cap b{color:var(--ink);font-size:.98rem}.ig-cap i{font-style:normal;font-size:.82rem;color:var(--dim)}
+.ig-open{display:inline-block;margin-top:2px;padding:10px 4px;font-size:.84rem;color:var(--copper);text-decoration:underline}
+.ig-frame{display:block;width:100%;max-width:340px;height:620px;margin:0 auto;border:0;border-radius:24px;background:#fff;box-shadow:var(--shadow-card)}
+@media(max-width:820px){.about-portrait{max-width:360px}.ig-frame{max-width:360px}}
+
+/* ── Continuous canvas (28 Nov 2026) ─────────────────────────────────────────────────────────────────
+   Concept: the page is one warm sheet of paper. Light pools where the visitor is invited to act (each hero and the
+   closing); everything else is whitespace and white cards. Two surfaces only: the canvas and the card. There are no
+   tinted bands and no lines between sections, so nothing can read as a patch.
+   (Awwwards guidance used: roles, not a palette; two surfaces; big fields of one colour; one spacing scale;
+   overlap used once; faint grain so gentle gradients do not band.) */
+:root{--space-section:clamp(56px,6.2vw,92px);--canvas-top:#FFFCF8;--canvas-end:#FFF1E2;--radius-card:24px;
+  --shadow-card:0 16px 44px rgba(122,74,46,.10);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .28 0 0 0 0 .14 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.075'/%3E%3C/svg%3E")}
+body{background:linear-gradient(180deg,var(--canvas-top) 0%,var(--canvas-end) 100%)}
+/* sections are transparent: the canvas shows through, and spacing (not colour) separates them */
+.alt,section[style*="paper-2"]{background:none!important;border:0!important}
+/* --space-section is the WHOLE gap between two neighbouring sections, so each section carries half of it */
+section:not(.checkin-shell){padding-top:calc(var(--space-section) / 2);padding-bottom:calc(var(--space-section) / 2)}
+.cta-strip+section{padding-top:calc(var(--space-section) * .75)}
+section[style*="padding"]:not(.checkin-shell){padding-top:calc(var(--space-section) / 2)!important;padding-bottom:calc(var(--space-section) / 2)!important}
+/* heroes: no band, only a soft pool of the page's own colour that fades out before any edge */
+main>header{background:none!important}
+.p-home .home-hero{padding-bottom:calc(var(--space-section) * .55)!important;background:radial-gradient(58% 52% at 50% 30%,rgba(255,222,182,.55),rgba(255,222,182,0) 70%),radial-gradient(34% 36% at 8% 52%,rgba(255,236,214,.5),rgba(255,236,214,0) 68%)!important}
+.p-jyotish main>header{background:radial-gradient(62% 80% at 82% 36%,rgba(255,212,164,.55),rgba(255,212,164,0) 68%),radial-gradient(34% 48% at 5% 46%,rgba(255,232,206,.55),rgba(255,232,206,0) 68%)!important}
+.p-bach main>header{background:radial-gradient(62% 80% at 82% 36%,rgba(246,198,208,.5),rgba(246,198,208,0) 68%),radial-gradient(34% 48% at 5% 46%,rgba(255,232,214,.5),rgba(255,232,214,0) 68%)!important}
+.p-happiness main>header{background:radial-gradient(62% 80% at 82% 36%,rgba(198,226,172,.5),rgba(198,226,172,0) 68%),radial-gradient(34% 48% at 5% 46%,rgba(255,236,214,.45),rgba(255,236,214,0) 68%)!important}
+/* the action bar becomes one floating invitation card; the first one overlaps the hero's empty bottom padding (the one overlap on the page) */
+.cta-strip{background:none;border:0;padding:0 20px;position:relative;z-index:3}
+.cta-strip-inner{max-width:960px;background:rgba(255,254,251,.94);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 30px}
+main>header+.cta-strip{margin-top:-38px}
+/* home closing: not a strip but a closing moment, with room around it and a pool of light behind it */
+.cta-strip-center{padding:calc(var(--space-section) * .7) 20px calc(var(--space-section) * .6);background:radial-gradient(50% 46% at 50% 50%,rgba(255,222,182,.55),rgba(255,222,182,0) 70%)}
+.cta-strip-center .cta-strip-inner{max-width:760px;background:none;box-shadow:none;border-radius:0;padding:0;gap:26px}
+.cta-strip-center p{font-family:'Marcellus',serif;font-weight:400;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.25;color:var(--ink);margin:0 0 10px}
+.cta-strip-center span{font-size:1rem;line-height:1.7;color:var(--dim)}
+/* home "not sure where to begin?" band becomes a contained card */
+.checkin-band{background:none;border:0!important;padding-top:0!important;padding-bottom:calc(var(--space-section) / 2)!important}
+.checkin-band-inner{max-width:1000px;width:calc(100% - 40px);background:rgba(255,254,251,.94);border-radius:calc(var(--radius-card) + 4px);box-shadow:var(--shadow-card);padding:44px 48px}
+/* footer: continues the canvas, deepening gently towards the bottom, with the same spacing rhythm */
+footer{border:0;background:linear-gradient(180deg,rgba(255,236,214,0) 0,rgba(255,236,214,.75) 150px);padding:calc(var(--space-section) * .4) 0 40px}
+/* one faint warm grain over the whole page: it cannot create edges of its own, and it hides banding */
+body{position:relative}
+body::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:var(--grain);pointer-events:none;z-index:1}
+@media print{body::after{display:none}}
+@media(max-width:560px){.cta-strip-inner{padding:20px}.checkin-band-inner{padding:32px 24px}}
+
+/* Video cards: the caption fills the card, so cards with shorter captions do not show a dark block underneath */
+.vid{display:flex;flex-direction:column}
+.vid-cap{flex:1 1 auto}
+
+/* ── Accessibility and readability pass (28 Nov 2026), from the Awwwards audit and an independent review ─────────────── */
+/* The site forces smooth scrolling in base.css; people who ask for reduced motion get an instant jump instead */
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* Touch targets of at least 44px (they were 15 to 42px) */
+.ig-open{min-height:44px;display:inline-flex;align-items:center}
+.vid-cap a{padding:14px 0}
+.talk-strip a{display:inline-flex;align-items:center;min-height:44px;padding:0 6px}
+.talk-strip{padding-top:0;padding-bottom:0}
+#btn-begin,#btn-save{min-height:44px}
+.stab{min-height:44px}
+/* One comfortable reading measure: FAQ answers were up to 124 characters wide */
+.faq-item p{max-width:72ch}
+/* On a phone, reading text is at least 16px (it was 14 to 15px). Small print and labels keep their small size. */
+@media(max-width:600px){
+  main :is(section,header) p:not(.fine):not(.breathe-note):not(.breathe-hint):not(.pick-care):not(.hero-attr):not(.ig-cap):not(.pick-q){font-size:1rem!important}
+  .faq-item summary{font-size:1rem}
+  .breathe-cap{min-height:3.2em}
+}
+/* small uppercase labels were 11.2 to 11.5px; 12px is the floor */
+.eyebrow,.res-kind,.dname{font-size:.75rem}

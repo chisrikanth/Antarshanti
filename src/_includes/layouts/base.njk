@@ -15,7 +15,7 @@
 <script src="/assets/env.js"></script>
 <script src="/assets/content.js"></script>
 </head>
-<body>
+<body class="p-{{ navKey or 'x' }}">
 <a class="skip-link" href="#main">{{ t.chrome.skip }}</a>
 {% if not env.isProduction %}<div style="background:#2F2418;color:#FFE9CC;text-align:center;padding:6px 12px;font:600 12px/1.4 sans-serif;letter-spacing:.06em">TEST SITE · {{ env.context | upper }} · not the live website · no real payments · sample data</div>
 {% endif %}{% block topbar %}{% endblock %}

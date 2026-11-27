@@ -280,6 +280,24 @@
    "attr": "— Gurudev Sri Sri Ravi Shankar",
    "note": "Start with whichever path calls to you."
   },
+  "pick": {
+   "q": "How are you arriving today?",
+   "chips": [
+    "My mind is busy",
+    "My heart feels heavy",
+    "I want some direction",
+    "Just looking around"
+   ],
+   "replies": [
+    "When the mind is busy, many people find the breath a gentle place to start. The Happiness Program is built around it.",
+    "Some feelings are hard to put into words. Bach Flower Therapy is a gentle, complementary way to be supported with them.",
+    "A Jyotish reading looks at your temperament and the season of life you are in, so you can decide with more clarity.",
+    "Welcome. A free, private 5-minute check-in is a gentle way to begin, or look around the three paths below."
+   ],
+   "show": "Show me ↓",
+   "look": "Look at the three paths ↓",
+   "suggested": "A good place to begin"
+  },
   "band": {
    "eyebrow": "Free · Private · 5 minutes",
    "title": "Not sure where to begin?",
@@ -327,6 +345,12 @@
    ],
    "alt": "Srikanth, Art of Living teacher, Bach Flower therapist and Jyotish practitioner"
   },
+  "hello": {
+   "title": "A short hello from Srikanth",
+   "note": "Plays from Instagram when you press play.",
+   "open": "Watch on Instagram ↗",
+   "play": "Play: a short hello from Srikanth"
+  },
   "kind": {
    "eyebrow": "Kind words",
    "title": "From people I have worked with"
@@ -353,6 +377,32 @@
    "title": "A calmer mind,<br><span class=\"hl\">one breath at a time.</span>",
    "intro": "A 3-day experience of breathing, meditation and simple tools for a calmer, clearer day-to-day life. The Art of Living Happiness Program is built around <strong>Sudarshan Kriya (SKY)</strong> — a breathing technique that has been the subject of many published studies.",
    "about": "The Art of Living is a global non-profit, founded in 1981, and its published research is summarised on its <a href=\"https://www.artofliving.org\" target=\"_blank\" rel=\"noopener\">website</a>. If it sounds interesting, you are welcome to join a batch whenever it feels right."
+  },
+  "breathe": {
+   "label": "Start a minute of calm breathing",
+   "stop": "Stop the breathing exercise",
+   "hint": "Just follow the orb. Stop any time.",
+   "in": "Breathe in…",
+   "hold": "Hold…",
+   "out": "Breathe out slowly…",
+   "rest": "Hold…",
+   "skipHolds": "Skip the holds (gentler)",
+   "done": "Well done. Notice how you feel now.",
+   "ask": "How do you feel?",
+   "feel": [
+    "Calmer",
+    "About the same",
+    "A bit uneasy"
+   ],
+   "reply": [
+    "That is a small taste of what guided breathing can feel like. In the Happiness Program a trained teacher takes you through longer breathing practices and meditation, step by step, over 3 days.",
+    "That is completely normal. One minute is short, and different rhythms suit different people. In the program a teacher guides you through several and adjusts them for you.",
+    "Thank you for noticing. Please breathe normally and rest, and stop if you feel unwell. Holding the breath is not comfortable for everyone. Srikanth can answer your questions and suggest what may suit you; he is one message away."
+   ],
+   "ctaRegister": "See the next batch ↓",
+   "ctaWa": "Ask Srikanth on WhatsApp",
+   "waMessage": "Namaste Srikanth, I tried the breathing exercise on your site and would like to know more about the Happiness Program.",
+   "note": "A simple paced-breathing exercise, not Sudarshan Kriya (which is learned with a teacher in the program). It is not medical advice. If you have a health condition, choose the gentler version or simply breathe normally."
   },
   "strip": {
    "title": "Register for the next Happiness Program batch",

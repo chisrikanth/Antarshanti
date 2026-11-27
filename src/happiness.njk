@@ -34,6 +34,20 @@ navKey: "happiness"
     <div class="eyebrow" style="color:var(--leaf);margin-bottom:14px">{{ c.hero.eyebrow }}</div>
     <h1 style="font-size:clamp(2.4rem,5vw,3.6rem);color:var(--ink)">{{ c.hero.title | safe }}</h1>
     <p style="font-size:1.08rem;color:var(--body);max-width:500px;margin:18px 0 10px;line-height:1.78">{{ c.hero.intro | safe }}</p>
+    {% set b = c.breathe %}<div class="breathe leaf" data-breathe data-pattern="4,4,6,2" data-gentle="4,6" data-rounds="3" data-unit="1000" data-t-in="{{ b.in }}" data-t-hold="{{ b.hold }}" data-t-out="{{ b.out }}" data-t-rest="{{ b.rest }}" data-t-label="{{ b.label }}" data-t-stop="{{ b.stop }}" data-t-done="{{ b.done }}" data-r0="{{ b.reply[0] }}" data-r1="{{ b.reply[1] }}" data-r2="{{ b.reply[2] }}">
+      <div class="breathe-stage">
+        <button type="button" class="breathe-orb" aria-label="{{ b.label }}" aria-describedby="breatheCap"><span class="b-art" aria-hidden="true"><i class="b-guide b-g-in"></i><i class="b-guide b-g-out"></i><i class="b-glow"></i><i class="b-wave"></i><i class="b-body"><i class="b-sphere"></i></i><i class="b-disc b-d-small"></i><i class="b-disc b-d-large"></i></span></button>
+        <div class="breathe-text"><div class="breathe-cap" id="breatheCap" aria-live="polite">{{ b.label }}</div><p class="breathe-hint">{{ b.hint }}</p>
+          <label class="breathe-opt"><input type="checkbox" class="breathe-gentle"> {{ b.skipHolds }}</label></div>
+      </div>
+      <div class="breathe-after" hidden>
+        <p class="breathe-ask" id="breatheAsk">{{ b.ask }}</p>
+        <div class="breathe-feels" role="group" aria-labelledby="breatheAsk">{% for f in b.feel %}<button type="button" class="breathe-chip" data-feel="{{ loop.index0 }}" aria-pressed="false">{{ f }}</button>{% endfor %}</div>
+        <p class="breathe-reply" tabindex="-1" aria-live="polite"></p>
+        <div class="breathe-ctas" hidden><a class="btn btn-leaf btn-sm breathe-register" href="#register">{{ b.ctaRegister }}</a><a class="btn btn-wa btn-sm" href="https://wa.me/919985133161?text={{ b.waMessage | urlencode }}" target="_blank" rel="noopener">{{ b.ctaWa }}</a></div>
+      </div>
+      <p class="breathe-note">{{ b.note }}</p>
+    </div>
     <p style="font-size:.96rem;color:var(--dim);max-width:500px;margin:0 0 30px;line-height:1.7">{{ c.hero.about | safe }}</p>
   </div>
 </header>
@@ -63,7 +77,7 @@ navKey: "happiness"
     <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.learn.eyebrow }}</div>
     <h2 style="font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:24px">{{ c.learn.title }}</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px">{% for it in c.learn.items %}
-      <div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--leaf);border-radius:var(--radius);padding:18px 20px"><h4 style="font-size:1rem;margin-bottom:7px;color:var(--ink)">{{ it.title }}</h4><p style="font-size:.88rem;color:var(--body);line-height:1.65">{{ it.text }}</p></div>{% endfor %}
+      <div style="background:var(--card);border:1px solid var(--line);border-left:3px solid var(--leaf);border-radius:var(--radius);padding:18px 20px"><h4 role="heading" aria-level="3" style="font-size:1rem;margin-bottom:7px;color:var(--ink)">{{ it.title }}</h4><p style="font-size:.88rem;color:var(--body);line-height:1.65">{{ it.text }}</p></div>{% endfor %}
     </div>
   </div>
 </section>
@@ -74,6 +88,19 @@ navKey: "happiness"
     <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:22px">{{ c.says.title }}</h2>
     <div data-testimonials="happiness"></div>
     <p style="font-size:.92rem;color:var(--dim);margin-top:16px" class="says-more">{{ c.says.more | safe }}</p>
+  </div>
+</section>
+
+<section style="padding:56px 0;background:var(--paper-2);border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.watch.eyebrow }}</div>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:10px">{{ c.watch.title }}</h2>
+    <p style="color:var(--dim);max-width:600px;font-size:.95rem">{{ c.watch.text }}</p>
+    <div class="res-grid">
+        <a class="res-card" href="https://www.youtube.com/playlist?list=PLoZ9lCw2MJU9x2vNGguZRB1giJwLscS1R" target="_blank" rel="noopener"><span class="res-kind">{{ c.watch.playlist.kind }}</span><span class="res-title">{{ c.watch.playlist.title }}</span><span class="res-desc">{{ c.watch.playlist.desc }}</span></a>
+        <a class="res-card" href="https://www.youtube.com/@artofliving" target="_blank" rel="noopener"><span class="res-kind">{{ c.watch.channel.kind }}</span><span class="res-title">{{ c.watch.channel.title }}</span><span class="res-desc">{{ c.watch.channel.desc }}</span></a>
+        <a class="res-card" href="https://www.artofliving.org/search/course" target="_blank" rel="noopener"><span class="res-kind">{{ c.watch.course.kind }}</span><span class="res-title">{{ c.watch.course.title }}</span><span class="res-desc">{{ c.watch.course.desc }}</span></a>
+    </div>
   </div>
 </section>
 
@@ -130,21 +157,10 @@ navKey: "happiness"
     </div>
   </div>
 </section>
-<section style="padding:56px 0;background:var(--paper-2);border-top:1px solid var(--line)">
-  <div class="wrap">
-    <div class="eyebrow" style="color:var(--leaf);margin-bottom:10px">{{ c.watch.eyebrow }}</div>
-    <h2 style="font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:10px">{{ c.watch.title }}</h2>
-    <p style="color:var(--dim);max-width:600px;font-size:.95rem">{{ c.watch.text }}</p>
-    <div class="res-grid">
-        <a class="res-card" href="https://www.youtube.com/playlist?list=PLoZ9lCw2MJU9x2vNGguZRB1giJwLscS1R" target="_blank" rel="noopener"><span class="res-kind">{{ c.watch.playlist.kind }}</span><span class="res-title">{{ c.watch.playlist.title }}</span><span class="res-desc">{{ c.watch.playlist.desc }}</span></a>
-        <a class="res-card" href="https://www.youtube.com/@artofliving" target="_blank" rel="noopener"><span class="res-kind">{{ c.watch.channel.kind }}</span><span class="res-title">{{ c.watch.channel.title }}</span><span class="res-desc">{{ c.watch.channel.desc }}</span></a>
-        <a class="res-card" href="https://www.artofliving.org/search/course" target="_blank" rel="noopener"><span class="res-kind">{{ c.watch.course.kind }}</span><span class="res-title">{{ c.watch.course.title }}</span><span class="res-desc">{{ c.watch.course.desc }}</span></a>
-    </div>
-  </div>
-</section>
+
 
 {% endblock %}
-{% block scripts %}{% set c = t.happiness %}<script>
+{% block scripts %}{% set c = t.happiness %}<script src="/assets/breathe.js" defer></script><script>
 const T = {{ c.js | dump | safe }};
 const LANG = '{{ lang.code }}';
 window.AS_KNOWN = T.known;   // standard batch phrases (fee, time, mode) shown in the visitor's language

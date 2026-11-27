@@ -744,6 +744,12 @@ key | en | te | hi
 `chrome.skip` | Skip to main content | ప్రధాన కంటెంట్‌కు వెళ్లండి | मुख्य सामग्री पर जाएँ
 
 
+## New strings, 28 Nov 2026: Happiness page "a minute of calm breathing"
+
+A tap-to-breathe practice under the Happiness hero (in 4, hold 4, out 6, rest 2, three rounds), then "How do you feel?" with a kind reply. Please have a native reader check every line; the tone should be a calm invitation with no health claim. The `reply` lines matter most: the third one is for someone who felt uneasy and must stay gentle and honest. The `note` says the exercise is not Sudarshan Kriya and not medical advice.
+
+All keys are under `happiness.breathe.*` in `src/_data/i18n/te.json` and `hi.json` (English in `en.json`): `label`, `hint`, `in`, `hold`, `out`, `rest`, `skipHolds`, `done`, `ask`, `feel` (3 items), `reply` (3 items), `ctaRegister`, `ctaWa`, `waMessage`, `note`.
+
 ## New video captions, 28 Nov 2026 (te, hi)
 
 Captions are short descriptions of each embedded video, written from the video's real title. Please have a native reader check them.
@@ -755,3 +761,13 @@ key | en | te | hi
 `happiness.whatIs.videos[0]` | How to stop overthinking? Gurudev in conversation with Anushka Sen | అతిగా ఆలోచించడం ఎలా ఆపాలి? అనుష్క సేన్‌తో గురుదేవ్ సంభాషణ | ओवरथिंकिंग कैसे रोकें? अनुष्का सेन के साथ गुरुदेव की बातचीत
 `happiness.whatIs.videos[2]` | How Sudarshan Kriya works, explained by Gurudev | సుదర్శన క్రియ ఎలా పనిచేస్తుంది: గురుదేవ్ వివరణ | सुदर्शन क्रिया क्या है? गुरुदेव से
 `checkin.js.next.bach.ytTitle` | John from the Bach Centre on simplicity | బాచ్ సెంటర్ నుండి జాన్: సరళత గురించి | बाख सेंटर से जॉन: सरलता पर
+
+
+## New strings, 28 Nov 2026: home picker, short hello, breathing hint (te, hi)
+
+Keys: `home.pick.*` (q, chips, replies, show, look, suggested), `home.hello.*` (title, note, open, play) and, changed, `happiness.breathe.hint`, `.hold`, `.rest` (the breathing no longer shows numbers). The "heavy heart" reply is followed by the existing Tele-MANAS line from `checkin.js.crisis.skipped`. Please have a native reader check all of them.
+
+
+## New string, 28 Nov 2026: breathing orb "Stop" label (te, hi)
+
+`happiness.breathe.stop`: read aloud by screen readers for the orb while the exercise is running. en: Stop the breathing exercise. te: శ్వాస అభ్యాసాన్ని ఆపండి. hi: श्वास-अभ्यास रोकें. Please have a native reader confirm.
