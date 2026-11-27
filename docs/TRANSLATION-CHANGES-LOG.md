@@ -761,3 +761,8 @@ key | en | te | hi
 `happiness.whatIs.videos[0]` | How to stop overthinking? Gurudev in conversation with Anushka Sen | అతిగా ఆలోచించడం ఎలా ఆపాలి? అనుష్క సేన్‌తో గురుదేవ్ సంభాషణ | ओवरथिंकिंग कैसे रोकें? अनुष्का सेन के साथ गुरुदेव की बातचीत
 `happiness.whatIs.videos[2]` | How Sudarshan Kriya works, explained by Gurudev | సుదర్శన క్రియ ఎలా పనిచేస్తుంది: గురుదేవ్ వివరణ | सुदर्शन क्रिया क्या है? गुरुदेव से
 `checkin.js.next.bach.ytTitle` | John from the Bach Centre on simplicity | బాచ్ సెంటర్ నుండి జాన్: సరళత గురించి | बाख सेंटर से जॉन: सरलता पर
+
+
+## New strings, 28 Nov 2026: home picker, short hello, breathing hint (te, hi)
+
+Keys: `home.pick.*` (q, chips, replies, show, look, suggested), `home.hello.*` (title, note, open, play) and, changed, `happiness.breathe.hint`, `.hold`, `.rest` (the breathing no longer shows numbers). The "heavy heart" reply is followed by the existing Tele-MANAS line from `checkin.js.crisis.skipped`. Please have a native reader check all of them.
