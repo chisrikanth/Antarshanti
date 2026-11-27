@@ -321,8 +321,8 @@ function computeAndRenderResults(){
    tension -> Sudarshan Kriya first; emotional heaviness -> Bach first; steady -> daily breathing practice.
 --------------------------------------------------------- */
 const NEXT = {
-  sky:  { ...T.next.sky,  url:URL_HAPPINESS + '#register',  path:'happiness', yt:'gWwhIPAajfw' },
-  bach: { ...T.next.bach, url:URL_BACH + '#booking-widget', path:'bach',      yt:'Cm5DVzkOo_U' }
+  sky:  { ...T.next.sky,  url:URL_HAPPINESS + '#register',  path:'happiness', yt:'gWwhIPAajfw', by:'The Art of Living India' },
+  bach: { ...T.next.bach, url:URL_BACH + '#booking-widget', path:'bach',      yt:'oUe7fkl3yCw', by:'The Bach Centre, UK' }
 };
 function suggestLead(domainScores){
   const pct = {};
@@ -341,7 +341,7 @@ const waLink = (msg) => 'https://wa.me/919985133161?text=' + encodeURIComponent(
 const WA_TALK = waLink(T.waTalk);
 function optionCard(o, key){
   return '<div class="card next-step primary">' +
-    '<div class="vid" data-yt="'+o.yt+'" data-title="'+o.ytTitle+'" data-open="'+T.next.youtubeOpen+'"></div>' +
+    '<div class="vid" data-yt="'+o.yt+'" data-by="'+o.by+'" data-title="'+o.ytTitle+'" data-open="'+T.next.youtubeOpen+'"></div>' +
     '<div><h3>'+o.name+'</h3><div class="ns-sub">'+o.sub+'</div><p>'+o.body+'</p>' +
     '<a class="btn btn-gold btn-sm" href="'+o.url+'" data-label="next:'+key+'">'+o.cta+' →</a></div></div>';
 }
