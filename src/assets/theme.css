@@ -313,3 +313,37 @@ main:focus{outline:none}
 .foot-contact a,.foot-links a{display:inline-block;padding:12px 0}
 .foot-links{gap:0 20px}
 @media(max-width:720px){.foot-links{gap:0}}
+
+/* ── Signature moment: the wheel (home hero) ────────────────────────────────
+   Three planets spiral in to one centre as you scroll: "three paths, one destination".
+   --p (0 to 1) is set by wheel.js. Still at --p:0 for reduced motion or without JS. */
+/* html and body used overflow-x:hidden, which makes them scroll containers and stops position:sticky from working.
+   overflow-x:clip hides sideways overflow the same way without that side effect (older browsers keep the hidden rule above). */
+html,body{overflow-x:clip}
+.wheel-stage{--p:0;position:sticky;top:86px;height:min(66vh,600px);margin-bottom:calc(min(66vh,600px) * -1);
+  display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0}
+.wheel{width:min(560px,88vw);height:auto;aspect-ratio:1;overflow:visible}
+.wheel *{transform-box:view-box;transform-origin:280px 280px}
+.wheel-ambient{animation:spin 240s linear infinite}
+.wheel-turn{transform:rotate(calc(var(--p) * 90deg))}
+.wheel .ring{fill:none;stroke:#E4B24F;stroke-width:1}
+.wheel .r1{opacity:.5}.wheel .r2{opacity:.38}.wheel .r3{opacity:.3}
+.wheel .spokes line{stroke:#E4B24F;stroke-width:1;opacity:.4}
+.wheel .petals ellipse{fill:#B8406A;opacity:.22}
+.wheel .ticks circle{fill:#D96B10;opacity:.6}
+.wheel .orbit-guides{opacity:calc(.55 - var(--p) * .45)}
+.wheel .orbit-guides circle{fill:none;stroke:#D9A441;stroke-width:1;stroke-dasharray:2 7}
+.wheel .bindu-core{fill:#D96B10}
+.wheel .bindu-halo{fill:rgba(244,168,96,.4);opacity:calc(var(--p) * var(--p));transform:scale(calc(.35 + var(--p) * .75))}
+.wheel .orbit{transform:rotate(calc(var(--a) + var(--p) * var(--t)))}
+.wheel .planet-g{transform:translateX(calc((1 - var(--p)) * var(--r) + var(--p) * 26px))}
+.wheel .o1{--a:-90deg;--t:360deg;--r:236px}
+.wheel .o2{--a:70deg;--t:320deg;--r:176px}
+.wheel .o3{--a:190deg;--t:320deg;--r:118px}
+.wheel .halo{opacity:.2}
+.wheel .planet{opacity:.9}
+.wheel .jy,.wheel .o1 .halo{fill:#D96B10}
+.wheel .ba,.wheel .o2 .halo{fill:#B05A7B}
+.wheel .ha,.wheel .o3 .halo{fill:#547F61}
+@media(max-width:720px){.wheel-stage{top:76px;height:min(62vh,540px);margin-bottom:calc(min(62vh,540px) * -1)}.wheel{width:min(420px,92vw)}}
+@media(prefers-reduced-motion:reduce){.wheel-ambient{animation:none}}
