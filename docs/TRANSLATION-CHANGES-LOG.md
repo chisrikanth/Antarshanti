@@ -742,3 +742,16 @@ Added so keyboard and screen-reader visitors can jump past the menu. Please have
 key | en | te | hi
 ---|---|---|---
 `chrome.skip` | Skip to main content | ప్రధాన కంటెంట్‌కు వెళ్లండి | मुख्य सामग्री पर जाएँ
+
+
+## New video captions, 28 Nov 2026 (te, hi)
+
+Captions are short descriptions of each embedded video, written from the video's real title. Please have a native reader check them.
+
+key | en | te | hi
+---|---|---|---
+`bach.whatIs.videos[0]` | John from the Bach Centre on the simplicity of Dr Bach's approach | బాచ్ సెంటర్ నుండి జాన్: డాక్టర్ బాచ్ విధానంలోని సరళత గురించి | बाख सेंटर से जॉन: डॉ. बाख के दृष्टिकोण की सरलता पर
+`bach.whatIs.videos[1]` | Judy from the Bach Centre on flower remedies and children | బాచ్ సెంటర్ నుండి జూడీ: పుష్ప ఔషధాలు, పిల్లల గురించి | बाख सेंटर से जूडी: फ्लावर रेमेडीज़ और बच्चों के बारे में
+`happiness.whatIs.videos[0]` | How to stop overthinking? Gurudev in conversation with Anushka Sen | అతిగా ఆలోచించడం ఎలా ఆపాలి? అనుష్క సేన్‌తో గురుదేవ్ సంభాషణ | ओवरथिंकिंग कैसे रोकें? अनुष्का सेन के साथ गुरुदेव की बातचीत
+`happiness.whatIs.videos[2]` | How Sudarshan Kriya works, explained by Gurudev | సుదర్శన క్రియ ఎలా పనిచేస్తుంది: గురుదేవ్ వివరణ | सुदर्शन क्रिया क्या है? गुरुदेव से
+`checkin.js.next.bach.ytTitle` | John from the Bach Centre on simplicity | బాచ్ సెంటర్ నుండి జాన్: సరళత గురించి | बाख सेंटर से जॉन: सरलता पर

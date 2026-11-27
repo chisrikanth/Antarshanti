@@ -134,7 +134,7 @@ var AS_CONFIG = {
       el.innerHTML =
         '<div class="vid-frame"><img src="https://i.ytimg.com/vi/' + id + '/hqdefault.jpg" alt="' + title.replace(/"/g, '&quot;') + '" loading="lazy" width="480" height="360" onerror="this.style.display=\'none\'">' +
         '<button class="vid-play" type="button" aria-label="Play: ' + title.replace(/"/g, '&quot;') + '"><span></span></button></div>' +
-        '<div class="vid-cap">' + title + '<a href="https://www.youtube.com/' + (short ? 'shorts/' : 'watch?v=') + id + '" target="_blank" rel="noopener">' + (el.getAttribute('data-open') || 'Open on YouTube') + ' ↗</a></div>';
+        '<div class="vid-cap">' + title + (el.getAttribute('data-by') ? '<span class="vid-by">' + esc(el.getAttribute('data-by')) + '</span>' : '') + '<a href="https://www.youtube.com/' + (short ? 'shorts/' : 'watch?v=') + id + '" target="_blank" rel="noopener">' + (el.getAttribute('data-open') || 'Open on YouTube') + ' ↗</a></div>';
       el.querySelector('.vid-play').addEventListener('click', function () {
         var f = document.createElement('iframe');
         f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';

@@ -70,3 +70,24 @@ Jyotish: caBLgExOBsQ (Komilla Sutton), zzRZGZv88n4 (Astrology for you).
 ## 3. After Gemini answers
 
 Paste its section 4 (final recommendation) and section 1 (channel table) to Claude, say which Jyotish option you chose, and Claude will: swap the video IDs in `src/bach.njk`, `src/happiness.njk`, `src/jyotish.njk` and `src/checkin.njk`; update the captions in `en.json`, `te.json` and `hi.json`; and add a small "From the official channel of ..." credit line under each video. Spot-check two or three picks yourself (open them, watch ten seconds) before approving, because the model can still be wrong about view counts and channel ownership.
+
+## 4. What was applied (28 Nov 2026)
+
+Gemini's picks were checked against YouTube's own data (channel, exact title, embeddable) before use. Captions are written from the verified titles, not copied from Gemini, and avoid benefit claims.
+
+| Page | Video | Channel (verified) | Caption on the site |
+|---|---|---|---|
+| Bach | `oUe7fkl3yCw` | bachcentre (`@bachcentremountvernon`, the UK Bach Centre) | John from the Bach Centre on the simplicity of Dr Bach's approach |
+| Bach | `VELRRnfCBz8` | same | Judy from the Bach Centre on flower remedies **and children** |
+| Happiness | `_n85KTw8FV4` | Gurudev Sri Sri Ravi Shankar (`@gurudev`) | How to stop overthinking? Gurudev in conversation with Anushka Sen |
+| Happiness | `gWwhIPAajfw` | ART OF LIVING INDIA (`@artoflivingindia8958`) | Sudarshan Kriya: what it is |
+| Happiness | `2wfh3W1xPN4` (Hindi page: `fXv7xrPnk7Y`, `@GurudevHindi`) | Gurudev (`@gurudev`) | How Sudarshan Kriya works, explained by Gurudev |
+| Jyotish | none | n/a | no external videos |
+| Check-in | Bach path: `oUe7fkl3yCw`; Happiness path: `gWwhIPAajfw` | as above | as above |
+
+Notes and open points:
+- **Gemini's caption for `VELRRnfCBz8` was wrong.** It said "everyday life"; the video is "Judy on remedies and children". The caption now says so. It is about children, so you may prefer to drop it from the adult consultation page.
+- The two Bach Centre uploads are older videos (their YouTube titles end in `.wmv`), so picture quality may be modest. Please watch them once.
+- No placeholder was left for your own recorded videos (Bach slot 3, Jyotish welcome). Add them when they are ready.
+- **Not applied:** Gemini suggested a note about your training at "The Art of Living's JyotirVāstu Academy". You said earlier you are not part of it yet, so nothing about it was added. Please confirm before any such line is written.
+- Channels that are not obviously official were taken from Gemini's word: `@artoflivingindia8958` (confirm it is the official Art of Living India channel) and `@GurudevHindi`.

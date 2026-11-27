@@ -313,3 +313,6 @@ main:focus{outline:none}
 .foot-contact a,.foot-links a{display:inline-block;padding:12px 0}
 .foot-links{gap:0 20px}
 @media(max-width:720px){.foot-links{gap:0}}
+
+/* Video credit under the caption (whose channel it is) */
+.vid-by{display:block;margin-top:3px;font-size:.76rem;color:var(--dim)}

@@ -239,7 +239,7 @@
      "name": "Bach Flower remedies",
      "sub": "A gentle, one-to-one approach",
      "cta": "Book a Bach Flower session",
-     "ytTitle": "Which Bach Flower remedy is right for you?",
+     "ytTitle": "John from the Bach Centre on simplicity",
      "body": "Bach Flower remedies are a gentle, personalised approach that many people use to support their mood and emotional balance. Srikanth matches them to how you have been feeling."
     },
     "jyotishName": "a Jyotish conversation",
@@ -366,11 +366,21 @@
    "title": "A breathing practice many people find deeply calming",
    "text": "Sudarshan Kriya (SKY) is a unique rhythmic breathing practice. Published studies suggest it may help reduce stress, anxiety and low mood and support sleep and focus — results vary from person to person. It is a simple daily practice you carry home after just 3 days, and it complements, never replaces, medical care.",
    "videos": [
+    "How to stop overthinking? Gurudev in conversation with Anushka Sen",
     "Sudarshan Kriya — what it is",
-    "Sudarshan Kriya Yoga in a minute",
-    "Learn Sudarshan Kriya with Gurudev"
+    "How Sudarshan Kriya works, explained by Gurudev"
    ],
-   "youtubeOpen": "Open on YouTube"
+   "youtubeOpen": "Open on YouTube",
+   "videoIds": [
+    "_n85KTw8FV4",
+    "gWwhIPAajfw",
+    "2wfh3W1xPN4"
+   ],
+   "videoBy": [
+    "Gurudev Sri Sri Ravi Shankar",
+    "The Art of Living India",
+    "Gurudev Sri Sri Ravi Shankar"
+   ]
   },
   "learn": {
    "eyebrow": "What you will learn",
@@ -595,11 +605,7 @@
   "whatIs": {
    "eyebrow": "What is Jyotish?",
    "title": "A traditional system of self-reflection",
-   "text": "Vedic astrology is a traditional Indian system that relates the sky to time. Your birth chart — cast for the exact moment, date and place you were born — maps the sky as it was when you arrived. We use it as a framework for reflecting on temperament, relationships, career and the timing of life phases, through planetary periods called <em>dashas</em>. Free will always applies; nothing is guaranteed, and it is not medical, legal or financial advice.",
-   "videos": [
-    "Vimshottari dasha: time and karma — Komilla Sutton",
-    "Rahu mahadasha in Vedic astrology"
-   ]
+   "text": "Vedic astrology is a traditional Indian system that relates the sky to time. Your birth chart — cast for the exact moment, date and place you were born — maps the sky as it was when you arrived. We use it as a framework for reflecting on temperament, relationships, career and the timing of life phases, through planetary periods called <em>dashas</em>. Free will always applies; nothing is guaranteed, and it is not medical, legal or financial advice."
   },
   "consult": {
    "eyebrow": "The Consultation",
@@ -756,9 +762,8 @@
    "title": "Flower essences for the emotional self",
    "text": "Dr. Edward Bach identified 38 flower essences — each associated with a specific emotional state. The remedies are highly diluted and preserved in brandy, so a small amount of alcohol is present. Many people find them a gentle support, and the choice works best when it is matched carefully to how you are feeling. Scientific evidence for their effect is limited, so we offer them as a complementary, personal practice.",
    "videos": [
-    "Which Bach Flower remedy is right for you?",
-    "Stop overthinking your Bach Flower remedies",
-    "Can you mix all 38 remedies together?"
+    "John from the Bach Centre on the simplicity of Dr Bach's approach",
+    "Judy from the Bach Centre on flower remedies and children"
    ]
   },
   "who": {
