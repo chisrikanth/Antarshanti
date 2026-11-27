@@ -320,22 +320,47 @@ main:focus{outline:none}
 .home-hero .hero-deco ellipse{display:none}
 .home-hero .hero-deco g[fill="rgba(217,107,16,.75)"]{opacity:.4}
 
-/* Happiness page: "a minute of calm breathing" (in 4, hold 4, out 6, rest 2, three rounds).
-   JS sets data-phase (in / hold / out / rest) and --d (the length of the phase); CSS draws the orb.
-   Still when motion is reduced: only the words and counting numbers change. */
-.breathe{--o1:#FFE6C2;--o2:#F4A860;--glow:238,149,70;--ringc:214,150,80;--d:4s;margin:26px 0 26px;max-width:520px}
-.breathe.leaf{--o1:#F1F9E8;--o2:#8DB27B;--glow:84,127,97;--ringc:84,127,97}
-.breathe-stage{display:flex;align-items:center;gap:44px}
-.breathe-orb{position:relative;flex:none;width:76px;height:76px;border:0;background:none;padding:0;cursor:pointer;border-radius:50%;margin:0 0 0 16px;-webkit-tap-highlight-color:transparent}
-.breathe-core{position:absolute;inset:14px;border-radius:50%;background:radial-gradient(circle at 38% 32%,var(--o1),var(--o2) 72%);box-shadow:0 8px 26px rgba(var(--glow),.35);transition:transform .9s ease,box-shadow .9s ease}
-.breathe-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(var(--ringc),.55);opacity:.95;transition:transform .9s ease,opacity .9s ease}
-.breathe-ring.r2{inset:-14px;opacity:.6}
-.breathe[data-phase="in"] .breathe-core,.breathe[data-phase="hold"] .breathe-core{transform:scale(1.5);box-shadow:0 10px 34px rgba(var(--glow),.5)}
-.breathe[data-phase="in"] .breathe-ring,.breathe[data-phase="hold"] .breathe-ring{transform:scale(1.8);opacity:.45}
-.breathe[data-phase="in"] .breathe-ring.r2,.breathe[data-phase="hold"] .breathe-ring.r2{transform:scale(1.9);opacity:.3}
-.breathe[data-phase="in"] .breathe-core,.breathe[data-phase="in"] .breathe-ring,.breathe[data-phase="out"] .breathe-core,.breathe[data-phase="out"] .breathe-ring{transition-duration:var(--d)}
-.breathe[data-phase="hold"] .breathe-core,.breathe[data-phase="hold"] .breathe-ring,.breathe[data-phase="rest"] .breathe-core,.breathe[data-phase="rest"] .breathe-ring{transition-duration:.01s}
-.breathe-cap{font-size:1.02rem;font-weight:600;letter-spacing:.03em;color:var(--ink);min-height:1.5em}
+/* Happiness page: "a minute of calm breathing".
+   The orb has to be understood without reading: it GROWS while you breathe in, STAYS STILL while you hold, SHRINKS
+   while you breathe out, and stays still again on the second hold.
+   - Two static dashed rings mark "full" (outer) and "empty" (inner). The orb travels between them; on a hold the ring it
+     is touching turns solid, so a hold looks like arriving and stopping.
+   - A wave runs outwards on the way in and inwards on the way out; there is no wave on a hold.
+   - Motion is transform and opacity only, one in-out easing, will-change only while a phase is running.
+   - Reduced motion: nothing scales. A small disc and a large disc cross-fade (0.2s) to show the same states.
+   JS sets data-phase (in / hold / out / rest) and --d (the length of the phase). */
+.breathe{--orb:232px;--rest:.4444;--d:4s;--ease:cubic-bezier(.45,0,.55,1);--o1:#F1F9E8;--o2:#8DB27B;--leafc:72,112,85;margin:26px 0;max-width:600px}
+.breathe-stage{display:flex;align-items:center;gap:28px}
+.breathe-orb{position:relative;flex:none;width:var(--orb);height:var(--orb);border:0;background:none;padding:0;cursor:pointer;border-radius:50%;-webkit-tap-highlight-color:transparent}
+.b-art{position:absolute;inset:0;display:block;border-radius:50%}
+.b-art>i{position:absolute;display:block;border-radius:50%}
+.b-guide{border:1.5px dashed rgba(var(--leafc),.4)}
+.b-g-in{inset:0}
+.b-g-out{inset:25%}
+.b-glow{inset:-6%;background:radial-gradient(circle,rgba(var(--leafc),.30) 0,rgba(var(--leafc),.13) 46%,rgba(var(--leafc),0) 70%);transform:scale(var(--rest));opacity:.5;transition:transform .7s var(--ease),opacity .7s var(--ease)}
+.b-wave{inset:5%;border:2px solid rgba(var(--leafc),.6);opacity:0;transform:scale(var(--rest))}
+.b-body{inset:5%;transform:scale(var(--rest));transition:transform .7s var(--ease)}
+.b-sphere{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 36% 30%,var(--o1),var(--o2) 74%)}
+.b-art .b-disc{display:none}
+/* in: grow to the outer ring */
+.breathe[data-phase="in"] .b-body,.breathe[data-phase="in"] .b-glow{transform:scale(1);transition-duration:var(--d)}
+.breathe[data-phase="in"] .b-glow{opacity:.95}
+/* hold (lungs full): the orb is still and the outer ring turns solid */
+.breathe[data-phase="hold"] .b-body,.breathe[data-phase="hold"] .b-glow{transform:scale(1);transition-duration:.05s}
+.breathe[data-phase="hold"] .b-glow{opacity:.95}
+.breathe[data-phase="hold"] .b-g-in{border-style:solid;border-color:rgba(var(--leafc),.75)}
+/* out: shrink to the inner ring */
+.breathe[data-phase="out"] .b-body,.breathe[data-phase="out"] .b-glow{transform:scale(var(--rest));transition-duration:var(--d)}
+/* second hold (lungs empty): still, the inner ring turns solid */
+.breathe[data-phase="rest"] .b-body,.breathe[data-phase="rest"] .b-glow{transform:scale(var(--rest));transition-duration:.05s}
+.breathe[data-phase="rest"] .b-g-out{border-style:solid;border-color:rgba(var(--leafc),.75)}
+/* waves: outwards on the way in, inwards on the way out, none on a hold */
+@keyframes b-wave-out{0%{transform:scale(var(--rest));opacity:.65}100%{transform:scale(1.16);opacity:0}}
+@keyframes b-wave-in{0%{transform:scale(1.16);opacity:0}30%{opacity:.6}100%{transform:scale(var(--rest));opacity:0}}
+.breathe[data-phase="in"] .b-wave{animation:b-wave-out var(--d) var(--ease) both}
+.breathe[data-phase="out"] .b-wave{animation:b-wave-in var(--d) var(--ease) both}
+.breathe[data-phase] .b-body,.breathe[data-phase] .b-glow,.breathe[data-phase] .b-wave{will-change:transform,opacity}
+.breathe-cap{font-size:1.12rem;font-weight:600;letter-spacing:.03em;color:var(--ink);min-height:1.6em}
 .breathe-hint{margin:6px 0 0;font-size:.88rem;line-height:1.6;color:var(--dim)}
 .breathe-opt{display:inline-flex;align-items:center;gap:8px;margin-top:10px;min-height:44px;font-size:.88rem;color:var(--body);cursor:pointer}
 .breathe-opt input{width:20px;height:20px;accent-color:var(--leaf)}
@@ -352,9 +377,15 @@ main:focus{outline:none}
 .breathe-ctas [hidden]{display:none}
 .breathe-note{margin:18px 0 0;font-size:.8rem;line-height:1.6;color:var(--dim)}
 .breathe-orb:focus-visible,.breathe-chip:focus-visible,.breathe-opt input:focus-visible{outline:3px solid rgba(var(--glow),.6);outline-offset:4px}
-@media(max-width:520px){.breathe-stage{gap:40px}.breathe-orb{margin-left:32px}}
+@media(max-width:640px){.breathe-stage{flex-direction:column;gap:16px;text-align:center}.breathe{margin-left:auto;margin-right:auto}.breathe-opt{justify-content:center}}
+@media(max-width:520px){.breathe{--orb:208px}}
 @media(prefers-reduced-motion:reduce){
-  .breathe-core,.breathe-ring{transition:none!important;transform:none!important}
+  .b-art .b-body,.b-art .b-glow,.b-art .b-wave{display:none}
+  .b-art .b-disc{display:block;opacity:0;background:radial-gradient(circle at 36% 30%,var(--o1),var(--o2) 74%);transition:opacity .2s linear}
+  .b-art .b-d-small{inset:30%;opacity:1}
+  .b-art .b-d-large{inset:5%}
+  .breathe[data-phase="in"] .b-art .b-d-large,.breathe[data-phase="hold"] .b-art .b-d-large{opacity:1}
+  .breathe[data-phase="in"] .b-art .b-d-small,.breathe[data-phase="hold"] .b-art .b-d-small{opacity:0}
 }
 
 /* Video credit under the caption (whose channel it is) */
