@@ -388,21 +388,45 @@ main:focus{outline:none}
 .ig-open{display:inline-block;margin-top:6px;padding:10px 4px;font-size:.84rem;color:var(--copper);text-decoration:underline}
 .ig-frame{display:block;width:100%;max-width:400px;height:min(74vh,640px);border:0;border-radius:18px;background:#fff}
 
-/* ── Soft surfaces (28 Nov 2026) ─────────────────────────────────────────────────────────────────────
-   The page uses two surface tones (--paper and --paper-2). They used to meet at hard edges with 1px lines,
-   so each band read as a separate patch. Now they meet through long fades, and a faint warm grain breaks up
-   the colour banding of gentle gradients, so the page reads as one continuous sheet. The grain is one uniform
-   layer over the whole page (not per section), so it cannot create edges of its own. */
-:root{--fade:112px;
+/* ── Continuous canvas (28 Nov 2026) ─────────────────────────────────────────────────────────────────
+   Concept: the page is one warm sheet of paper. Light pools where the visitor is invited to act (each hero and the
+   closing); everything else is whitespace and white cards. Two surfaces only: the canvas and the card. There are no
+   tinted bands and no lines between sections, so nothing can read as a patch.
+   (Awwwards guidance used: roles, not a palette; two surfaces; big fields of one colour; one spacing scale;
+   overlap used once; faint grain so gentle gradients do not band.) */
+:root{--space-section:clamp(64px,8.5vw,112px);--canvas-top:#FFFCF8;--canvas-end:#FFF1E2;--radius-card:24px;
+  --shadow-card:0 16px 44px rgba(122,74,46,.10);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .28 0 0 0 0 .14 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.075'/%3E%3C/svg%3E")}
-.alt{background:linear-gradient(180deg,var(--paper) 0,var(--paper-2) var(--fade),var(--paper-2) calc(100% - var(--fade)),var(--paper) 100%);border:0}
-.cta-strip,.checkin-band{border:0;background:linear-gradient(180deg,rgba(255,235,210,0) 0,#FFEBD2 32%,#FFEBD2 68%,rgba(255,235,210,0) 100%)}
-footer{border-top:0;background:linear-gradient(180deg,var(--paper) 0,var(--paper-2) 96px)}
-section[style*="paper-2"]{border-top:0!important;background:linear-gradient(180deg,var(--paper) 0,var(--paper-2) var(--fade),var(--paper-2) calc(100% - 60px),rgba(255,243,230,0) 100%)!important}
-main>header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:var(--fade);background:linear-gradient(180deg,rgba(255,252,248,0),var(--paper));pointer-events:none;z-index:1}
+body{background:linear-gradient(180deg,var(--canvas-top) 0%,var(--canvas-end) 100%)}
+/* sections are transparent: the canvas shows through, and spacing (not colour) separates them */
+.alt,section[style*="paper-2"]{background:none!important;border:0!important}
+section:not(.checkin-shell){padding-top:var(--space-section);padding-bottom:var(--space-section)}
+section[style*="padding"]:not(.checkin-shell){padding-top:var(--space-section)!important;padding-bottom:var(--space-section)!important}
+/* heroes: no band, only a soft pool of the page's own colour that fades out before any edge */
+main>header{background:none!important}
+.p-home .home-hero{padding-bottom:calc(var(--space-section) * .55)!important;background:radial-gradient(58% 52% at 50% 30%,rgba(255,222,182,.55),rgba(255,222,182,0) 70%),radial-gradient(34% 36% at 8% 52%,rgba(255,236,214,.5),rgba(255,236,214,0) 68%)!important}
+.p-jyotish main>header{background:radial-gradient(62% 80% at 82% 36%,rgba(255,212,164,.55),rgba(255,212,164,0) 68%),radial-gradient(34% 48% at 5% 46%,rgba(255,232,206,.55),rgba(255,232,206,0) 68%)!important}
+.p-bach main>header{background:radial-gradient(62% 80% at 82% 36%,rgba(246,198,208,.5),rgba(246,198,208,0) 68%),radial-gradient(34% 48% at 5% 46%,rgba(255,232,214,.5),rgba(255,232,214,0) 68%)!important}
+.p-happiness main>header{background:radial-gradient(62% 80% at 82% 36%,rgba(198,226,172,.5),rgba(198,226,172,0) 68%),radial-gradient(34% 48% at 5% 46%,rgba(255,236,214,.45),rgba(255,236,214,0) 68%)!important}
+/* the action bar becomes one floating invitation card; the first one overlaps the hero's empty bottom padding (the one overlap on the page) */
+.cta-strip{background:none;border:0;padding:0 20px;position:relative;z-index:3}
+.cta-strip-inner{max-width:960px;background:rgba(255,254,251,.94);border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:20px 30px}
+main>header+.cta-strip{margin-top:-38px}
+/* home closing: not a strip but a closing moment, with room around it and a pool of light behind it */
+.cta-strip-center{padding:calc(var(--space-section) * 1.1) 20px calc(var(--space-section) * .9);background:radial-gradient(50% 46% at 50% 50%,rgba(255,222,182,.55),rgba(255,222,182,0) 70%)}
+.cta-strip-center .cta-strip-inner{max-width:760px;background:none;box-shadow:none;border-radius:0;padding:0;gap:26px}
+.cta-strip-center p{font-family:'Marcellus',serif;font-weight:400;font-size:clamp(1.6rem,3vw,2.2rem);line-height:1.25;color:var(--ink);margin:0 0 10px}
+.cta-strip-center span{font-size:1rem;line-height:1.7;color:var(--dim)}
+/* home "not sure where to begin?" band becomes a contained card */
+.checkin-band{background:none;border:0!important;padding-top:0!important;padding-bottom:var(--space-section)!important}
+.checkin-band-inner{max-width:1000px;width:calc(100% - 40px);background:rgba(255,254,251,.94);border-radius:calc(var(--radius-card) + 4px);box-shadow:var(--shadow-card);padding:44px 48px}
+/* footer: continues the canvas, deepening gently towards the bottom, with the same spacing rhythm */
+footer{border:0;background:linear-gradient(180deg,rgba(255,236,214,0) 0,rgba(255,236,214,.75) 150px);padding:calc(var(--space-section) * .75) 0 40px}
+/* one faint warm grain over the whole page: it cannot create edges of its own, and it hides banding */
 body{position:relative}
 body::after{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:var(--grain);pointer-events:none;z-index:1}
 @media print{body::after{display:none}}
+@media(max-width:560px){.cta-strip-inner{padding:20px}.checkin-band-inner{padding:32px 24px}}
 
 /* Video cards: the caption fills the card, so cards with shorter captions do not show a dark block underneath */
 .vid{display:flex;flex-direction:column}
