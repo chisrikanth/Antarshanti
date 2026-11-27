@@ -9,7 +9,7 @@
    ========================================================================== */
 :root{
   --paper:#FFFCF8;   --paper-2:#FFF3E6;   --card:#FFFFFF;
-  --ink:#2F2418;     --body:#51402F;      --dim:#74644F;
+  --ink:#2F2418;     --body:#51402F;      --dim:#6A5B46;
   --sun:#F4A860;     --sun-deep:#EE9546;  --sun-soft:#FBD9B0;  --sun-wash:#FFF0DC;
   --gold:#E4B24F;    --saffron:#964C14;   --copper:#7A4A2E;
   --lotus:#B05A7B;   --leaf:#547F61;      --sky:#5A87A8;
@@ -313,3 +313,26 @@ main:focus{outline:none}
 .foot-contact a,.foot-links a{display:inline-block;padding:12px 0}
 .foot-links{gap:0 20px}
 @media(max-width:720px){.foot-links{gap:0}}
+
+/* ── Home hero: "Whisper" wheel and the breathing orb (28 Nov 2026) ──────────
+   The wheel is only a faint texture: no petals, nothing opaque behind the words. Home page only. */
+.home-hero .hero-deco{opacity:.2!important;width:980px!important;height:980px!important;margin-left:-490px!important;top:-70px!important}
+.home-hero .hero-deco ellipse{display:none}
+.home-hero .hero-deco g[fill="rgba(217,107,16,.75)"]{opacity:.4}
+
+/* "Take one slow breath": tap the orb, three breaths of 4 s in and 6 s out. Still when motion is reduced. */
+.breathe{--in:4s;--out:6s;margin:40px auto 0;display:flex;flex-direction:column;align-items:center}
+.breathe-orb{position:relative;width:76px;height:76px;border:0;background:none;padding:0;cursor:pointer;border-radius:50%;-webkit-tap-highlight-color:transparent}
+.breathe-core{position:absolute;inset:14px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#FFE6C2,#F4A860 72%);box-shadow:0 8px 26px rgba(238,149,70,.35);transition:transform .9s ease,box-shadow .9s ease}
+.breathe-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(214,150,80,.55);opacity:.95;transition:transform .9s ease,opacity .9s ease}
+.breathe-ring.r2{inset:-14px;opacity:.6}
+.breathe.is-in .breathe-core{transform:scale(1.5);box-shadow:0 10px 34px rgba(238,149,70,.5);transition-duration:var(--in)}
+.breathe.is-in .breathe-ring{transform:scale(1.8);opacity:.45;transition-duration:var(--in)}
+.breathe.is-in .breathe-ring.r2{transform:scale(1.9);opacity:.3}
+.breathe.is-out .breathe-core{transition-duration:var(--out)}
+.breathe.is-out .breathe-ring{transition-duration:var(--out)}
+.breathe-cap{margin-top:10px;font-size:.95rem;letter-spacing:.05em;color:var(--body);min-height:1.5em;text-align:center}
+.breathe-orb:focus-visible{outline:3px solid rgba(238,149,70,.55);outline-offset:6px}
+@media(prefers-reduced-motion:reduce){
+  .breathe-core,.breathe-ring{transition:none!important;transform:none!important}
+}

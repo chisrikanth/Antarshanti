@@ -44,6 +44,10 @@ navKey: "home"
       {{ c.hero.intro | safe }}
     </p>
     <p class="hero-note">{{ c.hero.note }}</p>
+    <div class="breathe" data-breathe data-in-ms="4000" data-out-ms="6000" data-rounds="3" data-t-label="{{ c.breathe.label }}" data-t-in="{{ c.breathe.in }}" data-t-out="{{ c.breathe.out }}" data-t-done="{{ c.breathe.done }}">
+      <button type="button" class="breathe-orb" aria-label="{{ c.breathe.label }}" aria-pressed="false" aria-describedby="breatheCap"><i class="breathe-ring r2"></i><i class="breathe-ring"></i><i class="breathe-core"></i></button>
+      <div class="breathe-cap" id="breatheCap" aria-live="polite">{{ c.breathe.label }}</div>
+    </div>
   </div>
 </div>
 <div id="offerings" class="wrap offerings-in-hero" style="position:relative;z-index:2;margin-top:52px">
@@ -129,7 +133,7 @@ navKey: "home"
 </div>
 
 {% endblock %}
-{% block scripts %}{% set c = t.home %}<script>
+{% block scripts %}{% set c = t.home %}<script src="/assets/breathe.js" defer></script><script>
 const NEXT_BATCH = {{ c.offerings.happiness.nextBatch | dump | safe }};
 {% raw %}AS_READY.then(function(c){var e=document.getElementById('homeNextBatch');
   if(e&&c.batches.length){e.textContent=NEXT_BATCH.replace('{date}', AS_batchDate(c.batches[0]));}});

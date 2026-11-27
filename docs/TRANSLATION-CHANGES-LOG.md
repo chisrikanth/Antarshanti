@@ -742,3 +742,15 @@ Added so keyboard and screen-reader visitors can jump past the menu. Please have
 key | en | te | hi
 ---|---|---|---
 `chrome.skip` | Skip to main content | ప్రధాన కంటెంట్‌కు వెళ్లండి | मुख्य सामग्री पर जाएँ
+
+
+## New strings, 28 Nov 2026: home "Take one slow breath"
+
+A small tap-to-breathe orb on the home hero (three breaths, 4 s in and 6 s out). Please have a native reader check the wording; it is meant to sound like a calm, plain invitation, with no health claim.
+
+key | en | te | hi
+---|---|---|---
+`home.breathe.label` | Take one slow breath | ఒక్క నెమ్మదైన శ్వాస తీసుకోండి | एक धीमी, गहरी साँस लें
+`home.breathe.in` | Breathe in… | శ్వాస లోపలికి తీసుకోండి… | साँस भीतर लें…
+`home.breathe.out` | Breathe out… | నెమ్మదిగా వదలండి… | धीरे-धीरे छोड़ें…
+`home.breathe.done` | Notice how you feel now. | ఇప్పుడు మీకు ఎలా అనిపిస్తోందో గమనించండి. | अब ध्यान दें कि आपको कैसा लग रहा है।
