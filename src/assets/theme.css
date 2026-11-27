@@ -12,7 +12,7 @@
   --ink:#2F2418;     --body:#51402F;      --dim:#6A5B46;
   --sun:#F4A860;     --sun-deep:#EE9546;  --sun-soft:#FBD9B0;  --sun-wash:#FFF0DC;
   --gold:#E4B24F;    --saffron:#964C14;   --copper:#7A4A2E;
-  --lotus:#B05A7B;   --leaf:#547F61;      --sky:#5A87A8;
+  --lotus:#B05A7B;   --leaf:#487055;      --sky:#5A87A8;
   --cta:var(--sun);  --cta-deep:var(--sun-deep); --cta-text:#3A2108; --cta-soft:#FDE7CC;
   --line:rgba(122,74,46,.15);
   --radius:20px;
@@ -320,19 +320,40 @@ main:focus{outline:none}
 .home-hero .hero-deco ellipse{display:none}
 .home-hero .hero-deco g[fill="rgba(217,107,16,.75)"]{opacity:.4}
 
-/* "Take one slow breath": tap the orb, three breaths of 4 s in and 6 s out. Still when motion is reduced. */
-.breathe{--in:4s;--out:6s;margin:40px auto 0;display:flex;flex-direction:column;align-items:center}
-.breathe-orb{position:relative;width:76px;height:76px;border:0;background:none;padding:0;cursor:pointer;border-radius:50%;-webkit-tap-highlight-color:transparent}
-.breathe-core{position:absolute;inset:14px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#FFE6C2,#F4A860 72%);box-shadow:0 8px 26px rgba(238,149,70,.35);transition:transform .9s ease,box-shadow .9s ease}
-.breathe-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(214,150,80,.55);opacity:.95;transition:transform .9s ease,opacity .9s ease}
+/* Happiness page: "a minute of calm breathing" (in 4, hold 4, out 6, rest 2, three rounds).
+   JS sets data-phase (in / hold / out / rest) and --d (the length of the phase); CSS draws the orb.
+   Still when motion is reduced: only the words and counting numbers change. */
+.breathe{--o1:#FFE6C2;--o2:#F4A860;--glow:238,149,70;--ringc:214,150,80;--d:4s;margin:26px 0 26px;max-width:520px}
+.breathe.leaf{--o1:#F1F9E8;--o2:#8DB27B;--glow:84,127,97;--ringc:84,127,97}
+.breathe-stage{display:flex;align-items:center;gap:44px}
+.breathe-orb{position:relative;flex:none;width:76px;height:76px;border:0;background:none;padding:0;cursor:pointer;border-radius:50%;margin:0 0 0 16px;-webkit-tap-highlight-color:transparent}
+.breathe-core{position:absolute;inset:14px;border-radius:50%;background:radial-gradient(circle at 38% 32%,var(--o1),var(--o2) 72%);box-shadow:0 8px 26px rgba(var(--glow),.35);transition:transform .9s ease,box-shadow .9s ease}
+.breathe-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(var(--ringc),.55);opacity:.95;transition:transform .9s ease,opacity .9s ease}
 .breathe-ring.r2{inset:-14px;opacity:.6}
-.breathe.is-in .breathe-core{transform:scale(1.5);box-shadow:0 10px 34px rgba(238,149,70,.5);transition-duration:var(--in)}
-.breathe.is-in .breathe-ring{transform:scale(1.8);opacity:.45;transition-duration:var(--in)}
-.breathe.is-in .breathe-ring.r2{transform:scale(1.9);opacity:.3}
-.breathe.is-out .breathe-core{transition-duration:var(--out)}
-.breathe.is-out .breathe-ring{transition-duration:var(--out)}
-.breathe-cap{margin-top:10px;font-size:.95rem;letter-spacing:.05em;color:var(--body);min-height:1.5em;text-align:center}
-.breathe-orb:focus-visible{outline:3px solid rgba(238,149,70,.55);outline-offset:6px}
+.breathe-count{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.15rem;color:var(--ink);pointer-events:none}
+.breathe[data-phase="in"] .breathe-core,.breathe[data-phase="hold"] .breathe-core{transform:scale(1.5);box-shadow:0 10px 34px rgba(var(--glow),.5)}
+.breathe[data-phase="in"] .breathe-ring,.breathe[data-phase="hold"] .breathe-ring{transform:scale(1.8);opacity:.45}
+.breathe[data-phase="in"] .breathe-ring.r2,.breathe[data-phase="hold"] .breathe-ring.r2{transform:scale(1.9);opacity:.3}
+.breathe[data-phase="in"] .breathe-core,.breathe[data-phase="in"] .breathe-ring,.breathe[data-phase="out"] .breathe-core,.breathe[data-phase="out"] .breathe-ring{transition-duration:var(--d)}
+.breathe[data-phase="hold"] .breathe-core,.breathe[data-phase="hold"] .breathe-ring,.breathe[data-phase="rest"] .breathe-core,.breathe[data-phase="rest"] .breathe-ring{transition-duration:.01s}
+.breathe-cap{font-size:1.02rem;font-weight:600;letter-spacing:.03em;color:var(--ink);min-height:1.5em}
+.breathe-hint{margin:6px 0 0;font-size:.88rem;line-height:1.6;color:var(--dim)}
+.breathe-opt{display:inline-flex;align-items:center;gap:8px;margin-top:10px;min-height:44px;font-size:.88rem;color:var(--body);cursor:pointer}
+.breathe-opt input{width:20px;height:20px;accent-color:var(--leaf)}
+.breathe-after{margin-top:18px;padding-top:16px;border-top:1px solid rgba(84,127,97,.25)}
+.breathe-after[hidden],.breathe-ctas[hidden]{display:none}
+.breathe-ask{margin:0 0 10px;font-weight:600;color:var(--ink)}
+.breathe-feels{display:flex;flex-wrap:wrap;gap:10px}
+.breathe-chip{min-height:44px;padding:10px 18px;border-radius:999px;border:1.5px solid rgba(63,106,77,.5);background:#fff;color:var(--ink);font:inherit;font-size:.92rem;font-weight:600;cursor:pointer}
+.breathe-chip:hover{background:#F1F9E8}
+.breathe-chip[aria-pressed="true"]{background:#3F6A4D;border-color:#3F6A4D;color:#fff}
+.breathe-reply{margin:14px 0 0;font-size:.96rem;line-height:1.7;color:var(--body)}
+.breathe-reply:empty{display:none}
+.breathe-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.breathe-ctas [hidden]{display:none}
+.breathe-note{margin:18px 0 0;font-size:.8rem;line-height:1.6;color:var(--dim)}
+.breathe-orb:focus-visible,.breathe-chip:focus-visible,.breathe-opt input:focus-visible{outline:3px solid rgba(var(--glow),.6);outline-offset:4px}
+@media(max-width:520px){.breathe-stage{gap:40px}.breathe-orb{margin-left:32px}}
 @media(prefers-reduced-motion:reduce){
   .breathe-core,.breathe-ring{transition:none!important;transform:none!important}
 }

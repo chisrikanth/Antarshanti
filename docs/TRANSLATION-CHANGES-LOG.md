@@ -744,13 +744,8 @@ key | en | te | hi
 `chrome.skip` | Skip to main content | ప్రధాన కంటెంట్‌కు వెళ్లండి | मुख्य सामग्री पर जाएँ
 
 
-## New strings, 28 Nov 2026: home "Take one slow breath"
+## New strings, 28 Nov 2026: Happiness page "a minute of calm breathing"
 
-A small tap-to-breathe orb on the home hero (three breaths, 4 s in and 6 s out). Please have a native reader check the wording; it is meant to sound like a calm, plain invitation, with no health claim.
+A tap-to-breathe practice under the Happiness hero (in 4, hold 4, out 6, rest 2, three rounds), then "How do you feel?" with a kind reply. Please have a native reader check every line; the tone should be a calm invitation with no health claim. The `reply` lines matter most: the third one is for someone who felt uneasy and must stay gentle and honest. The `note` says the exercise is not Sudarshan Kriya and not medical advice.
 
-key | en | te | hi
----|---|---|---
-`home.breathe.label` | Take one slow breath | ఒక్క నెమ్మదైన శ్వాస తీసుకోండి | एक धीमी, गहरी साँस लें
-`home.breathe.in` | Breathe in… | శ్వాస లోపలికి తీసుకోండి… | साँस भीतर लें…
-`home.breathe.out` | Breathe out… | నెమ్మదిగా వదలండి… | धीरे-धीरे छोड़ें…
-`home.breathe.done` | Notice how you feel now. | ఇప్పుడు మీకు ఎలా అనిపిస్తోందో గమనించండి. | अब ध्यान दें कि आपको कैसा लग रहा है।
+All keys are under `happiness.breathe.*` in `src/_data/i18n/te.json` and `hi.json` (English in `en.json`): `label`, `hint`, `in`, `hold`, `out`, `rest`, `skipHolds`, `done`, `ask`, `feel` (3 items), `reply` (3 items), `ctaRegister`, `ctaWa`, `waMessage`, `note`.

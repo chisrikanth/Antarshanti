@@ -280,12 +280,6 @@
    "attr": "— Gurudev Sri Sri Ravi Shankar",
    "note": "Start with whichever path calls to you."
   },
-  "breathe": {
-   "label": "Take one slow breath",
-   "in": "Breathe in…",
-   "out": "Breathe out…",
-   "done": "Notice how you feel now."
-  },
   "band": {
    "eyebrow": "Free · Private · 5 minutes",
    "title": "Not sure where to begin?",
@@ -359,6 +353,31 @@
    "title": "A calmer mind,<br><span class=\"hl\">one breath at a time.</span>",
    "intro": "A 3-day experience of breathing, meditation and simple tools for a calmer, clearer day-to-day life. The Art of Living Happiness Program is built around <strong>Sudarshan Kriya (SKY)</strong> — a breathing technique that has been the subject of many published studies.",
    "about": "The Art of Living is a global non-profit, founded in 1981, and its published research is summarised on its <a href=\"https://www.artofliving.org\" target=\"_blank\" rel=\"noopener\">website</a>. If it sounds interesting, you are welcome to join a batch whenever it feels right."
+  },
+  "breathe": {
+   "label": "Start a minute of calm breathing",
+   "hint": "In for 4, hold for 4, out for 6, rest for 2. Three rounds, about 50 seconds. Stop any time.",
+   "in": "Breathe in…",
+   "hold": "Hold gently…",
+   "out": "Breathe out slowly…",
+   "rest": "Rest…",
+   "skipHolds": "Skip the holds (gentler)",
+   "done": "Well done. Notice how you feel now.",
+   "ask": "How do you feel?",
+   "feel": [
+    "Calmer",
+    "About the same",
+    "A bit uneasy"
+   ],
+   "reply": [
+    "That is a small taste of what guided breathing can feel like. In the Happiness Program a trained teacher takes you through longer breathing practices and meditation, step by step, over 3 days.",
+    "That is completely normal. One minute is short, and different rhythms suit different people. In the program a teacher guides you through several and adjusts them for you.",
+    "Thank you for noticing. Please breathe normally and rest, and stop if you feel unwell. Holding the breath is not comfortable for everyone. Srikanth can answer your questions and suggest what may suit you; he is one message away."
+   ],
+   "ctaRegister": "See the next batch ↓",
+   "ctaWa": "Ask Srikanth on WhatsApp",
+   "waMessage": "Namaste Srikanth, I tried the breathing exercise on your site and would like to know more about the Happiness Program.",
+   "note": "A simple paced-breathing exercise, not Sudarshan Kriya (which is learned with a teacher in the program). It is not medical advice. If you have a health condition, choose the gentler version or simply breathe normally."
   },
   "strip": {
    "title": "Register for the next Happiness Program batch",
