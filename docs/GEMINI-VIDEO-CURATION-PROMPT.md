@@ -1,5 +1,11 @@
 # Curating the website videos (27 Nov 2026)
 
+**How to use this file (3 steps)**
+1. Open Gemini: **[gemini.google.com/app](https://gemini.google.com/app)** (sign in with the Google account that has Gemini Pro, and pick the Pro model).
+2. Copy the whole prompt from section 2 below (everything inside the grey box) and paste it as **one message**.
+3. Paste Gemini's answer back to Claude (see section 3).
+
+
 Goal: every video on antarshanti.co.in comes from the **official channel of the organisation your work comes from**, not from random creators. Principles in `docs/GUIDING-PRINCIPLES.md` apply: calm, honest, no fear, no promised outcomes.
 
 ## 1. Review of the 8 videos currently on the site
