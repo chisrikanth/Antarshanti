@@ -13,13 +13,13 @@
   var after = $('.breathe-after'), reply = $('.breathe-reply'), ctas = $('.breathe-ctas'), chips = root.querySelectorAll('.breathe-chip');
   var ROUNDS = +root.getAttribute('data-rounds') || 3, UNIT = +root.getAttribute('data-unit') || 1000;
   var NAMES = ['in', 'hold', 'out', 'rest'];
-  var T = { label: attr('label'), done: attr('done') };
+  var T = { label: attr('label'), done: attr('done'), stop: attr('stop') };
   NAMES.forEach(function (n) { T[n] = attr(n); });
   function attr(k) { return root.getAttribute('data-t-' + k) || ''; }
   function nums(s) { return (s || '').split(',').map(Number); }
   var PLAN = nums(root.getAttribute('data-pattern'));            // 4,4,6,2   (in, hold, out, rest)
   var GENTLE = nums(root.getAttribute('data-gentle'));           // 4,6       (in, out)
-  var timer = null, running = false, reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timer = null, running = false;
 
   function track(n, p) { try { if (window.AS && window.AS.track) window.AS.track(n, p); } catch (e) {} }
   function steps() {   // [{name, secs}, ...] for one round
@@ -33,7 +33,7 @@
   function reset(keepAfter) {
     clearTimeout(timer); running = false;
     root.removeAttribute('data-phase'); cap.textContent = T.label;
-    btn.setAttribute('aria-pressed', 'false'); gentle.disabled = false;
+    btn.setAttribute('aria-label', T.label); gentle.disabled = false;
     if (!keepAfter) { after.hidden = true; ctas.hidden = true; reply.textContent = ''; chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); }); }
   }
   function run(list, i, round) {
@@ -46,8 +46,8 @@
   }
   btn.addEventListener('click', function () {
     if (running) { reset(false); return; }                        // a second tap stops it
-    reset(false); running = true; btn.setAttribute('aria-pressed', 'true'); gentle.disabled = true;
-    track('breathe_start', { label: gentle.checked ? 'gentle' : 'full' });
+    reset(false); running = true; btn.setAttribute('aria-label', T.stop || T.label); gentle.disabled = true;
+    track('breathe_start');
     run(steps(), 0, 0);
   });
   chips.forEach(function (c) {
@@ -62,7 +62,7 @@
   root.querySelector('.breathe-register').addEventListener('click', function (e) {
     var target = document.getElementById('register'); if (!target) return;
     e.preventDefault(); track('breathe_cta', { label: 'register' });
-    target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    target.scrollIntoView({ behavior: 'auto', block: 'start' });   // CSS decides: smooth normally, instant when motion is reduced
     if (history.replaceState) history.replaceState(null, '', '#register');
     target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true });
   });

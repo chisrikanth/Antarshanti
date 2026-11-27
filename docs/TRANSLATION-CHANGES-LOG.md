@@ -766,3 +766,8 @@ key | en | te | hi
 ## New strings, 28 Nov 2026: home picker, short hello, breathing hint (te, hi)
 
 Keys: `home.pick.*` (q, chips, replies, show, look, suggested), `home.hello.*` (title, note, open, play) and, changed, `happiness.breathe.hint`, `.hold`, `.rest` (the breathing no longer shows numbers). The "heavy heart" reply is followed by the existing Tele-MANAS line from `checkin.js.crisis.skipped`. Please have a native reader check all of them.
+
+
+## New string, 28 Nov 2026: breathing orb "Stop" label (te, hi)
+
+`happiness.breathe.stop`: read aloud by screen readers for the orb while the exercise is running. en: Stop the breathing exercise. te: శ్వాస అభ్యాసాన్ని ఆపండి. hi: श्वास-अभ्यास रोकें. Please have a native reader confirm.

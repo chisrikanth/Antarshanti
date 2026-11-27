@@ -1,0 +1,8 @@
+# Safe baseline security headers. Deliberately NO Content-Security-Policy here: Razorpay checkout, YouTube, Instagram, Supabase
+# and Google Fonts are all loaded by the pages, and a wrong CSP would break payments or embeds. Add one only after testing it
+# against the live booking and payment flow. HTTPS and HSTS are provided by Netlify.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

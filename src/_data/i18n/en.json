@@ -380,6 +380,7 @@
   },
   "breathe": {
    "label": "Start a minute of calm breathing",
+   "stop": "Stop the breathing exercise",
    "hint": "Just follow the orb. Stop any time.",
    "in": "Breathe in…",
    "hold": "Hold…",

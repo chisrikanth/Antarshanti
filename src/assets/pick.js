@@ -10,13 +10,13 @@
   var chips = root.querySelectorAll('.pick-chip'), reply = $('.pick-reply'), care = $('.pick-care'), box = $('.pick-actions');
   var show = $('.pick-show'), checkin = $('.pick-checkin'), look = $('.pick-look'), wa = $('.pick-wa');
   var PATH = ['happiness', 'bach', 'jyotish', null];
-  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, started = false, current = null;
+  var started = false, current = null;
   function track(n) { try { if (window.AS && window.AS.track) window.AS.track(n, { page: 'home' }); } catch (e) {} }
   function card(p) { return p ? document.querySelector('#offerings [data-path="' + p + '"]') : null; }
   function clear() {
     [].forEach.call(document.querySelectorAll('#offerings .is-suggested'), function (c) { c.classList.remove('is-suggested'); var t = c.querySelector('.pick-tag'); if (t) t.remove(); });
   }
-  function go(el) { el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); }
+  function go(el) { el.scrollIntoView({ behavior: 'auto', block: 'center' }); }   // CSS decides: smooth normally, instant when motion is reduced
   chips.forEach(function (c) {
     c.addEventListener('click', function () {
       var i = +c.getAttribute('data-i'); current = PATH[i];
@@ -27,7 +27,7 @@
       show.hidden = !current; checkin.hidden = i !== 3; look.hidden = i !== 3; box.hidden = false;
       clear();
       var el = card(current);
-      if (el) { el.classList.add('is-suggested'); var t = document.createElement('span'); t.className = 'pick-tag'; t.textContent = root.getAttribute('data-suggested'); el.appendChild(t); }
+      if (el) { el.classList.add('is-suggested'); var t = document.createElement('span'); t.className = 'pick-tag'; t.setAttribute('aria-hidden', 'true'); t.textContent = root.getAttribute('data-suggested'); el.appendChild(t); }
     });
   });
   show.addEventListener('click', function () { var el = card(current); if (!el) return; track('engage_cta'); go(el); el.focus({ preventScroll: true }); });
