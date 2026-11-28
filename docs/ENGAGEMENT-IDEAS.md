@@ -1,5 +1,8 @@
 # Small "taste" activities for each page (28 Nov 2026)
 
+> **Update 28 Nov 2026:** the Jyotish and Bach rows below (sample chart, sample blend) are replaced by `ENGAGEMENT-PLAN-JYOTISH-BACH.md`, because a personal sample cannot be given to every visitor.
+
+
 One tiny, calm activity under the hero text of each page. It gives a **glimpse of what the visitor would get**, takes under a minute, asks for nothing, and ends with **one gentle next step** (scroll to booking or registration) plus the human option (WhatsApp).
 
 Status: **Happiness is built** (preview branch `design/wheel-moment`). Home, Jyotish and Bach are proposals with mock-ups, waiting for your choice.
